@@ -1,0 +1,32 @@
+export type Config = {
+  apiAddress: string;
+  edocReport_UserValidation: number;
+  edocReport_ExtraWorks: number;
+  edocReport_TypeOfTreatment: number;
+  customRegister_ExtraWork: number;
+  edocReport_ListOfZPsFromAField: number;
+  edocReport_ZPForActivityId: number;
+  edocReport_ActivityTodaysQuantity: number;
+  edocReport_ZPDetailedInfo: number;
+  edocReport_ZPLocalizationInfo: number;
+  edocReport_ProtectiveTreatments: number;
+  edocReport_CheckLocalization: number;
+  edocReport_Information: number;
+  edocReport_InformationAboutZPPerLocalization: number;
+  edocReport_CutsList: number;
+  edocReport_GeneralWorks: number;
+  edocReport_TrayToBeDestroyed: number;
+  edocReport_ModulesPins: number;
+  edocReport_TrayReplacementInfo: number;
+  edocReport_ControlSowingChanges: number;
+  edocReport_DeleteReasons: number;
+  edocReport_ActivitiesList: number;
+  edocReport_ActivityDetails: number;
+  edocReport_NitrogenIrrigationList: number;
+
+  customRegister_PhoneInfo: number;
+  customRegister_AllLocalizations: number;
+  customRegister_CutGRU: number;
+  customRegister_LoadingForecast: number;
+  customRegister_GeneralWorks: number;
+};

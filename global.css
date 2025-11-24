@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* fonts */
+
+.font-title {
+  @apply font-euclid_bold text-[22px] tracking-tighter;
+}
+.font-default-normal {
+  @apply font-euclid_regular text-[12px] tracking-tight;
+}
+.font-default-semibold {
+  @apply font-euclid_semibold text-[12px] tracking-tight;
+}
+.font-default-bold {
+  @apply font-euclid_bold text-[12px] tracking-tight;
+}
+.font-main-menu {
+  @apply font-euclid_bold text-[17px] tracking-tighter;
+}
+.font-nav {
+  @apply font-euclid_bold text-[16px] tracking-tighter;
+}
+.font-input {
+  @apply font-euclid_semibold text-[14px] tracking-tight;
+}
+
+.font-l-normal {
+  @apply font-euclid_regular text-[16px] tracking-tight;
+}
+
+/* 
+.font-main-menu-medium {
+  @apply font-euclid_medium text-[14px] tracking-tighter;
+}
+.font-main-menu-regular {
+  @apply font-euclid_regular text-[14px] tracking-tighter;
+}
+.font-main-menu-semibold {
+  @apply font-euclid_semibold text-[14px] tracking-tighter;
+}
+.font-main-menu-bold {
+  @apply font-euclid_bold text-[14px] tracking-tighter;
+}
+
+
+
+
+
+.font-default-bold {
+  @apply font-euclid_medium text-[14px];
+}
+
+.font-small-normal {
+  @apply font-euclid_regular text-[12px] tracking-wide;
+}
+
+.font-small-bold {
+  @apply font-euclid_semibold text-[12px] tracking-wide;
+}
+
+.font-smallest-normal {
+  @apply font-euclid_regular text-[11px] tracking-wide;
+}
+
+.font-smallest-semibold {
+  @apply font-euclid_semibold text-[11px] tracking-tight;
+}
+
+.font-smallest-bold {
+  @apply font-euclid_semibold text-[11px] tracking-wide;
+} */
