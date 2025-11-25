@@ -46,7 +46,7 @@ const IndexEntryPage = () => {
             actionFn={
               getModuleVisibility("information")
                 ? () => {
-                    // router.push("/app/information");
+                    router.push("/app/information");
                   }
                 : () => {}
             }

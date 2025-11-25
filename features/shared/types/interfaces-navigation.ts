@@ -11,10 +11,10 @@ export type NavElement = {
   actionFn: () => void;
 };
 
-// export const INDEX: NavElement = {
-//   actionFn: () => router.push("/"),
-//   name: "Menu",
-// } as const;
+export const INDEX: NavElement = {
+  actionFn: () => router.push("/"),
+  name: "Menu",
+} as const;
 // export const FIELD_CROPS: NavElement = {
 //   actionFn: () => router.push("/app/field_crops"),
 //   name: "Rozsady gruntowe",
