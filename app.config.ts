@@ -7,12 +7,16 @@ export default {
     icon: "./assets/images/icon.png",
     scheme: "pl.korsol.traceontest",
     userInterfaceStyle: "automatic",
+    newArchEnabled: true,
     plugins: [
-      "expo-font",
-      // "expo-router",
-      "expo-secure-store",
-      "expo-audio",
-      "expo-asset",
+      "expo-router",
+      [
+        "expo-audio",
+        {
+          microphonePermission:
+            "Allow $(PRODUCT_NAME) to access your microphone.",
+        },
+      ],
       [
         "expo-splash-screen",
         {
@@ -22,6 +26,9 @@ export default {
           backgroundColor: "#FFFDF9",
         },
       ],
+      "expo-font",
+      "expo-secure-store",
+      "expo-asset",
     ],
     splash: {
       backgroundColor: "#FFFDF9",
@@ -49,13 +56,14 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#FFFDF9",
       },
-      statusBar: {
-        backgroundColor: "#FFFDF9",
-        barStyle: "dark",
-        translucent: true,
-        hidden: false,
-      },
+
       softwareKeyboardLayoutMode: "pan", //??
+    },
+    statusBar: {
+      backgroundColor: "#FFFDF9",
+      barStyle: "dark",
+      translucent: true,
+      hidden: false,
     },
     web: {
       favicon: "./assets/images/favicon.png",

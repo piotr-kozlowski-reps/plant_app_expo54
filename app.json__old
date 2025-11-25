@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "plant_app_new",
-    "slug": "plant_app_new",
-    "version": "1.0.0",
+    "name": "TraceONtest",
+    "slug": "traceontest",
+    "version": "1.2.00",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "plantappnew",
+    "scheme": "pl.korsol.traceontest",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -43,7 +43,10 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-font",
+      "expo-secure-store",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true,
