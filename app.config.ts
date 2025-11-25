@@ -11,7 +11,7 @@ export default {
       "expo-font",
       // "expo-router",
       "expo-secure-store",
-      // "expo-audio",
+      "expo-audio",
       [
         "expo-splash-screen",
         {

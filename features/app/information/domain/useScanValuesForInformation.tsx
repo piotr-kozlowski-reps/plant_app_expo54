@@ -1,5 +1,5 @@
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-// import { useAudioPlayer } from "expo-audio";
+import { useAudioPlayer } from "expo-audio";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 
 import { useEffect, useState } from "react";
@@ -16,12 +16,13 @@ import {
   InformationResponse,
 } from "@/features/shared/types/interfaces-information";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
+import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 
 export const useScanValuesForInformation = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   ////vars
-  // const player = useAudioPlayer(audioScanSoundSource);
+  const player = useAudioPlayer(audioScanSoundSource);
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
   const {
@@ -43,8 +44,8 @@ export const useScanValuesForInformation = (
   //fn
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    // player.seekTo(0);
-    // player.play();
+    player.seekTo(0);
+    player.play();
 
     try {
       setIsLoading(true);

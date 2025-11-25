@@ -1,0 +1,16 @@
+import FieldCropsProtectiveTreatmentEntryPage from "@/features/app/field_crops/field_crops_works/protective_treatment/ui/FieldCropsProtectiveTreatmentEntryPage";
+import { router, type ErrorBoundaryProps } from "expo-router";
+
+export function ErrorBoundary({ error }: ErrorBoundaryProps) {
+  router.push(`/global_error?error_message=${error.message}`);
+}
+
+const FieldCropsProtectiveTreatmentPage = () => {
+  return (
+    <>
+      <FieldCropsProtectiveTreatmentEntryPage />
+    </>
+  );
+};
+
+export default FieldCropsProtectiveTreatmentPage;
