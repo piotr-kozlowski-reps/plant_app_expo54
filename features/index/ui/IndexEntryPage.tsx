@@ -2,14 +2,7 @@ import { View } from "react-native";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useFocusEffect, router } from "expo-router";
 
-import {
-  BadgeInfo,
-  House,
-  Menu,
-  ShoppingBag,
-  Shovel,
-  Sprout,
-} from "lucide-react-native";
+import { BadgeInfo, House, Menu, Shovel, Sprout } from "lucide-react-native";
 import {
   darkColor,
   lightNuanceColor,
@@ -107,7 +100,7 @@ const IndexEntryPage = () => {
             actionFn={
               getModuleVisibility("greenhouse_crops")
                 ? () => {
-                    // router.push("/app/greenhouse_crops");
+                    router.push("/app/greenhouse_crops");
                   }
                 : () => {}
             }
@@ -123,7 +116,7 @@ const IndexEntryPage = () => {
             actionFn={
               getModuleVisibility("general_works")
                 ? () => {
-                    // router.push("/app/general_works");
+                    router.push("/app/general_works");
                   }
                 : () => {}
             }

@@ -46,6 +46,7 @@ export type GreenhouseCropsSubmodule = ModuleOverallPermission & {
   greenhouse_crops_works_loading_forecast: boolean;
   greenhouse_crops_works_internal_transport: boolean;
   greenhouse_crops_works_order_export_to_customer: boolean;
+  // greenhouse_crops_works_order_to_spacing;
 
   //extra_works_quantity
   extra_works_quantity___overallVisibility: boolean;

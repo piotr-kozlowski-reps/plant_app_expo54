@@ -12,6 +12,7 @@ export default {
       // "expo-router",
       "expo-secure-store",
       "expo-audio",
+      "expo-asset",
       [
         "expo-splash-screen",
         {
