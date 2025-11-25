@@ -1,0 +1,62 @@
+export default {
+  expo: {
+    name: "TraceON",
+    slug: "traceon",
+    version: "1.1.05",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "pl.korsol.traceon",
+    userInterfaceStyle: "automatic",
+    plugins: [
+      "expo-font",
+      "expo-router",
+      "expo-secure-store",
+      "expo-audio",
+      [
+        "expo-splash-screen",
+        {
+          image: "./assets/images/splash-icon.png",
+          imageWidth: 200,
+          resizeMode: "cover",
+          backgroundColor: "#FFFDF9",
+        },
+      ],
+    ],
+    splash: {
+      backgroundColor: "#FFFDF9",
+      image: "./assets/images/splash.png",
+      resizeMode: "cover",
+    },
+    assetBundlePatterns: ["**/*"],
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: "pl.korsol.traceon",
+      infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
+        UIBackgroundModes: ["audio"],
+      },
+    },
+    android: {
+      package: "pl.korsol.traceon",
+      adaptiveIcon: {
+        foregroundImage: "./assets/images/adaptive-icon.png",
+        backgroundColor: "#FFFDF9",
+      },
+      androidStatusBar: {
+        backgroundColor: "#FFFDF9",
+        barStyle: "dark-content",
+        translucent: true,
+        hidden: false,
+      },
+      softwareKeyboardLayoutMode: "pan", //??
+    },
+    web: {
+      favicon: "./assets/images/favicon.png",
+    },
+    extra: {
+      eas: {
+        projectId: "b04b5b1f-e159-457a-8a84-ba5d7f0eccd8",
+      },
+    },
+  },
+};

@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "../global.css";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { Toaster } from "sonner-native";
-// import { PortalProvider } from "@gorhom/portal";
+import { PortalProvider } from "@gorhom/portal";
 import { View, Text } from "react-native";
 import { configPerBuild } from "@/features/shared/env/env";
 import { useTestOrProductionStore } from "@/features/shared/stores/useTestOrProductionStore";
@@ -52,51 +52,51 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        {/* <PortalProvider> */}
-        <QueryClientProvider client={client}>
-          <KeyboardProvider>
-            <StatusBar style="dark" translucent={true} hidden={false} />
+        <PortalProvider>
+          <QueryClientProvider client={client}>
+            <KeyboardProvider>
+              <StatusBar style="dark" translucent={true} hidden={false} />
 
-            <Stack>
-              <Stack.Screen
-                name="index"
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="login"
-                options={{ headerShown: false, animation: "slide_from_left" }}
-              />
-              <Stack.Screen
-                name="app-not-up-to-date"
-                options={{ headerShown: false, animation: "slide_from_left" }}
-              />
+              <Stack>
+                <Stack.Screen
+                  name="index"
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="login"
+                  options={{ headerShown: false, animation: "slide_from_left" }}
+                />
+                <Stack.Screen
+                  name="app-not-up-to-date"
+                  options={{ headerShown: false, animation: "slide_from_left" }}
+                />
 
-              {/* //app */}
-              <Stack.Screen
-                name="app/information/index"
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="app/field_crops/index"
-                options={{ headerShown: false }}
-              />
-            </Stack>
+                {/* //app */}
+                <Stack.Screen
+                  name="app/information/index"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="app/field_crops/index"
+                  options={{ headerShown: false }}
+                />
+              </Stack>
 
-            {isProduction ? null : (
-              <View className="w-full h-[16px] bg-emerald-400">
-                <Text className="text-center text-foreground font-default-normal">
-                  Środowisko testowe:{" "}
-                  <Text className="text-foreground font-default-semibold">{`${configPerBuild.apiAddress}`}</Text>
-                </Text>
-              </View>
-            )}
+              {isProduction ? null : (
+                <View className="w-full h-[16px] bg-emerald-400">
+                  <Text className="text-center text-foreground font-default-normal">
+                    Środowisko testowe:{" "}
+                    <Text className="text-foreground font-default-semibold">{`${configPerBuild.apiAddress}`}</Text>
+                  </Text>
+                </View>
+              )}
 
-            <Toaster position="top-center" />
-          </KeyboardProvider>
-        </QueryClientProvider>
-        {/* </PortalProvider> */}
+              <Toaster position="top-center" />
+            </KeyboardProvider>
+          </QueryClientProvider>
+        </PortalProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );
