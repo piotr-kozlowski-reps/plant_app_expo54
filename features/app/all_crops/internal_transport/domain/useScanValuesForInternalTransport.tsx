@@ -17,11 +17,11 @@ import {
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
-import { getRepId116 } from "@/features/shared/data-access/getRepId116";
-import { useGetLocalizationInfo_Report1580 } from "@/features/shared/data-access/useGetLocalizationInfo_Report1580";
-import { useCheckIfZpIsAlreadyScanned } from "@/features/shared/utils/useCheckIfZPIsAlreadyScanned";
 import { AllInternalTransportSubmodules } from "@/features/shared/types/interfaces-auth";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
+import { useGetLocalizationInfo_Report1580 } from "@/features/shared/data-access/useGetLocalizationInfo_Report1580";
+import { useCheckIfZpIsAlreadyScanned } from "@/features/shared/utils/useCheckIfZPIsAlreadyScanned";
+import { getRepId116 } from "@/features/shared/data-access/getRepId116";
 
 export const useScanValuesForInternalTransport = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,

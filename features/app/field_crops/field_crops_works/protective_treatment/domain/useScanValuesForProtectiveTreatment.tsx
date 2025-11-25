@@ -6,7 +6,7 @@ import {
   ProtectiveTreatment,
   WhoDidProtectiveTreatment,
 } from "@/features/shared/types/interfaces-protective_treatment";
-import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
+
 import { useState } from "react";
 import * as Haptics from "expo-haptics";
 import { useAudioPlayer } from "expo-audio";
@@ -16,12 +16,11 @@ import { toast } from "sonner-native";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useScanValueForExtraWorkHandler } from "@/features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
 import { MESSAGES } from "@/features/shared/utils/messages";
-import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/interfaces-localization";
-import { useGetLocalizationInfo_Report1580 } from "@/features/shared/data-access/useGetLocalizationInfo_Report1580";
-import { useGetAllZPsInLocalizationWithAllLocalizationsInfo_Report1587 } from "@/features/shared/data-access/useGetAllZPsInLocalizationWithAllLocalizationsInfo_Report1587";
-import { useRestOfLocalizationsHelpers } from "@/features/shared/utils/useRestOfLocalizationsHelpers";
+
 import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
+import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
+import { useRestOfLocalizationsHelpers } from "@/features/shared/utils/useRestOfLocalizationsHelpers";
 
 export const useScanValuesForProtectiveTreatment = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>

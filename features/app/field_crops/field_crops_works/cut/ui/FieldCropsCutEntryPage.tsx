@@ -4,10 +4,11 @@ import { Stack } from "expo-router";
 import CutMainWindow from "./CutMainWindow";
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
-import edocReport_CutsList from "@/features/shared/data-access/edocReport_CutsList";
+
 import { useMemo } from "react";
 import { ZpToCut } from "@/features/shared/types/interfaces-cut";
 import { FieldCropsSubmodules } from "@/features/shared/types/interfaces-auth";
+import edocReport_CutsList from "@/features/shared/data-access/edocReport_CutsList";
 
 const FieldCropsCutEntryPage = () => {
   ////vars

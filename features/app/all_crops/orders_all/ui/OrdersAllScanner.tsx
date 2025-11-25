@@ -1,19 +1,7 @@
-import AppPath from "@/features/shared/ui/app-path/AppPath";
-import {
-  View,
-  Text,
-  Platform,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Platform, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useScanValuesForOrderToHardener } from "../domain/useScanValuesForOrderToHardener";
-import {
-  FIELD_CROPS,
-  FIELD_CROPS_WORKS,
-  INDEX,
-} from "@/features/shared/types/interfaces-navigation";
+
 import { StatusBar } from "expo-status-bar";
 import { CameraView } from "expo-camera";
 import Button from "@/features/shared/ui/button/Button";
@@ -22,9 +10,7 @@ import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import {
-  darkColor,
   lightColor,
-  primaryColor,
   yellowColor,
 } from "@/features/shared/constants/colorThemeVars";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
@@ -37,12 +23,12 @@ import { Image } from "expo-image";
 import ZPItemInOrdersAllInfo from "./ZPItemInOrdersAllInfo";
 import { Localization } from "@/features/shared/types/interfaces-localization";
 import DeleteZpForOrdersAllModal from "./DeleteZpForOrdersAllModal";
-import ButtonTextAndIcon from "@/features/shared/ui/button/ButtonTextAndIcon";
 import { ChevronDown } from "lucide-react-native";
 import HowManyDaysToMoveInOrdersAllModal from "./HowManyDaysToMoveInOrdersAllModal";
 import { AllCropsOrdersSubmodules } from "@/features/shared/types/interfaces-auth";
 import { useGetOrderDetailsDependingOnType } from "../domain/useGetOrderDetailsDependingOnType";
 import { useGetAppPathForOrdersAll } from "@/features/shared/utils/useGetAppPathForOrdersAll";
+import ButtonTextAndIcon from "../../../../shared/ui/button/ButtonTextAndIcon";
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;

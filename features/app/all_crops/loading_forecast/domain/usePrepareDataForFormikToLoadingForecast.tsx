@@ -12,9 +12,9 @@ import {
   VALIDATION_MESSAGES,
 } from "@/features/shared/utils/messages";
 import { validateFormOnDemand } from "@/features/shared/utils/validation";
+import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useGetEdocCustomRegisterMutation } from "@/features/shared/utils/getEdocCustomRegister/useGetEdocCustomRegisterMutation";
 import { customRegister_LoadingForecast } from "@/features/shared/data-access/customRegister_LoadingForecast";
-import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 
 export const usePrepareDataForFormikToLoadingForecast = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,

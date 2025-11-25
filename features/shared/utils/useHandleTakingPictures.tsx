@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES, MESSAGES } from "./messages";
 import * as FileSystem from "expo-file-system";
+import * as FileSystemLegacy from "expo-file-system/legacy";
 import { useIsTakingPicturesAvailable } from "@/features/app/all_crops/order_export_to_customer/domain/useIsTakingPicturesAvailable";
 
 type AnyObjectWithPictures = {
@@ -50,7 +51,7 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
   };
 
   async function deleteAllCachedPhotos() {
-    const appCachePath = FileSystem.cacheDirectory;
+    const appCachePath = FileSystemLegacy.cacheDirectory;
     if (!appCachePath) {
       toast.warning(
         "Błąd podczas usuwania zdjęć, brak informacji o katalogu z cache'em aplikacji."

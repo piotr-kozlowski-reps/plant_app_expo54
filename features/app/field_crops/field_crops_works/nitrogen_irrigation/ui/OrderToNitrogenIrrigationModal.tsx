@@ -30,7 +30,6 @@ import {
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import HowManyDaysToOrderNitrogenIrrigationModal from "./HowManyDaysToOrderNitrogenIrrigationModal";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
-import SelectConcentrationOfNitrogenModal from "./SelectConcentrationOfNitrogenModal";
 import ZPItemInOrdersAllInfo from "../../../../all_crops/orders_all/ui/ZPItemInOrdersAllInfo";
 import DeleteZpForOrdersAllModal from "../../../../all_crops/orders_all/ui/DeleteZpForOrdersAllModal";
 import { useSendOrderNitrogenIrrigation } from "../domain/useSendOrderNitrogenIrrigation";

@@ -10,19 +10,15 @@ import {
   ProtectiveTreatmentInput,
   WhoDidProtectiveTreatment,
 } from "@/features/shared/types/interfaces-protective_treatment";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useProtectiveTreatmentFormik } from "../domain/useProtectiveTreatmentFormik";
-import { useGetTreatmentTypeComboboxItems } from "../domain/useGetTreatmentTypeComboboxItems";
 import { Combobox } from "@/features/shared/types/interfaces-general";
-import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
-import edocReport_ProtectiveTreatments from "@/features/shared/data-access/edocReport_ProtectiveTreatments";
 import InputFormik from "@/features/shared/ui/input/InputFormik";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
-import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import { useScanValuesForProtectiveTreatment } from "../domain/useScanValuesForProtectiveTreatment";
 import { useShowModal } from "@/features/shared/utils/useShowModal";

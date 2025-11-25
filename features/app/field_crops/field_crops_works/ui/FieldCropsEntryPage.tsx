@@ -11,9 +11,8 @@ import {
   INDEX,
   SubNavigationElement,
 } from "@/features/shared/types/interfaces-navigation";
-
-import { useGetSubNavigationFieldCropsElements } from "@/features/shared/utils/useGetSubNavigationFieldCropsElements";
 import { Stack } from "expo-router";
+import { useGetSubNavigationFieldCropsElements } from "@/features/shared/utils/useGetSubNavigationFieldCropsElements";
 
 const FieldCropsEntryPage = () => {
   ////vars

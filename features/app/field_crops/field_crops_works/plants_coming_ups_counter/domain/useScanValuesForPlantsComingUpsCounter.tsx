@@ -7,12 +7,11 @@ import * as Haptics from "expo-haptics";
 import {
   RiseCountResponse,
   Tray,
-  TrayResponse,
 } from "@/features/shared/types/interfaces-tray";
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { configPerBuild } from "@/features/shared/env/env";
-import { getRepId113 } from "@/features/shared/data-access/getRepId113";
+
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useGetTrayInfo_Report113 } from "@/features/shared/data-access/useGetTrayInfo_Report113";

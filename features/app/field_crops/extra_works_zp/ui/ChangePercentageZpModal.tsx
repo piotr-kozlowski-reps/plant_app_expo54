@@ -4,7 +4,7 @@ import {
   ZpScannedValuePercentage,
 } from "@/features/shared/types/interfaces-extra_works";
 import Button from "@/features/shared/ui/button/Button";
-import ButtonZPBadge from "@/features/shared/ui/button/ButtonZPBadge";
+
 import { View, Text } from "react-native";
 import { usePrepareDataForFormikToChangePercentage } from "../domain/usePrepareDataForFormikToChangePercentage";
 import InputFormik from "@/features/shared/ui/input/InputFormik";
@@ -12,6 +12,7 @@ import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
+import ButtonZPBadge from "@/features/shared/ui/button/ButtonZPBadge";
 
 type Props = {
   closeFn: () => void;

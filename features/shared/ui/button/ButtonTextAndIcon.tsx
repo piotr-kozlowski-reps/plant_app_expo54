@@ -1,8 +1,6 @@
 import { View, Text } from "react-native";
 import ButtonAsChild from "./ButtonAsChild";
-import ThreeChevrons from "../icons/ThreeChevrons";
 import clsx from "clsx";
-import { darkColor, lightNuanceColor } from "../../constants/colorThemeVars";
 
 type Props = {
   actionFn: () => void;

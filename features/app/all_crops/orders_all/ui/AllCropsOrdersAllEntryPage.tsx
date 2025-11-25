@@ -1,21 +1,13 @@
-import { View } from "react-native";
 import { Stack } from "expo-router";
-import {
-  AllCropsOrdersSubmodules,
-  FieldCropsSubmodules,
-} from "@/features/shared/types/interfaces-auth";
-import { useHandleSubmodulePermission } from "@/features/shared/utils/useHandleSubmodulePermission";
+import { AllCropsOrdersSubmodules } from "@/features/shared/types/interfaces-auth";
 import { useCameraPermissions } from "expo-camera";
-import Button from "@/features/shared/ui/button/Button";
 import OrdersAllScanner from "./OrdersAllScanner";
 import { Localization } from "@/features/shared/types/interfaces-localization";
 import { useMemo, useState } from "react";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
-import edocReport_AvailableLocalizations from "@/features/shared/data-access/edocReport_AvailableLocalizations";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import { useGetOrderDetailsDependingOnType } from "../domain/useGetOrderDetailsDependingOnType";
-import { useSubmoduleEntryDataAndGuard } from "@/features/shared/utils/useSubmoduleEntryDataAndGuard";
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
+import edocReport_AvailableLocalizations from "@/features/shared/data-access/edocReport_AvailableLocalizations";
 
 type Props = {
   whatOrderType: AllCropsOrdersSubmodules;

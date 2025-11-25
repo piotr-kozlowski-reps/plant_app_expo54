@@ -4,19 +4,18 @@ import { useState } from "react";
 import * as Haptics from "expo-haptics";
 import { ZPShortenedInfoWithPics } from "@/features/shared/types/interfaces-zp";
 import { toast } from "sonner-native";
-import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
+import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useDatesHelper } from "@/features/shared/utils/useDatesHelper";
 import { CameraView } from "expo-camera";
-import { useScanZpOrTrayRep113 } from "@/features/shared/data-access/useScanZpOrTrayRep113";
-import { useAllowScanOnlyZpOrTray } from "@/features/shared/utils/useAllowScanOnlyZpOrTray";
+
 import { useHandleTakingPictures } from "@/features/shared/utils/useHandleTakingPictures";
 import { AllExportToCustomerSubmodules } from "@/features/shared/types/interfaces-auth";
 import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
-import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
+import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 
 export const useScanValuesForOrderExportToCustomer = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,

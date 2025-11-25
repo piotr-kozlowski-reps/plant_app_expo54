@@ -1,10 +1,10 @@
 import { QUERY_KEYS } from "@/features/shared/constants/queryKeys";
 import { customRegister_ExtraWork } from "@/features/shared/data-access/customRegister_ExtraWork";
+
 import {
   ExtraWork,
   Post_ExtraWork_ZP_DTO,
   ZpScannedValue,
-  ZpScannedValueToBeSent,
 } from "@/features/shared/types/interfaces-extra_works";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";

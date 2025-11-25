@@ -3,17 +3,15 @@ import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
 import { useSubmoduleEntryDataAndGuard } from "@/features/shared/utils/useSubmoduleEntryDataAndGuard";
 import { Stack } from "expo-router";
-import OrderNitrogenIrrigationScanner from "./OrderToNitrogenIrrigationModal";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 import edocReport_ProtectiveTreatments from "@/features/shared/data-access/edocReport_ProtectiveTreatments";
-import { useMemo } from "react";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import { useNitrogenProtectiveTreatmentsHelpers } from "../domain/useNitrogenProtectiveTreatmentsHelpers";
-import edocReport_NitrogenIrrigationList from "@/features/shared/data-access/edocReport_NitrogenIrrigation";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import NitrogenIrrigationMainWindow from "./NitrogenIrrigationMainWindow";
 import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
+import edocReport_NitrogenIrrigationList from "@/features/shared/data-access/edocReport_NitrogenIrrigation";
 
 const FieldCropsNitrogenIrrigationEntryPage = () => {
   ////vars

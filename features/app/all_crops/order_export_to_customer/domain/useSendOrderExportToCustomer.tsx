@@ -1,6 +1,4 @@
 import { ZPShortenedInfoWithPics } from "@/features/shared/types/interfaces-zp";
-import { useIsSendingDataAvailable } from "./useIsSendingDataAvailable";
-import { INDEX } from "@/features/shared/types/interfaces-navigation";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import {
   AttachmentsRequest,
@@ -10,18 +8,17 @@ import { toast } from "sonner-native";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useBaseAPI_URL_Store } from "@/features/shared/stores/useBaseAPI_URL_Store";
-import { useImagesHelper } from "@/features/shared/utils/useImagesHelper";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import {
   OrderExportToCustomerResponse,
   OrderExportToCustomerSendDataDTO,
-  OrderToHardenerSendDataDTO,
 } from "@/features/shared/types/interfaces-orders_all";
 import { useDatesHelper } from "@/features/shared/utils/useDatesHelper";
-import { useCreateDocId } from "@/features/shared/data-access/useCreateDocId";
+
 import { configPerBuild } from "@/features/shared/env/env";
 import { useIsSendingOrderExportToCustomerDataAvailable } from "./useIsSendingOrderExportToCustomerDataAvailable";
 import { AllExportToCustomerSubmodules } from "@/features/shared/types/interfaces-auth";
+import { useCreateDocId } from "@/features/shared/data-access/useCreateDocId";
 
 type OrderExportToCustomerDataToSent = {
   scannedValue: ZPShortenedInfoWithPics;

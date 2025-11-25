@@ -10,8 +10,9 @@ import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { TrayInfoWithPics } from "@/features/shared/types/interfaces-destroy_tray";
 import { CameraView } from "expo-camera";
 import { useHandleTakingPictures } from "@/features/shared/utils/useHandleTakingPictures";
-import { useScanTrayToBeDestroyedRep84 } from "@/features/shared/data-access/useScanTrayToBeDestroyedRep84";
+
 import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
+import { useScanTrayToBeDestroyedRep84 } from "@/features/shared/data-access/useScanTrayToBeDestroyedRep84";
 
 export const useScanValuesForDestroyTray = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,

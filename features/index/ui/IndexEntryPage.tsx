@@ -61,7 +61,7 @@ const IndexEntryPage = () => {
             actionFn={
               getModuleVisibility("field_crops")
                 ? () => {
-                    // router.push("/app/field_crops");
+                    router.push("/app/field_crops");
                   }
                 : () => {}
             }

@@ -1,14 +1,12 @@
-import { View, Text, Button } from "react-native";
-import { router, Stack } from "expo-router";
-import { useMemo, useState } from "react";
+import { View } from "react-native";
+import { Stack } from "expo-router";
+import React, { useMemo, useState } from "react";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
-import Modal from "@/features/shared/ui/modal/Modal";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
-import ItemsList from "@/features/shared/ui/list/ItemsList";
 import {
   EXTRA_WORKS_HOBBY,
   FIELD_CROPS,
@@ -20,6 +18,7 @@ import ExtraWorksQuantityModal from "./ExtraWorksQuantityModal";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 import { useChooseWhichError } from "@/features/shared/utils/getEdocReports/lib/useChooseWhichError";
+import ItemsList from "@/features/shared/ui/list/ItemsList";
 
 type Props = {
   isHobby: boolean;

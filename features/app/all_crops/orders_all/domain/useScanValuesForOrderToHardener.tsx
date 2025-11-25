@@ -14,8 +14,10 @@ import { ZPShortenedInfoWithoutTwrnzw } from "@/features/shared/types/interfaces
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import { useGetTrayInfo_Report113 } from "@/features/shared/data-access/useGetTrayInfo_Report113";
 import { AllCropsOrdersSubmodules } from "@/features/shared/types/interfaces-auth";
-import { useScanHelpers } from "@/features/shared/utils/useScanHelpers";
+
 import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
+
+import { useScanHelpers } from "@/features/shared/utils/useScanHelpers";
 import { getIsPossibleToProcess_After13_guard } from "@/features/shared/utils/guards/cannotOrderAfter13_guard";
 
 export const useScanValuesForOrderToHardener = (
