@@ -68,7 +68,13 @@ export const useScanValueForExtraWorkHandler = () => {
       setScannedZPOnManyFields,
     } = dataForScanZP;
 
-    if (whatWasScanned !== "tray" && whatWasScanned !== "zp_gru") {
+    if (
+      whatWasScanned !== "tray" &&
+      whatWasScanned !== "zp_gru" &&
+      whatWasScanned !== "zp_roz"
+    ) {
+      // whatWasScanned !== "tray" && (whatWasScanned !== "zp_gru" ||
+      // whatWasScanned !== "zp_roz")
       toast.warning(
         ERROR_MESSAGES.WRONG_PARAMETER +
           "-> " +
@@ -371,7 +377,7 @@ export const useScanValueForExtraWorkHandler = () => {
     activityId: number,
     whatWasScanned: TypeOfScannedValue
   ): string {
-    if (whatWasScanned === "zp_gru") {
+    if (whatWasScanned === "zp_gru" || whatWasScanned === "zp_roz") {
       return `${
         configPerBuild.apiAddress
       }/api.php/REST/custom/korsolgetreport?rep_id=${

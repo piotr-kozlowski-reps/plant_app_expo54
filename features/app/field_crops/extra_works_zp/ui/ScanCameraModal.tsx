@@ -8,7 +8,9 @@ import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protecti
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import {
   FIELD_CROPS,
+  GREENHOUSE_CROPS,
   INDEX,
+  NavElement,
 } from "@/features/shared/types/interfaces-navigation";
 
 type TProps = {
@@ -16,14 +18,33 @@ type TProps = {
   extraWork: ExtraWork | undefined;
   nitrogenProtectiveTreatments: ProtectiveTreatment[];
   refreshAllData: () => void;
+  isRoz?: boolean;
 };
 
 const ScanCameraModal = (props: TProps) => {
   ////vars
-  const { closeFn, extraWork, nitrogenProtectiveTreatments, refreshAllData } =
-    props;
+  const {
+    closeFn,
+    extraWork,
+    nitrogenProtectiveTreatments,
+    refreshAllData,
+    isRoz = false,
+  } = props;
   const [permission, requestPermission] = useCameraPermissions();
   const isPermissionGranted = Boolean(permission?.granted);
+
+  //paths
+  const paths: NavElement[] = isRoz
+    ? [
+        INDEX,
+        GREENHOUSE_CROPS,
+        { actionFn: () => {}, name: "Prace Extra ROZ - ZP" },
+      ]
+    : [
+        INDEX,
+        FIELD_CROPS,
+        { actionFn: () => {}, name: "Prace Extra GRU - ZP" },
+      ];
 
   ////tsx
   return (
@@ -37,15 +58,8 @@ const ScanCameraModal = (props: TProps) => {
         nitrogenProtectiveTreatments={nitrogenProtectiveTreatments}
         refreshAllData={refreshAllData}
         zpListWithOrderedNitrogenIrrigation={[]}
-        appPath={
-          <AppPath
-            paths={[
-              INDEX,
-              FIELD_CROPS,
-              { actionFn: () => {}, name: "Prace Extra GRU - ZP" },
-            ]}
-          />
-        }
+        appPath={<AppPath paths={paths} />}
+        isRoz
       />
     </PermissionsOrGoFurther>
   );

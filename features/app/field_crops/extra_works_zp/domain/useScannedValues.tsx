@@ -1,5 +1,5 @@
 import { ZpScannedValue } from "@/features/shared/types/interfaces-extra_works";
-import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
+import { MESSAGES } from "@/features/shared/utils/messages";
 import { useState } from "react";
 import { toast } from "sonner-native";
 import * as Haptics from "expo-haptics";
@@ -14,7 +14,8 @@ import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_
 
 export const useScannedValues = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  isExtraWork230: boolean
+  isExtraWork230: boolean,
+  isRoz = false
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -64,19 +65,20 @@ export const useScannedValues = (
     //check allowed scanned values
     const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
       scannedValue,
-      ["zp_gru", "field"]
+      isRoz ? ["zp_roz", "field"] : ["zp_gru", "field"]
     );
     if (!isScannedDataCorrect) return;
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     const isZP = whatValueWasScanned === "zp_gru";
+
     const isField = whatValueWasScanned === "field";
 
     try {
       setIsLoading(true);
 
       //allowed paths/conditions
-      if (isZP) {
+      if (isZP || isRoz) {
         await scanZpOrTrayHandler(
           {
             scannedValue,
@@ -88,7 +90,7 @@ export const useScannedValues = (
             setIsForceToScanField,
             setScannedZPOnManyFields,
           },
-          "zp_gru"
+          isRoz ? "zp_roz" : "zp_gru"
         );
 
         return;

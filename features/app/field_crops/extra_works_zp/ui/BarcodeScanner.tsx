@@ -50,6 +50,7 @@ type TProps = {
   refreshAllData: () => void;
   zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[];
   appPath: React.ReactNode;
+  isRoz?: boolean;
 };
 
 const BarcodeScanner = (props: TProps) => {
@@ -59,6 +60,7 @@ const BarcodeScanner = (props: TProps) => {
     nitrogenProtectiveTreatments,
     zpListWithOrderedNitrogenIrrigation,
     appPath,
+    isRoz = false,
 
     refreshAllData,
     closeFn,
@@ -87,7 +89,7 @@ const BarcodeScanner = (props: TProps) => {
     deleteScannedValue,
     changePercentageOfScannedValue,
     clearZpOnManyFields,
-  } = useScannedValues(setIsLoading, isExtraWork230);
+  } = useScannedValues(setIsLoading, isExtraWork230, isRoz);
 
   //date value
   const [chosenDate, setChosenDate] = useState(new Date(Date.now()));
