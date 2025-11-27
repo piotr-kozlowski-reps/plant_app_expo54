@@ -1,9 +1,3 @@
-import {
-  FIELD_CROPS,
-  FIELD_CROPS_WORKS,
-  INDEX,
-} from "@/features/shared/types/interfaces-navigation";
-import AppPath from "@/features/shared/ui/app-path/AppPath";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { View, Platform, StyleSheet, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

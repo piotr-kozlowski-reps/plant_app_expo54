@@ -2,16 +2,21 @@ export default {
   expo: {
     name: "TraceON",
     slug: "traceon",
-    version: "1.1.05",
+    version: "1.2.00",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "pl.korsol.traceon",
     userInterfaceStyle: "automatic",
+    newArchEnabled: true,
     plugins: [
-      "expo-font",
       "expo-router",
-      "expo-secure-store",
-      "expo-audio",
+      [
+        "expo-audio",
+        {
+          microphonePermission:
+            "Allow $(PRODUCT_NAME) to access your microphone.",
+        },
+      ],
       [
         "expo-splash-screen",
         {
@@ -21,6 +26,9 @@ export default {
           backgroundColor: "#FFFDF9",
         },
       ],
+      "expo-font",
+      "expo-secure-store",
+      "expo-asset",
     ],
     splash: {
       backgroundColor: "#FFFDF9",
@@ -34,6 +42,12 @@ export default {
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
         UIBackgroundModes: ["audio"],
+        NSCameraUsageDescription:
+          "Ta aplikacja wykorzystuje aparat, aby umożliwić Ci robienie zdjęć kodów QR i roślin.",
+        NSMicrophoneUsageDescription:
+          "Ta aplikacja wykorzystuje mikrofon do nagrywania audio.",
+        NSPhotoLibraryUsageDescription:
+          "Ta aplikacja potrzebuje dostępu do Twojej biblioteki zdjęć, aby zapisywać i udostępniać obrazy.",
       },
     },
     android: {
@@ -42,13 +56,14 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#FFFDF9",
       },
-      androidStatusBar: {
-        backgroundColor: "#FFFDF9",
-        barStyle: "dark-content",
-        translucent: true,
-        hidden: false,
-      },
+
       softwareKeyboardLayoutMode: "pan", //??
+    },
+    statusBar: {
+      backgroundColor: "#FFFDF9",
+      barStyle: "dark",
+      translucent: true,
+      hidden: false,
     },
     web: {
       favicon: "./assets/images/favicon.png",

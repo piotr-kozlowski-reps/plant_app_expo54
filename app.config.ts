@@ -1,11 +1,11 @@
 export default {
   expo: {
-    name: "TraceONtest",
-    slug: "traceontest",
+    name: "TraceON",
+    slug: "traceon",
     version: "1.2.00",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
-    scheme: "pl.korsol.traceontest",
+    scheme: "pl.korsol.traceon",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     plugins: [
@@ -38,7 +38,7 @@ export default {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "pl.korsol.traceontest",
+      bundleIdentifier: "pl.korsol.traceon",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
         UIBackgroundModes: ["audio"],
@@ -51,7 +51,7 @@ export default {
       },
     },
     android: {
-      package: "pl.korsol.traceontest",
+      package: "pl.korsol.traceon",
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#FFFDF9",
@@ -70,7 +70,7 @@ export default {
     },
     extra: {
       eas: {
-        projectId: "60a19f78-ceb2-494c-82c3-b807ab4c814f",
+        projectId: "b04b5b1f-e159-457a-8a84-ba5d7f0eccd8",
       },
     },
   },
