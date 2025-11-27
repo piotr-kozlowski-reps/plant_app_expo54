@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
-import Modal from "@/features/shared/ui/modal/Modal";
 import ScanCameraModal from "./ScanCameraModal";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
@@ -16,7 +15,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import ItemsList from "@/features/shared/ui/list/ItemsList";
-import DeleteZpModal from "./DeleteZpModal";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 import { Stack } from "expo-router";

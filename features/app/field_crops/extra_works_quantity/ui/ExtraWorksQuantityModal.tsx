@@ -12,6 +12,7 @@ import {
   FIELD_CROPS,
   INDEX,
   QUANTITY_FORM,
+  GREENHOUSE_CROPS,
 } from "@/features/shared/types/interfaces-navigation";
 import { usePrepareDataForFormikToExtraWorkQuantity } from "../domain/usePrepareDataForFormikToExtraWorkQuantity";
 import InputFormik from "@/features/shared/ui/input/InputFormik";
@@ -25,11 +26,12 @@ type TProps = {
   closeFn: () => void;
   extraWork: ExtraWork | undefined;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  isRoz?: boolean;
 };
 
 const ExtraWorksQuantityModal = (props: TProps) => {
   ////vars
-  const { closeFn, extraWork, setIsLoading } = props;
+  const { closeFn, extraWork, setIsLoading, isRoz = false } = props;
 
   const { todaysQuantity } = useCheckIfExtraWorkWasDoneToday(
     setIsLoading,
@@ -56,7 +58,7 @@ const ExtraWorksQuantityModal = (props: TProps) => {
             <AppPath
               paths={[
                 INDEX,
-                FIELD_CROPS,
+                isRoz ? GREENHOUSE_CROPS : FIELD_CROPS,
                 { name: "Prace Extra - Ilości", actionFn: closeFn },
                 QUANTITY_FORM,
               ]}

@@ -2,11 +2,10 @@ import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { INDEX } from "@/features/shared/types/interfaces-navigation";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import LeafNavigationButton from "@/features/shared/ui/button/LeafNavigationButton";
-import { router } from "expo-router";
 import { GreenhouseCropsSubmodule } from "@/features/shared/types/interfaces-auth";
 import {
   CheckCheck,
@@ -116,7 +115,7 @@ const GreenhouseCropsEntryPage = () => {
                         strokeWidth={2.7}
                       />
                     }
-                    name={`Prace${"\n"}Extra ROZ - ZP`}
+                    name={`brak`}
                     // disabled={
                     //   !getModuleVisibilitiesObject<GreenhouseCropsSubmodule>(
                     //     "greenhouse_crops"
@@ -131,9 +130,7 @@ const GreenhouseCropsEntryPage = () => {
                         "greenhouse_crops"
                       ).extra_works_zp___overallVisibility
                         ? () => {
-                            router.push(
-                              "/app/greenhouse_crops/extra_works_hobby"
-                            );
+                            router.push("/app/greenhouse_crops/extra_works_zp");
                           }
                         : () => {}
                     }

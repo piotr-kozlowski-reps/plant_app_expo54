@@ -4,6 +4,7 @@ export type Config = {
   edocReport_ExtraWorks: number;
   edocReport_TypeOfTreatment: number;
   customRegister_ExtraWork: number;
+  edocReport_ExtraWorksRoz: number;
   edocReport_ListOfZPsFromAField: number;
   edocReport_ZPForActivityId: number;
   edocReport_ActivityTodaysQuantity: number;

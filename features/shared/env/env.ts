@@ -34,6 +34,7 @@ export let configPerBuild: Config = {
   apiAddress: env.EXPO_PUBLIC_API_URL,
   edocReport_UserValidation: 1567,
   edocReport_ExtraWorks: 1568,
+  edocReport_ExtraWorksRoz: 1680,
   edocReport_TypeOfTreatment: 1610,
   edocReport_ListOfZPsFromAField: 1569,
   edocReport_ZPForActivityId: 1571,

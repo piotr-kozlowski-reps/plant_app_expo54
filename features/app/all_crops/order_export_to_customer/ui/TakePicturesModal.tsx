@@ -1,14 +1,8 @@
-import {
-  darkColor,
-  grayColor,
-  primaryColor,
-} from "@/features/shared/constants/colorThemeVars";
-import Button from "@/features/shared/ui/button/Button";
+import { grayColor } from "@/features/shared/constants/colorThemeVars";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import ButtonIcon from "@/features/shared/ui/button/ButtonIcon";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import { CameraView } from "expo-camera";
-import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ImageOff } from "lucide-react-native";
 import { View, Platform, StyleSheet } from "react-native";
