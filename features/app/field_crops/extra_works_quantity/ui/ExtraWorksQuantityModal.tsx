@@ -95,7 +95,11 @@ const ExtraWorksQuantityModal = (props: TProps) => {
 
               <View className="w-full px-6">
                 <InputFormik<ExtraWorkQuantityInput>
-                  label="Ilość:"
+                  label={`Podaj ilość${
+                    extraWork?.mobile_jm
+                      ? " - (" + extraWork?.mobile_jm + ") "
+                      : ""
+                  }:`}
                   placeholder="podaj ilość"
                   isSignedAsRequired={true}
                   formik={formik}

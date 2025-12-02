@@ -3,12 +3,14 @@ export type ExtraWorkDTO = {
   activityname: string;
   is_ordnmb: string;
   ishobby: string;
+  mobile_jm: string | null;
 };
 export type ExtraWork = {
   keyval: number;
   activityname: string;
   is_ordnmb: boolean;
   ishobby: boolean;
+  mobile_jm: string | null;
 };
 
 export type Post_ExtraWork_ZP_DTO = {

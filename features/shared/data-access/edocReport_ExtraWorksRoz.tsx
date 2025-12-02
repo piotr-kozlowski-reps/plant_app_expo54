@@ -12,6 +12,7 @@ const navigationObjectExample: ExtraWork = {
   activityname: "test",
   is_ordnmb: true,
   ishobby: true,
+  mobile_jm: null,
 };
 
 const edocReport_ExtraWorksRoz = new EdocReport<ExtraWorkDTO, ExtraWork>({
@@ -27,6 +28,7 @@ const edocReport_ExtraWorksRoz = new EdocReport<ExtraWorkDTO, ExtraWork>({
     new MapStringIntoInteger<ExtraWork>("keyval"),
     new MapStringValueTorFIntoBoolean<ExtraWork>("is_ordnmb"),
     new MapStringValueTorFIntoBoolean<ExtraWork>("ishobby"),
+    new MapDoNotMap<ExtraWork, string | null>("mobile_jm"),
   ],
 });
 

@@ -48,6 +48,8 @@ const OrderExportToCustomerScanner = (props: Props) => {
   } = useDatesHelper();
   const cameraRef = useRef<CameraView | null>(null);
 
+  console.log({ submoduleType });
+
   //app path
   const { getAppPathForOrderExportToCustomer } =
     useGetAppPathForOrderExportToCustomer();
