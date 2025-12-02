@@ -62,8 +62,14 @@ const HowManyDaysToMoveInOrdersAllModal = (props: Props) => {
                       new Date(Date.now()),
                       item.value
                     );
+
+                    // const isRoz =
+                    //   whatOrderType ===
+                    //   "greenhouse_crops_works_order_export_to_customer";
+
                     const isDayAvailable =
                       getIsDayAvailableToOrderExportToClient(valueDate);
+
                     const color = isHandleUnavailableDays
                       ? isDayAvailable
                         ? darkColor

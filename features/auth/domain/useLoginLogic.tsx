@@ -217,10 +217,10 @@ export const useLoginLogic = () => {
             greenhouse_crops_works_order_export_to_customer: true,
 
             //extra_works_quantity
-            extra_works_quantity___overallVisibility: true,
+            extra_works_quantity___overallVisibility: false,
 
             //extra_works_zp
-            extra_works_zp___overallVisibility: true,
+            extra_works_zp___overallVisibility: false,
           },
 
           general_works: {

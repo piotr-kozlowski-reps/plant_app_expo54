@@ -16,6 +16,7 @@ import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCh
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
+import { getIsPossibleToProcess_After13_guard } from "@/features/shared/utils/guards/cannotOrderAfter13_guard";
 
 export const useScanValuesForOrderExportToCustomer = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -148,8 +149,43 @@ export const useScanValuesForOrderExportToCustomer = (
     }
   };
   const changeInHowManyDaysHandler = (inHowManyDaysInput: number) => {
+    /** guard: cannot order to todays and tomorrows date when is after 13:00 - for field crops*/
+    if (submoduleType === "greenhouse_crops_works_order_export_to_customer") {
+      const isPossibleToProcess_Before13 =
+        getIsPossibleToProcess_After13_guard();
+      if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
+        toast.warning(
+          ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW
+        );
+        return;
+      }
+    }
+
     setInHowManyDays(inHowManyDaysInput);
   };
+
+  // const changeInHowManyDaysHandler = (inHowManyDaysInput: number) => {
+  //   /** guard: cannot order to  tomorrow and day after tomorrow date when is after 13:00 - for greenhouse crops */
+  //   if (whatOrderType === "greenhouse_crops_works_order_to_spacing") {
+  //     const isPossibleToProcess_Before13 =
+  //       getIsPossibleToProcess_After13_guard();
+  //     if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
+  //       toast.warning(
+  //         ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW
+  //       );
+  //       return;
+  //     }
+  //   }
+
+  //   /** guard: cannot order to todays and tomorrows date when is after 13:00 - for field crops*/
+  //   const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
+  //   if (inHowManyDaysInput < 2 && !isPossibleToProcess_Before13) {
+  //     toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
+  //     return;
+  //   }
+
+  //   setInHowManyDays(inHowManyDaysInput);
+  // };
 
   const resetValues = () => {
     setScannedValue(null);

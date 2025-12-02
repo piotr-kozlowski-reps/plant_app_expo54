@@ -91,7 +91,8 @@ export type AllCropsOrdersSubmodules =
   | "field_crops_works_order_to_hardener"
   | "field_crops_works_internal_transport"
   | "field_crops_works_order_export_to_customer"
-  | "greenhouse_crops_works_order_to_spacing";
+  | "greenhouse_crops_works_order_to_spacing"
+  | "greenhouse_crops_works_order_export_to_customer";
 
 export type AllExportToCustomerSubmodules =
   | "field_crops_works_order_export_to_customer"

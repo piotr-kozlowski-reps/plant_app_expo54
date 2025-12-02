@@ -16,7 +16,10 @@ export const useGetOrderDetailsDependingOnType = (
       setSubmoduleName("Zlecenie transportu");
       return;
     }
-    if (whatOrderType === "field_crops_works_order_export_to_customer") {
+    if (
+      whatOrderType === "field_crops_works_order_export_to_customer" ||
+      whatOrderType === "greenhouse_crops_works_order_export_to_customer"
+    ) {
       setSubmoduleName("Zlecenie wywozu do klienta");
       return;
     }
@@ -58,7 +61,10 @@ export const useGetOrderDetailsDependingOnType = (
       whatOrderType === "greenhouse_crops_works_order_to_spacing"
     )
       return "Wybierz za ile dni";
-    if (whatOrderType === "field_crops_works_order_export_to_customer")
+    if (
+      whatOrderType === "field_crops_works_order_export_to_customer" ||
+      whatOrderType === "greenhouse_crops_works_order_export_to_customer"
+    )
       return "Wybierz datę wywozu";
 
     throw new Error("getInHowManyDaysText -> whatOrderType is not valid");
@@ -119,6 +125,31 @@ export const useGetOrderDetailsDependingOnType = (
     if (whatOrderType === "field_crops_works_order_export_to_customer") {
       return [
         { name: "+ 1 dzień", value: 1 },
+        { name: "+ 2 dni", value: 2 },
+        { name: "+ 3 dni", value: 3 },
+        { name: "+ 4 dni", value: 4 },
+        { name: "+ 5 dni", value: 5 },
+        { name: "+ 6 dni", value: 6 },
+        { name: "+ 7 dni", value: 7 },
+        { name: "+ 8 dni", value: 8 },
+        { name: "+ 9 dni", value: 9 },
+        { name: "+ 10 dni", value: 10 },
+        { name: "+ 11 dni", value: 11 },
+        { name: "+ 12 dni", value: 12 },
+        { name: "+ 13 dni", value: 13 },
+        { name: "+ 14 dni", value: 14 },
+        { name: "+ 15 dni", value: 15 },
+        { name: "+ 16 dni", value: 16 },
+        { name: "+ 17 dni", value: 17 },
+        { name: "+ 18 dni", value: 18 },
+        { name: "+ 19 dni", value: 19 },
+        { name: "+ 20 dni", value: 20 },
+        { name: "+ 21 dni", value: 21 },
+      ];
+    }
+
+    if (whatOrderType === "greenhouse_crops_works_order_export_to_customer") {
+      return [
         { name: "+ 2 dni", value: 2 },
         { name: "+ 3 dni", value: 3 },
         { name: "+ 4 dni", value: 4 },

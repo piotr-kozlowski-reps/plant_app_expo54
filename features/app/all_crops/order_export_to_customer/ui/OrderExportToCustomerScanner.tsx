@@ -48,8 +48,6 @@ const OrderExportToCustomerScanner = (props: Props) => {
   } = useDatesHelper();
   const cameraRef = useRef<CameraView | null>(null);
 
-  console.log({ submoduleType });
-
   //app path
   const { getAppPathForOrderExportToCustomer } =
     useGetAppPathForOrderExportToCustomer();
@@ -102,7 +100,9 @@ const OrderExportToCustomerScanner = (props: Props) => {
 
   /** */
   const valueDate = addDaysToDate(new Date(Date.now()), inHowManyDays);
-  const isDayAvailable = getIsDayAvailableToOrderExportToClient(valueDate);
+  const isDayAvailable = isFieldCrops
+    ? getIsDayAvailableToOrderExportToClient(valueDate)
+    : true;
 
   useHandleDayUnavailableWhenSuperDataIsOff(
     isDayAvailable,
@@ -458,9 +458,9 @@ const OrderExportToCustomerScanner = (props: Props) => {
         <HowManyDaysToMoveInOrdersAllModal
           closeFn={() => setIsShowModalWithInHowManyDays(false)}
           changeInHowManyDaysHandler={changeInHowManyDaysHandler}
-          whatOrderType={"field_crops_works_order_export_to_customer"}
+          whatOrderType={submoduleType}
           isSuperData={isSuperData}
-          isHandleUnavailableDays={true}
+          isHandleUnavailableDays={isFieldCrops ? true : false}
         />
       </ModalInternal>
     </View>
