@@ -330,9 +330,6 @@ export const useScanValuesForInternalTransport = (
       ZPLocalizationInfoPromise,
     ]);
 
-    // console.log({ ZPInfo });
-    // console.log({ ZPLocalizationInfo });
-
     if (!ZPInfo || !ZPLocalizationInfo) {
       return;
     }

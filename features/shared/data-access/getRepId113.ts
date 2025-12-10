@@ -25,8 +25,11 @@ export async function getRepId113<T>(
 ////utils
 function getRightQueryAddress(ordnmbOrStk_id: string): string {
   //zp
-  if (ordnmbOrStk_id.startsWith("ZP-"))
+  if (ordnmbOrStk_id.startsWith("ZP-") && ordnmbOrStk_id.endsWith("GRU"))
     return `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ZPDetailedInfo}&ordnmb=${ordnmbOrStk_id}&module=GRUNT`;
+
+  if (ordnmbOrStk_id.startsWith("ZP-") && ordnmbOrStk_id.endsWith("ROZ"))
+    return `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ZPDetailedInfo}&ordnmb=${ordnmbOrStk_id}&module=SZKLO`;
 
   //tray with SK
   if (ordnmbOrStk_id.startsWith("SK."))
