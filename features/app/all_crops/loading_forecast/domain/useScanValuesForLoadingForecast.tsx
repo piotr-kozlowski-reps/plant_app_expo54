@@ -49,6 +49,8 @@ export const useScanValuesForLoadingForecast = (
         ? ["zp_roz"]
         : ["tray", "zp_gru"];
 
+    const isRoz = submoduleType === "greenhouse_crops_works_loading_forecast";
+
     //check allowed scanned values
     const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
       scannedValue,
@@ -84,7 +86,9 @@ export const useScanValuesForLoadingForecast = (
         //there is already forecast set
         if (foundZP.outid_ && foundZP.outmvplan && foundZP.outcnt) {
           toast.warning(
-            `Wprowadzono już prognozę załadunku dla tego zlecenia (${foundZP.outcnt} tac).`
+            `Wprowadzono już prognozę załadunku dla tego zlecenia (${
+              foundZP.outcnt
+            } ${isRoz ? "kostek" : "tac"}).`
           );
           return;
         }
