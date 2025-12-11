@@ -51,6 +51,8 @@ export const usePrepareDataForFormikToLoadingForecast = (
         scanned_raw_value: rawValue,
       };
 
+      console.log({ dataToBeSent });
+
       await send_LoadingForecast_PatchMutation(dataToBeSent);
       toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
     } catch (error) {

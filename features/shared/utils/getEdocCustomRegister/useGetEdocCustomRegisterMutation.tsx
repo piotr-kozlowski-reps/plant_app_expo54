@@ -7,6 +7,7 @@ import { useBaseAPI_URL_Store } from "../../stores/useBaseAPI_URL_Store";
 import { query_postDataAsServerAction } from "../commonHelpers/queryPostOnServer";
 import { useChooseWhichErrorToHandle } from "../useChooseWhichErrorToHandle";
 import { query_deleteDataAsServerAction } from "../commonHelpers/queryDeleteOnServer";
+import { query_patchDataAsServerAction } from "../commonHelpers/queryPatchOnServer";
 
 type TEdocCustomRegisterData = {
   customRegister: EdocCustomRegister<any, any>;
@@ -89,7 +90,7 @@ export function useGetEdocCustomRegisterMutation(
     error: error_PATCHdata,
   } = useMutation<TResponseFromCustomRegister, Error, TPatch>({
     mutationFn: async (patchObjData) => {
-      const patchDataResponse = await query_postDataAsServerAction<
+      const patchDataResponse = await query_patchDataAsServerAction<
         TResponseFromCustomRegister,
         TPost
       >(baseURL, address, token, patchObjData);
