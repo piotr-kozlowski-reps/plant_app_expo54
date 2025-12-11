@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "TraceON",
     slug: "traceon",
-    version: "1.2.02",
+    version: "1.2.03",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "pl.korsol.traceon",
