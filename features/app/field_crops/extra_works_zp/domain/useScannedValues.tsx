@@ -53,15 +53,6 @@ export const useScannedValues = (
     player.seekTo(0);
     player.play();
 
-    // if (whatValueWasScanned === "unknown") {
-    //   toast.warning(`Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`);
-    //   return;
-    // }
-    // if (whatValueWasScanned === "tray") {
-    //   toast.warning(ERROR_MESSAGES.MODULE_DOESNT_HANDLE_WITH_TRAY_QR);
-    //   return;
-    // }
-
     //check allowed scanned values
     const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
       scannedValue,
@@ -78,7 +69,7 @@ export const useScannedValues = (
       setIsLoading(true);
 
       //allowed paths/conditions
-      if (isZP || isRoz) {
+      if (!isField && (isZP || isRoz)) {
         await scanZpOrTrayHandler(
           {
             scannedValue,
