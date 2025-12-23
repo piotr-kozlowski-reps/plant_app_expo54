@@ -1,5 +1,5 @@
 import { ZpScannedValue } from "@/features/shared/types/interfaces-extra_works";
-import Button from "@/features/shared/ui/button/Button";
+
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { TouchableOpacity, Text, View } from "react-native";
 
@@ -9,6 +9,7 @@ type Props = {
   isActive?: boolean;
   changeZpPercentageAction: () => void;
   canPercentageBeChanged?: boolean;
+  isRoz?: boolean;
 };
 
 const ZpItem = (props: Props) => {
@@ -19,6 +20,7 @@ const ZpItem = (props: Props) => {
     isActive,
     changeZpPercentageAction,
     canPercentageBeChanged = true,
+    isRoz,
   } = props;
 
   ////tsx
@@ -40,7 +42,7 @@ const ZpItem = (props: Props) => {
             </View>
           ) : null}
 
-          {zpValue.planam !== "BRAK" ? (
+          {zpValue.planam !== "BRAK" && !isRoz ? (
             <View className="flex-col items-start justify-start">
               <Text className="text-background-nuance font-default-semibold">
                 {zpValue.ordnmb}
@@ -53,6 +55,20 @@ const ZpItem = (props: Props) => {
                 z{" "}
                 <Text className="text-background-nuance font-default-semibold">
                   {zpValue.stkcnt_ordnmb}
+                </Text>
+              </Text>
+            </View>
+          ) : null}
+
+          {zpValue.planam !== "BRAK" && isRoz ? (
+            <View className="flex-col items-start justify-start">
+              <Text className="text-background-nuance font-default-semibold">
+                {zpValue.ordnmb}
+              </Text>
+              <Text className="text-background-nuance font-default-normal">
+                ilość:{" "}
+                <Text className="text-background-nuance font-default-semibold">
+                  {zpValue.stkcnt_loc}
                 </Text>
               </Text>
             </View>

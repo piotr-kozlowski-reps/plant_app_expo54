@@ -343,6 +343,7 @@ const BarcodeScanner = (props: TProps) => {
                           }}
                           canPercentageBeChanged={!isFieldScanned}
                           isActive={isZPScanned}
+                          isRoz={isRoz}
                         />
                       ))}
                     </View>
@@ -440,6 +441,7 @@ const BarcodeScanner = (props: TProps) => {
           closeFn={() => setIsShowDeleteModal(false)}
           zpItem={chosenZP}
           actionFn={deleteScannedValue}
+          isRoz={isRoz}
         />
       </ModalInternal>
 

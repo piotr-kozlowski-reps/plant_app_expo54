@@ -59,7 +59,7 @@ const ScanCameraModal = (props: TProps) => {
         refreshAllData={refreshAllData}
         zpListWithOrderedNitrogenIrrigation={[]}
         appPath={<AppPath paths={paths} />}
-        isRoz
+        isRoz={isRoz}
       />
     </PermissionsOrGoFurther>
   );

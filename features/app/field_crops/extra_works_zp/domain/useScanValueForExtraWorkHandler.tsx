@@ -378,18 +378,24 @@ export const useScanValueForExtraWorkHandler = () => {
     whatWasScanned: TypeOfScannedValue
   ): string {
     if (whatWasScanned === "zp_gru" || whatWasScanned === "zp_roz") {
+      const moduleKind = getModuleKind(whatWasScanned);
+
       return `${
         configPerBuild.apiAddress
       }/api.php/REST/custom/korsolgetreport?rep_id=${
         configPerBuild.edocReport_ZPForActivityId
-      }&ordnmb=${getPureZPValue(scannedValue)}&activityid=${activityId}`;
+      }&ordnmb=${getPureZPValue(
+        scannedValue
+      )}&activityid=${activityId}&module=${moduleKind}`;
     }
     if (whatWasScanned === "tray") {
       return `${
         configPerBuild.apiAddress
       }/api.php/REST/custom/korsolgetreport?rep_id=${
         configPerBuild.edocReport_ZPForActivityId
-      }&stk_id=${getPureTrayValue(scannedValue)}&activityid=${activityId}`;
+      }&stk_id=${getPureTrayValue(
+        scannedValue
+      )}&activityid=${activityId}&module=GRUNT`;
     }
 
     throw Error("getQueryDependingOnZpOrTray -> only zp and tray is handled");
@@ -404,3 +410,10 @@ export const useScanValueForExtraWorkHandler = () => {
     return foundZPField || null;
   }
 };
+
+function getModuleKind(whatWasScanned: TypeOfScannedValue) {
+  if (whatWasScanned === "zp_gru") return "GRUNT";
+  if (whatWasScanned === "zp_roz") return "SZKLO";
+
+  throw Error("getModuleKind -> only zp and tray is handled");
+}

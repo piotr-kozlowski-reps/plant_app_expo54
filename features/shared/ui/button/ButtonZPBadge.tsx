@@ -7,11 +7,18 @@ type TProps = {
   isActive?: boolean;
   isCentered?: boolean;
   zpItem: ZpScannedValue;
+  isRoz?: boolean;
 };
 
 const ButtonZPBadge = (props: TProps) => {
   ////vars
-  const { zpItem, actionFn, isActive = true, isCentered } = props;
+  const {
+    zpItem,
+    actionFn,
+    isActive = true,
+    isCentered,
+    isRoz = false,
+  } = props;
 
   ////tsx
   return (
@@ -33,7 +40,7 @@ const ButtonZPBadge = (props: TProps) => {
           </View>
         ) : null}
 
-        {zpItem.planam !== "BRAK" ? (
+        {zpItem.planam !== "BRAK" && !isRoz ? (
           <View className="flex-col items-start justify-start w-full ">
             <Text className="w-full text-center text-background-nuance font-default-semibold">
               {zpItem.ordnmb}
@@ -48,6 +55,20 @@ const ButtonZPBadge = (props: TProps) => {
                 {zpItem.stkcnt_ordnmb}
               </Text>{" "}
               ({Math.round((zpItem.stkcnt_loc / zpItem.stkcnt_ordnmb) * 100)} %)
+            </Text>
+          </View>
+        ) : null}
+
+        {zpItem.planam !== "BRAK" && isRoz ? (
+          <View className="flex-col items-start justify-start w-full ">
+            <Text className="w-full text-center text-background-nuance font-default-semibold">
+              {zpItem.ordnmb}
+            </Text>
+            <Text className="w-full text-center text-background-nuance font-default-normal">
+              ilość:{" "}
+              <Text className="text-background-nuance font-default-semibold">
+                {zpItem.stkcnt_loc}
+              </Text>
             </Text>
           </View>
         ) : null}

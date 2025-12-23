@@ -7,11 +7,12 @@ type Props = {
   closeFn: () => void;
   zpItem: ZpScannedValue | undefined;
   actionFn: (text: string) => void;
+  isRoz?: boolean;
 };
 
 const DeleteZpModal = (props: Props) => {
   ////vars
-  const { closeFn, zpItem, actionFn } = props;
+  const { closeFn, zpItem, actionFn, isRoz } = props;
 
   if (!zpItem) {
     throw new Error("DeleteZpModal - No ZP Item provided");
@@ -33,7 +34,12 @@ const DeleteZpModal = (props: Props) => {
             </Text>
           </View>
           <View className="flex items-center justify-center w-full mt-2">
-            <ButtonZPBadge zpItem={zpItem} actionFn={() => {}} isCentered />
+            <ButtonZPBadge
+              zpItem={zpItem}
+              actionFn={() => {}}
+              isCentered
+              isRoz={isRoz}
+            />
           </View>
 
           <View className="flex-col justify-center w-full gap-4 px-6 mt-8 items-between">
