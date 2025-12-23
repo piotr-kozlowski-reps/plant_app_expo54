@@ -19,9 +19,8 @@ import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndT
 import Label from "@/features/shared/ui/label/Label";
 
 import { router, Stack } from "expo-router";
-import { Check, ChevronLeft, ChevronRight, X } from "lucide-react-native";
-import { useState } from "react";
-import { View, Text } from "react-native";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Calendar, DateData, LocaleConfig } from "react-native-calendars";
 

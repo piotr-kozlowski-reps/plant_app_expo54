@@ -8,7 +8,6 @@ import { Combobox } from "../../types/interfaces-general";
 import { useShowScrollViewFlash } from "../../utils/useShowScrollViewFlash";
 import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
 import ButtonBack from "../button/ButtonBack";
-import { FullWindowOverlay } from "react-native-screens";
 
 type Props<T> = {
   closeFn: () => void;
