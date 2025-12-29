@@ -140,8 +140,6 @@ export const useGetEdocReports = (edocReportsData: TEdocReportsData) => {
       return data.data.resultMainQuery as DTOType[];
     }, [data]);
 
-    // console.log({ queriedData });
-
     const sortedData: DTOType[] = report.sort(queriedData);
     const mappedData: TMappedObjectType = report.map(sortedData);
     reportsData[report.dataName()] = mappedData as TMappedObjectType;

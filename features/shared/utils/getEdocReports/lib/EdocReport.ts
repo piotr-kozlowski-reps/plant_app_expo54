@@ -6,25 +6,25 @@ type RequiredField<T, Field extends keyof T> = Omit<T, Field> &
   Required<Pick<T, Field>>;
 
 export type TEdocReportData<
-  TtypeDTO extends Object,
-  TTypeFinalObject extends Object
+  TtypeDTO extends object,
+  TTypeFinalObject extends object
 > = {
   dataName: string;
   address: string;
   queryKey: QueryKey;
-  requiredPropertiesInResultObject: Array<keyof TTypeFinalObject>;
+  requiredPropertiesInResultObject: (keyof TTypeFinalObject)[];
   sort: Sort<TtypeDTO>;
   mappers: MapProperty<TtypeDTO, any, any>[];
 };
 
 export class EdocReport<
-  TtypeDTO extends Object,
-  TTypeFinalObject extends Object
+  TtypeDTO extends object,
+  TTypeFinalObject extends object
 > {
   #dataName: string;
   #address: string;
   #queryKey: QueryKey;
-  #requiredPropertiesInResultObject: Array<keyof TTypeFinalObject>;
+  #requiredPropertiesInResultObject: (keyof TTypeFinalObject)[];
   #sort: Sort<TtypeDTO>;
   #mappers: MapProperty<TtypeDTO, any, any>[];
 
@@ -48,7 +48,7 @@ export class EdocReport<
   queryKey(): QueryKey {
     return this.#queryKey;
   }
-  requiredPropertiesInResultObject(): Array<keyof TTypeFinalObject> {
+  requiredPropertiesInResultObject(): (keyof TTypeFinalObject)[] {
     return this.#requiredPropertiesInResultObject;
   }
   sort(data: TtypeDTO[]): TtypeDTO[] {
@@ -88,7 +88,7 @@ export class EdocReport<
 
   private checkAreFieldsDefinedAndIfNotThrowErrorWithNonexistingFieldName<
     T extends {},
-    U extends Array<keyof T>
+    U extends (keyof T)[]
   >(obj: T, fields: U, dateName: string): obj is RequiredField<T, U[number]> {
     for (let field of fields) {
       if (obj[field] === undefined)
