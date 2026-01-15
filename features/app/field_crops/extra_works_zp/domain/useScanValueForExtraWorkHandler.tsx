@@ -73,8 +73,6 @@ export const useScanValueForExtraWorkHandler = () => {
       whatWasScanned !== "zp_gru" &&
       whatWasScanned !== "zp_roz"
     ) {
-      // whatWasScanned !== "tray" && (whatWasScanned !== "zp_gru" ||
-      // whatWasScanned !== "zp_roz")
       toast.warning(
         ERROR_MESSAGES.WRONG_PARAMETER +
           "-> " +
@@ -337,6 +335,7 @@ export const useScanValueForExtraWorkHandler = () => {
       whatWasScanned
     );
 
+    console.log({ queryDependingOnZpOrTray });
     //fetch data
     let response: ZPItemResponse;
     const res = await fetch(queryDependingOnZpOrTray, {
