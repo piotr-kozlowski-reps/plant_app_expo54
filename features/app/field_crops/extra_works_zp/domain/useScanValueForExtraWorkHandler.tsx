@@ -335,7 +335,6 @@ export const useScanValueForExtraWorkHandler = () => {
       whatWasScanned
     );
 
-    console.log({ queryDependingOnZpOrTray });
     //fetch data
     let response: ZPItemResponse;
     const res = await fetch(queryDependingOnZpOrTray, {

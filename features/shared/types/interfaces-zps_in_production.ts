@@ -1,10 +1,14 @@
 export type ZpInProductionDTO = {
   ordnmb: string;
   sordid: string;
+  knt_akronim: string;
+  glowny: string;
 };
 export type ZpInProduction = {
   sordid: number;
   ordnmb: string;
+  knt_akronim: string;
+  glowny: string;
 };
 
 // export type CutInput = {

@@ -11,6 +11,8 @@ import { MapStringIntoInteger } from "../utils/getEdocReports/lib/mapping/implem
 const zpsInProductionObjectExample: ZpInProduction = {
   ordnmb: "sdfvgdsf",
   sordid: 0,
+  knt_akronim: "sdfg",
+  glowny: "sdfg",
 };
 
 const edocReport_ZPsInProduction = new EdocReport<
@@ -27,6 +29,8 @@ const edocReport_ZPsInProduction = new EdocReport<
   mappers: [
     new MapDoNotMap<ZpInProduction, string>("ordnmb"),
     new MapStringIntoInteger<ZpInProduction>("sordid"),
+    new MapDoNotMap<ZpInProduction, string>("knt_akronim"),
+    new MapDoNotMap<ZpInProduction, string>("glowny"),
   ],
 });
 

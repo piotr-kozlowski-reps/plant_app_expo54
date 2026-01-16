@@ -21,6 +21,7 @@ import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import SearchZpByNameModal from "./SearchZpByNameModal";
+import SearchZpByClientModal from "./SearchZpByClientModal";
 
 type Props = {
   information_type: "scan_zp" | "search_by_client" | "search_zp";
@@ -37,6 +38,9 @@ const InformationScanner = (props: Props) => {
   //modals
   const [isShowSearchZp, setIsShowSearchZp] = useShowModal(
     isSearchZp ? true : false
+  );
+  const [isShowSearchByClient, setIsShowSearchByClient] = useShowModal(
+    isSearchByClient ? true : false
   );
 
   //app path name
@@ -146,7 +150,7 @@ const InformationScanner = (props: Props) => {
             </View>
           ) : null}
 
-          {isSearchZp ? (
+          {isSearchZp || isSearchByClient ? (
             <View className="mt-16">
               <Text className="text-center font-nav text-destructive">
                 processing...
@@ -177,13 +181,27 @@ const InformationScanner = (props: Props) => {
           />
         </ModalInternal>
 
-        {/* details -  modal */}
+        {/* search by zp - modal */}
         <ModalInternal
           isOpen={isShowSearchZp}
           isTransparent={false}
           backgroundColor={yellowColor}
         >
           <SearchZpByNameModal
+            closeFn={() => setIsShowSearchZp(false)}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            findInfoAboutSearchedZp={findInfoAboutSearchedZp}
+          />
+        </ModalInternal>
+
+        {/* search by client - modal */}
+        <ModalInternal
+          isOpen={isShowSearchByClient}
+          isTransparent={false}
+          backgroundColor={yellowColor}
+        >
+          <SearchZpByClientModal
             closeFn={() => setIsShowSearchZp(false)}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
