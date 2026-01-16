@@ -1,12 +1,6 @@
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import AppPath from "@/features/shared/ui/app-path/AppPath";
-import {
-  FIELD_CROPS,
-  FIELD_CROPS_WORKS,
-  INDEX,
-} from "@/features/shared/types/interfaces-navigation";
 import { Localization } from "@/features/shared/types/interfaces-localization";
 import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
 import { toast } from "sonner-native";

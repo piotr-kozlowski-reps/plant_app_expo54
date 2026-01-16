@@ -45,11 +45,6 @@ const DetailedInfoModal = (props: Props) => {
           <View className="flex-1">
             <View className="mb-6">
               <View className="flex-row items-center justify-center">
-                {/* <View>
-                  <Text className="text-center text-foreground font-nav">
-                    {`${getProperLabel()} `}
-                  </Text>
-                </View> */}
                 <View className="">
                   <BadgeValueHighlighted
                     value={`${getProperLabel()} ${scannedPureValue}`}

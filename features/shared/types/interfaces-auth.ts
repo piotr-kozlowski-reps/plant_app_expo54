@@ -15,7 +15,7 @@ export const UserRole = {
 export type UserRole = keyof typeof UserRole;
 
 export type ModulesPermissions = {
-  information: ModuleOverallPermission;
+  information: InformationSubmodules;
   field_crops: FieldCropsSubmodules;
   greenhouse_crops: GreenhouseCropsSubmodule;
   // concierge: ModuleOverallPermission;
@@ -24,6 +24,12 @@ export type ModulesPermissions = {
   // extra_works_hobby: ModuleOverallPermission;
   general_works: GeneralWorksSubmodules;
   // tray_operations: TrayOperationsSubModules;
+};
+
+export type InformationSubmodules = ModuleOverallPermission & {
+  information_scan_zp: boolean;
+  information_search_zp: boolean;
+  information_search_by_client: boolean;
 };
 
 export type TrayOperationsSubModules = ModuleOverallPermission & {

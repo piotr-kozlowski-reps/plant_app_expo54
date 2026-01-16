@@ -1,4 +1,7 @@
-import { INDEX } from "@/features/shared/types/interfaces-navigation";
+import {
+  INDEX,
+  INFORMATION,
+} from "@/features/shared/types/interfaces-navigation";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import { useState } from "react";
@@ -16,10 +19,39 @@ import DetailedInfoModal from "./DetailedInfoModal";
 import { Overlay } from "@/features/shared/ui/overlay/Overlay";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
+import { useShowModal } from "@/features/shared/utils/useShowModal";
+import SearchZpByNameModal from "./SearchZpByNameModal";
 
-const InformationScanner = () => {
+type Props = {
+  information_type: "scan_zp" | "search_by_client" | "search_zp";
+};
+
+const InformationScanner = (props: Props) => {
   ////vars
+  const { information_type } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const isScanZP = information_type === "scan_zp";
+  const isSearchByClient = information_type === "search_by_client";
+  const isSearchZp = information_type === "search_zp";
+
+  //modals
+  const [isShowSearchZp, setIsShowSearchZp] = useShowModal(
+    isSearchZp ? true : false
+  );
+
+  //app path name
+  let appPathName = "";
+  if (isScanZP) appPathName = "Skanuj ZP";
+  if (isSearchByClient) appPathName = "Wyszukaj po kliencie";
+  if (isSearchZp) appPathName = "Wyszukaj ZP";
+
+  const detailedInfoModalClose = () => {
+    if (isScanZP) resetValuesToScanNextItem();
+    if (isSearchZp) {
+      resetValuesToScanNextItem();
+      setIsShowSearchZp(true);
+    }
+  };
 
   //scan values
   const {
@@ -33,6 +65,7 @@ const InformationScanner = () => {
     setQrLock,
     scanValueHandler,
     resetValuesToScanNextItem,
+    findInfoAboutSearchedZp,
   } = useScanValuesForInformation(setIsLoading);
 
   ////tsx
@@ -43,61 +76,83 @@ const InformationScanner = () => {
         <SafeAreaView className="flex-1 w-full">
           <View className="w-full px-6 mt-8">
             <AppPath
-              paths={[INDEX, { actionFn: () => {}, name: "Informacja" }]}
+              paths={[
+                INDEX,
+                INFORMATION,
+                { actionFn: () => {}, name: appPathName },
+              ]}
             />
           </View>
 
-          <View className="flex-col items-center justify-between w-[94vw] pl-6 mt-6 ">
-            <View className="h-[50vh] w-full relative">
-              {Platform.OS === "android" ? <StatusBar hidden /> : null}
-              <CameraView
-                facing="back"
-                style={StyleSheet.absoluteFillObject}
-                onBarcodeScanned={({ data }) => {
-                  if (data && !qrLock) {
-                    scanValueHandler(data);
-                    setQrLock(true);
-                  }
-                }}
-              />
+          {isScanZP ? (
+            <View className="flex-col items-center justify-between w-[94vw] pl-6 mt-6 ">
+              <View className="h-[50vh] w-full relative">
+                {Platform.OS === "android" ? <StatusBar hidden /> : null}
+                <CameraView
+                  facing="back"
+                  style={StyleSheet.absoluteFillObject}
+                  onBarcodeScanned={({ data }) => {
+                    if (data && !qrLock) {
+                      scanValueHandler(data);
+                      setQrLock(true);
+                    }
+                  }}
+                />
 
-              <Overlay />
+                <Overlay />
 
-              <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
-                {qrLock ? (
-                  <View className="flex-col items-center justify-center w-full h-full">
-                    <View className="w-full px-16">
-                      <View className="opacity-70">
-                        <Button
-                          title="skanuj lokalizację, ZP lub tacę"
-                          handlePress={() => {
-                            setQrLock(false);
-                          }}
-                          containerStyles={`h-32`}
-                          isGrayed={!qrLock}
-                          height={128}
-                        />
+                <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
+                  {qrLock ? (
+                    <View className="flex-col items-center justify-center w-full h-full">
+                      <View className="w-full px-16">
+                        <View className="opacity-70">
+                          <Button
+                            title="skanuj lokalizację, ZP lub tacę"
+                            handlePress={() => {
+                              setQrLock(false);
+                            }}
+                            containerStyles={`h-32`}
+                            isGrayed={!qrLock}
+                            height={128}
+                          />
+                        </View>
                       </View>
                     </View>
-                  </View>
-                ) : null}
-                {!qrLock ? (
-                  <View className="flex-col items-center justify-end w-full h-full pb-6">
-                    <Scanning />
-                  </View>
-                ) : null}
+                  ) : null}
+                  {!qrLock ? (
+                    <View className="flex-col items-center justify-end w-full h-full pb-6">
+                      <Scanning />
+                    </View>
+                  ) : null}
+                </View>
               </View>
-            </View>
+              <View className="mt-4">
+                <Text className="text-center font-nav text-destructive">
+                  zeskanuj kod lokalizacji,
+                </Text>
+                <Text className="text-center font-nav text-destructive">
+                  ZPka lub tacy
+                </Text>
+              </View>
+              {/* <View className="h-[1px] w-16 bg-foreground mt-4"></View>
 
-            <View className="mt-8 ">
+            <View className="w-full mt-8">
+              <Button
+                title="poszukaj ZP po nazwie"
+                handlePress={() => setIsShowSearchZp(true)}
+                isOutline
+              />
+            </View> */}
+            </View>
+          ) : null}
+
+          {isSearchZp ? (
+            <View className="mt-16">
               <Text className="text-center font-nav text-destructive">
-                zeskanuj kod lokalizacji,
-              </Text>
-              <Text className="text-center font-nav text-destructive">
-                ZPka lub tacy
+                processing...
               </Text>
             </View>
-          </View>
+          ) : null}
 
           <View className="flex-1"></View>
 
@@ -106,19 +161,33 @@ const InformationScanner = () => {
           </View>
         </SafeAreaView>
 
-        {/* choose quantities -  modal */}
+        {/* details -  modal */}
         <ModalInternal
           isOpen={isAnyValueScanned}
           isTransparent={false}
           backgroundColor={yellowColor}
         >
           <DetailedInfoModal
-            closeFn={resetValuesToScanNextItem}
+            closeFn={detailedInfoModalClose}
             informationData={informationData}
             isLocalization={isLocalization}
             scannedPureValue={scannedPureValue}
             isZP={isZP}
             isTray={isTray}
+          />
+        </ModalInternal>
+
+        {/* details -  modal */}
+        <ModalInternal
+          isOpen={isShowSearchZp}
+          isTransparent={false}
+          backgroundColor={yellowColor}
+        >
+          <SearchZpByNameModal
+            closeFn={() => setIsShowSearchZp(false)}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            findInfoAboutSearchedZp={findInfoAboutSearchedZp}
           />
         </ModalInternal>
       </View>

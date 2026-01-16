@@ -1,4 +1,3 @@
-import FieldCropsEntryPage from "@/features/app/field_crops/ui/FieldCropsEntryPage";
 import GreenhouseCropsEntryPage from "@/features/app/greenhouse_crops/ui/GreenhouseCropsEntryPage";
 import { router, type ErrorBoundaryProps } from "expo-router";
 

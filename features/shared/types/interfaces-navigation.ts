@@ -56,6 +56,10 @@ export const NITROGEN_IRRIGATION: NavElement = {
     router.push("/app/field_crops/field_crops_works/nitrogen_irrigation"),
   name: "Podlewanie azotem",
 };
+export const INFORMATION: NavElement = {
+  actionFn: () => router.push("/app/information"),
+  name: "Informacja",
+} as const;
 
 export const SCANNER: NavElement = {
   actionFn: () => {},

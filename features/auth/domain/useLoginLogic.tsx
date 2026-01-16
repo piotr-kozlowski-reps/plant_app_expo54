@@ -172,6 +172,9 @@ export const useLoginLogic = () => {
         modulesVisibility: {
           information: {
             is_whole_module_available: true,
+            information_scan_zp: true,
+            information_search_zp: true,
+            information_search_by_client: true,
           },
           field_crops: {
             //field_crops_works

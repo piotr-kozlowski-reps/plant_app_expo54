@@ -62,9 +62,11 @@ export const useScanValuesForInformation = (
     }
   };
 
+  const findInfoAboutSearchedZp = (ordnmb: string) => {
+    scanValueHandler(`ZLEC_${ordnmb}`);
+  };
+
   const resetValuesToScanNextItem = () => {
-    // setScannedPureValue("");
-    // setInformationData([]);
     setIsLocalization(false);
     setIsZP(false);
     setIsTray(false);
@@ -88,6 +90,7 @@ export const useScanValuesForInformation = (
     setQrLock,
     scanValueHandler,
     resetValuesToScanNextItem,
+    findInfoAboutSearchedZp,
   };
 
   //helpers
