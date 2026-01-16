@@ -116,7 +116,7 @@ const SearchZpByNameModal = (props: Props) => {
                 renderItem={({ item }: { item: ZpInProduction }) => (
                   <ListItemName
                     title={item.ordnmb}
-                    id={0}
+                    id={item.sordid}
                     actionFn={() => {
                       findInfoAboutSearchedZp(item.ordnmb);
                       closeFn();

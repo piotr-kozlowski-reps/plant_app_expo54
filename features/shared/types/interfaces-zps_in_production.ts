@@ -11,6 +11,11 @@ export type ZpInProduction = {
   glowny: string;
 };
 
+export type ClientsOfZPsInProduction = Pick<
+  ZpInProduction,
+  "glowny" | "knt_akronim" | "sordid"
+>;
+
 // export type CutInput = {
 //   height: number;
 //   plannedDate: Date;

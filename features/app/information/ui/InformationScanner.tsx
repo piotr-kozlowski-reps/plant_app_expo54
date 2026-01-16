@@ -55,6 +55,10 @@ const InformationScanner = (props: Props) => {
       resetValuesToScanNextItem();
       setIsShowSearchZp(true);
     }
+    if (isSearchByClient) {
+      resetValuesToScanNextItem();
+      setIsShowSearchByClient(true);
+    }
   };
 
   //scan values
@@ -138,15 +142,6 @@ const InformationScanner = (props: Props) => {
                   ZPka lub tacy
                 </Text>
               </View>
-              {/* <View className="h-[1px] w-16 bg-foreground mt-4"></View>
-
-            <View className="w-full mt-8">
-              <Button
-                title="poszukaj ZP po nazwie"
-                handlePress={() => setIsShowSearchZp(true)}
-                isOutline
-              />
-            </View> */}
             </View>
           ) : null}
 
@@ -202,7 +197,7 @@ const InformationScanner = (props: Props) => {
           backgroundColor={yellowColor}
         >
           <SearchZpByClientModal
-            closeFn={() => setIsShowSearchZp(false)}
+            closeFn={() => setIsShowSearchByClient(false)}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
             findInfoAboutSearchedZp={findInfoAboutSearchedZp}

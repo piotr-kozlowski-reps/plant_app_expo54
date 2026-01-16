@@ -8,6 +8,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 
 type Props = {
   title: string;
+  subTitle?: string;
+  subTitleName?: string;
   id: number;
   actionFn: (id: number) => void;
   isActive?: boolean;
@@ -15,7 +17,14 @@ type Props = {
 
 const ListItemName = (props: Props) => {
   ////vars
-  const { title, id, actionFn, isActive = true } = props;
+  const {
+    title,
+    subTitle,
+    subTitleName,
+    id,
+    actionFn,
+    isActive = true,
+  } = props;
 
   ////tsx
   return (
@@ -26,15 +35,28 @@ const ListItemName = (props: Props) => {
       )}
       onPress={isActive ? () => actionFn(id) : undefined}
     >
-      <View>
-        <Text
-          className={clsx(
-            "font-default-bold text-foreground",
-            isActive ? "opacity-100" : "opacity-70"
-          )}
-        >
-          {title}
-        </Text>
+      <View className="flex items-start justify-start">
+        <View>
+          <Text
+            className={clsx(
+              "font-default-bold text-foreground",
+              isActive ? "opacity-100" : "opacity-70"
+            )}
+          >
+            {title}
+          </Text>
+        </View>
+        {subTitle ? (
+          <Text
+            className={clsx(
+              "font-default-normal text-foreground",
+              isActive ? "opacity-100" : "opacity-70"
+            )}
+          >
+            {subTitleName ? `${subTitleName}: ` : ""}
+            {subTitle}
+          </Text>
+        ) : null}
       </View>
       <View>
         <ThreeChevrons color={darkColor} />
