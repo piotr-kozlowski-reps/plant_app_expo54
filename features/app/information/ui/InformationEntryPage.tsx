@@ -132,12 +132,11 @@ const InformationEntryPage = () => {
                     />
                   }
                   name={`Wyszukaj${"\n"}po kliencie`}
-                  // disabled={
-                  //   !getModuleVisibilitiesObject<InformationSubmodules>(
-                  //     "information"
-                  //   ).information_search_by_client
-                  // }
-                  disabled={true}
+                  disabled={
+                    !getModuleVisibilitiesObject<InformationSubmodules>(
+                      "information",
+                    ).information_search_by_client
+                  }
                 />
               </View>
               {/* <View className="flex-row items-center justify-center w-full gap-2">

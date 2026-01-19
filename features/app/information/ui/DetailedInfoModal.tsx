@@ -5,6 +5,7 @@ import Button from "@/features/shared/ui/button/Button";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
 import { View, ScrollView } from "react-native";
 import DetailedInfoItem from "./DetailedInfoItem";
+import { useGetDetailedInfoHelpers } from "../domain/useGetDetailedInfoHelpers";
 
 type Props = {
   closeFn: () => void;
@@ -25,6 +26,21 @@ const DetailedInfoModal = (props: Props) => {
     isZP,
     isTray,
   } = props;
+
+  // const { getCorrectedRealizationSowingRootstockPOM } =
+  //   useGetDetailedInfoHelpers();
+
+  // //zp - realizacja wysiew podkladki pom
+  // const realizationSowingRootstockPOM_JSXValue =
+  //   getCorrectedRealizationSowingRootstockPOM(informationData);
+
+  // if (realizationSowingRootstockPOM_JSXValue) {
+  //   const foundRealizationSowingRootstockPOM = informationData.find(
+  //     (item) => item.label === "REALIZACJA WYSIEW PODKŁADKI POM",
+  //   );
+  //   foundRealizationSowingRootstockPOM!.value =
+  //     realizationSowingRootstockPOM_JSXValue;
+  // }
 
   //fn
   const getProperLabel = (): string => {

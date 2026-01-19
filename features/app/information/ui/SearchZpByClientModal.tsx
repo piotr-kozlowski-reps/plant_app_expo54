@@ -1,5 +1,5 @@
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import { View, Text } from "react-native";
+import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
@@ -36,15 +36,17 @@ const SearchZpByClientModal = (props: Props) => {
   const getZPsInProduction = useGetZPsInProduction();
 
   // fetch data
-  const { data: ZPsInProductionBaseArray } = useQuery<ZpInProduction[]>({
+  const { data: ZPsInProductionBaseArray, refetch: refreshAllData } = useQuery<
+    ZpInProduction[]
+  >({
     queryKey: ["ZPsInProduction"],
     queryFn: () => getZPsInProduction(),
   });
   const ZPsInProductionArray = useMemo(
     () => (ZPsInProductionBaseArray ? ZPsInProductionBaseArray : []),
-    [ZPsInProductionBaseArray]
+    [ZPsInProductionBaseArray],
   );
-  const refreshAllData = () => {};
+
   // const { ZPsInProduction, refreshAllData } = useGetEdocReports({
   //   setIsLoading: setIsLoading,
   //   reports: [edocReport_ZPsInProduction],
@@ -55,13 +57,12 @@ const SearchZpByClientModal = (props: Props) => {
   // }, [ZPsInProduction]);
 
   ////
-  ////
   //clients
   const [chosenClient, setChosenClient] = useState<ZpInProduction | null>(null);
   const [zpsWithUniqueClients, setZpsWithUniqueClients] = useState<
     ZpInProduction[]
   >([]);
-  // const isClientsCreated = useRef(false);
+
   useEffect(() => {
     const zpUniqueDueToClients = new Set<string>();
     ZPsInProductionArray.forEach((zp) => {
@@ -79,8 +80,10 @@ const SearchZpByClientModal = (props: Props) => {
     });
 
     setZpsWithUniqueClients(zpsList);
-    // isClientsCreated.current = true;
   }, [ZPsInProductionArray]);
+
+  ////
+  ////search client
   const [searchTextClient, setSearchTextClient] = useState("");
   const updateSearchTextClient = (text: string) => {
     setSearchTextClient(text);
@@ -88,6 +91,7 @@ const SearchZpByClientModal = (props: Props) => {
 
   const debouncedSearchTextClients = useDebounce(searchTextClient, 500);
   const [filteredClients, setFilteredClients] = useState<ZpInProduction[]>([]);
+
   useEffect(() => {
     if (!debouncedSearchTextClients) {
       setFilteredClients([...zpsWithUniqueClients]);
@@ -108,7 +112,6 @@ const SearchZpByClientModal = (props: Props) => {
     }
   }, [debouncedSearchTextClients, zpsWithUniqueClients]);
 
-  ////
   ////
   ////search zp
   const [searchText, setSearchText] = useState("");
@@ -135,20 +138,23 @@ const SearchZpByClientModal = (props: Props) => {
   }, [chosenClient]);
 
   useEffect(() => {
+    if (!chosenClient) {
+      setFilteredZPsInProductionByClient(ZPsInProductionArray);
+      return;
+    }
     const filteredZpByChosenClient = ZPsInProductionArray.filter((zp) => {
       return (
         zp.glowny
           .toLocaleLowerCase()
-          .includes(debouncedSearchText.toLocaleLowerCase()) ||
+          .includes(chosenClient.glowny.toLocaleLowerCase()) ||
         zp.knt_akronim
           .toLocaleLowerCase()
-          .includes(debouncedSearchText.toLocaleLowerCase())
+          .includes(chosenClient.knt_akronim.toLocaleLowerCase())
       );
     });
     if (!debouncedSearchText) {
       setFilteredZPsInProductionByClient(filteredZpByChosenClient);
     }
-
     if (debouncedSearchText) {
       const filteredData = filteredZpByChosenClient.filter((zp) => {
         return zp.ordnmb
@@ -157,7 +163,7 @@ const SearchZpByClientModal = (props: Props) => {
       });
       setFilteredZPsInProductionByClient(filteredData);
     }
-  }, [debouncedSearchText]);
+  }, [debouncedSearchText, chosenClient]);
 
   ////tsx
   return (
@@ -165,10 +171,10 @@ const SearchZpByClientModal = (props: Props) => {
       {isLoading ? <LoaderWholeScreen /> : null}
 
       <View className="absolute bottom-0 left-0 right-0 w-full top-8">
-        <KeyboardAwareScrollView
-          bottomOffset={61}
-          className="flex-1"
-          contentContainerStyle={{ flex: 1 }}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          className="absolute bottom-0 left-0 right-0 w-full top-2"
+          style={{ flex: 1 }}
         >
           <View className="flex-1 w-full bg-yellow">
             <View className="w-full px-6 mt-4">
@@ -287,8 +293,8 @@ const SearchZpByClientModal = (props: Props) => {
               </View>
             </View>
           </View>
-        </KeyboardAwareScrollView>
-        <KeyboardToolbar doneText={"gotowe"} />
+        </KeyboardAvoidingView>
+        {/* <KeyboardToolbar doneText={"gotowe"} /> */}
       </View>
     </>
   );

@@ -7,9 +7,11 @@ import AppPath from "@/features/shared/ui/app-path/AppPath";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import InputText from "@/features/shared/ui/input/InputText";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import {
-  KeyboardAwareScrollView,
+  //   KeyboardAwareScrollView,
+  KeyboardAvoidingView,
+  //   KeyboardToolbar,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
 import { FlatList } from "react-native-gesture-handler";
@@ -32,17 +34,12 @@ const SearchZpByNameModal = (props: Props) => {
   const { closeFn, isLoading, setIsLoading, findInfoAboutSearchedZp } = props;
   const getZPsInProduction = useGetZPsInProduction();
 
-  // //fetch data
-  // const { ZPsInProduction, refreshAllData } = useGetEdocReports({
-  //   setIsLoading: setIsLoading,
-  //   reports: [edocReport_ZPsInProduction],
-  // });
-  // const ZPsInProductionArray = useMemo(() => {
-  //   return ZPsInProduction as unknown as ZpInProduction[];
-  // }, [ZPsInProduction]);
-
   // fetch data
-  const { data: ZPsInProductionBaseArray } = useQuery<ZpInProduction[]>({
+  const {
+    data: ZPsInProductionBaseArray,
+    isLoading: isLoadingZPs,
+    refetch: refreshAllData,
+  } = useQuery<ZpInProduction[]>({
     queryKey: ["ZPsInProduction"],
     queryFn: () => getZPsInProduction(),
   });
@@ -50,48 +47,54 @@ const SearchZpByNameModal = (props: Props) => {
     () => (ZPsInProductionBaseArray ? ZPsInProductionBaseArray : []),
     [ZPsInProductionBaseArray],
   );
-  const refreshAllData = () => {};
 
-  console.log({ ZPsInProductionBaseArray });
-  console.log({ ZPsInProductionArray });
-
-  // //search
+  //search
   const [searchText, setSearchText] = useState("");
   const updateSearchText = (text: string) => {
     setSearchText(text);
   };
-  // const debouncedSearchText = useDebounce(searchText, 500);
+  const debouncedSearchText = useDebounce(searchText, 500);
 
-  // //filtered zps in production
-  // const [filteredZPsInProduction, setFilteredZPsInProduction] =
-  //   useState<ZpInProduction[]>(ZPsInProductionArray);
-  // useEffect(() => {
-  //   if (!debouncedSearchText) {
-  //     setFilteredZPsInProduction([...ZPsInProductionArray]);
-  //   }
+  //filtered zps in production
+  const [filteredZPsInProduction, setFilteredZPsInProduction] =
+    useState<ZpInProduction[]>(ZPsInProductionArray);
 
-  //   if (debouncedSearchText) {
-  //     const filteredData = ZPsInProductionArray.filter((zp) => {
-  //       return zp.ordnmb
-  //         .toLocaleLowerCase()
-  //         .includes(debouncedSearchText.toLocaleLowerCase());
-  //     });
-  //     setFilteredZPsInProduction(filteredData);
-  //   }
-  // }, [debouncedSearchText]);
+  useEffect(() => {
+    setFilteredZPsInProduction([...ZPsInProductionArray]);
+  }, [ZPsInProductionArray]);
+
+  useEffect(() => {
+    if (!debouncedSearchText) {
+      setFilteredZPsInProduction([...ZPsInProductionArray]);
+    }
+
+    if (debouncedSearchText) {
+      const filteredData = ZPsInProductionArray.filter((zp) => {
+        return zp.ordnmb
+          .toLocaleLowerCase()
+          .includes(debouncedSearchText.toLocaleLowerCase());
+      });
+      setFilteredZPsInProduction(filteredData);
+    }
+  }, [debouncedSearchText]);
 
   //
 
   ////tsx
   return (
     <>
-      {isLoading ? <LoaderWholeScreen /> : null}
+      {isLoading || isLoadingZPs ? <LoaderWholeScreen /> : null}
 
       <View className="absolute bottom-0 left-0 right-0 w-full top-8">
-        <KeyboardAwareScrollView
+        {/* <KeyboardAwareScrollView
           bottomOffset={61}
           className="flex-1"
           contentContainerStyle={{ flex: 1 }}
+        > */}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          className="absolute bottom-0 left-0 right-0 w-full top-8"
+          style={{ flex: 1 }}
         >
           <View className="flex-1 w-full bg-yellow">
             <View className="w-full px-6 mt-4">
@@ -119,17 +122,17 @@ const SearchZpByNameModal = (props: Props) => {
               <View className="h-[1px] w-16 bg-foreground mt-6"></View>
             </View>
 
-            {/* <View className="w-full pl-6 mt-4">
+            <View className="w-full pl-6 mt-4">
               <Text className="mb-2 font-default-semibold text-background-nuance">
                 Zlecenia produkcyjne - (ilość: {filteredZPsInProduction.length}
                 ):
               </Text>
-            </View> */}
+            </View>
 
             <View className="flex-1 w-full px-6">
               <FlatList<ZpInProduction>
-                // data={filteredZPsInProduction}
-                data={ZPsInProductionArray}
+                data={filteredZPsInProduction}
+                // data={ZPsInProductionArray}
                 renderItem={({ item }: { item: ZpInProduction }) => (
                   <ListItemName
                     title={item.ordnmb}
@@ -143,6 +146,7 @@ const SearchZpByNameModal = (props: Props) => {
                 refreshing={isLoading}
                 onRefresh={refreshAllData}
                 initialNumToRender={15}
+                keyboardShouldPersistTaps="handled"
               />
             </View>
 
@@ -153,8 +157,9 @@ const SearchZpByNameModal = (props: Props) => {
               </View>
             </View>
           </View>
-        </KeyboardAwareScrollView>
-        <KeyboardToolbar doneText={"gotowe"} />
+        </KeyboardAvoidingView>
+        {/* <KeyboardToolbar doneText={"gotowe"} /> */}
+        {/* </KeyboardAwareScrollView> */}
       </View>
     </>
   );

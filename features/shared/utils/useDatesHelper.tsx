@@ -22,13 +22,13 @@ export const useDatesHelper = () => {
     return isFridaySaturdayOrSunday ? false : true;
   };
 
-  const checkIsDate = (value: any) =>
-    value instanceof Date && !isNaN(value as any);
+  // const checkIsDate = (value: any) =>
+  //   value instanceof Date && !isNaN(value as any);
 
   const createYearMonthDayString = (date: Date): string => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
       2,
-      "0"
+      "0",
     )}-${String(date.getDate()).padStart(2, "0")}`;
   };
 
@@ -43,6 +43,22 @@ export const useDatesHelper = () => {
     return isValueToday || isValueTomorrow;
   };
 
+  const checkIsStringValidToCreateADateObject = (str: string): boolean => {
+    if (!str) return false;
+    const newDateFromString = new Date(str);
+    return checkIsDate(newDateFromString);
+  };
+
+  const checkIsDate = (el: any): boolean => {
+    if (!el) return false;
+    try {
+      const result = !isNaN((el as Date).getTime());
+      return result;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return {
     addDaysToDate,
     getDayNameInPolish,
@@ -51,5 +67,6 @@ export const useDatesHelper = () => {
     checkIsDate,
     createYearMonthDayString,
     getIfIsTodayOrTomorrow,
+    checkIsStringValidToCreateADateObject,
   };
 };

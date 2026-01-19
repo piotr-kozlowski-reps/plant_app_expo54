@@ -14,13 +14,9 @@ export const useGetZPsInProduction = () => {
   const token = user!.tokens.token;
 
   async function getZPsInProduction(): Promise<ZpInProduction[]> {
-    console.log("getZPsInProduction");
-    
     const data = await query_getDataAsServerAction<
       DTOReportReturnType<ZpInProductionDTO>
     >(baseURL, `/api.php/REST/custom/korsolgetreport?rep_id=1694`, token);
-
-    console.log({ data });
 
     if (data.data.resultMainQuery === -1) {
       return [];
@@ -34,8 +30,6 @@ export const useGetZPsInProduction = () => {
         glowny: el.glowny,
       }),
     );
-
-    console.log({ dataMapped });
 
     return dataMapped;
   }
