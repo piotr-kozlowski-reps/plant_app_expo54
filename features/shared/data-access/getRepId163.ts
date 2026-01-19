@@ -1,6 +1,5 @@
 import { configPerBuild } from "../env/env";
 import { InformationResponse } from "../types/interfaces-information";
-import { LocalizationResponse } from "../types/interfaces-localization";
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
 
 export async function getRepId163(

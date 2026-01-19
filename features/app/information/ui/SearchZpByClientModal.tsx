@@ -20,6 +20,8 @@ import { useDebounce } from "@/features/shared/data-access/useDebounce";
 import { FlatList } from "react-native-gesture-handler";
 import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
 import Button from "@/features/shared/ui/button/Button";
+import { useQuery } from "@tanstack/react-query";
+import { useGetZPsInProduction } from "@/features/shared/data-access/useGetZPsInProduction";
 
 type Props = {
   closeFn: () => void;
@@ -31,16 +33,26 @@ type Props = {
 const SearchZpByClientModal = (props: Props) => {
   ////vars
   const { closeFn, isLoading, setIsLoading, findInfoAboutSearchedZp } = props;
+  const getZPsInProduction = useGetZPsInProduction();
 
   // fetch data
-  const { ZPsInProduction, refreshAllData } = useGetEdocReports({
-    setIsLoading: setIsLoading,
-    reports: [edocReport_ZPsInProduction],
+  const { data: ZPsInProductionBaseArray } = useQuery<ZpInProduction[]>({
+    queryKey: ["ZPsInProduction"],
+    queryFn: () => getZPsInProduction(),
   });
+  const ZPsInProductionArray = useMemo(
+    () => (ZPsInProductionBaseArray ? ZPsInProductionBaseArray : []),
+    [ZPsInProductionBaseArray]
+  );
+  const refreshAllData = () => {};
+  // const { ZPsInProduction, refreshAllData } = useGetEdocReports({
+  //   setIsLoading: setIsLoading,
+  //   reports: [edocReport_ZPsInProduction],
+  // });
 
-  const ZPsInProductionArray = useMemo(() => {
-    return ZPsInProduction as unknown as ZpInProduction[];
-  }, [ZPsInProduction]);
+  // const ZPsInProductionArray = useMemo(() => {
+  //   return ZPsInProduction as unknown as ZpInProduction[];
+  // }, [ZPsInProduction]);
 
   ////
   ////
@@ -49,29 +61,25 @@ const SearchZpByClientModal = (props: Props) => {
   const [zpsWithUniqueClients, setZpsWithUniqueClients] = useState<
     ZpInProduction[]
   >([]);
-  const isClientsCreated = useRef(false);
+  // const isClientsCreated = useRef(false);
   useEffect(() => {
-    console.log("isClientsCreated.current: ", isClientsCreated.current);
+    const zpUniqueDueToClients = new Set<string>();
+    ZPsInProductionArray.forEach((zp) => {
+      zpUniqueDueToClients.add(zp.glowny);
+    });
 
-    if (!isClientsCreated.current && ZPsInProductionArray.length > 0) {
-      const zpUniqueDueToClients = new Set<string>();
-      ZPsInProductionArray.forEach((zp) => {
-        zpUniqueDueToClients.add(zp.glowny);
-      });
+    const clientsArray = Array.from(zpUniqueDueToClients);
 
-      const clientsArray = Array.from(zpUniqueDueToClients);
+    const zpsList: ZpInProduction[] = [];
+    clientsArray.forEach((client) => {
+      const foundZP = ZPsInProductionArray.find((zp) => zp.glowny === client);
+      if (foundZP) {
+        zpsList.push(foundZP);
+      }
+    });
 
-      const zpsList: ZpInProduction[] = [];
-      clientsArray.forEach((client) => {
-        const foundZP = ZPsInProductionArray.find((zp) => zp.glowny === client);
-        if (foundZP) {
-          zpsList.push(foundZP);
-        }
-      });
-
-      setZpsWithUniqueClients(zpsList);
-      isClientsCreated.current = true;
-    }
+    setZpsWithUniqueClients(zpsList);
+    // isClientsCreated.current = true;
   }, [ZPsInProductionArray]);
   const [searchTextClient, setSearchTextClient] = useState("");
   const updateSearchTextClient = (text: string) => {
@@ -98,7 +106,7 @@ const SearchZpByClientModal = (props: Props) => {
       });
       setFilteredClients(filteredData);
     }
-  }, [debouncedSearchTextClients]);
+  }, [debouncedSearchTextClients, zpsWithUniqueClients]);
 
   ////
   ////

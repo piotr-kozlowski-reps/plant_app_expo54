@@ -7,7 +7,6 @@ import AppPath from "@/features/shared/ui/app-path/AppPath";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import InputText from "@/features/shared/ui/input/InputText";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 import { View, Text } from "react-native";
 import {
   KeyboardAwareScrollView,
@@ -18,6 +17,8 @@ import { ZpInProduction } from "@/features/shared/types/interfaces-zps_in_produc
 import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "@/features/shared/data-access/useDebounce";
+import { useQuery } from "@tanstack/react-query";
+import { useGetZPsInProduction } from "@/features/shared/data-access/useGetZPsInProduction";
 
 type Props = {
   closeFn: () => void;
@@ -29,40 +30,55 @@ type Props = {
 const SearchZpByNameModal = (props: Props) => {
   ////vars
   const { closeFn, isLoading, setIsLoading, findInfoAboutSearchedZp } = props;
+  const getZPsInProduction = useGetZPsInProduction();
 
-  //fetch data
-  const { ZPsInProduction, refreshAllData } = useGetEdocReports({
-    setIsLoading: setIsLoading,
-    reports: [edocReport_ZPsInProduction],
+  // //fetch data
+  // const { ZPsInProduction, refreshAllData } = useGetEdocReports({
+  //   setIsLoading: setIsLoading,
+  //   reports: [edocReport_ZPsInProduction],
+  // });
+  // const ZPsInProductionArray = useMemo(() => {
+  //   return ZPsInProduction as unknown as ZpInProduction[];
+  // }, [ZPsInProduction]);
+
+  // fetch data
+  const { data: ZPsInProductionBaseArray } = useQuery<ZpInProduction[]>({
+    queryKey: ["ZPsInProduction"],
+    queryFn: () => getZPsInProduction(),
   });
-  const ZPsInProductionArray = useMemo(() => {
-    return ZPsInProduction as unknown as ZpInProduction[];
-  }, [ZPsInProduction]);
+  const ZPsInProductionArray = useMemo(
+    () => (ZPsInProductionBaseArray ? ZPsInProductionBaseArray : []),
+    [ZPsInProductionBaseArray],
+  );
+  const refreshAllData = () => {};
 
-  //search
+  console.log({ ZPsInProductionBaseArray });
+  console.log({ ZPsInProductionArray });
+
+  // //search
   const [searchText, setSearchText] = useState("");
   const updateSearchText = (text: string) => {
     setSearchText(text);
   };
-  const debouncedSearchText = useDebounce(searchText, 500);
+  // const debouncedSearchText = useDebounce(searchText, 500);
 
-  //filtered zps in production
-  const [filteredZPsInProduction, setFilteredZPsInProduction] =
-    useState<ZpInProduction[]>(ZPsInProductionArray);
-  useEffect(() => {
-    if (!debouncedSearchText) {
-      setFilteredZPsInProduction([...ZPsInProductionArray]);
-    }
+  // //filtered zps in production
+  // const [filteredZPsInProduction, setFilteredZPsInProduction] =
+  //   useState<ZpInProduction[]>(ZPsInProductionArray);
+  // useEffect(() => {
+  //   if (!debouncedSearchText) {
+  //     setFilteredZPsInProduction([...ZPsInProductionArray]);
+  //   }
 
-    if (debouncedSearchText) {
-      const filteredData = ZPsInProductionArray.filter((zp) => {
-        return zp.ordnmb
-          .toLocaleLowerCase()
-          .includes(debouncedSearchText.toLocaleLowerCase());
-      });
-      setFilteredZPsInProduction(filteredData);
-    }
-  }, [debouncedSearchText]);
+  //   if (debouncedSearchText) {
+  //     const filteredData = ZPsInProductionArray.filter((zp) => {
+  //       return zp.ordnmb
+  //         .toLocaleLowerCase()
+  //         .includes(debouncedSearchText.toLocaleLowerCase());
+  //     });
+  //     setFilteredZPsInProduction(filteredData);
+  //   }
+  // }, [debouncedSearchText]);
 
   //
 
@@ -103,16 +119,17 @@ const SearchZpByNameModal = (props: Props) => {
               <View className="h-[1px] w-16 bg-foreground mt-6"></View>
             </View>
 
-            <View className="w-full pl-6 mt-4">
+            {/* <View className="w-full pl-6 mt-4">
               <Text className="mb-2 font-default-semibold text-background-nuance">
                 Zlecenia produkcyjne - (ilość: {filteredZPsInProduction.length}
                 ):
               </Text>
-            </View>
+            </View> */}
 
             <View className="flex-1 w-full px-6">
               <FlatList<ZpInProduction>
-                data={filteredZPsInProduction}
+                // data={filteredZPsInProduction}
+                data={ZPsInProductionArray}
                 renderItem={({ item }: { item: ZpInProduction }) => (
                   <ListItemName
                     title={item.ordnmb}

@@ -19,7 +19,7 @@ import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCh
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 
 export const useScanValuesForInformation = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -47,12 +47,16 @@ export const useScanValuesForInformation = (
     player.seekTo(0);
     player.play();
 
+    // console.log({ scannedValue });
+
     try {
       setIsLoading(true);
       const whatHasBeenScanned = checkWhatValueWasScanned(scannedValue);
 
-      if (whatHasBeenScanned !== "unknown")
+      if (whatHasBeenScanned !== "unknown") {
+        // console.log("whatHasBeenScanned !== unknown");
         await fetchData(scannedValue, whatHasBeenScanned);
+      }
       if (whatHasBeenScanned === "unknown")
         scannedUnknownValueHandler(scannedValue);
     } catch (error) {
@@ -63,6 +67,7 @@ export const useScanValuesForInformation = (
   };
 
   const findInfoAboutSearchedZp = (ordnmb: string) => {
+    // console.log({ ordnmb });
     scanValueHandler(`ZLEC_${ordnmb}`);
   };
 
@@ -96,8 +101,12 @@ export const useScanValuesForInformation = (
   //helpers
   async function fetchData(
     scannedValue: string,
-    whatHasBeenScanned: TypeOfScannedValue
+    whatHasBeenScanned: TypeOfScannedValue,
   ) {
+    // console.log("fetchData");
+    // console.log({ scannedValue });
+    // console.log({ whatHasBeenScanned });
+
     if (whatHasBeenScanned === "unknown") {
       scannedUnknownValueHandler(scannedValue);
       return;
@@ -108,8 +117,10 @@ export const useScanValuesForInformation = (
     const response: InformationResponse = await getRepId163(
       configPerBuild.apiAddress,
       token!,
-      param
+      param,
     );
+
+    // console.log({ response });
 
     if (
       response.data.resultMainQuery === -1 ||
@@ -126,7 +137,7 @@ export const useScanValuesForInformation = (
 
   function setAppropriateDataHandler(
     whatHasBeenScanned: TypeOfScannedValue,
-    informationData: InformationDTO[]
+    informationData: InformationDTO[],
   ): void {
     // resetValuesToScanNextItem();
 
@@ -152,7 +163,7 @@ export const useScanValuesForInformation = (
     }
 
     throw new Error(
-      "setAppropriateDataHandler - whatHasBeenScanned not implemented."
+      "setAppropriateDataHandler - whatHasBeenScanned not implemented.",
     );
   }
 
@@ -162,7 +173,7 @@ export const useScanValuesForInformation = (
 
   function getDesiredParams(
     scannedValue: string,
-    whatHasBeenScanned: TypeOfScannedValue
+    whatHasBeenScanned: TypeOfScannedValue,
   ): Param {
     if (whatHasBeenScanned === "field") {
       return {
@@ -188,14 +199,14 @@ export const useScanValuesForInformation = (
 
   function getDesiredErrorMessage(
     whatHasBeenScanned: TypeOfScannedValue,
-    pureValue: string
+    pureValue: string,
   ) {
     if (whatHasBeenScanned === "field") {
       return `Lokalizacja (${pureValue}) nie została odnaleziona w systemie.`;
     }
 
     throw new Error(
-      "getDesiredErrorMessage - whatHasBeenScanned not implemented."
+      "getDesiredErrorMessage - whatHasBeenScanned not implemented.",
     );
   }
 };

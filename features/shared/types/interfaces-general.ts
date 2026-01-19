@@ -52,3 +52,9 @@ export type InfoModal = {
   info2?: string;
   confirmationButtonName: string;
 };
+
+export type DTOReportReturnType<T> = {
+  data: {
+    resultMainQuery: T[] | -1;
+  };
+};

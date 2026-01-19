@@ -14,7 +14,7 @@ const ShowClientsList = (props: Props) => {
   const { zpsWithUniqueClients, isLoading, refreshAllData, setChosenClient } =
     props;
 
-  console.log({ zpsWithUniqueClients });
+  // console.log({ zpsWithUniqueClients });
 
   return (
     <View className="flex-1 w-full px-6">

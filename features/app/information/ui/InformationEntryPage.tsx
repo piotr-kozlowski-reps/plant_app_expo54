@@ -37,7 +37,7 @@ const InformationEntryPage = () => {
                   side={"left"}
                   actionFn={
                     getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
+                      "information",
                     ).information_scan_zp
                       ? () => {
                           router.push("/app/information/scan_zp");
@@ -54,7 +54,7 @@ const InformationEntryPage = () => {
                   name={`Skanuj ZP`}
                   disabled={
                     !getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
+                      "information",
                     ).information_scan_zp
                   }
                 />
@@ -62,7 +62,7 @@ const InformationEntryPage = () => {
                   side={"right"}
                   actionFn={
                     getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
+                      "information",
                     ).information_scan_zp
                       ? () => {
                           router.push("/app/information/search_zp");
@@ -79,7 +79,7 @@ const InformationEntryPage = () => {
                   name={`Wyszukaj ZP`}
                   disabled={
                     !getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
+                      "information",
                     ).information_scan_zp
                   }
                 />
@@ -89,11 +89,11 @@ const InformationEntryPage = () => {
                   side={"left"}
                   actionFn={
                     getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
+                      "information",
                     ).information_scan_zp
                       ? () => {
                           router.push(
-                            "/app/field_crops/extra_works_zp?ishobby=f"
+                            "/app/field_crops/extra_works_zp?ishobby=f",
                           );
                         }
                       : () => {}
@@ -108,7 +108,7 @@ const InformationEntryPage = () => {
                   name={`Prace${"\n"}Extra GRU - ZP`}
                   disabled={
                     !getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
+                      "information",
                     ).information_scan_zp
                   }
                   visibility={false}
@@ -117,7 +117,7 @@ const InformationEntryPage = () => {
                   side={"right"}
                   actionFn={
                     getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
+                      "information",
                     ).information_search_by_client
                       ? () => {
                           router.push("/app/information/search_by_client");
@@ -132,11 +132,12 @@ const InformationEntryPage = () => {
                     />
                   }
                   name={`Wyszukaj${"\n"}po kliencie`}
-                  disabled={
-                    !getModuleVisibilitiesObject<InformationSubmodules>(
-                      "information"
-                    ).information_search_by_client
-                  }
+                  // disabled={
+                  //   !getModuleVisibilitiesObject<InformationSubmodules>(
+                  //     "information"
+                  //   ).information_search_by_client
+                  // }
+                  disabled={true}
                 />
               </View>
               {/* <View className="flex-row items-center justify-center w-full gap-2">
