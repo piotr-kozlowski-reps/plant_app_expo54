@@ -106,9 +106,6 @@ function getJSXWithProperColors(text: string | null) {
   if (!text) return <Text className="text-foreground font-main-menu"></Text>;
 
   const substringsObject = parseRedString(text);
-  console.log("------getJSXWithProperColors---------");
-  console.log({ text });
-  console.log({ substringsObject });
 
   return (
     <Text className="text-foreground font-main-menu">
