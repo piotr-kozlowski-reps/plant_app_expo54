@@ -23,7 +23,7 @@ const DetailedInfoItem = (props: Props) => {
         <View
           className={clsx(
             "w-full flex-col justify-end",
-            index === 0 ? "mb-8 h-8" : "h-[96px] mb-8"
+            index === 0 ? "mb-8 h-8" : "h-[96px] mb-8",
           )}
         >
           <View className="flex-row items-center justify-start w-full">
@@ -34,7 +34,8 @@ const DetailedInfoItem = (props: Props) => {
               </Text>
             </View>
             <View className="ml-2 ">
-              <Text className="text-foreground font-title">{item.value}</Text>
+              {getJSXWithProperColors(item.details)}
+              {/* <Text className="text-foreground font-title">{item.value}</Text> */}
             </View>
           </View>
         </View>
@@ -43,7 +44,7 @@ const DetailedInfoItem = (props: Props) => {
         <View
           className={clsx(
             "w-full flex-col justify-end",
-            index === 0 ? "mb-8 h-8" : "h-[96px] mb-8"
+            index === 0 ? "mb-8 h-8" : "h-[96px] mb-8",
           )}
         >
           <View className="w-full h-[8px] bg-foreground mb-[18px]"></View>
@@ -55,7 +56,8 @@ const DetailedInfoItem = (props: Props) => {
               </Text>
             </View>
             <View className="ml-2 ">
-              <Text className="text-foreground font-title">{item.value}</Text>
+              {getJSXWithProperColors(item.details)}
+              {/* <Text className="text-foreground font-title">{item.value}</Text> */}
             </View>
           </View>
         </View>
@@ -73,7 +75,8 @@ const DetailedInfoItem = (props: Props) => {
               </View>
 
               <View className="mt-1 ml-4">
-                <Text className="text-foreground font-nav">{item.value}</Text>
+                {getJSXWithProperColors(item.details)}
+                {/* <Text className="text-foreground font-nav">{item.value}</Text> */}
               </View>
             </View>
           </View>
@@ -98,3 +101,107 @@ const DetailedInfoItem = (props: Props) => {
   );
 };
 export default DetailedInfoItem;
+
+function getJSXWithProperColors(text: string | null) {
+  if (!text) return <Text className="text-foreground font-main-menu"></Text>;
+
+  const substringsObject = parseRedString(text);
+  console.log("------getJSXWithProperColors---------");
+  console.log({ text });
+  console.log({ substringsObject });
+
+  return (
+    <Text className="text-foreground font-main-menu">
+      {substringsObject.map((item, index) => {
+        const isRedString = item.isRed;
+
+        if (isRedString)
+          return (
+            <Text className="text-destructive font-main-menu" key={index}>
+              {item.text + " " + " "}
+            </Text>
+          );
+
+        return (
+          <Text className="text-foreground font-main-menu" key={index}>
+            {item.text + " " + " "}
+          </Text>
+        );
+      })}
+      {/* {substringArray.map((substring, index) => {
+        const isRedString = checkIfIsRedString(substring);
+        const textWithCutTags = substring
+          .replace("<red>", "")
+          .replace("</red>", "");
+
+        if (isRedString)
+          return (
+            <Text className="text-destructive font-main-menu" key={index}>
+              {textWithCutTags}
+            </Text>
+          );
+
+        return (
+          <Text className="text-foreground font-main-menu" key={index}>
+            {substring}
+          </Text>
+        );
+      })} */}
+    </Text>
+  );
+}
+
+function checkIfIsRedString(text: string): boolean {
+  return text.includes("<red>");
+}
+
+type ParsedItem = {
+  isRed: boolean;
+  text: string;
+};
+export function parseRedString(input: string): ParsedItem[] {
+  const result: ParsedItem[] = [];
+
+  let inputCropped = input.replaceAll("|", "");
+
+  while (inputCropped.length > 0) {
+    const trimmedText = inputCropped.trim();
+
+    const redStartIndex = trimmedText.indexOf("<red>");
+    const redEndIndex = trimmedText.indexOf("</red>");
+    if (
+      (redStartIndex === -1 || redEndIndex === -1) &&
+      trimmedText.length > 0
+    ) {
+      result.push({
+        isRed: false,
+        text: trimmedText,
+      });
+      inputCropped = "";
+
+      // break;
+    }
+
+    if (redStartIndex > 0) {
+      const cutText = trimmedText.slice(0, redStartIndex);
+      result.push({
+        isRed: false,
+        text: cutText.trim(),
+      });
+      inputCropped = trimmedText.replace(cutText, "");
+    }
+
+    if (redStartIndex === 0) {
+      const cutText = trimmedText.slice(0, redEndIndex + 6);
+      const cutTextWithoutTags = cutText
+        .replace("<red>", "")
+        .replace("</red>", "");
+      result.push({
+        isRed: true,
+        text: cutTextWithoutTags.trim(),
+      });
+      inputCropped = trimmedText.replace(cutText, "");
+    }
+  }
+  return result;
+}

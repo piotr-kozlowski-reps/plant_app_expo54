@@ -1,6 +1,6 @@
 export type InformationDTO = {
   label: string;
-  value: string | null | React.ReactNode;
+  details: string | null;
   prior: string;
 };
 

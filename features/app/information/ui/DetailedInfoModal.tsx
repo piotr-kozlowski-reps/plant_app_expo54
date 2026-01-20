@@ -70,6 +70,7 @@ const DetailedInfoModal = (props: Props) => {
             </View>
 
             <ContainerHorizontalRoundedFrame color={lightNuanceColor}>
+              
               <ScrollView className="w-full ">
                 <View className="flex-row flex-wrap items-center justify-start flex-1 px-8 py-4">
                   {informationData.map((item, index) => (
