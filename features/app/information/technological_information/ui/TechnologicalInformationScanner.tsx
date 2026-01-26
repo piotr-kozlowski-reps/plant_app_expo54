@@ -22,6 +22,7 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import { useScanValuesForTechnologicalInformation } from "../domain/useScanValuesForTechnologicalInformation";
 import DetailedTechnologicalInfoModal from "./DetailedTechnologicalInfoModal";
+import SearchZpByNameModal from "../../ui/SearchZpByNameModal";
 
 type Props = {
   information_type: "scan_zp" | "search_by_client" | "search_zp";
@@ -67,6 +68,8 @@ const TechnologicalInformationScanner = () => {
   const {
     qrLock,
     isAnyValueScanned,
+    informationData,
+    scannedPureValue,
     // isLocalization,
     // isZP,
     // isTray,
@@ -75,8 +78,8 @@ const TechnologicalInformationScanner = () => {
     // scannedPureValue,
     setQrLock,
     scanValueHandler,
-    // resetValuesToScanNextItem,
-    // findInfoAboutSearchedZp,
+    detailedTechnologicalInfoModalClose,
+    findInfoAboutSearchedZp,
   } = useScanValuesForTechnologicalInformation(setIsLoading);
 
   ////tsx
@@ -166,17 +169,17 @@ const TechnologicalInformationScanner = () => {
           backgroundColor={yellowColor}
         >
           <DetailedTechnologicalInfoModal
-          // closeFn={detailedInfoModalClose}
-          // informationData={informationData}
-          // isLocalization={isLocalization}
-          // scannedPureValue={scannedPureValue}
-          // isZP={isZP}
-          // isTray={isTray}
+            closeFn={detailedTechnologicalInfoModalClose}
+            informationData={informationData}
+            // isLocalization={isLocalization}
+            scannedPureValue={scannedPureValue}
+            // isZP={isZP}
+            // isTray={isTray}
           />
         </ModalInternal>
 
         {/* search by zp - modal */}
-        {/* <ModalInternal
+        <ModalInternal
           isOpen={isShowSearchZp}
           isTransparent={false}
           backgroundColor={yellowColor}
@@ -187,7 +190,7 @@ const TechnologicalInformationScanner = () => {
             setIsLoading={setIsLoading}
             findInfoAboutSearchedZp={findInfoAboutSearchedZp}
           />
-        </ModalInternal> */}
+        </ModalInternal>
 
         {/* search by client - modal */}
         {/* <ModalInternal

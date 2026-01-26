@@ -36,9 +36,9 @@ export async function getRepId1695(
     (item) => ({
       ptc_kod: item.ptc_kod,
       ptc_lp: mapStringIntoInteger(item.ptc_lp),
-      plan_xl: mapStringOrNullIntoDateOrNull(item.plan_xl),
-      real_dt: mapStringOrNullIntoDateOrNull(item.real_dt),
-      watch_dt: mapStringOrNullIntoDateOrNull(item.watch_dt),
+      plan_xl: item.plan_xl,
+      real_dt: item.real_dt,
+      watch_dt: item.watch_dt,
       delta_days: mapStringOrNullIntoIntegerOrNull(item.delta_days),
       delta_days_watch: mapStringOrNullIntoIntegerOrNull(item.delta_days_watch),
     }),

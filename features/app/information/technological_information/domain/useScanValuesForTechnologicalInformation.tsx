@@ -21,6 +21,7 @@ export const useScanValuesForTechnologicalInformation = (
 
   //states
   const [qrLock, setQrLock] = useState(true);
+  const [scannedPureValue, setScannedPureValue] = useState("");
   const [informationData, setInformationData] = useState<
     TechnicalInformation[]
   >([]);
@@ -54,6 +55,15 @@ export const useScanValuesForTechnologicalInformation = (
     }
   };
 
+  const detailedTechnologicalInfoModalClose = () => {
+    setInformationData([]);
+  };
+
+  const findInfoAboutSearchedZp = (ordnmb: string) => {
+    // console.log({ ordnmb });
+    scanValueHandler(`ZLEC_${ordnmb}`);
+  };
+
   //derived data
   const isAnyValueScanned =
     informationData && informationData.length ? true : false;
@@ -62,9 +72,13 @@ export const useScanValuesForTechnologicalInformation = (
   return {
     qrLock,
     isAnyValueScanned,
+    informationData,
+    scannedPureValue,
 
     setQrLock,
     scanValueHandler,
+    detailedTechnologicalInfoModalClose,
+    findInfoAboutSearchedZp,
   };
 
   //helpers
@@ -78,5 +92,6 @@ export const useScanValuesForTechnologicalInformation = (
     );
 
     setInformationData(response);
+    setScannedPureValue(zpValue);
   }
 };

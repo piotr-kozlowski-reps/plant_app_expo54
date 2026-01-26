@@ -8,13 +8,7 @@ import LeafNavigationButton from "@/features/shared/ui/button/LeafNavigationButt
 import { InformationSubmodules } from "@/features/shared/types/interfaces-auth";
 import { router } from "expo-router";
 import { lightNuanceColor } from "@/features/shared/constants/colorThemeVars";
-import {
-  Blinds,
-  BookUser,
-  Microscope,
-  ScanSearch,
-  Search,
-} from "lucide-react-native";
+import { Blinds, BookUser, ScanSearch, Search } from "lucide-react-native";
 
 const InformationEntryPage = () => {
   ////vars
@@ -138,61 +132,6 @@ const InformationEntryPage = () => {
                   }
                 />
               </View>
-              {/* <View className="flex-row items-center justify-center w-full gap-2">
-                <LeafNavigationButton
-                  side={"left"}
-                  actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).extra_works_zp___overallVisibility
-                      ? () => {
-                          router.push(
-                            "/app/field_crops/extra_works_zp?ishobby=f"
-                          );
-                        }
-                      : () => {}
-                  }
-                  icon={
-                    <Pickaxe
-                      size={24}
-                      color={lightNuanceColor}
-                      strokeWidth={2.7}
-                    />
-                  }
-                  name={`Prace${"\n"}Extra GRU - ZP`}
-                  disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).extra_works_zp___overallVisibility
-                  }
-                  visibility={false}
-                />
-                <LeafNavigationButton
-                  side={"right"}
-                  actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).tray_operations___overallVisibility
-                      ? () => {
-                          router.push("/app/field_crops/tray_operations");
-                        }
-                      : () => {}
-                  }
-                  icon={
-                    <Grid3x3
-                      size={24}
-                      color={lightNuanceColor}
-                      strokeWidth={2.7}
-                    />
-                  }
-                  name={`Operacje${"\n"}na tacach`}
-                  disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).tray_operations___overallVisibility
-                  }
-                />
-              </View> */}
             </View>
             <View className="w-full mb-6">
               <ButtonBack isOutline={false} />

@@ -22,9 +22,9 @@ export type TechnicalInformationDTO = {
 export type TechnicalInformation = {
   ptc_kod: string;
   ptc_lp: number;
-  plan_xl: Date | null;
-  real_dt: Date | null;
-  watch_dt: Date | null;
+  plan_xl: string | null;
+  real_dt: string | null;
+  watch_dt: string | null;
   delta_days: number | null;
   delta_days_watch: number | null;
 };
