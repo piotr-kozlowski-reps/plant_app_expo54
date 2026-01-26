@@ -9,11 +9,11 @@ import { InformationSubmodules } from "@/features/shared/types/interfaces-auth";
 import { router } from "expo-router";
 import { lightNuanceColor } from "@/features/shared/constants/colorThemeVars";
 import {
+  Blinds,
   BookUser,
-  Pickaxe,
+  Microscope,
   ScanSearch,
   Search,
-  ShoppingBag,
 } from "lucide-react-native";
 
 const InformationEntryPage = () => {
@@ -90,28 +90,27 @@ const InformationEntryPage = () => {
                   actionFn={
                     getModuleVisibilitiesObject<InformationSubmodules>(
                       "information",
-                    ).information_scan_zp
+                    ).technological_information
                       ? () => {
                           router.push(
-                            "/app/field_crops/extra_works_zp?ishobby=f",
+                            "/app/information/technological_information",
                           );
                         }
                       : () => {}
                   }
                   icon={
-                    <Pickaxe
+                    <Blinds
                       size={24}
                       color={lightNuanceColor}
                       strokeWidth={2.7}
                     />
                   }
-                  name={`Prace${"\n"}Extra GRU - ZP`}
+                  name={`Informacja${"\n"}technologiczna`}
                   disabled={
                     !getModuleVisibilitiesObject<InformationSubmodules>(
                       "information",
                     ).information_scan_zp
                   }
-                  visibility={false}
                 />
                 <LeafNavigationButton
                   side={"right"}

@@ -13,6 +13,7 @@ export type Config = {
   edocReport_ProtectiveTreatments: number;
   edocReport_CheckLocalization: number;
   edocReport_Information: number;
+  edocReport_TechnicalInformation: number;
   edocReport_InformationAboutZPPerLocalization: number;
   edocReport_CutsList: number;
   edocReport_GeneralWorks: number;

@@ -46,7 +46,7 @@ export const useLoginLogic = () => {
       const tokens: TokensDTO | TError | null = await getTokens(
         username,
         password,
-        errorHandler
+        errorHandler,
       );
 
       if (!tokens) {
@@ -63,7 +63,7 @@ export const useLoginLogic = () => {
       const userProfilePromise = getUser(currentToken, errorHandler);
       const adminUsersGroupPromise = getAdminsUserGroups(
         currentToken,
-        errorHandler
+        errorHandler,
       );
       const [userProfile, adminUsersIDs] = await Promise.all([
         userProfilePromise,
@@ -115,7 +115,7 @@ export const useLoginLogic = () => {
         await sendReportAboutAppVersionCurrentlyUsed(
           currentToken,
           baseURL,
-          currentAppAndPhoneInfo
+          currentAppAndPhoneInfo,
         );
       } catch (error) {
         errorHandler(error as Error);
@@ -126,12 +126,12 @@ export const useLoginLogic = () => {
         await getUserPermissionAndRecentAppVersions(
           currentToken,
           errorHandler,
-          userProfile.usr_id
+          userProfile.usr_id,
         );
 
       const isUserPermittedToLogin = checkIfUserIsPermittedToLogin(
         userPermissionAndRecentAppVersions,
-        userProfile.usr_id
+        userProfile.usr_id,
       );
 
       if (!isUserPermittedToLogin) {
@@ -150,7 +150,7 @@ export const useLoginLogic = () => {
       const isAppUpToDate = isProduction
         ? checkIfAppIsUpToDate(
             currentAppAndPhoneInfo,
-            userPermissionAndRecentAppVersions
+            userPermissionAndRecentAppVersions,
           )
         : true;
 
@@ -175,6 +175,7 @@ export const useLoginLogic = () => {
             information_scan_zp: true,
             information_search_zp: true,
             information_search_by_client: true,
+            technological_information: true,
           },
           field_crops: {
             //field_crops_works
@@ -246,7 +247,7 @@ export const useLoginLogic = () => {
 async function getTokens(
   username: string,
   password: string,
-  errorHandler: (error: Error, errorTitle?: string) => void
+  errorHandler: (error: Error, errorTitle?: string) => void,
 ): Promise<TokensDTO | TError | null> {
   let response: TokensDTO | TError;
   try {
@@ -263,7 +264,7 @@ async function getTokens(
           "Content-Type": "application/json",
         },
         // agent: httpAgent,
-      }
+      },
     );
 
     response = await res.json();
@@ -278,7 +279,7 @@ async function getTokens(
 
 async function getUser(
   token: string,
-  errorHandler: (error: Error, errorTitle?: string) => void
+  errorHandler: (error: Error, errorTitle?: string) => void,
 ): Promise<FetchedUserDTO | null> {
   let response: UserProfileDTO;
   try {
@@ -290,7 +291,7 @@ async function getUser(
           Authorization: `Bearer ${token}`,
         },
         // agent: httpAgent,
-      }
+      },
     );
 
     response = (await res.json()) as UserProfileDTO;
@@ -308,7 +309,7 @@ async function getUser(
 
 async function getAdminsUserGroups(
   token: string,
-  errorHandler: (error: Error, errorTitle?: string) => void
+  errorHandler: (error: Error, errorTitle?: string) => void,
 ): Promise<AdminsIds | null> {
   let response: AdminsGroup;
   try {
@@ -320,7 +321,7 @@ async function getAdminsUserGroups(
           Authorization: `Bearer ${token}`,
         },
         // agent: httpAgent,
-      }
+      },
     );
 
     response = (await res.json()) as AdminsGroup;
@@ -340,7 +341,7 @@ async function getAdminsUserGroups(
 async function getUserPermissionAndRecentAppVersions(
   token: string,
   errorHandler: (error: Error, errorTitle?: string) => void,
-  usr_id: number
+  usr_id: number,
 ): Promise<UserPermission[]> {
   let response: UserPermissionDTO;
   let userPermissionAndRecentAppVersions: UserPermission[] = [];
@@ -353,7 +354,7 @@ async function getUserPermissionAndRecentAppVersions(
           Authorization: `Bearer ${token}`,
         },
         // agent: httpAgent,
-      }
+      },
     );
 
     response = (await res.json()) as UserPermissionDTO;
@@ -367,7 +368,7 @@ async function getUserPermissionAndRecentAppVersions(
         os: item.os,
         app_version: item.app_version,
         app_build: item.app_build,
-      })
+      }),
     );
   } catch (error) {
     errorHandler(error as Error);
@@ -377,7 +378,7 @@ async function getUserPermissionAndRecentAppVersions(
 
 function checkIfAppIsUpToDate(
   currentAppAndPhoneInfo: PhoneInfo,
-  userPermissionAndRecentAppVersions: UserPermission[]
+  userPermissionAndRecentAppVersions: UserPermission[],
 ): boolean {
   const currentOS = currentAppAndPhoneInfo.os;
   const currentAppVersion = currentAppAndPhoneInfo.app_version;
@@ -395,22 +396,22 @@ function checkIfAppIsUpToDate(
   const lastUsedAppVersionAndBuildForDesiredOS =
     getLastUsedAppVersionAndBuildForDesiredOS(
       currentOS,
-      userPermissionAndRecentAppVersions
+      userPermissionAndRecentAppVersions,
     );
 
   if (!lastUsedAppVersionAndBuildForDesiredOS) {
     throw new Error(
-      "checkIfAppIsUpToDate -> missing lastUsedAppVersionAndBuildForDesiredOS"
+      "checkIfAppIsUpToDate -> missing lastUsedAppVersionAndBuildForDesiredOS",
     );
   }
 
   const isVersionUpToDate = checkIfVersionIsUpToDate(
     currentAppVersion,
-    lastUsedAppVersionAndBuildForDesiredOS
+    lastUsedAppVersionAndBuildForDesiredOS,
   );
   const isBuildUpToDate = checkIfNumberIsTheSameOrHigher(
     Number.parseInt(currentAppBuild),
-    Number.parseInt(lastUsedAppVersionAndBuildForDesiredOS.app_version)
+    Number.parseInt(lastUsedAppVersionAndBuildForDesiredOS.app_version),
   );
 
   if (
@@ -425,7 +426,7 @@ function checkIfAppIsUpToDate(
 
 function checkIfVersionIsUpToDate(
   currentAppVersion: string | null,
-  lastUsedAppVersionAndBuildForDesiredOS: AppVersionAndBuild | null
+  lastUsedAppVersionAndBuildForDesiredOS: AppVersionAndBuild | null,
 ): boolean {
   if (!currentAppVersion || !lastUsedAppVersionAndBuildForDesiredOS)
     return false;
@@ -436,15 +437,15 @@ function checkIfVersionIsUpToDate(
 
   const isFirstNumberCorrect = checkIfNumberIsTheSameOrHigher(
     Number.parseInt(currentAppVersionSplitted[0]),
-    Number.parseInt(lastAppVersionSplitted[0])
+    Number.parseInt(lastAppVersionSplitted[0]),
   );
   const isSecondNumberCorrect = checkIfNumberIsTheSameOrHigher(
     Number.parseInt(currentAppVersionSplitted[1]),
-    Number.parseInt(lastAppVersionSplitted[1])
+    Number.parseInt(lastAppVersionSplitted[1]),
   );
   const isThirdNumberCorrect = checkIfNumberIsTheSameOrHigher(
     Number.parseInt(currentAppVersionSplitted[2]),
-    Number.parseInt(lastAppVersionSplitted[2])
+    Number.parseInt(lastAppVersionSplitted[2]),
   );
 
   return isFirstNumberCorrect && isSecondNumberCorrect && isThirdNumberCorrect;
@@ -455,10 +456,10 @@ function checkIfNumberIsTheSameOrHigher(numberOne: number, numberTwo: number) {
 
 function getLastUsedAppVersionAndBuildForDesiredOS(
   currentOS: OS,
-  userPermissionAndRecentAppVersions: UserPermission[]
+  userPermissionAndRecentAppVersions: UserPermission[],
 ): AppVersionAndBuild | null {
   const foundOSAppVersion = userPermissionAndRecentAppVersions.find(
-    (item) => item.os === currentOS
+    (item) => item.os === currentOS,
   );
   if (!foundOSAppVersion) return null;
   return {
@@ -470,7 +471,7 @@ function getLastUsedAppVersionAndBuildForDesiredOS(
 async function sendReportAboutAppVersionCurrentlyUsed(
   token: string,
   baseURL: string,
-  info: PhoneInfo
+  info: PhoneInfo,
 ) {
   const response = await query_postDataAsServerAction<
     {
@@ -481,7 +482,7 @@ async function sendReportAboutAppVersionCurrentlyUsed(
     baseURL,
     `/api.php/REST/v1/customRegisters/${configPerBuild.customRegister_PhoneInfo}/entries`,
     token,
-    { params: info }
+    { params: info },
   );
 
   if (!response || !response.id____) {
@@ -491,7 +492,7 @@ async function sendReportAboutAppVersionCurrentlyUsed(
 
 function checkIfUserIsPermittedToLogin(
   userPermissionAndRecentAppVersions: UserPermission[],
-  usr_id: number
+  usr_id: number,
 ): boolean {
   if (!userPermissionAndRecentAppVersions.length || !usr_id) return false;
   return userPermissionAndRecentAppVersions[0].usr_id === usr_id;

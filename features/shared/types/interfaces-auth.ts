@@ -30,6 +30,7 @@ export type InformationSubmodules = ModuleOverallPermission & {
   information_scan_zp: boolean;
   information_search_zp: boolean;
   information_search_by_client: boolean;
+  technological_information: boolean;
 };
 
 export type TrayOperationsSubModules = ModuleOverallPermission & {

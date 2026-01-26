@@ -13,7 +13,7 @@ const envSchema = Yup.object({
           "https://ed.mularski.pl",
         ];
         return possibleValues.includes(value);
-      }
+      },
     ),
   NODE_ENV: Yup.string()
     .required("NODE_ENV required")
@@ -44,6 +44,7 @@ export let configPerBuild: Config = {
   edocReport_ProtectiveTreatments: 121,
   edocReport_CheckLocalization: 1580,
   edocReport_Information: 163,
+  edocReport_TechnicalInformation: 1695,
   edocReport_InformationAboutZPPerLocalization: 123,
   edocReport_CutsList: 911,
   edocReport_GeneralWorks: 1605,
