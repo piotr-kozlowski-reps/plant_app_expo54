@@ -1,6 +1,6 @@
 export type InformationDTO = {
   label: string;
-  details: string | null;
+  value: string | null;
   prior: string;
 };
 

@@ -34,7 +34,7 @@ const DetailedInfoItem = (props: Props) => {
               </Text>
             </View>
             <View className="ml-2 ">
-              {getJSXWithProperColors(item.details)}
+              {getJSXWithProperColors(item.value)}
               {/* <Text className="text-foreground font-title">{item.value}</Text> */}
             </View>
           </View>
@@ -56,7 +56,7 @@ const DetailedInfoItem = (props: Props) => {
               </Text>
             </View>
             <View className="ml-2 ">
-              {getJSXWithProperColors(item.details)}
+              {getJSXWithProperColors(item.value)}
               {/* <Text className="text-foreground font-title">{item.value}</Text> */}
             </View>
           </View>
@@ -75,7 +75,7 @@ const DetailedInfoItem = (props: Props) => {
               </View>
 
               <View className="mt-1 ml-4">
-                {getJSXWithProperColors(item.details)}
+                {getJSXWithProperColors(item.value)}
                 {/* <Text className="text-foreground font-nav">{item.value}</Text> */}
               </View>
             </View>
