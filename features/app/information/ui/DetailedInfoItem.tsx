@@ -162,7 +162,16 @@ export function parseRedString(input: string): ParsedItem[] {
   let inputCropped = input.replaceAll("|", "");
 
   while (inputCropped.length > 0) {
+    // debugger;
     const trimmedText = inputCropped.trim();
+
+    if (!trimmedText) {
+      result.push({
+        isRed: false,
+        text: " ",
+      });
+      break;
+    }
 
     const redStartIndex = trimmedText.indexOf("<red>");
     const redEndIndex = trimmedText.indexOf("</red>");
@@ -200,5 +209,6 @@ export function parseRedString(input: string): ParsedItem[] {
       inputCropped = trimmedText.replace(cutText, "");
     }
   }
+
   return result;
 }
