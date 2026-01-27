@@ -28,11 +28,20 @@ type Props = {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   findInfoAboutSearchedZp: (ordnmb: string) => void;
+  chosenClient: ZpInProduction | null;
+  setChosenClient: React.Dispatch<React.SetStateAction<ZpInProduction | null>>;
 };
 
 const SearchZpByClientModal = (props: Props) => {
   ////vars
-  const { closeFn, isLoading, setIsLoading, findInfoAboutSearchedZp } = props;
+  const {
+    closeFn,
+    isLoading,
+    setIsLoading,
+    findInfoAboutSearchedZp,
+    chosenClient,
+    setChosenClient,
+  } = props;
   const getZPsInProduction = useGetZPsInProduction();
 
   // fetch data
@@ -47,18 +56,10 @@ const SearchZpByClientModal = (props: Props) => {
     [ZPsInProductionBaseArray],
   );
 
-  // const { ZPsInProduction, refreshAllData } = useGetEdocReports({
-  //   setIsLoading: setIsLoading,
-  //   reports: [edocReport_ZPsInProduction],
-  // });
-
-  // const ZPsInProductionArray = useMemo(() => {
-  //   return ZPsInProduction as unknown as ZpInProduction[];
-  // }, [ZPsInProduction]);
-
-  ////
-  //clients
-  const [chosenClient, setChosenClient] = useState<ZpInProduction | null>(null);
+  /** */
+  /** */
+  /** clients */
+  // const [chosenClient, setChosenClient] = useState<ZpInProduction | null>(null);
   const [zpsWithUniqueClients, setZpsWithUniqueClients] = useState<
     ZpInProduction[]
   >([]);
@@ -112,8 +113,9 @@ const SearchZpByClientModal = (props: Props) => {
     }
   }, [debouncedSearchTextClients, zpsWithUniqueClients]);
 
-  ////
-  ////search zp
+  /** */
+  /** */
+  /** search zp */
   const [searchText, setSearchText] = useState("");
   const updateSearchText = (text: string) => {
     setSearchText(text);

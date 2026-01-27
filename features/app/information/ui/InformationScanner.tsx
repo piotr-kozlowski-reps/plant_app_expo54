@@ -22,6 +22,7 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import SearchZpByNameModal from "./SearchZpByNameModal";
 import SearchZpByClientModal from "./SearchZpByClientModal";
+import { ZpInProduction } from "@/features/shared/types/interfaces-zps_in_production";
 
 type Props = {
   information_type: "scan_zp" | "search_by_client" | "search_zp";
@@ -37,10 +38,10 @@ const InformationScanner = (props: Props) => {
 
   //modals
   const [isShowSearchZp, setIsShowSearchZp] = useShowModal(
-    isSearchZp ? true : false
+    isSearchZp ? true : false,
   );
   const [isShowSearchByClient, setIsShowSearchByClient] = useShowModal(
-    isSearchByClient ? true : false
+    isSearchByClient ? true : false,
   );
 
   //app path name
@@ -75,6 +76,9 @@ const InformationScanner = (props: Props) => {
     resetValuesToScanNextItem,
     findInfoAboutSearchedZp,
   } = useScanValuesForInformation(setIsLoading);
+
+  /** clients */
+  const [chosenClient, setChosenClient] = useState<ZpInProduction | null>(null);
 
   ////tsx
   return (
@@ -201,6 +205,8 @@ const InformationScanner = (props: Props) => {
             isLoading={isLoading}
             setIsLoading={setIsLoading}
             findInfoAboutSearchedZp={findInfoAboutSearchedZp}
+            chosenClient={chosenClient}
+            setChosenClient={setChosenClient}
           />
         </ModalInternal>
       </View>
