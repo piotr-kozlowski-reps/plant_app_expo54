@@ -16,7 +16,7 @@ import { validateFormOnDemand } from "@/features/shared/utils/validation";
 import { useLoginLogic } from "./useLoginLogic";
 
 export const usePrepareDataForFormikToLogin = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const [isRememberMe, setIsRememberMe] = useState(false);
@@ -31,12 +31,13 @@ export const usePrepareDataForFormikToLogin = (
       await addToSecureStore("username", values.username);
       await addToSecureStore("password", values.password);
     }
+    await addToSecureStore("IsRememberMe", isChecked ? "true" : "false");
   };
 
   //on submit
   const onSubmit = async (
     values: LoginInput,
-    formikHelpers: FormikHelpers<LoginInput>
+    formikHelpers: FormikHelpers<LoginInput>,
   ) => {
     Keyboard.dismiss();
     setIsLoading(true);
@@ -64,6 +65,7 @@ export const usePrepareDataForFormikToLogin = (
       username: yup.string().required(VALIDATION_MESSAGES.USERNAME_REQUIRED),
       password: yup.string().required(VALIDATION_MESSAGES.PASSWORD_REQUIRED),
     }),
+    validateOnMount: true,
   });
 
   const validateForm = () => {

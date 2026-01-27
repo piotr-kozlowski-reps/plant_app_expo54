@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { checkOS } from "@/features/shared/utils/checkOS";
 import clsx from "clsx";
 import InputFormik from "@/features/shared/ui/input/InputFormik";
@@ -12,6 +12,7 @@ import {
 import { usePrepareDataForFormikToLogin } from "../domain/usePrepareDataForFormikToLogin";
 import { useCredentialsSecureStoreHandler } from "@/features/shared/utils/useCredentialsSecureStoreHandler";
 import { CustomKeyboardAvoidingView } from "@/features/shared/ui/custom-keyboard-avoiding-view/CustomKeyboardAvoidingView";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = {
   isLoading: boolean;
@@ -30,8 +31,12 @@ const LoginForm = (props: Props) => {
     setIsRememberMe,
   } = usePrepareDataForFormikToLogin(setIsLoading);
 
-  const { removeCredentialsFromSecureStore } =
-    useCredentialsSecureStoreHandler(formik);
+  const { removeCredentialsFromSecureStore } = useCredentialsSecureStoreHandler(
+    formik,
+    setIsRememberMe,
+  );
+
+  // console.log({ formik });
 
   //reset form and secure store
   const reset = async () => {
@@ -49,7 +54,7 @@ const LoginForm = (props: Props) => {
         >
           <View
             className={clsx(
-              "flex-col items-center justify-start w-full  bg-yellow flex-1 rounded-tl-[96px] rounded-tr-app rounded-br-[96px] mt-6"
+              "flex-col items-center justify-start w-full  bg-yellow flex-1 rounded-tl-[96px] rounded-tr-app rounded-br-[96px] mt-6",
             )}
           >
             <View className="flex-col items-start justify-center w-full h-full pl-6">
@@ -96,7 +101,7 @@ const LoginForm = (props: Props) => {
                           "text-foreground ",
                           isRememberMe
                             ? "font-default-semibold"
-                            : "font-default-normal"
+                            : "font-default-normal",
                         )}
                       >
                         Zapamiętaj mnie
