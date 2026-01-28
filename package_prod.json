@@ -1,7 +1,7 @@
 {
   "name": "traceON",
   "main": "expo-router/entry",
-  "version": "1.2.07",
+  "version": "1.2.08",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
