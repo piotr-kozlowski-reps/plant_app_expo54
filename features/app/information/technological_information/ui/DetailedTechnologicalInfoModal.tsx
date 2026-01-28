@@ -3,7 +3,7 @@ import { TechnicalInformation } from "@/features/shared/types/interfaces-informa
 import BadgeValueHighlighted from "@/features/shared/ui/badge/BadgeValueHighlighted";
 import Button from "@/features/shared/ui/button/Button";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Text } from "react-native";
 import DetailedTechnologicalInfoItem from "./DetailedTechnologicalInfoItem";
 
 type Props = {
@@ -26,16 +26,38 @@ const DetailedTechnologicalInfoModal = (props: Props) => {
     // isTray,
   } = props;
 
+  let twrCode = "";
+  let twrName = "";
+  if (informationData.length > 0) {
+    twrCode = informationData[0].twr_kod ? informationData[0].twr_kod : "";
+    twrName = informationData[0].twr_nazwa ? informationData[0].twr_nazwa : "";
+  }
   ////tsx
   return (
     <View className="absolute left-0 right-0 w-full bottom-8 top-8">
       <View className="relative flex-col items-center justify-center flex-1">
         <View className="w-full pt-8 pb-[4px] border-t-2 border-b-2 border-gray-600 rounded-app flex-1 ">
           <View className="flex-1">
-            <View className="mb-6">
-              <View className="flex-row items-center justify-center">
+            <View className="mb-4">
+              <View className="flex-col items-center justify-center">
                 <View className="">
                   <BadgeValueHighlighted value={`${scannedPureValue}`} />
+                </View>
+                <View className="mt-1">
+                  <Text className="text-center font-default-normal">
+                    Kod towaru:{" "}
+                    <Text className=" text-foreground font-default-bold">
+                      {twrCode}
+                    </Text>
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-center font-default-normal">
+                    Nazwa towaru:{" "}
+                    <Text className=" text-foreground font-default-bold">
+                      {twrName}
+                    </Text>
+                  </Text>
                 </View>
               </View>
             </View>

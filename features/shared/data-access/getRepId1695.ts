@@ -35,6 +35,8 @@ export async function getRepId1695(
   const mappedData: TechnicalInformation[] = response.data.resultMainQuery.map(
     (item) => ({
       ptc_kod: item.ptc_kod,
+      twr_kod: item.twr_kod,
+      twr_nazwa: item.twr_nazwa,
       ptc_lp: mapStringIntoInteger(item.ptc_lp),
       plan_xl: item.plan_xl,
       real_dt: item.real_dt,

@@ -11,6 +11,8 @@ export type InformationResponse = {
 };
 
 export type TechnicalInformationDTO = {
+  twr_kod: string | null;
+  twr_nazwa: string | null;
   ptc_kod: string;
   ptc_lp: string;
   plan_xl: string | null;
@@ -20,6 +22,8 @@ export type TechnicalInformationDTO = {
   delta_days_watch: string | null;
 };
 export type TechnicalInformation = {
+  twr_kod: string | null;
+  twr_nazwa: string | null;
   ptc_kod: string;
   ptc_lp: number;
   plan_xl: string | null;
