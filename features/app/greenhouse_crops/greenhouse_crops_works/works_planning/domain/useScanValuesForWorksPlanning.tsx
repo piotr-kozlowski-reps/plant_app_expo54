@@ -144,11 +144,23 @@ export const useScanValuesForWorksPlanning = (
         toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
         return;
       }
+
+      //activityId
+      const id = foundWorkToPlan.id;
+      const activityId = foundWorkToPlan.activityid;
+
+      if (!id && !activityId)
+        throw new Error(
+          "useScanValuesForWorksPlanning -> scanValueHandler -> activityId && id not found",
+        );
+
+      let rozActivityId = id && id !== 0 ? id : activityId!;
+
       const ZPInfo: ZPInfoForWorkPlanning = {
         ordnmb: foundZP.ordnmb,
         sordid: foundZP.ordid_,
         stkcnt: foundZP.stkcnt,
-        rozActivityId: foundWorkToPlan.id,
+        rozActivityId: rozActivityId,
         scanned_raw_value: scannedValue,
       };
       setScannedValues((prev) => [...prev, ZPInfo]);

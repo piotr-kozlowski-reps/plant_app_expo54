@@ -24,8 +24,8 @@ export type WorkPlanningSendDataDTO = {
   // id: number;
   plndat: Date;
   ordnmb_json: ZpScannedValueToBeSent[] | null;
-  // type__: WorkType;
-  // sordid: number;
+  type__: WorkType;
+  activityid: number;
   scanned_raw_value: string;
 };
 export type WorkPlanningResponse = string[];

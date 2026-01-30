@@ -9,6 +9,7 @@ export type ZpRozActivityDTO = {
   ilebeg: string;
   iledne: string;
   status: string;
+  activityid: string | null;
   pcz_pzlid: string;
   prior: string;
   enabled: string;
@@ -24,6 +25,7 @@ export type ZpRozActivity = {
   ilebeg: number;
   iledne: number;
   status: number | null;
+  activityid: number | null;
   pcz_pzlid: number;
   prior: number;
   enabled: boolean;

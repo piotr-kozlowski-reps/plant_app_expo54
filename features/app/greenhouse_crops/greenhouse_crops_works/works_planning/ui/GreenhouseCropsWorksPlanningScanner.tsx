@@ -67,6 +67,8 @@ const GreenhouseCropsWorksPlanningScanner = (props: Props) => {
     deleteValueFromList,
   } = useScanValuesForWorksPlanning(setIsLoading, variant);
 
+  console.log({ scannedValues });
+
   /** delete item from list handler */
   const deleteItemFromListHandler = () => {
     deleteValueFromList(ZPSelected);

@@ -54,6 +54,7 @@ export const useGetActivitiesListRep143 = () => {
         ilebeg: Number.parseInt(zp.ilebeg),
         iledne: Number.parseInt(zp.iledne),
         status: zp.status ? Number.parseInt(zp.status) : null,
+        activityid: zp.activityid ? Number.parseInt(zp.activityid) : null,
         pcz_pzlid: Number.parseInt(zp.pcz_pzlid),
         prior: Number.parseInt(zp.prior),
         enabled: zp.enabled === "t" ? true : false,
