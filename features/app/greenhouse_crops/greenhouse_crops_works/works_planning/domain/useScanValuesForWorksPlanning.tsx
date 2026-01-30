@@ -22,7 +22,7 @@ import { toast } from "sonner-native";
 
 export const useScanValuesForWorksPlanning = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  variant: WorksPlanningVariant
+  variant: WorksPlanningVariant,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -35,10 +35,10 @@ export const useScanValuesForWorksPlanning = (
 
   ////state
   const [scannedValues, setScannedValues] = useState<ZPInfoForWorkPlanning[]>(
-    []
+    [],
   );
   const [ZPSelected, setZPSelected] = useState<ZPInfoForWorkPlanning | null>(
-    null
+    null,
   );
   const [workToPlan, setWorkToPlan] = useState<WorkToPlan | null>(null);
   const [inHowManyDays, setInHowManyDays] = useState<number | null>(3);
@@ -58,7 +58,7 @@ export const useScanValuesForWorksPlanning = (
     //check allowed scanned values
     const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
       scannedValue,
-      ["zp_roz"]
+      ["zp_roz"],
     );
     if (!isScannedDataCorrect) return;
 
@@ -71,7 +71,7 @@ export const useScanValuesForWorksPlanning = (
       if (
         checkIfValueIsAlreadyScanned<ZPShortenedInfoWithoutTwrnzw>(
           ordnmbValue,
-          scannedValues
+          scannedValues,
         )
       ) {
         toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
@@ -85,44 +85,57 @@ export const useScanValuesForWorksPlanning = (
 
       const zpRozActivities = await getActivitiesList_Report143(
         ordnmbValue,
-        errorHandler
+        errorHandler,
       );
+      const zpRozActivitiesFiltered =
+        variant === "greenhouse_crops_works_works_planning_tomato"
+          ? zpRozActivities?.filter((item) => item.dscrpt.endsWith("POM"))
+          : zpRozActivities?.filter((item) => item.dscrpt.endsWith("OGÓ"));
 
-      if (!zpRozActivities) {
+      if (!zpRozActivitiesFiltered) {
         toast.error(
-          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`
+          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`,
         );
         return;
       }
 
       //is work to plan available for scanned ZP
-      const foundWorkToPlan = zpRozActivities.find(
-        (act) => act.dscrpt === workToPlan.ptc_kod
+      const foundWorkToPlan = zpRozActivitiesFiltered.find(
+        (act) => act.dscrpt === workToPlan.ptc_kod,
       );
       if (!foundWorkToPlan) {
         toast.error(
-          `Nie możesz zaplanować tej pracy. Nie ma jej na liście czynności do wykonania dla tego ZP (${ordnmbValue}).`
+          `Nie możesz zaplanować tej pracy. Nie ma jej na liście czynności do wykonania dla tego ZP (${ordnmbValue}).`,
         );
         return;
       }
+
+      //////
       //is variant of plant correct according to chosen work planning plant - tomato or cucumber
-      if (!checkIfVariantIsCorrect(variant, zpRozActivities)) {
+      if (!checkIfVariantIsCorrect(variant, zpRozActivitiesFiltered)) {
         if (variant === "greenhouse_crops_works_works_planning_tomato") {
           toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz zaplanować pracę dla pomidora.`
+            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz zaplanować pracę dla pomidora.`,
           );
         }
         if (variant === "greenhouse_crops_works_works_planning_cucumber") {
           toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz zaplanować pracę dla ogórka.`
+            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz zaplanować pracę dla ogórka.`,
           );
         }
 
         return;
       }
+
       //is work already done - status if different than null
       if (foundWorkToPlan.status !== null) {
         toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_DONE);
+        return;
+      }
+
+      //is work already planned and plan is approved
+      if (foundWorkToPlan.start_plan && foundWorkToPlan.stop_plan) {
+        toast.error(ERROR_MESSAGES.PLAN_WAS_ALREADY_APPROVED);
         return;
       }
 
@@ -153,7 +166,7 @@ export const useScanValuesForWorksPlanning = (
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
       toast.warning(
-        ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW
+        ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
       );
       return;
     }
@@ -173,7 +186,7 @@ export const useScanValuesForWorksPlanning = (
 
     toast.success(MESSAGES.ZP_DELETED_SUCCESS_FROM_LIST);
     const updatedValues = scannedValues.filter(
-      (zp) => zp.ordnmb !== zpInfo.ordnmb
+      (zp) => zp.ordnmb !== zpInfo.ordnmb,
     );
     setScannedValues(updatedValues);
   };
@@ -181,7 +194,7 @@ export const useScanValuesForWorksPlanning = (
   //helpers
   function checkIfVariantIsCorrect(
     variant: WorksPlanningVariant,
-    zpRozActivities: ZpRozActivity[]
+    zpRozActivities: ZpRozActivity[],
   ): boolean {
     if (!zpRozActivities.length) {
       throw new Error("checkIfVariantIsCorrect -> !zpRozActivities.length");

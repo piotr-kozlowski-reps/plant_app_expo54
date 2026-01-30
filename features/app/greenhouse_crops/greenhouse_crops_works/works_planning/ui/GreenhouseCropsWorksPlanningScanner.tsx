@@ -75,7 +75,7 @@ const GreenhouseCropsWorksPlanningScanner = (props: Props) => {
   //send data
   const sendWorkToPlanInGreenhouseCropsHandler =
     useSendWorkToPlanInGreenhouseCrops(setIsLoading, clearScannedValues, () =>
-      setIsShowModalWorkToChoose(true)
+      setIsShowModalWorkToChoose(true),
     );
 
   const appPathName = useMemo(() => {

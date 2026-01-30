@@ -2,14 +2,14 @@
 export function mapStringIntoInteger(value: string): number {
   if (!checkIfStringIsNumeric(value)) {
     throw new Error(
-      `mapStringIntoInteger -> value is not a number, but was ${value}`
+      `mapStringIntoInteger -> value is not a number, but was ${value}`,
     );
   }
 
   return Number.parseInt(value);
 }
 export function mapStringOrNullIntoIntegerOrNull(
-  value: string | null | undefined
+  value: string | null | undefined,
 ): number | null {
   if (!value) return null;
   return mapStringIntoInteger(value);
@@ -18,14 +18,14 @@ export function mapStringOrNullIntoIntegerOrNull(
 export function mapStringIntoFloat(value: string): number {
   if (!checkIfStringIsNumeric(value)) {
     throw new Error(
-      `mapStringIntoInteger -> value is not a number, but was ${value}`
+      `mapStringIntoInteger -> value is not a number, but was ${value}`,
     );
   }
 
   return Number.parseFloat(value);
 }
 export function mapStringOrNullIntoFloatOrNull(
-  value: string | null | undefined
+  value: string | null | undefined,
 ): number | null {
   if (!value) return null;
   return mapStringIntoFloat(value);
@@ -33,7 +33,7 @@ export function mapStringOrNullIntoFloatOrNull(
 
 //string to string | mapStringOrNullIntoIntegerOrNull
 export function mapStringOrNullIntoStringOrNull(
-  value: string | null
+  value: string | null,
 ): string | null {
   return !value ? null : value;
 }
@@ -53,7 +53,7 @@ export function mapStringOrNullIntoDateOrNull(value: string | null) {
 export function mapStringIntoBoolean(value: string): boolean {
   if (value !== "t" && value !== "f") {
     throw new Error(
-      "mapStringIntoBoolean -> value is not t or f so it cannot be mapped to boolean"
+      "mapStringIntoBoolean -> value is not t or f so it cannot be mapped to boolean",
     );
   }
 
@@ -71,6 +71,7 @@ export const checkIfStringIsNumeric = (num: unknown) =>
 
 export function checkIsStringValidToCreateADateObject(str: string): boolean {
   const newDateFromString = new Date(str);
+
   return checkIsDate(newDateFromString);
 }
 const checkIsDate = (el: unknown): boolean => {

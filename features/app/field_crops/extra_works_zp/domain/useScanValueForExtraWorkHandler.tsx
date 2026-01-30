@@ -12,6 +12,7 @@ import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
+import { useGet_CheckIfZPExistsInThisActivityId } from "@/features/shared/data-access/useGet_CheckIfZPExistsInThisActivityId";
 
 type DataForScanZP = {
   scannedValue: string;
@@ -22,7 +23,7 @@ type DataForScanZP = {
   setScannedValues: React.Dispatch<React.SetStateAction<ZpScannedValue[]>>;
   setIsForceToScanField: (value: React.SetStateAction<boolean>) => void;
   setScannedZPOnManyFields: (
-    value: React.SetStateAction<ZpScannedValue[]>
+    value: React.SetStateAction<ZpScannedValue[]>,
   ) => void;
 };
 type DataForFieldWhenIsForcedToScanFieldForZP = {
@@ -30,7 +31,7 @@ type DataForFieldWhenIsForcedToScanFieldForZP = {
   scannedZPOnManyFields: ZpScannedValue[];
   setScannedValues: (value: React.SetStateAction<ZpScannedValue[]>) => void;
   setScannedZPOnManyFields: (
-    value: React.SetStateAction<ZpScannedValue[]>
+    value: React.SetStateAction<ZpScannedValue[]>,
   ) => void;
   setIsForceToScanField: (value: React.SetStateAction<boolean>) => void;
   setIsZPScanned: (value: React.SetStateAction<boolean>) => void;
@@ -49,13 +50,15 @@ type DataForScanField = {
 export const useScanValueForExtraWorkHandler = () => {
   //vars
   const { token } = useAuthSessionStore();
-  const { getPureZPValue, getPureTrayValue, getPureFieldValue } =
+  const { getPureZPValue, getPureFieldValue } =
     useCheckWhatValueIsScannedHelpers();
+  const checkIfZPExistsInThisActivityId =
+    useGet_CheckIfZPExistsInThisActivityId();
 
   //zp
   async function scanZpOrTrayHandler(
     dataForScanZP: DataForScanZP,
-    whatWasScanned: TypeOfScannedValue
+    whatWasScanned: TypeOfScannedValue,
   ) {
     const {
       scannedValue,
@@ -77,7 +80,7 @@ export const useScanValueForExtraWorkHandler = () => {
         ERROR_MESSAGES.WRONG_PARAMETER +
           "-> " +
           whatWasScanned +
-          " -> scanZpOrTrayHandler"
+          " -> scanZpOrTrayHandler",
       );
       return;
     }
@@ -89,7 +92,7 @@ export const useScanValueForExtraWorkHandler = () => {
       scannedValue,
       token,
       activityId,
-      whatWasScanned
+      whatWasScanned,
     );
 
     //is ZP already scanned
@@ -114,7 +117,7 @@ export const useScanValueForExtraWorkHandler = () => {
     if (valueNotFound) {
       const ZPWIthoutPrefixZLEC_ = getPureZPValue(scannedValue);
       toast.warning(
-        `ZPk: "${ZPWIthoutPrefixZLEC_}" nie został znaleziony na obiekcie.`
+        `ZPk: "${ZPWIthoutPrefixZLEC_}" nie został znaleziony na obiekcie.`,
       );
       setScannedValues((prevValues) => [
         ...prevValues,
@@ -157,7 +160,7 @@ export const useScanValueForExtraWorkHandler = () => {
     isAddRestOfLocalizations: boolean,
     setRestOfLocalizations?: React.Dispatch<
       React.SetStateAction<RestOfLocalizationsDespiteOfOneChosen[]>
-    >
+    >,
   ) {
     const {
       scannedValue,
@@ -170,13 +173,13 @@ export const useScanValueForExtraWorkHandler = () => {
     const scannedFieldNumber = getPureFieldValue(scannedValue);
     const foundFieldForDesiredZp = findFieldForDesiredZp(
       scannedFieldNumber,
-      scannedZPOnManyFields
+      scannedZPOnManyFields,
     );
     if (!foundFieldForDesiredZp) {
       toast.warning(
         `Nie znaleziono ${
           scannedZPOnManyFields.length ? scannedZPOnManyFields[0].ordnmb : "ZP"
-        }ś w lokalizacji: ${scannedFieldNumber}`
+        }ś w lokalizacji: ${scannedFieldNumber}`,
       );
       return;
     }
@@ -187,17 +190,17 @@ export const useScanValueForExtraWorkHandler = () => {
 
     if (isAddRestOfLocalizations && !setRestOfLocalizations) {
       throw new Error(
-        "setRestOfLocalizations is required when isAddRestOfLocalizations is true"
+        "setRestOfLocalizations is required when isAddRestOfLocalizations is true",
       );
     }
     if (isAddRestOfLocalizations && setRestOfLocalizations) {
       const localizationsNotInScannedField = scannedZPOnManyFields.filter(
-        (item) => item.planam !== scannedFieldNumber
+        (item) => item.planam !== scannedFieldNumber,
       );
       const restOfLocalizations: RestOfLocalizationsDespiteOfOneChosen = {
         ordnmb: localizationsNotInScannedField[0].ordnmb,
         restOfLocalizations: localizationsNotInScannedField.map(
-          (item) => item.planam
+          (item) => item.planam,
         ),
       };
       setRestOfLocalizations((prevValue) => [
@@ -225,7 +228,7 @@ export const useScanValueForExtraWorkHandler = () => {
     const listOfZPs = await getListOfZPInDesiredField(
       scannedValue,
       token,
-      activityId
+      activityId,
     );
 
     //check if any of ZPs have "/ROZ" in name - if so (rozsada szklarniowa) - user cannnt do anything
@@ -239,7 +242,7 @@ export const useScanValueForExtraWorkHandler = () => {
     listOfZPs.forEach((zp) => {
       const isValueAlreadyScanned = checkIfValueIsAlreadyScanned(
         zp.ordnmb,
-        scannedValues
+        scannedValues,
       );
       if (isValueAlreadyScanned) {
         toast.warning(`ZPk: "${zp.ordnmb}" został już wcześniej zeskanowany.`);
@@ -272,7 +275,7 @@ export const useScanValueForExtraWorkHandler = () => {
   async function getListOfZPInDesiredField(
     value: string,
     token: string | null,
-    activityId: number
+    activityId: number,
   ): Promise<ZpScannedValue[]> {
     let listOfZPsOnField: ZpScannedValue[] = [];
 
@@ -285,7 +288,7 @@ export const useScanValueForExtraWorkHandler = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const response: ZPFieldListDTO = (await res.json()) as ZPFieldListDTO;
@@ -312,106 +315,106 @@ export const useScanValueForExtraWorkHandler = () => {
   }
   function checkIfValueIsAlreadyScanned(
     zpValue: string | null,
-    scannedValuesArray: ZpScannedValue[]
+    scannedValuesArray: ZpScannedValue[],
   ): boolean {
     if (!zpValue) return false;
 
     const scannedZpValues: string[] = scannedValuesArray.map(
-      (item) => item.ordnmb
+      (item) => item.ordnmb,
     );
     return scannedZpValues.includes(zpValue);
   }
-  async function checkIfZPExistsInThisActivityId(
-    value: string,
-    token: string | null,
-    activityId: number,
-    whatWasScanned: TypeOfScannedValue
-  ): Promise<(ZPItem & { scanned_raw_value: string })[] | null> {
-    let zpFoundValues: (ZPItem & { scanned_raw_value: string })[] | null = null;
+  // async function checkIfZPExistsInThisActivityId(
+  //   value: string,
+  //   token: string | null,
+  //   activityId: number,
+  //   whatWasScanned: TypeOfScannedValue
+  // ): Promise<(ZPItem & { scanned_raw_value: string })[] | null> {
+  //   let zpFoundValues: (ZPItem & { scanned_raw_value: string })[] | null = null;
 
-    const queryDependingOnZpOrTray = getQueryDependingOnZpOrTray(
-      value,
-      activityId,
-      whatWasScanned
-    );
+  //   const queryDependingOnZpOrTray = getQueryDependingOnZpOrTray(
+  //     value,
+  //     activityId,
+  //     whatWasScanned
+  //   );
 
-    //fetch data
-    let response: ZPItemResponse;
-    const res = await fetch(queryDependingOnZpOrTray, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  //   //fetch data
+  //   let response: ZPItemResponse;
+  //   const res = await fetch(queryDependingOnZpOrTray, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
 
-    response = (await res.json()) as ZPItemResponse;
+  //   response = (await res.json()) as ZPItemResponse;
 
-    if (
-      response.data.resultMainQuery === -1 ||
-      response.data.resultMainQuery.length === 0
-    ) {
-      return null;
-    }
+  //   if (
+  //     response.data.resultMainQuery === -1 ||
+  //     response.data.resultMainQuery.length === 0
+  //   ) {
+  //     return null;
+  //   }
 
-    const arrayOfZpItemsDTO: ZPItemDTO[] = response.data.resultMainQuery;
+  //   const arrayOfZpItemsDTO: ZPItemDTO[] = response.data.resultMainQuery;
 
-    zpFoundValues = arrayOfZpItemsDTO.map((item) => ({
-      scanned_raw_value: value,
-      is_repeated: item.is_repeated === "t" ? true : false,
-      activityid: item.activityid ? Number.parseInt(item.activityid) : null,
-      planam: item.planam,
-      ordnmb: item.ordnmb,
-      prev_percentage: Number.parseInt(item.prev_percentage),
-      stkcnt_loc: Number.parseInt(item.stkcnt_loc),
-      stkcnt_ordnmb: Number.parseInt(item.stkcnt_ordnmb),
-      act_percentage: Number.parseInt(item.act_percentage),
-      sordid: Number.parseInt(item.sordid),
-    }));
+  //   zpFoundValues = arrayOfZpItemsDTO.map((item) => ({
+  //     scanned_raw_value: value,
+  //     is_repeated: item.is_repeated === "t" ? true : false,
+  //     activityid: item.activityid ? Number.parseInt(item.activityid) : null,
+  //     planam: item.planam,
+  //     ordnmb: item.ordnmb,
+  //     prev_percentage: Number.parseInt(item.prev_percentage),
+  //     stkcnt_loc: Number.parseInt(item.stkcnt_loc),
+  //     stkcnt_ordnmb: Number.parseInt(item.stkcnt_ordnmb),
+  //     act_percentage: Number.parseInt(item.act_percentage),
+  //     sordid: Number.parseInt(item.sordid),
+  //   }));
 
-    return zpFoundValues;
-  }
-  function getQueryDependingOnZpOrTray(
-    scannedValue: string,
-    activityId: number,
-    whatWasScanned: TypeOfScannedValue
-  ): string {
-    if (whatWasScanned === "zp_gru" || whatWasScanned === "zp_roz") {
-      const moduleKind = getModuleKind(whatWasScanned);
+  //   return zpFoundValues;
+  // }
+  // function getQueryDependingOnZpOrTray(
+  //   scannedValue: string,
+  //   activityId: number,
+  //   whatWasScanned: TypeOfScannedValue
+  // ): string {
+  //   if (whatWasScanned === "zp_gru" || whatWasScanned === "zp_roz") {
+  //     const moduleKind = getModuleKind(whatWasScanned);
 
-      return `${
-        configPerBuild.apiAddress
-      }/api.php/REST/custom/korsolgetreport?rep_id=${
-        configPerBuild.edocReport_ZPForActivityId
-      }&ordnmb=${getPureZPValue(
-        scannedValue
-      )}&activityid=${activityId}&module=${moduleKind}`;
-    }
-    if (whatWasScanned === "tray") {
-      return `${
-        configPerBuild.apiAddress
-      }/api.php/REST/custom/korsolgetreport?rep_id=${
-        configPerBuild.edocReport_ZPForActivityId
-      }&stk_id=${getPureTrayValue(
-        scannedValue
-      )}&activityid=${activityId}&module=GRUNT`;
-    }
+  //     return `${
+  //       configPerBuild.apiAddress
+  //     }/api.php/REST/custom/korsolgetreport?rep_id=${
+  //       configPerBuild.edocReport_ZPForActivityId
+  //     }&ordnmb=${getPureZPValue(
+  //       scannedValue
+  //     )}&activityid=${activityId}&module=${moduleKind}`;
+  //   }
+  //   if (whatWasScanned === "tray") {
+  //     return `${
+  //       configPerBuild.apiAddress
+  //     }/api.php/REST/custom/korsolgetreport?rep_id=${
+  //       configPerBuild.edocReport_ZPForActivityId
+  //     }&stk_id=${getPureTrayValue(
+  //       scannedValue
+  //     )}&activityid=${activityId}&module=GRUNT`;
+  //   }
 
-    throw Error("getQueryDependingOnZpOrTray -> only zp and tray is handled");
-  }
+  //   throw Error("getQueryDependingOnZpOrTray -> only zp and tray is handled");
+  // }
   function findFieldForDesiredZp(
     scannedFieldNumber: string,
-    scannedZPOnManyFields: ZpScannedValue[]
+    scannedZPOnManyFields: ZpScannedValue[],
   ): ZpScannedValue | null {
     const foundZPField = scannedZPOnManyFields.find(
-      (zp) => zp.planam === scannedFieldNumber
+      (zp) => zp.planam === scannedFieldNumber,
     );
     return foundZPField || null;
   }
 };
 
-function getModuleKind(whatWasScanned: TypeOfScannedValue) {
-  if (whatWasScanned === "zp_gru") return "GRUNT";
-  if (whatWasScanned === "zp_roz") return "SZKLO";
+// function getModuleKind(whatWasScanned: TypeOfScannedValue) {
+//   if (whatWasScanned === "zp_gru") return "GRUNT";
+//   if (whatWasScanned === "zp_roz") return "SZKLO";
 
-  throw Error("getModuleKind -> only zp and tray is handled");
-}
+//   throw Error("getModuleKind -> only zp and tray is handled");
+// }

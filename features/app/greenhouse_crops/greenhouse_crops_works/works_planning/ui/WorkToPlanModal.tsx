@@ -8,12 +8,16 @@ import {
   GREENHOUSE_CROPS_WORKS,
 } from "@/features/shared/types/interfaces-navigation";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-import { WorkToPlan } from "@/features/shared/types/interfaces-works_planning";
+import {
+  WorkToPlan,
+  WorkType,
+} from "@/features/shared/types/interfaces-works_planning";
 
 import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { FlatList } from "react-native-gesture-handler";
 import { toast } from "sonner-native";
+import { useMemo } from "react";
 
 type Props = {
   closeFn: () => void;
@@ -23,6 +27,7 @@ type Props = {
   setTargetWorkToPlan: (workToPlan: WorkToPlan) => void;
   appPathName: string;
 };
+type Separator = { type__: "separator" };
 
 const TargetLocalizationModal = (props: Props) => {
   ////vars
@@ -35,10 +40,10 @@ const TargetLocalizationModal = (props: Props) => {
     appPathName,
   } = props;
 
-  //   //fn
+  //fn
   const setTargetWorkToPlanHandler = (prior_: number) => {
     const foundWorkToPlan = availableWorks.find(
-      (work) => work.prior_ === prior_
+      (work) => work.prior_ === prior_,
     );
     if (!foundWorkToPlan) {
       toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN);
@@ -47,6 +52,25 @@ const TargetLocalizationModal = (props: Props) => {
     setTargetWorkToPlan(foundWorkToPlan);
     closeFn();
   };
+
+  const preparedDataToDisplay: (WorkToPlan | Separator)[] = useMemo(() => {
+    let currentType: WorkType = "TECH";
+
+    const tempArray: (WorkToPlan | Separator)[] = [];
+    for (const item of availableWorks) {
+      if (item.type__ === currentType) {
+        tempArray.push(item);
+      }
+
+      if (item.type__ !== currentType) {
+        currentType = item.type__;
+        tempArray.push({ type__: "separator" });
+        tempArray.push(item);
+      }
+    }
+
+    return tempArray;
+  }, [availableWorks]);
 
   ////tsx
   return (
@@ -73,15 +97,31 @@ const TargetLocalizationModal = (props: Props) => {
           </View>
 
           <View className="flex-1 w-full px-6">
-            <FlatList<WorkToPlan>
-              data={availableWorks}
-              renderItem={({ item }: { item: WorkToPlan }) => (
-                <ListItemName
-                  title={item.ptc_kod}
-                  id={item.prior_}
-                  actionFn={setTargetWorkToPlanHandler}
-                />
-              )}
+            <FlatList<WorkToPlan | Separator>
+              data={preparedDataToDisplay}
+              renderItem={({ item }: { item: WorkToPlan | Separator }) => {
+                if (isWorkToPlan(item)) {
+                  return (
+                    <ListItemName
+                      title={item.ptc_kod}
+                      id={item.prior_}
+                      actionFn={setTargetWorkToPlanHandler}
+                    />
+                  );
+                }
+
+                if (isSeparator(item)) {
+                  return (
+                    <View className="flex items-center justify-center w-full mt-2 mb-6">
+                      <View className="w-32 h-[2px]  bg-foreground"></View>
+                    </View>
+                  );
+                }
+
+                throw new Error(
+                  "TargetLocalizationModal - FlatList - Unknown item type",
+                );
+              }}
               refreshing={isLoading}
               onRefresh={refreshAllData}
               initialNumToRender={15}
@@ -100,3 +140,25 @@ const TargetLocalizationModal = (props: Props) => {
   );
 };
 export default TargetLocalizationModal;
+
+function isWorkToPlan(testedObject: any): testedObject is WorkToPlan {
+  return (
+    typeof testedObject === "object" &&
+    testedObject !== null &&
+    "prior_" in testedObject &&
+    "ptc_kod" in testedObject &&
+    "type__" in testedObject &&
+    typeof (testedObject as any).prior_ === "number" &&
+    typeof (testedObject as any).ptc_kod === "string" &&
+    typeof (testedObject as any).type__ === "string"
+  );
+}
+function isSeparator(testedObject: any): testedObject is Separator {
+  return (
+    typeof testedObject === "object" &&
+    testedObject !== null &&
+    "type__" in testedObject &&
+    typeof (testedObject as any).type__ === "string"
+  );
+}
+// type Separator = { type__: "separator" };

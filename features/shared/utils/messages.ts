@@ -156,6 +156,7 @@ export const ERROR_MESSAGES = {
   NO_FUTURE_DATA: "Data może być późniejsza niż dzisiaj.",
   CANNOT_AUTOMATICALLY_UPDATE:
     "Brak możliwości uaktualnienia danych automatycznie, wyjdź z tego modułu i zeskanuj ZP raz jeszcze.",
+  PLAN_WAS_ALREADY_APPROVED: "Plan został już zatwierdzony.",
 } as const;
 
 export const MESSAGES = {
@@ -187,7 +188,7 @@ export const ERROR_TITLES = {
 } as const;
 
 export const provideNoAccessToSubmoduleMessage = (
-  moduleName: string
+  moduleName: string,
 ): string => {
   return `Brak dostępu do modułu: ${moduleName} .`;
 };

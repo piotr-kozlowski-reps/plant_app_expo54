@@ -32,15 +32,40 @@ const GreenhouseCropsWorksPlanningEntryPage = (props: Props) => {
   const availableWorksArray = useMemo(() => {
     return works_to_plan as unknown as WorkToPlan[];
   }, [works_to_plan]);
+
   const filteredWorksArrayDependingOnVariant = useMemo(() => {
+    const filteredWorksArray: WorkToPlan[] = [];
+
     if (variant === "greenhouse_crops_works_works_planning_tomato") {
-      return availableWorksArray.filter((work) => work.prior_ < 100);
-    }
-    if (variant === "greenhouse_crops_works_works_planning_cucumber") {
-      return availableWorksArray.filter((work) => work.prior_ >= 100);
+      for (const item of availableWorksArray) {
+        if (item.type__ === "TECH" && item.prior_ < 100) {
+          filteredWorksArray.push(item);
+        }
+        if (item.type__ === "EXTRA" && item.ptc_kod.endsWith("POM")) {
+          filteredWorksArray.push(item);
+        }
+      }
     }
 
-    throw new Error("filteredWorksArrayDependingOnVariant -> bad variant");
+    if (variant === "greenhouse_crops_works_works_planning_cucumber") {
+      for (const item of availableWorksArray) {
+        if (item.type__ === "TECH" && item.prior_ >= 100) {
+          filteredWorksArray.push(item);
+        }
+        if (item.type__ === "EXTRA" && item.ptc_kod.endsWith("OGÓ")) {
+          filteredWorksArray.push(item);
+        }
+      }
+    }
+
+    if (
+      variant !== "greenhouse_crops_works_works_planning_cucumber" &&
+      variant !== "greenhouse_crops_works_works_planning_tomato"
+    ) {
+      throw new Error("filteredWorksArrayDependingOnVariant -> bad variant");
+    }
+
+    return filteredWorksArray;
   }, [variant, availableWorksArray]);
 
   return (

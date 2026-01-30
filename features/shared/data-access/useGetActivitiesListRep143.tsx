@@ -6,6 +6,8 @@ import {
   ZpRozActivityResponse,
 } from "../types/interfaces-activities_list";
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
+import { mapStringOrNullIntoDateOrNull } from "./mapping_helpers";
+import { parse } from "date-fns";
 
 export const useGetActivitiesListRep143 = () => {
   //vars
@@ -13,7 +15,7 @@ export const useGetActivitiesListRep143 = () => {
 
   async function getActivitiesList_Report143(
     ordnmb: string,
-    errorHandler: (error: Error, errorTitle?: string) => void
+    errorHandler: (error: Error, errorTitle?: string) => void,
   ): Promise<ZpRozActivity[] | null> {
     let response: ZpRozActivityResponse;
 
@@ -21,7 +23,7 @@ export const useGetActivitiesListRep143 = () => {
       response = await query_getDataAsServerAction<ZpRozActivityResponse>(
         configPerBuild.apiAddress,
         `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ActivitiesList}&ordnmb=${ordnmb}`,
-        token!
+        token!,
       );
 
       if (
@@ -29,7 +31,7 @@ export const useGetActivitiesListRep143 = () => {
         response.data.resultMainQuery.length === 0
       ) {
         toast.error(
-          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmb}).`
+          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmb}).`,
         );
         return null;
       }
@@ -41,6 +43,13 @@ export const useGetActivitiesListRep143 = () => {
         enabled1: zp.enabled1 === "t" ? true : false,
         id: Number.parseInt(zp.id),
         pcz_id: Number.parseInt(zp.pcz_id),
+        start_plan: zp.start_plan
+          ? parse(zp.start_plan, "yyyy-MM-dd HH:mm:ssX", new Date())
+          : null,
+        stop_plan: zp.stop_plan
+          ? parse(zp.stop_plan, "yyyy-MM-dd HH:mm:ssX", new Date())
+          : null,
+
         dscrpt: zp.dscrpt,
         ilebeg: Number.parseInt(zp.ilebeg),
         iledne: Number.parseInt(zp.iledne),

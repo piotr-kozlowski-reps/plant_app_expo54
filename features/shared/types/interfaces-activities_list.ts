@@ -3,6 +3,8 @@ export type ZpRozActivityDTO = {
   enabled1: string;
   id: string;
   pcz_id: string;
+  start_plan: null | string;
+  stop_plan: null | string;
   dscrpt: string;
   ilebeg: string;
   iledne: string;
@@ -16,6 +18,8 @@ export type ZpRozActivity = {
   enabled1: boolean;
   id: number;
   pcz_id: number;
+  start_plan: null | Date;
+  stop_plan: null | Date;
   dscrpt: string;
   ilebeg: number;
   iledne: number;

@@ -1,12 +1,16 @@
+import { ZpScannedValueToBeSent } from "./interfaces-extra_works";
 import { ZPShortenedInfoWithoutTwrnzw } from "./interfaces-zp";
 
-export type WorkToPlan = {
-  prior_: number;
-  ptc_kod: string;
-};
+export type WorkType = "TECH" | "EXTRA";
 export type WorkToPlanDTO = {
   prior_: string;
   ptc_kod: string;
+  type__: string;
+};
+export type WorkToPlan = {
+  prior_: number;
+  ptc_kod: string;
+  type__: WorkType;
 };
 
 export type WorkPlanningDataToSend = {
@@ -16,9 +20,12 @@ export type WorkPlanningDataToSend = {
 };
 
 export type WorkPlanningSendDataDTO = {
-  ordnmb: string;
-  id: number;
+  // ordnmb: string;
+  // id: number;
   plndat: Date;
+  ordnmb_json: ZpScannedValueToBeSent[] | null;
+  // type__: WorkType;
+  // sordid: number;
   scanned_raw_value: string;
 };
 export type WorkPlanningResponse = string[];
@@ -28,6 +35,7 @@ export type ZPInfoForWorkPlanning = {
   ordnmb: string;
   stkcnt: number;
   rozActivityId: number;
+
   scanned_raw_value: string;
 };
 

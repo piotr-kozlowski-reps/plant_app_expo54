@@ -11,21 +11,24 @@ import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { configPerBuild } from "@/features/shared/env/env";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
-import { useQueryClient } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/features/shared/constants/queryKeys";
+import { ZPItem } from "@/features/shared/types/interfaces-zp";
+import { useGet_CheckIfZPExistsInThisActivityId } from "@/features/shared/data-access/useGet_CheckIfZPExistsInThisActivityId";
+import { ZpScannedValueToBeSent } from "@/features/shared/types/interfaces-extra_works";
 
 export const useSendWorkToPlanInGreenhouseCrops = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   clearScannedValues: () => void,
-  closeFn: () => void
+  closeFn: () => void,
 ) => {
   ////vars
   const { addDaysToDate } = useDatesHelper();
   const { errorHandler } = useErrorHandler();
+  const checkIfZPExistsInThisActivityId =
+    useGet_CheckIfZPExistsInThisActivityId();
   const { token } = useAuthSessionStore();
 
   const sendWorkToPlanInGreenhouseCropsHandler = async (
-    valuesToSendOrderToHardener: WorkPlanningDataToSend
+    valuesToSendOrderToHardener: WorkPlanningDataToSend,
   ) => {
     const { scannedValues, workToPlan, inHowManyDays } =
       valuesToSendOrderToHardener;
@@ -47,28 +50,53 @@ export const useSendWorkToPlanInGreenhouseCrops = (
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (inHowManyDays < 3 && !isPossibleToProcess_Before13) {
       toast.warning(
-        ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW
+        ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
       );
       return;
     }
 
     const workPlanningDataToBeSent: WorkPlanningSendDataDTO[] = [];
-    scannedValues.forEach((zp) => {
+    scannedValues.forEach(async (zp) => {
+      const ZPFoundForThisActivityId:
+        | (ZPItem & { scanned_raw_value: string })[]
+        | null = await checkIfZPExistsInThisActivityId(
+        zp.scanned_raw_value,
+        token,
+        zp.rozActivityId,
+        "zp_roz",
+      );
+
+      // console.log({ ZPFoundForThisActivityId });
+
+      ///////////////
+
+      const ordnmb_jsonObject: ZpScannedValueToBeSent[] | null =
+        ZPFoundForThisActivityId
+          ? ZPFoundForThisActivityId.map((item) => ({
+              ...item,
+              treatid: null,
+              dscrpt: null,
+              plan_id: null,
+            }))
+          : null;
+
       const item: WorkPlanningSendDataDTO = {
-        ordnmb: zp.ordnmb,
-        id: zp.rozActivityId,
         plndat: addDaysToDate(
           new Date(Date.now()),
-          inHowManyDays ? inHowManyDays : 0
+          inHowManyDays ? inHowManyDays : 0,
         ),
+        ordnmb_json: ordnmb_jsonObject,
         scanned_raw_value: zp.scanned_raw_value,
       };
 
       workPlanningDataToBeSent.push(item);
     });
 
+    console.log({ workPlanningDataToBeSent });
+
     try {
       setIsLoading(true);
+      // alert("useSendWorkToPlanInGreenhouseCrops - turn on send to server");
       await sendToServer(workPlanningDataToBeSent);
     } catch (error) {
       errorHandler(error as Error);
@@ -94,20 +122,8 @@ export const useSendWorkToPlanInGreenhouseCrops = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/czynnosciplan",
       token!,
-      dataToBeSend
+      dataToBeSend,
     );
-
-    // //check if response array has the same amount of items as sent items
-    // //disabled
-    // // const responseIDsQuantity = response.length;
-    // // const sentItemsQuantity = dataToBeSend.length;
-
-    // // if (responseIDsQuantity === sentItemsQuantity) {
-    // //   toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
-    // // }
-    // // if (responseIDsQuantity !== sentItemsQuantity) {
-    // //   toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
-    // // }
 
     if (response && response.length) {
       toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
