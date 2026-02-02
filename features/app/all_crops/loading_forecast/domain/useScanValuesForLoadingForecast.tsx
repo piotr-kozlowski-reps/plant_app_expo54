@@ -1,29 +1,26 @@
 import { useAudioPlayer } from "expo-audio";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useState } from "react";
-import { ZPShortenedInfo } from "@/features/shared/types/interfaces-zp";
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import * as Haptics from "expo-haptics";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
-import { useScanZpOrTrayRep113 } from "@/features/shared/data-access/useScanZpOrTrayRep113";
 import {
   LoadingForecastInput,
   ZPLoadingForecastInfo,
 } from "@/features/shared/types/interfaces-loading_forecast";
 import { FormikProps } from "formik";
-import { useAllowScanOnlyZpOrTray } from "@/features/shared/utils/useAllowScanOnlyZpOrTray";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
 import { AllLoadingForecastSubmodules } from "@/features/shared/types/interfaces-auth";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForLoadingForecast = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   formik: FormikProps<LoadingForecastInput>,
-  submoduleType: AllLoadingForecastSubmodules
+  submoduleType: AllLoadingForecastSubmodules,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -32,6 +29,8 @@ export const useScanValuesForLoadingForecast = (
     useCheckWhatValueIsScannedHelpers();
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [qrLock, setQrLock] = useState(true);
@@ -52,9 +51,9 @@ export const useScanValuesForLoadingForecast = (
     const isRoz = submoduleType === "greenhouse_crops_works_loading_forecast";
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
+    const isScannedDataCorrect = checkIsScannedDataCorrect(
       scannedValue,
-      arrayOfAllowedScannedValues
+      arrayOfAllowedScannedValues,
     );
     if (!isScannedDataCorrect) {
       return;
@@ -72,7 +71,7 @@ export const useScanValuesForLoadingForecast = (
         const foundZP = await getZPInfo_Rep113(
           token!,
           scannedOrdnmb,
-          errorHandler
+          errorHandler,
         );
         if (!foundZP) return;
 
@@ -88,7 +87,7 @@ export const useScanValuesForLoadingForecast = (
           toast.warning(
             `Wprowadzono już prognozę załadunku dla tego zlecenia (${
               foundZP.outcnt
-            } ${isRoz ? "kostek" : "tac"}).`
+            } ${isRoz ? "kostek" : "tac"}).`,
           );
           return;
         }
@@ -96,7 +95,7 @@ export const useScanValuesForLoadingForecast = (
         //there was no plants coming ups counted - turned off - it may come back
         if (!foundZP.risecnt) {
           toast.warning(
-            `Nie przeliczono wschodów dla tego zlecenia (${foundZP.ordnmb}).`
+            `Nie przeliczono wschodów dla tego zlecenia (${foundZP.ordnmb}).`,
           );
           return;
         }
@@ -108,7 +107,7 @@ export const useScanValuesForLoadingForecast = (
           foundZP.stkcnt < foundZP.risecnt
         ) {
           toast.warning(
-            ERROR_MESSAGES.ORDER_HAS_NOT_ENOUGH_TRAYS_TO_FULFILL_ORDER
+            ERROR_MESSAGES.ORDER_HAS_NOT_ENOUGH_TRAYS_TO_FULFILL_ORDER,
           );
         }
 
@@ -130,7 +129,7 @@ export const useScanValuesForLoadingForecast = (
         //set quantity according to stkcnt in formik
         formik.setFieldValue(
           "traysQuantity",
-          foundZP.risecnt + Math.ceil(foundZP.risecnt * 0.02)
+          foundZP.risecnt + Math.ceil(foundZP.risecnt * 0.02),
         );
 
         //set zpInfo in formik to have access to zp data
@@ -142,7 +141,7 @@ export const useScanValuesForLoadingForecast = (
       }
 
       throw new Error(
-        "useScanValuesForCutGRU -> scanValueHandler - condition not implemented."
+        "useScanValuesForCutGRU -> scanValueHandler - condition not implemented.",
       );
     } catch (error) {
       console.error(error);

@@ -2,7 +2,6 @@ import * as Haptics from "expo-haptics";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useAudioPlayer } from "expo-audio";
 import { useState } from "react";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import {
@@ -14,23 +13,26 @@ import {
 import { toast } from "sonner-native";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import { useGetActivitiesListRep143 } from "@/features/shared/data-access/useGetActivitiesListRep143";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForGreenhouseCropsActionsConfirmation = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  variant: ActivityVariant
+  variant: ActivityVariant,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
   const { getActivitiesList_Report143 } = useGetActivitiesListRep143();
   const { getPureZPValue } = useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [scannedValue, setScannedValue] = useState<ZpRozWithActivities | null>(
-    null
+    null,
   );
   const [currentActivity, setCurrentActivity] = useState<ZpRozActivity | null>(
-    null
+    null,
   );
   const [currentActivityDetails, setCurrentActivityDetails] =
     useState<ZpRozActivityDetails | null>(null);
@@ -47,31 +49,26 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["zp_roz"]
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "zp_roz",
+    ]);
     if (!isScannedDataCorrect) return;
 
     try {
       setIsLoading(true);
 
       const ordnmbValue = getPureZPValue(scannedValue);
-      // const zpRozActivities = await queryClient.fetchQuery({
-      //   queryKey: [QUERY_KEYS.ACTIVITIES_PER_ZP, ordnmbValue],
-      //   queryFn: () => getActivitiesList_Report143(ordnmbValue, errorHandler),
-      // });
 
       const zpRozActivities = await getActivitiesList_Report143(
         ordnmbValue,
-        errorHandler
+        errorHandler,
       );
 
       /** guards */
       //any activities returned in list?
       if (!zpRozActivities) {
         toast.error(
-          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`
+          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`,
         );
         return;
       }
@@ -80,14 +77,14 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
       if (!checkIfVariantIsCorrect(variant, zpRozActivities)) {
         if (variant === "greenhouse_crops_works_activity_confirmation_tomato") {
           toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz potwierdzić pracę dla pomidora.`
+            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz potwierdzić pracę dla pomidora.`,
           );
         }
         if (
           variant === "greenhouse_crops_works_activity_confirmation_cucumber"
         ) {
           toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz potwierdzić pracę dla ogórka.`
+            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz potwierdzić pracę dla ogórka.`,
           );
         }
         return;
@@ -198,7 +195,7 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
   /** helpers */
   function checkIfVariantIsCorrect(
     variant: ActivityVariant,
-    zpRozActivities: ZpRozActivity[]
+    zpRozActivities: ZpRozActivity[],
   ): boolean {
     if (!zpRozActivities.length) {
       throw new Error("checkIfVariantIsCorrect -> !zpRozActivities.length");

@@ -14,12 +14,11 @@ import {
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { configPerBuild } from "@/features/shared/env/env";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
-
 import { useGetTrayReplacementInfo_Report88 } from "@/features/shared/data-access/useGetTrayReplacementInfo_Report88";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForReplaceTray = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -29,6 +28,8 @@ export const useScanValuesForReplaceTray = (
     useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
   const { token } = useAuthSessionStore();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [qrLock, setQrLock] = useState(true);
@@ -41,10 +42,10 @@ export const useScanValuesForReplaceTray = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["tray"]
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "tray",
+    ]);
+
     if (!isScannedDataCorrect) return;
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
@@ -67,7 +68,7 @@ export const useScanValuesForReplaceTray = (
 
         const trayReplacementResponse = await getTrayReplacementInfo_Report88(
           oldTray.stk_id,
-          newTrayId
+          newTrayId,
         );
 
         if (!trayReplacementResponse) {
@@ -79,7 +80,7 @@ export const useScanValuesForReplaceTray = (
         //check if that tray was not scanned already
         if (newTrayId === oldTray.stk_id) {
           toast.warning(
-            ERROR_MESSAGES.NEW_TRAY_MUST_BE_DIFFERENT_FROM_OLD_TRAY
+            ERROR_MESSAGES.NEW_TRAY_MUST_BE_DIFFERENT_FROM_OLD_TRAY,
           );
           return;
         }
@@ -114,7 +115,7 @@ export const useScanValuesForReplaceTray = (
 
   const sendValuesForReplaceTray = async (
     oldTray: TrayReplaceInfo | null,
-    newTray: TrayReplaceInfo | null
+    newTray: TrayReplaceInfo | null,
   ) => {
     if (!oldTray || !newTray) {
       toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_TRAYS);
@@ -157,7 +158,7 @@ export const useScanValuesForReplaceTray = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/replacestickers",
       token!,
-      [dataToBeSend]
+      [dataToBeSend],
     );
 
     //check if response array has the same amount of items as sent items

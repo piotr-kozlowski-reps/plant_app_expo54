@@ -6,29 +6,28 @@ import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCh
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-
 import { TrayInfoWithPics } from "@/features/shared/types/interfaces-destroy_tray";
 import { CameraView } from "expo-camera";
 import { useHandleTakingPictures } from "@/features/shared/utils/useHandleTakingPictures";
-
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { useScanTrayToBeDestroyedRep84 } from "@/features/shared/data-access/useScanTrayToBeDestroyedRep84";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForDestroyTray = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  cameraRef: React.MutableRefObject<CameraView | null>
+  cameraRef: React.MutableRefObject<CameraView | null>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
-  // const { scanZpOrTrayRep113 } = useScanZpOrTrayRep113();
   const { scanTrayToBeDestroyedRep84 } = useScanTrayToBeDestroyedRep84();
   const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [qrLock, setQrLock] = useState(true);
   const [scannedValue, setScannedValue] = useState<TrayInfoWithPics | null>(
-    null
+    null,
   );
   const {
     chosenPicture,
@@ -43,7 +42,7 @@ export const useScanValuesForDestroyTray = (
   } = useHandleTakingPictures<TrayInfoWithPics>(
     scannedValue,
     cameraRef,
-    setScannedValue
+    setScannedValue,
   );
 
   //fn
@@ -53,10 +52,9 @@ export const useScanValuesForDestroyTray = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["tray"]
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "tray",
+    ]);
     if (!isScannedDataCorrect) return;
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);

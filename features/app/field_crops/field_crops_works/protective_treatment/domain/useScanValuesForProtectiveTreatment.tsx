@@ -6,7 +6,6 @@ import {
   ProtectiveTreatment,
   WhoDidProtectiveTreatment,
 } from "@/features/shared/types/interfaces-protective_treatment";
-
 import { useState } from "react";
 import * as Haptics from "expo-haptics";
 import { useAudioPlayer } from "expo-audio";
@@ -17,18 +16,16 @@ import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useScanValueForExtraWorkHandler } from "@/features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
 import { MESSAGES } from "@/features/shared/utils/messages";
 import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/interfaces-localization";
-
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
 import { useRestOfLocalizationsHelpers } from "@/features/shared/utils/useRestOfLocalizationsHelpers";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForProtectiveTreatment = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
-  const { checkWhatValueWasScanned, getPureFieldValue } =
-    useCheckWhatValueIsScannedHelpers();
+  const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
   const {
     scanZpOrTrayHandler,
@@ -37,6 +34,8 @@ export const useScanValuesForProtectiveTreatment = (
   } = useScanValueForExtraWorkHandler();
   const { addRestOfLocalizationsWhenScannedFieldHandler } =
     useRestOfLocalizationsHelpers();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   /** state */
   //protective treatment data
@@ -53,7 +52,7 @@ export const useScanValuesForProtectiveTreatment = (
     isFieldScanned,
     setIsFieldScanned,
     isZPScanned,
-    setIsZPScanned
+    setIsZPScanned,
   );
   //force to scan field
   const [isForceToScanField, setIsForceToScanField] = useState(false);
@@ -74,7 +73,7 @@ export const useScanValuesForProtectiveTreatment = (
     quantity: number,
     treatment: ProtectiveTreatment,
     treatmentType: ExtraWork,
-    who: WhoDidProtectiveTreatment
+    who: WhoDidProtectiveTreatment,
   ) => {
     setQuantity(quantity);
     setTreatment(treatment);
@@ -87,10 +86,11 @@ export const useScanValuesForProtectiveTreatment = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["tray", "field", "zp_gru"]
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "tray",
+      "field",
+      "zp_gru",
+    ]);
     if (!isScannedDataCorrect) return;
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
@@ -114,7 +114,7 @@ export const useScanValuesForProtectiveTreatment = (
             setIsForceToScanField,
             setScannedZPOnManyFields,
           },
-          "zp_gru"
+          "zp_gru",
         );
         return;
       }
@@ -131,7 +131,7 @@ export const useScanValuesForProtectiveTreatment = (
             setIsForceToScanField,
             setScannedZPOnManyFields,
           },
-          "tray"
+          "tray",
         );
         return;
       }
@@ -147,7 +147,7 @@ export const useScanValuesForProtectiveTreatment = (
             setIsZPScanned,
           },
           true,
-          setRestOfLocalizations
+          setRestOfLocalizations,
         );
         return;
       }
@@ -166,7 +166,7 @@ export const useScanValuesForProtectiveTreatment = (
         forceChangeWhoDidProtectiveTreatmentToRobotWhenScannedField();
         await addRestOfLocalizationsWhenScannedFieldHandler(
           scannedValue,
-          setRestOfLocalizations
+          setRestOfLocalizations,
         );
 
         return;
@@ -183,7 +183,7 @@ export const useScanValuesForProtectiveTreatment = (
   const deleteScannedValue = (value: string) => {
     toast.success(MESSAGES.ZP_DELETED_SUCCESS);
     setScannedValues((prevValues) =>
-      prevValues.filter((v) => v.ordnmb !== value)
+      prevValues.filter((v) => v.ordnmb !== value),
     );
   };
 
@@ -230,7 +230,7 @@ export const useScanValuesForProtectiveTreatment = (
     if (who !== "ROBOT") {
       setWho("ROBOT");
       toast.warning(
-        MESSAGES.FORCE_CHANGE_WHO_DID_PROTECTIVE_TREATMENT_TO_ROBOT
+        MESSAGES.FORCE_CHANGE_WHO_DID_PROTECTIVE_TREATMENT_TO_ROBOT,
       );
     }
   }

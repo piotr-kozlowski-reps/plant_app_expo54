@@ -14,6 +14,7 @@ import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 import { useScanHelpers } from "@/features/shared/utils/useScanHelpers";
 import { useAudioPlayer } from "expo-audio";
 import * as Haptics from "expo-haptics";
@@ -32,6 +33,8 @@ export const useScanValuesForWorksPlanning = (
   const { checkIfValueIsAlreadyScanned } = useScanHelpers();
   const { getZPInfo_Rep113 } = useGetZPInfo_Report113();
   const { token } = useAuthSessionStore();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   ////state
   const [scannedValues, setScannedValues] = useState<ZPInfoForWorkPlanning[]>(
@@ -56,10 +59,9 @@ export const useScanValuesForWorksPlanning = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["zp_roz"],
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "zp_roz",
+    ]);
     if (!isScannedDataCorrect) return;
 
     try {

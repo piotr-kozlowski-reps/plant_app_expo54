@@ -10,12 +10,12 @@ import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
 import { useScanValueForExtraWorkHandler } from "./useScanValueForExtraWorkHandler";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScannedValues = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   isExtraWork230: boolean,
-  isRoz = false
+  isRoz = false,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -28,6 +28,8 @@ export const useScannedValues = (
     scanFieldWhenIsForcedToScanFieldForZP,
     scanField,
   } = useScanValueForExtraWorkHandler();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   /** state */
   //scanner
@@ -39,7 +41,7 @@ export const useScannedValues = (
     isFieldScanned,
     setIsFieldScanned,
     isZPScanned,
-    setIsZPScanned
+    setIsZPScanned,
   );
 
   //force to scan field
@@ -54,9 +56,9 @@ export const useScannedValues = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
+    const isScannedDataCorrect = checkIsScannedDataCorrect(
       scannedValue,
-      isRoz ? ["zp_roz", "field"] : ["zp_gru", "field"]
+      isRoz ? ["zp_roz", "field"] : ["zp_gru", "field"],
     );
     if (!isScannedDataCorrect) return;
 
@@ -81,7 +83,7 @@ export const useScannedValues = (
             setIsForceToScanField,
             setScannedZPOnManyFields,
           },
-          isRoz ? "zp_roz" : "zp_gru"
+          isRoz ? "zp_roz" : "zp_gru",
         );
 
         return;
@@ -97,7 +99,7 @@ export const useScannedValues = (
             setIsForceToScanField,
             setIsZPScanned,
           },
-          false
+          false,
         );
         return;
       }
@@ -132,7 +134,7 @@ export const useScannedValues = (
   const deleteScannedValue = (value: string) => {
     toast.success(MESSAGES.ZP_DELETED_SUCCESS);
     setScannedValues((prevValues) =>
-      prevValues.filter((v) => v.ordnmb !== value)
+      prevValues.filter((v) => v.ordnmb !== value),
     );
   };
 

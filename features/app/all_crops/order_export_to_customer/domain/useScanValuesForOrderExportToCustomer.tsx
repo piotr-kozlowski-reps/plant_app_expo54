@@ -7,21 +7,20 @@ import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useDatesHelper } from "@/features/shared/utils/useDatesHelper";
 import { CameraView } from "expo-camera";
-
 import { useHandleTakingPictures } from "@/features/shared/utils/useHandleTakingPictures";
 import { AllExportToCustomerSubmodules } from "@/features/shared/types/interfaces-auth";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import { getIsPossibleToProcess_After13_guard } from "@/features/shared/utils/guards/cannotOrderAfter13_guard";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForOrderExportToCustomer = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   cameraRef: React.MutableRefObject<CameraView | null>,
-  submoduleType: AllExportToCustomerSubmodules
+  submoduleType: AllExportToCustomerSubmodules,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -31,6 +30,8 @@ export const useScanValuesForOrderExportToCustomer = (
     useCheckWhatValueIsScannedHelpers();
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [qrLock, setQrLock] = useState(true);
@@ -51,7 +52,7 @@ export const useScanValuesForOrderExportToCustomer = (
   } = useHandleTakingPictures<ZPShortenedInfoWithPics>(
     scannedValue,
     cameraRef,
-    setScannedValue
+    setScannedValue,
   );
 
   //modals
@@ -70,10 +71,11 @@ export const useScanValuesForOrderExportToCustomer = (
         : ["tray", "zp_gru"];
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
+    const isScannedDataCorrect = checkIsScannedDataCorrect(
       scannedValue,
-      arrayOfAllowedScannedValues
+      arrayOfAllowedScannedValues,
     );
+
     if (!isScannedDataCorrect) {
       return;
     }
@@ -95,7 +97,7 @@ export const useScanValuesForOrderExportToCustomer = (
         const foundZP = await getZPInfo_Rep113(
           token!,
           scannedOrdnmb,
-          errorHandler
+          errorHandler,
         );
         if (!foundZP) return;
 
@@ -105,7 +107,7 @@ export const useScanValuesForOrderExportToCustomer = (
           toast.warning(
             `${
               ERROR_MESSAGES.DATE_OF_ORDER_EXPORT_TO_CUSTOMER_ALREADY_SET
-            } ${renderDateInPolishWay(foundZP.outmvplan)}.`
+            } ${renderDateInPolishWay(foundZP.outmvplan)}.`,
           );
           return;
         }
@@ -128,7 +130,7 @@ export const useScanValuesForOrderExportToCustomer = (
         };
 
         const resultOfChangingDate = changeDateInHowManyDaysAccordingToTMS(
-          ZPInfo.tmsdat
+          ZPInfo.tmsdat,
         );
         if (!resultOfChangingDate) {
           toast.warning(ERROR_MESSAGES.NO_TMS_DATE_IN_ZP);
@@ -140,7 +142,7 @@ export const useScanValuesForOrderExportToCustomer = (
       }
 
       throw new Error(
-        "useScanValuesForOrderToHardener -> scanValueHandler - condition not implemented."
+        "useScanValuesForOrderToHardener -> scanValueHandler - condition not implemented.",
       );
     } catch (error) {
       console.error(error);
@@ -155,7 +157,7 @@ export const useScanValuesForOrderExportToCustomer = (
         getIsPossibleToProcess_After13_guard();
       if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
         toast.warning(
-          ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW
+          ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
         );
         return;
       }

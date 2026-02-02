@@ -1,6 +1,5 @@
 import { useAudioPlayer } from "expo-audio";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
-import { useScanZpOrTrayRep113 } from "@/features/shared/data-access/useScanZpOrTrayRep113";
 import { useEffect, useState } from "react";
 import * as Haptics from "expo-haptics";
 import { toast } from "sonner-native";
@@ -15,16 +14,16 @@ import {
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { getIsPossibleToProcess_After13_guard } from "@/features/shared/utils/guards/cannotOrderAfter13_guard";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import { useDatesHelper } from "@/features/shared/utils/useDatesHelper";
 import { InfoModal } from "@/features/shared/types/interfaces-general";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForOrderNitrogenIrrigation = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   resetValuesForProtectiveTreatments: () => void,
-  nitrogenIrrigationList: ZpToNitrogenIrrigation[]
+  nitrogenIrrigationList: ZpToNitrogenIrrigation[],
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -35,6 +34,8 @@ export const useScanValuesForOrderNitrogenIrrigation = (
   const { getZPInfo_Rep113 } = useGetZPInfo_Report113();
   const { token } = useAuthSessionStore();
   const { renderDateInPolishWay } = useDatesHelper();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   ////states
 
@@ -52,7 +53,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
     isFieldScanned,
     setIsFieldScanned,
     isZPScanned,
-    setIsZPScanned
+    setIsZPScanned,
   );
 
   //modals
@@ -63,13 +64,13 @@ export const useScanValuesForOrderNitrogenIrrigation = (
     useState(false);
 
   const [infoModalDetails, setInfoModalDetails] = useState<InfoModal | null>(
-    null
+    null,
   );
   const showInfoConfirmationModal = (
     title: string,
     confirmationButtonName: string,
     info1: string,
-    info2?: string
+    info2?: string,
   ) => {
     setInfoModalDetails({
       title,
@@ -103,10 +104,11 @@ export const useScanValuesForOrderNitrogenIrrigation = (
     /** guards */
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["zp_gru", "field"]
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "zp_gru",
+      "field",
+    ]);
+
     if (!isScannedDataCorrect) return;
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
@@ -136,7 +138,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
                     "Uwaga",
                     "Potwierdzam",
                     "W lokalizacji znajduje się co najmniej jeden ZPek, który został już zlecony do podlewania azotem. Aktualne zlecenie zostanie ustawione dla wszystkich ZPeków w lokalizacji, poza tymi, które zostały zlecone wcześniej.",
-                    "Jeżeli lista jest pusta, to albo nie ma żadnych ZPków w lokalizacji, albo wszystkie są już zlecone do podlewania azotem."
+                    "Jeżeli lista jest pusta, to albo nie ma żadnych ZPków w lokalizacji, albo wszystkie są już zlecone do podlewania azotem.",
                   );
                   return true;
                 }
@@ -148,7 +150,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
         /** filter callbacks */
         const filter_filterOutZpsFromFieldWhenAreInListOfAlreadyOrderedZpsToIrrigateWithNitrogen_Callback =
           (
-            foundZPsPerLocalization: ZPInLocalizationInfo[]
+            foundZPsPerLocalization: ZPInLocalizationInfo[],
           ): ZPInLocalizationInfo[] => {
             const filteredElements: ZPInLocalizationInfo[] = [];
             for (const zpInLoc of foundZPsPerLocalization) {
@@ -186,13 +188,13 @@ export const useScanValuesForOrderNitrogenIrrigation = (
       if (isZP) {
         await scanZpForOrderNitrogenIrrigationHandler(
           scannedValue,
-          nitrogenIrrigationList
+          nitrogenIrrigationList,
         );
         return;
       }
 
       throw new Error(
-        "useScanValuesForOrderNitrogenIrrigation -> scanValueHandler - condition not implemented."
+        "useScanValuesForOrderNitrogenIrrigation -> scanValueHandler - condition not implemented.",
       );
     } catch (error) {
       errorHandler(error as Error);
@@ -213,7 +215,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
   };
 
   const deleteValueFromList = (
-    zpInfo: ZPShortenedInfoWithoutTwrnzw | null
+    zpInfo: ZPShortenedInfoWithoutTwrnzw | null,
   ): void => {
     if (zpInfo === null) {
       toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO);
@@ -222,7 +224,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
 
     toast.success(MESSAGES.ZP_DELETED_SUCCESS);
     const updatedValues = scannedValues.filter(
-      (zp) => zp.ordnmb !== zpInfo.ordnmb
+      (zp) => zp.ordnmb !== zpInfo.ordnmb,
     );
     setScannedValues(updatedValues);
   };
@@ -264,7 +266,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
   /** helpers */
   async function scanZpForOrderNitrogenIrrigationHandler(
     scannedValue: string,
-    nitrogenIrrigationList: ZpToNitrogenIrrigation[]
+    nitrogenIrrigationList: ZpToNitrogenIrrigation[],
   ) {
     /** guards */
     //check if scanned ZP
@@ -277,7 +279,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
     if (
       checkIfValueIsAlreadyScanned<ZPShortenedInfoWithoutTwrnzw>(
         scannedOrdnmb,
-        scannedValues
+        scannedValues,
       )
     ) {
       toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
@@ -286,15 +288,15 @@ export const useScanValuesForOrderNitrogenIrrigation = (
 
     //check if scanned ZP was on nitrogen irrigation list
     const foundZPOnNitrogenList = nitrogenIrrigationList.find(
-      (zp) => zp.ordnmb === scannedOrdnmb
+      (zp) => zp.ordnmb === scannedOrdnmb,
     );
     if (foundZPOnNitrogenList) {
       toast.warning(
         `To zlecenie (${
           foundZPOnNitrogenList.ordnmb
         }) już zaplanowano na: ${renderDateInPolishWay(
-          foundZPOnNitrogenList.nitrogen_irrigation_date
-        )}`
+          foundZPOnNitrogenList.nitrogen_irrigation_date,
+        )}`,
       );
       return;
     }

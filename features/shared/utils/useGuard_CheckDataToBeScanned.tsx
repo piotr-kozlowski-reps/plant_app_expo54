@@ -5,7 +5,7 @@ import { ERROR_MESSAGES } from "./messages";
 
 export const useGuard_CheckDataToBeScanned = (
   scannedValue: string,
-  typesOfAllowedValues: TypeOfScannedValue[]
+  typesOfAllowedValues: TypeOfScannedValue[],
 ) => {
   ////vars
   const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();

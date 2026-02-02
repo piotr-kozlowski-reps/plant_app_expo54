@@ -4,11 +4,11 @@ import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useAudioPlayer } from "expo-audio";
 import { useState } from "react";
 import * as Haptics from "expo-haptics";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { configPerBuild } from "@/features/shared/env/env";
 import { getRepId1695 } from "@/features/shared/data-access/getRepId1695";
 import { TechnicalInformation } from "@/features/shared/types/interfaces-information";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForTechnologicalInformation = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -18,6 +18,8 @@ export const useScanValuesForTechnologicalInformation = (
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
   const { getPureZPValue } = useCheckWhatValueIsScannedHelpers();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [qrLock, setQrLock] = useState(true);
@@ -38,10 +40,10 @@ export const useScanValuesForTechnologicalInformation = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["zp_roz", "zp_gru"],
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "zp_roz",
+      "zp_gru",
+    ]);
     if (!isScannedDataCorrect) return;
 
     try {

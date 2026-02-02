@@ -14,25 +14,25 @@ import { ZPShortenedInfoWithoutTwrnzw } from "@/features/shared/types/interfaces
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import { useGetTrayInfo_Report113 } from "@/features/shared/data-access/useGetTrayInfo_Report113";
 import { AllCropsOrdersSubmodules } from "@/features/shared/types/interfaces-auth";
-
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
-
 import { useScanHelpers } from "@/features/shared/utils/useScanHelpers";
 import { getIsPossibleToProcess_After13_guard } from "@/features/shared/utils/guards/cannotOrderAfter13_guard";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForOrderToHardener = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  whatOrderType: AllCropsOrdersSubmodules
+  whatOrderType: AllCropsOrdersSubmodules,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
-  const { checkWhatValueWasScanned, getPureFieldValue, getPureZPValue } =
+  const { checkWhatValueWasScanned, getPureZPValue } =
     useCheckWhatValueIsScannedHelpers();
   const { getZPInfo_Rep113 } = useGetZPInfo_Report113();
   const { getTrayInfo_Rep113 } = useGetTrayInfo_Report113();
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
   const { checkIfValueIsAlreadyScanned, scanField } = useScanHelpers();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [qrLock, setQrLock] = useState(true);
@@ -46,7 +46,7 @@ export const useScanValuesForOrderToHardener = (
     isFieldScanned,
     setIsFieldScanned,
     isZPScanned,
-    setIsZPScanned
+    setIsZPScanned,
   );
   const [ZPSelected, setZPSelected] =
     useState<ZPShortenedInfoWithoutTwrnzw | null>(null);
@@ -64,11 +64,11 @@ export const useScanValuesForOrderToHardener = (
     player.seekTo(0);
     player.play();
 
-    //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["tray", "field", "zp_gru"]
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "tray",
+      "field",
+      "zp_gru",
+    ]);
     if (!isScannedDataCorrect) return;
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
@@ -109,7 +109,7 @@ export const useScanValuesForOrderToHardener = (
       }
 
       throw new Error(
-        "useScanValuesForOrderToHardener -> scanValueHandler - condition not implemented."
+        "useScanValuesForOrderToHardener -> scanValueHandler - condition not implemented.",
       );
     } catch (error) {
       errorHandler(error as Error);
@@ -123,7 +123,7 @@ export const useScanValuesForOrderToHardener = (
   };
 
   const deleteValueFromList = (
-    zpInfo: ZPShortenedInfoWithoutTwrnzw | null
+    zpInfo: ZPShortenedInfoWithoutTwrnzw | null,
   ): void => {
     if (zpInfo === null) {
       toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO);
@@ -132,7 +132,7 @@ export const useScanValuesForOrderToHardener = (
 
     toast.success(MESSAGES.ZP_DELETED_SUCCESS);
     const updatedValues = scannedValues.filter(
-      (zp) => zp.ordnmb !== zpInfo.ordnmb
+      (zp) => zp.ordnmb !== zpInfo.ordnmb,
     );
     setScannedValues(updatedValues);
   };
@@ -148,7 +148,7 @@ export const useScanValuesForOrderToHardener = (
         getIsPossibleToProcess_After13_guard();
       if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
         toast.warning(
-          ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW
+          ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
         );
         return;
       }
@@ -191,14 +191,14 @@ export const useScanValuesForOrderToHardener = (
   /** helpers */
   async function scanZpOrTrayForOrderToHardenerHandler(
     scannedValue: string,
-    whatValueWasScanned: TypeOfScannedValue
+    whatValueWasScanned: TypeOfScannedValue,
   ) {
     if (whatValueWasScanned !== "tray" && whatValueWasScanned !== "zp_gru") {
       toast.warning(
         ERROR_MESSAGES.WRONG_PARAMETER +
           "-> " +
           whatValueWasScanned +
-          " -> scanZpOrTrayForOrderToHardenerHandler"
+          " -> scanZpOrTrayForOrderToHardenerHandler",
       );
       return;
     }
@@ -209,7 +209,7 @@ export const useScanValuesForOrderToHardener = (
       if (
         checkIfValueIsAlreadyScanned<ZPShortenedInfoWithoutTwrnzw>(
           scannedOrdnmb,
-          scannedValues
+          scannedValues,
         )
       ) {
         toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
@@ -221,7 +221,7 @@ export const useScanValuesForOrderToHardener = (
       const foundZP = await getZPInfo_Rep113(
         token!,
         scannedOrdnmb,
-        errorHandler
+        errorHandler,
       );
       if (!foundZP) {
         toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
@@ -257,7 +257,7 @@ export const useScanValuesForOrderToHardener = (
       const foundTray = await getTrayInfo_Rep113(
         token!,
         scannedValue,
-        errorHandler
+        errorHandler,
       );
       if (!foundTray) {
         toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);

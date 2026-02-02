@@ -4,23 +4,25 @@ import { useAudioPlayer } from "expo-audio";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useState } from "react";
 import * as Haptics from "expo-haptics";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
+import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
 export const useScanValuesForConfirmationNitrogenIrrigation = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
   const { scanZpOrTrayRep113 } = useScanZpOrTrayRep113();
   const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
+  const { checkIsScannedDataCorrect } =
+    useGuard_CheckDataToBeScanned_ReturnFunction();
 
   //states
   const [qrLock, setQrLock] = useState(true);
   const [scannedValue, setScannedValue] = useState<ZPShortenedInfo | null>(
-    null
+    null,
   );
 
   //fn
@@ -30,10 +32,10 @@ export const useScanValuesForConfirmationNitrogenIrrigation = (
     player.play();
 
     //check allowed scanned values
-    const { isScannedDataCorrect } = useGuard_CheckDataToBeScanned(
-      scannedValue,
-      ["tray", "zp_gru"]
-    );
+    const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
+      "tray",
+      "zp_gru",
+    ]);
     if (!isScannedDataCorrect) return;
 
     try {
@@ -42,7 +44,7 @@ export const useScanValuesForConfirmationNitrogenIrrigation = (
       const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
       const foundZP = await scanZpOrTrayRep113(
         scannedValue,
-        whatValueWasScanned
+        whatValueWasScanned,
       );
       if (!foundZP) return;
 
