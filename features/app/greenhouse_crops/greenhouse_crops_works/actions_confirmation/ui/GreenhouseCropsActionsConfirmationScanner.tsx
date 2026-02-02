@@ -49,7 +49,7 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
 
   const { activityDetails, updateQuantity } = useGetActivityData(
     currentActivity,
-    setIsLoading
+    setIsLoading,
   );
 
   const appPathName = useMemo(() => {

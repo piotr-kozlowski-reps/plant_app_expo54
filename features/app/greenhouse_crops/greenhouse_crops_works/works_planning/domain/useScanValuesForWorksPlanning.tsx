@@ -128,8 +128,19 @@ export const useScanValuesForWorksPlanning = (
       }
 
       //is work already done - status if different than null
-      if (foundWorkToPlan.status !== null) {
+      if (
+        foundWorkToPlan.type__ === "TECH" &&
+        foundWorkToPlan.status !== null
+      ) {
         toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_DONE);
+        return;
+      }
+
+      if (
+        foundWorkToPlan.type__ === "EXTRA" &&
+        foundWorkToPlan.status !== null
+      ) {
+        toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED);
         return;
       }
 

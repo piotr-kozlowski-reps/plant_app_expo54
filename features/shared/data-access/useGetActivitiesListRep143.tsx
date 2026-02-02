@@ -6,8 +6,9 @@ import {
   ZpRozActivityResponse,
 } from "../types/interfaces-activities_list";
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
-import { mapStringOrNullIntoDateOrNull } from "./mapping_helpers";
 import { parse } from "date-fns";
+import { MapStringValueIntoWorkType } from "../utils/getEdocReports/lib/mapping/implementations/MapStringValueIntoWorkType";
+import { mapStringIntoWorkType } from "./mapping_helpers";
 
 export const useGetActivitiesListRep143 = () => {
   //vars
@@ -58,6 +59,7 @@ export const useGetActivitiesListRep143 = () => {
         pcz_pzlid: Number.parseInt(zp.pcz_pzlid),
         prior: Number.parseInt(zp.prior),
         enabled: zp.enabled === "t" ? true : false,
+        type__: mapStringIntoWorkType(zp.type__),
       }));
 
       return zpRozActivities;

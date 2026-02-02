@@ -55,13 +55,8 @@ export const useSendWorkToPlanInGreenhouseCrops = (
       return;
     }
 
-    console.log({ scannedValues });
-
     const workPlanningDataToBeSent: WorkPlanningSendDataDTO[] = [];
     for (const zp of scannedValues) {
-      console.log("for ...loop");
-      console.log({ zp });
-
       const ZPFoundForThisActivityId:
         | (ZPItem & { scanned_raw_value: string })[]
         | null = await checkIfZPExistsInThisActivityId(
@@ -70,8 +65,6 @@ export const useSendWorkToPlanInGreenhouseCrops = (
         zp.rozActivityId,
         "zp_roz",
       );
-      console.log({ ZPFoundForThisActivityId });
-      console.log({ workToPlan });
 
       const ordnmb_jsonObject: ZpScannedValueToBeSent[] | null =
         ZPFoundForThisActivityId
@@ -96,44 +89,8 @@ export const useSendWorkToPlanInGreenhouseCrops = (
 
       workPlanningDataToBeSent.push(item);
     }
-    ///////////
-    // scannedValues.forEach(async (zp) => {
-    //   const ZPFoundForThisActivityId:
-    //     | (ZPItem & { scanned_raw_value: string })[]
-    //     | null = await checkIfZPExistsInThisActivityId(
-    //     zp.scanned_raw_value,
-    //     token,
-    //     zp.rozActivityId,
-    //     "zp_roz",
-    //   );
 
-    //   // console.log({ ZPFoundForThisActivityId });
-
-    //   ///////////////
-
-    //   const ordnmb_jsonObject: ZpScannedValueToBeSent[] | null =
-    //     ZPFoundForThisActivityId
-    //       ? ZPFoundForThisActivityId.map((item) => ({
-    //           ...item,
-    //           treatid: null,
-    //           dscrpt: null,
-    //           plan_id: null,
-    //         }))
-    //       : null;
-
-    //   const item: WorkPlanningSendDataDTO = {
-    //     plndat: addDaysToDate(
-    //       new Date(Date.now()),
-    //       inHowManyDays ? inHowManyDays : 0,
-    //     ),
-    //     ordnmb_json: ordnmb_jsonObject,
-    //     scanned_raw_value: zp.scanned_raw_value,
-    //   };
-
-    //   workPlanningDataToBeSent.push(item);
-    // });
-
-    console.log({ workPlanningDataToBeSent });
+    // console.log({ workPlanningDataToBeSent });
 
     try {
       setIsLoading(true);

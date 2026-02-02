@@ -1,3 +1,5 @@
+import { WorkType } from "../types/interfaces-works_planning";
+
 //string to number or number | null
 export function mapStringIntoInteger(value: string): number {
   if (!checkIfStringIsNumeric(value)) {
@@ -63,6 +65,36 @@ export function mapStringOrNullIntoBooleanOrNull(value: string | null) {
   if (!value) return null;
   return mapStringIntoBoolean(value);
 }
+
+export function mapStringIntoWorkType(value: string): WorkType {
+  if (!value || (value !== "TECH" && value !== "EXTRA")) {
+    throw new Error(
+      "mapStringIntoWorkType -> value is not TECH or EXTRA so it cannot be mapped to type:  WorkType",
+    );
+  }
+
+  if (value === "EXTRA") return "EXTRA";
+  if (value === "TECH") return "TECH";
+
+  throw new Error(
+    "mapStringIntoWorkType -> value is not TECH or EXTRA so it cannot be mapped to type:  WorkType",
+  );
+}
+
+//   map(value: string): WorkType {
+//     if (value !== "TECH" && value !== "EXTRA") {
+//       throw new Error(
+//         "MapStringValueIntoWorkType -> value is not TECH or EXTRA so it cannot be mapped to type:  WorkType",
+//       );
+//     }
+//     if (value === "EXTRA") return "EXTRA";
+//     if (value === "TECH") return "TECH";
+
+//     throw new Error(
+//       "MapStringValueIntoWorkType -> value is not TECH or EXTRA so it cannot be mapped to type:  WorkType",
+//     );
+//   }
+// }
 
 ////helpers
 export const checkIfStringIsNumeric = (num: unknown) =>

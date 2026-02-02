@@ -1,4 +1,7 @@
+import { WorkType } from "./interfaces-works_planning";
+
 export type ZpRozActivityDTO = {
+  type__: string;
   is_active: string;
   enabled1: string;
   id: string;
@@ -15,6 +18,7 @@ export type ZpRozActivityDTO = {
   enabled: string;
 };
 export type ZpRozActivity = {
+  type__: WorkType;
   is_active: boolean;
   enabled1: boolean;
   id: number;

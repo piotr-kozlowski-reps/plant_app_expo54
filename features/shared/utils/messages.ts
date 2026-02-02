@@ -78,6 +78,8 @@ export const ERROR_MESSAGES = {
   ONLY_ZP_POSSIBLE: "Możesz zeskanować tylko QR kod ZPka.",
   WORK_TO_PLAN_IS_ALREADY_DONE:
     "Nie możesz zaplanować tej pracy, jej wykonanie zostało już potwierdzone.",
+  WORK_TO_PLAN_IS_ALREADY_PLANNED:
+    "Nie możesz zaplanować tej czynności, ponieważ została już zaplanowana. W celu zmiany zgłoś się do administratora.",
   ONLY_ZP_OR_LOCALIZATION_POSSIBLE:
     "Możesz zeskanować tylko QR kod lokalizacji lub ZPka.",
   NO_ZPS_WHERE_DATE_OF_ORDER_TO_INTERNAL_TRANSPORT_WAS_NOT_SET:
