@@ -89,6 +89,7 @@ export const useScanValuesForWorksPlanning = (
         ordnmbValue,
         errorHandler,
       );
+      console.log({ zpRozActivities });
       const zpRozActivitiesFiltered =
         variant === "greenhouse_crops_works_works_planning_tomato"
           ? zpRozActivities?.filter((item) => item.dscrpt.endsWith("POM"))
@@ -101,6 +102,7 @@ export const useScanValuesForWorksPlanning = (
         return;
       }
 
+      console.log({ zpRozActivitiesFiltered });
       //is work to plan available for scanned ZP
       const foundWorkToPlan = zpRozActivitiesFiltered.find(
         (act) => act.dscrpt === workToPlan.ptc_kod,

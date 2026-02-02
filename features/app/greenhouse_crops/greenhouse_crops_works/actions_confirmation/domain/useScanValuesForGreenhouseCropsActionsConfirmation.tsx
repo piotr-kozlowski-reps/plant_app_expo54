@@ -40,6 +40,8 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
   //modals
   const [isShowConfirmActivityModal, setIsShowConfirmActivityModal] =
     useShowModal();
+  const [isShowConfirmForExtraWorksModal, setIsShowConfirmForExtraWorksModal] =
+    useShowModal();
   const [isShowQuantityModal, setShowQuantityModal] = useShowModal(false);
 
   //fn
@@ -106,9 +108,19 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     setCurrentActivity(activity);
     setIsShowConfirmActivityModal(true);
   };
+  const openActionConfirmationForExtraWorksModal = (
+    activity: ZpRozActivity,
+  ) => {
+    setCurrentActivity(activity);
+    setIsShowConfirmForExtraWorksModal(true);
+  };
   const closeActionConfirmationModal = () => {
     setCurrentActivity(null);
     setIsShowConfirmActivityModal(false);
+  };
+  const closeActionConfirmationForExtraWorksModal = () => {
+    setCurrentActivity(null);
+    setIsShowConfirmForExtraWorksModal(false);
   };
 
   const openActivityQuantityModal = (activityDetails: ZpRozActivityDetails) => {
@@ -224,6 +236,7 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     isShowConfirmActivityModal,
     isShowQuantityModal,
     currentActivityDetails,
+    isShowConfirmForExtraWorksModal,
 
     setShowQuantityModal,
     scanValueHandler,
@@ -233,5 +246,7 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     closeActivityQuantityModal,
     goBackToScanner,
     refetchActivitiesData,
+    openActionConfirmationForExtraWorksModal,
+    closeActionConfirmationForExtraWorksModal,
   };
 };

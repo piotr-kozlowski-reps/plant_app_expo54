@@ -21,6 +21,12 @@ import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import ConfirmationActivityModal from "./ConfirmationActivityModal";
 import ActivityQuantityModal from "./ActivityQuantityModal";
 import { useGetActivityData } from "../domain/useGetActivityData";
+import {
+  isSeparator,
+  Separator,
+} from "@/features/shared/types/interfaces-general";
+import { WorkType } from "@/features/shared/types/interfaces-works_planning";
+import ConfirmationForExtraWorkModal from "./ConfirmationForExtraWorkModal";
 
 type Props = {
   variant: ActivityVariant;
@@ -37,6 +43,7 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
     isShowConfirmActivityModal,
     isShowQuantityModal,
     currentActivityDetails,
+    isShowConfirmForExtraWorksModal,
 
     scanValueHandler,
     openActionConfirmationModal,
@@ -45,6 +52,8 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
     closeActivityQuantityModal,
     goBackToScanner,
     refetchActivitiesData,
+    openActionConfirmationForExtraWorksModal,
+    closeActionConfirmationForExtraWorksModal,
   } = useScanValuesForGreenhouseCropsActionsConfirmation(setIsLoading, variant);
 
   const { activityDetails, updateQuantity } = useGetActivityData(
@@ -57,6 +66,23 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
       ? "Potwierdzanie czynności - pomidor"
       : "Potwierdzanie czynności - ogórek";
   }, [variant]);
+
+  const preparedDataToDisplay: (ZpRozActivity | Separator)[] = useMemo(() => {
+    let currentType: WorkType = "TECH";
+
+    const tempArray: (ZpRozActivity | Separator)[] = [];
+    for (const item of scannedValue?.activities || []) {
+      if (item.type__ === currentType) {
+        tempArray.push(item);
+      }
+      if (item.type__ !== currentType) {
+        currentType = item.type__;
+        tempArray.push({ type__: "separator" });
+        tempArray.push(item);
+      }
+    }
+    return tempArray;
+  }, [scannedValue]);
 
   ////tsx
   return (
@@ -133,15 +159,46 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
             </View>
 
             <View className="flex-1 w-full px-6">
-              <FlatList<ZpRozActivity>
-                data={scannedValue.activities}
-                renderItem={({ item }: { item: ZpRozActivity }) => (
-                  <ActivityListItem
-                    activity={item}
-                    actionFn={openActionConfirmationModal}
-                    allActivities={scannedValue.activities}
-                  />
-                )}
+              <FlatList<ZpRozActivity | Separator>
+                data={preparedDataToDisplay}
+                renderItem={({ item }: { item: ZpRozActivity | Separator }) => {
+                  if (isZpRozActivity(item) && item.type__ === "TECH") {
+                    return (
+                      <ActivityListItem
+                        activity={item}
+                        actionFn={openActionConfirmationModal}
+                        allActivities={scannedValue.activities}
+                      />
+                    );
+                  }
+
+                  if (isZpRozActivity(item) && item.type__ === "EXTRA") {
+                    return (
+                      <ActivityListItem
+                        activity={item}
+                        actionFn={openActionConfirmationForExtraWorksModal}
+                        allActivities={scannedValue.activities}
+                      />
+                    );
+                  }
+
+                  if (isSeparator(item)) {
+                    return (
+                      <View className="flex items-center justify-center w-full mt-2 mb-6">
+                        <View className="w-32 h-[2px]  bg-foreground"></View>
+                      </View>
+                    );
+                  }
+
+                  return <></>;
+                }}
+                // (
+                //   <ActivityListItem
+                //     activity={item}
+                //     actionFn={openActionConfirmationModal}
+                //     allActivities={scannedValue.activities}
+                //   />
+                // )}
                 // refreshing={isLoading}
                 // onRefresh={refreshAllData}
                 initialNumToRender={10}
@@ -156,6 +213,29 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
             </View>
           </SafeAreaView>
         ) : null}
+
+        {/* confirm extra work -  modal */}
+        <ModalInternal
+          isOpen={isShowConfirmForExtraWorksModal}
+          isTransparent={false}
+          backgroundColor={yellowColor}
+        >
+          <ConfirmationForExtraWorkModal
+            setIsLoading={setIsLoading}
+            closeFn={closeActionConfirmationForExtraWorksModal}
+            currentActivity={currentActivity}
+            zp={scannedValue}
+          />
+          {/* <ConfirmationActivityModal
+            setIsLoading={setIsLoading}
+            closeFn={closeActionConfirmationModal}
+            currentActivity={currentActivity}
+            openQuantityModal={openActivityQuantityModal}
+            activityDetails={activityDetails}
+            allActivities={scannedValue?.activities}
+            refetchActivitiesData={refetchActivitiesData}
+          /> */}
+        </ModalInternal>
 
         {/* choose activity details -  modal */}
         <ModalInternal
@@ -195,3 +275,18 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
 };
 
 export default GreenhouseCropsActionsConfirmationScanner;
+
+////utils
+function isZpRozActivity(testedObject: any): testedObject is ZpRozActivity {
+  return (
+    typeof testedObject === "object" &&
+    testedObject !== null &&
+    "type__" in testedObject &&
+    "dscrpt" in testedObject &&
+    "activityid" in testedObject &&
+    "prior" in testedObject &&
+    typeof (testedObject as any).prior === "number" &&
+    typeof (testedObject as any).dscrpt === "string" &&
+    typeof (testedObject as any).type__ === "string"
+  );
+}

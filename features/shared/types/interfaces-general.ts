@@ -58,3 +58,13 @@ export type DTOReportReturnType<T> = {
     resultMainQuery: T[] | -1;
   };
 };
+
+export type Separator = { type__: "separator" };
+export function isSeparator(testedObject: any): testedObject is Separator {
+  return (
+    typeof testedObject === "object" &&
+    testedObject !== null &&
+    "type__" in testedObject &&
+    typeof (testedObject as any).type__ === "string"
+  );
+}

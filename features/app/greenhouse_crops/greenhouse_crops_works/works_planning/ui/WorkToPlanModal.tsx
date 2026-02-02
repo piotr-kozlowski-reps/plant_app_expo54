@@ -18,6 +18,10 @@ import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { FlatList } from "react-native-gesture-handler";
 import { toast } from "sonner-native";
 import { useMemo } from "react";
+import {
+  isSeparator,
+  Separator,
+} from "@/features/shared/types/interfaces-general";
 
 type Props = {
   closeFn: () => void;
@@ -27,7 +31,6 @@ type Props = {
   setTargetWorkToPlan: (workToPlan: WorkToPlan) => void;
   appPathName: string;
 };
-type Separator = { type__: "separator" };
 
 const TargetLocalizationModal = (props: Props) => {
   ////vars
@@ -153,12 +156,3 @@ function isWorkToPlan(testedObject: any): testedObject is WorkToPlan {
     typeof (testedObject as any).type__ === "string"
   );
 }
-function isSeparator(testedObject: any): testedObject is Separator {
-  return (
-    typeof testedObject === "object" &&
-    testedObject !== null &&
-    "type__" in testedObject &&
-    typeof (testedObject as any).type__ === "string"
-  );
-}
-// type Separator = { type__: "separator" };
