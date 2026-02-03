@@ -204,6 +204,10 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     //   });
   };
 
+  const clearScannedValues = () => {
+    setScannedValue(null);
+  };
+
   /** helpers */
   function checkIfVariantIsCorrect(
     variant: ActivityVariant,
@@ -248,5 +252,6 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     refetchActivitiesData,
     openActionConfirmationForExtraWorksModal,
     closeActionConfirmationForExtraWorksModal,
+    clearScannedValues,
   };
 };

@@ -23,6 +23,7 @@ type Props = {
   closeFn: () => void;
   currentActivity: ZpRozActivity | null;
   zp: ZpRozWithActivities | null;
+  clearScannedValues: () => void;
   // openQuantityModal: (activityDetails: ZpRozActivityDetails) => void;
   // activityDetails: ZpRozActivityDetails[];
   // allActivities: ZpRozActivity[] | undefined;
@@ -31,7 +32,8 @@ type Props = {
 
 export default function ConfirmationForExtraWorkModal(props: Props) {
   ////vars
-  const { currentActivity, zp, closeFn, setIsLoading } = props;
+  const { currentActivity, zp, closeFn, setIsLoading, clearScannedValues } =
+    props;
   const checkIfZPExistsInThisActivityId =
     useGet_CheckIfZPExistsInThisActivityId();
   const { token } = useAuthSessionStore();
@@ -58,10 +60,6 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
     }
   }, [isLoading, isFetching, setIsLoading]);
 
-  console.log({ currentActivity });
-  console.log({ zp });
-  console.log({ data });
-
   const canConfirmationBeSubmitted = false;
 
   type ConfirmationForExtraWork_PostDTO = {
@@ -73,7 +71,7 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
 
   const sendDataHandler = async () => {
     if (!currentActivity || !zp || !data || !data.length) {
-      alert("sendDataHandler => ogarnij");
+      toast.error(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
       return;
     }
 
@@ -93,8 +91,6 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
       },
     ];
 
-    console.log({ dataToBeSend });
-
     try {
       setIsLoading(true);
 
@@ -108,8 +104,6 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
         dataToBeSend,
       );
 
-      console.log({ response });
-
       // await send_ExtraWork_PostMutation(dataToBeSent);
       toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
       queryClient.invalidateQueries({
@@ -120,8 +114,8 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
       toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
     } finally {
       setIsLoading(false);
-      // clearScannedValues();
-      // closeFn();
+      clearScannedValues();
+      closeFn();
     }
   };
 

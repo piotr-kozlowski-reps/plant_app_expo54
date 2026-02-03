@@ -1,31 +1,31 @@
-import {
-  GREENHOUSE_CROPS,
-  INDEX,
-} from "@/features/shared/types/interfaces-navigation";
-import AppPath from "@/features/shared/ui/app-path/AppPath";
-import CameraScanner from "@/features/shared/ui/camera_view_scanner/CameraScanner";
-import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import { useMemo, useState } from "react";
-import { View, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useScanValuesForGreenhouseCropsActionsConfirmation } from "../domain/useScanValuesForGreenhouseCropsActionsConfirmation";
-import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-import { FlatList } from "react-native-gesture-handler";
+import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import {
   ActivityVariant,
   ZpRozActivity,
 } from "@/features/shared/types/interfaces-activities_list";
-import ActivityListItem from "./ActivityListItem";
-import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
-import { yellowColor } from "@/features/shared/constants/colorThemeVars";
-import ConfirmationActivityModal from "./ConfirmationActivityModal";
-import ActivityQuantityModal from "./ActivityQuantityModal";
-import { useGetActivityData } from "../domain/useGetActivityData";
 import {
   isSeparator,
   Separator,
 } from "@/features/shared/types/interfaces-general";
+import {
+  GREENHOUSE_CROPS,
+  INDEX,
+} from "@/features/shared/types/interfaces-navigation";
 import { WorkType } from "@/features/shared/types/interfaces-works_planning";
+import AppPath from "@/features/shared/ui/app-path/AppPath";
+import ButtonBack from "@/features/shared/ui/button/ButtonBack";
+import CameraScanner from "@/features/shared/ui/camera_view_scanner/CameraScanner";
+import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
+import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
+import { useMemo, useState } from "react";
+import { Text, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useGetActivityData } from "../domain/useGetActivityData";
+import { useScanValuesForGreenhouseCropsActionsConfirmation } from "../domain/useScanValuesForGreenhouseCropsActionsConfirmation";
+import ActivityListItem from "./ActivityListItem";
+import ActivityQuantityModal from "./ActivityQuantityModal";
+import ConfirmationActivityModal from "./ConfirmationActivityModal";
 import ConfirmationForExtraWorkModal from "./ConfirmationForExtraWorkModal";
 
 type Props = {
@@ -54,6 +54,7 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
     refetchActivitiesData,
     openActionConfirmationForExtraWorksModal,
     closeActionConfirmationForExtraWorksModal,
+    clearScannedValues,
   } = useScanValuesForGreenhouseCropsActionsConfirmation(setIsLoading, variant);
 
   const { activityDetails, updateQuantity } = useGetActivityData(
@@ -71,7 +72,26 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
     let currentType: WorkType = "TECH";
 
     const tempArray: (ZpRozActivity | Separator)[] = [];
+
     for (const item of scannedValue?.activities || []) {
+      //filter if not cucumber extra work
+      if (
+        variant === "greenhouse_crops_works_activity_confirmation_cucumber" &&
+        item.type__ !== "TECH" &&
+        item.dscrpt.endsWith("POM")
+      ) {
+        continue;
+      }
+
+      //filter if not tomato extra work
+      if (
+        variant === "greenhouse_crops_works_activity_confirmation_tomato" &&
+        item.type__ !== "TECH" &&
+        item.dscrpt.endsWith("OGÓ")
+      ) {
+        continue;
+      }
+
       if (item.type__ === currentType) {
         tempArray.push(item);
       }
@@ -225,6 +245,7 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
             closeFn={closeActionConfirmationForExtraWorksModal}
             currentActivity={currentActivity}
             zp={scannedValue}
+            clearScannedValues={clearScannedValues}
           />
           {/* <ConfirmationActivityModal
             setIsLoading={setIsLoading}
