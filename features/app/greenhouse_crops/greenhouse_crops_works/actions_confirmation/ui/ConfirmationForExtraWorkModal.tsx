@@ -6,7 +6,11 @@ import {
   ZpRozActivity,
   ZpRozWithActivities,
 } from "@/features/shared/types/interfaces-activities_list";
-import { ZpScannedValueToBeSent } from "@/features/shared/types/interfaces-extra_works";
+import {
+  ConfirmationForExtraWork_PostDTO,
+  ConfirmationForExtraWorkResponse,
+  ZpScannedValueToBeSent,
+} from "@/features/shared/types/interfaces-extra_works";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
@@ -62,12 +66,13 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
 
   const canConfirmationBeSubmitted = false;
 
-  type ConfirmationForExtraWork_PostDTO = {
-    activityid: number | null;
-    scanned_raw_value: string;
-    mobile: true;
-    ordnmb_json: ZpScannedValueToBeSent[];
-  };
+  // type ConfirmationForExtraWork_PostDTO = {
+  //   activityid: number | null;
+  //   scanned_raw_value: string;
+  //   mobile: true;
+  //   ordnmb_json: ZpScannedValueToBeSent[];
+  // };
+  // type ConfirmationForExtraWorkResponse = string[];
 
   const sendDataHandler = async () => {
     if (!currentActivity || !zp || !data || !data.length) {
@@ -94,28 +99,32 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
     try {
       setIsLoading(true);
 
-      let response: any = await query_postDataAsServerAction<
-        any,
-        ConfirmationForExtraWork_PostDTO[]
-      >(
-        configPerBuild.apiAddress,
-        "/api.php/REST/custom/czynnosciextradone",
-        token!,
-        dataToBeSend,
-      );
+      let response: ConfirmationForExtraWorkResponse =
+        await query_postDataAsServerAction<
+          any,
+          ConfirmationForExtraWork_PostDTO[]
+        >(
+          configPerBuild.apiAddress,
+          "/api.php/REST/custom/czynnosciextradone",
+          token!,
+          dataToBeSend,
+        );
 
-      // await send_ExtraWork_PostMutation(dataToBeSent);
-      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.EXTRA_WORK_IN_ACTIVITIES],
-      });
+      if (response && response.length === 0) {
+        clearScannedValues();
+        closeFn();
+        toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.EXTRA_WORK_IN_ACTIVITIES],
+        });
+      } else {
+        toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      }
     } catch (error) {
       console.error(error);
       toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
     } finally {
       setIsLoading(false);
-      clearScannedValues();
-      closeFn();
     }
   };
 

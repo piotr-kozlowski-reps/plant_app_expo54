@@ -18,17 +18,18 @@ export const usePrepareDataToSendExtraWorks = () => {
     begin_date: Date,
     scannedValues: ZpScannedValue[],
     selectedProtectiveTreatment: ProtectiveTreatment | null,
-    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[]
+    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
   ) => {
     const dataToBeSent: Post_ExtraWork_ZP_DTO = {
       activityid: extraWork.keyval,
-      begindat: begin_date,
+      // begindat: begin_date,
+      scanned_raw_value: scannedValues[0].scanned_raw_value,
       donedat: new Date(Date.now()),
       mobile: true,
       ordnmb_json: prepareScannedValuesToBeSent(
         scannedValues,
         selectedProtectiveTreatment,
-        zpListWithOrderedNitrogenIrrigation
+        zpListWithOrderedNitrogenIrrigation,
       ),
     };
 
@@ -42,17 +43,17 @@ export const usePrepareDataToSendExtraWorks = () => {
   function prepareScannedValuesToBeSent(
     scannedValues: ZpScannedValue[],
     selectedProtectiveTreatment: ProtectiveTreatment | null,
-    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[]
+    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
   ): ZpScannedValueToBeSent[] {
     let scannedValuesPreparedToBeSent: ZpScannedValueToBeSent[] = [];
     scannedValuesPreparedToBeSent = pickOnlyDesiredValuesToBeSent(
       scannedValues,
       selectedProtectiveTreatment,
-      zpListWithOrderedNitrogenIrrigation
+      zpListWithOrderedNitrogenIrrigation,
     );
 
     scannedValuesPreparedToBeSent = cutPrefixZlecInStrings(
-      scannedValuesPreparedToBeSent
+      scannedValuesPreparedToBeSent,
     );
 
     return scannedValuesPreparedToBeSent;
@@ -61,7 +62,7 @@ export const usePrepareDataToSendExtraWorks = () => {
   function pickOnlyDesiredValuesToBeSent(
     scannedValues: ZpScannedValue[],
     selectedProtectiveTreatment: ProtectiveTreatment | null,
-    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[]
+    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
   ): ZpScannedValueToBeSent[] {
     const pickedOnlyDesiredValuesToBeSent: ZpScannedValueToBeSent[] =
       scannedValues.map((item) => ({
@@ -80,7 +81,7 @@ export const usePrepareDataToSendExtraWorks = () => {
           : null,
         plan_id: getPlanIdIfPossible(
           zpListWithOrderedNitrogenIrrigation,
-          item.ordnmb
+          item.ordnmb,
         ),
       }));
 
@@ -89,14 +90,14 @@ export const usePrepareDataToSendExtraWorks = () => {
 
   function getPlanIdIfPossible(
     zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
-    ordnmb: string
+    ordnmb: string,
   ): null | number {
     if (
       zpListWithOrderedNitrogenIrrigation &&
       zpListWithOrderedNitrogenIrrigation.length
     ) {
       const foundZp = zpListWithOrderedNitrogenIrrigation.find(
-        (zp) => zp.ordnmb === ordnmb
+        (zp) => zp.ordnmb === ordnmb,
       );
 
       if (foundZp) {
@@ -107,7 +108,7 @@ export const usePrepareDataToSendExtraWorks = () => {
   }
 
   function cutPrefixZlecInStrings(
-    stringsArray: ZpScannedValueToBeSent[]
+    stringsArray: ZpScannedValueToBeSent[],
   ): ZpScannedValueToBeSent[] {
     return stringsArray.map((value) => ({
       ...value,

@@ -15,7 +15,8 @@ export type ExtraWork = {
 
 export type Post_ExtraWork_ZP_DTO = {
   activityid: number;
-  begindat: Date;
+  scanned_raw_value: string;
+  // begindat: Date;
   donedat: Date;
   mobile: boolean;
   ordnmb_json: Omit<ZpScannedValue, "sordid">[];
@@ -76,3 +77,11 @@ export type ActivityTodaysQuantity = {
 };
 
 export type IsHobbyParam = "t" | "f";
+
+export type ConfirmationForExtraWork_PostDTO = {
+  activityid: number | null;
+  scanned_raw_value: string;
+  mobile: boolean;
+  ordnmb_json: ZpScannedValueToBeSent[];
+};
+export type ConfirmationForExtraWorkResponse = string[];

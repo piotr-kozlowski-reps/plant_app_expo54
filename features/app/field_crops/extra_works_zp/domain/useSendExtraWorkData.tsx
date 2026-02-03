@@ -1,13 +1,17 @@
 import { QUERY_KEYS } from "@/features/shared/constants/queryKeys";
 import { customRegister_ExtraWork } from "@/features/shared/data-access/customRegister_ExtraWork";
+import { configPerBuild } from "@/features/shared/env/env";
+import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 
 import {
+  ConfirmationForExtraWorkResponse,
   ExtraWork,
   Post_ExtraWork_ZP_DTO,
   ZpScannedValue,
 } from "@/features/shared/types/interfaces-extra_works";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { useGetEdocCustomRegisterMutation } from "@/features/shared/utils/getEdocCustomRegister/useGetEdocCustomRegisterMutation";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { usePrepareDataToSendExtraWorks } from "@/features/shared/utils/usePrepareDataToSendExtraWorks";
@@ -18,7 +22,7 @@ import { toast } from "sonner-native";
 export const useSendExtraWorkData = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   clearScannedValues: () => void,
-  closeFn: () => void
+  closeFn: () => void,
 ) => {
   ////vars
   const { prepareDataToSendExtraWorksHandler } =
@@ -28,6 +32,7 @@ export const useSendExtraWorkData = (
       customRegister: customRegister_ExtraWork,
     });
   const queryClient = useQueryClient();
+  const { token } = useAuthSessionStore();
 
   //fn
   const sendExtraWork = async (
@@ -35,7 +40,7 @@ export const useSendExtraWorkData = (
     scannedValues: ZpScannedValue[],
     begin_date: Date,
     selectedProtectiveTreatment: ProtectiveTreatment | null,
-    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[]
+    zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
   ) => {
     if (!extraWork || !scannedValues.length || !begin_date) {
       if (!extraWork) toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK);
@@ -51,16 +56,35 @@ export const useSendExtraWorkData = (
         begin_date,
         scannedValues,
         selectedProtectiveTreatment,
-        zpListWithOrderedNitrogenIrrigation
+        zpListWithOrderedNitrogenIrrigation,
       );
+
+    console.log({ dataToBeSent });
 
     try {
       setIsLoading(true);
-      await send_ExtraWork_PostMutation(dataToBeSent);
-      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.NITROGEN_IRRIGATION_LIST],
-      });
+      ////old way
+      // await send_ExtraWork_PostMutation(dataToBeSent);
+
+      //// new api
+      let response: ConfirmationForExtraWorkResponse =
+        await query_postDataAsServerAction<any, Post_ExtraWork_ZP_DTO[]>(
+          configPerBuild.apiAddress,
+          "/api.php/REST/custom/czynnosciextradone",
+          token!,
+          [dataToBeSent],
+        );
+
+      if (response && response.length === 0) {
+        clearScannedValues();
+        closeFn();
+        toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.NITROGEN_IRRIGATION_LIST],
+        });
+      } else {
+        toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      }
     } catch (error) {
       toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
     } finally {
