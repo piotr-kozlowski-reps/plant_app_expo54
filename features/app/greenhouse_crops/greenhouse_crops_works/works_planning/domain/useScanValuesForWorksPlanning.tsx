@@ -153,6 +153,12 @@ export const useScanValuesForWorksPlanning = (
         return;
       }
 
+      //is work already planned and plan is not approved - but still cannot plan again
+      // if (foundWorkToPlan.) {
+      // //   toast.error(ERROR_MESSAGES.PLAN_WAS_ALREADY_APPROVED);
+      // //   return;
+      // }
+
       const foundZP = await getZPInfo_Rep113(token!, ordnmbValue, errorHandler);
       if (!foundZP) {
         toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);

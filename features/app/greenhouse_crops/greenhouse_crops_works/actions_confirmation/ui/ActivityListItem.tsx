@@ -15,26 +15,45 @@ const ActivityListItem = (props: Props) => {
   ////vars
   const { activity, actionFn, allActivities } = props;
 
-  const isStatusSet = activity.status;
+  const isTech = activity.type__ === "TECH";
+  const isExtra = activity.type__ === "EXTRA";
+  const isTechActivityDone = !!(activity.status && activity.type__ === "TECH");
+  const isExtraActivityDone = !!(
+    activity.type__ === "EXTRA" &&
+    activity.status === null &&
+    activity.donedat
+  );
+  const isExtraActivityNeverEvenPlanned =
+    activity.type__ === "EXTRA" &&
+    activity.status === null &&
+    !activity.donedat &&
+    !activity.plndat;
   const isActivitySettable = checkIfActivityCanBeSet(activity, allActivities);
+
+  let isActivityDone: boolean = false;
+  if (isTech) isActivityDone = isTechActivityDone;
+  if (isExtra) isActivityDone = isExtraActivityDone;
+  if (!isTech && !isExtra)
+    throw new Error("ActivityListItem => !isTech && !isExtra");
 
   return (
     <TouchableOpacity
       className={clsx(
         "h-[64px] flex-row items-center justify-between  rounded-app mb-4  px-6",
-        isStatusSet ? "bg-green shadow-sm" : "",
-        !isStatusSet && isActivitySettable
+        isActivityDone ? "bg-green shadow-sm" : "",
+        !isActivityDone && isActivitySettable
           ? "bg-foreground shadow-sm"
-          : "bg-gray opacity-80"
+          : "bg-gray opacity-80",
+        isExtraActivityNeverEvenPlanned ? "bg-cyan-600" : "",
       )}
       activeOpacity={0.7}
       onPress={() => actionFn(activity)}
     >
       <View className="mr-4">
-        {isStatusSet ? (
+        {isActivityDone ? (
           <CheckCheck color={lightColor} strokeWidth={3} size={18} />
         ) : null}
-        {!isStatusSet ? (
+        {!isActivityDone ? (
           <CircleDashed color={lightColor} strokeWidth={3} size={18} />
         ) : null}
       </View>
@@ -50,7 +69,7 @@ const ActivityListItem = (props: Props) => {
               className={clsx("font-default-normal text-background-nuance")}
             >
               {`${activity.ilebeg} ${
-                isStatusSet ? `(${activity.iledne})` : ``
+                isTechActivityDone ? `(${activity.iledne})` : ``
               }`}
             </Text>
           </View>

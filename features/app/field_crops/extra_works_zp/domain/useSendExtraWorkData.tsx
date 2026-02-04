@@ -59,8 +59,6 @@ export const useSendExtraWorkData = (
         zpListWithOrderedNitrogenIrrigation,
       );
 
-    console.log({ dataToBeSent });
-
     try {
       setIsLoading(true);
       ////old way

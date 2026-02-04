@@ -102,7 +102,7 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
       }
     }
     return tempArray;
-  }, [scannedValue]);
+  }, [scannedValue, variant]);
 
   ////tsx
   return (

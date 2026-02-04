@@ -8,7 +8,10 @@ import {
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
 import { parse } from "date-fns";
 import { MapStringValueIntoWorkType } from "../utils/getEdocReports/lib/mapping/implementations/MapStringValueIntoWorkType";
-import { mapStringIntoWorkType } from "./mapping_helpers";
+import {
+  mapStringIntoWorkType,
+  mapStringOrNullIntoDateOrNull,
+} from "./mapping_helpers";
 
 export const useGetActivitiesListRep143 = () => {
   //vars
@@ -44,6 +47,12 @@ export const useGetActivitiesListRep143 = () => {
         enabled1: zp.enabled1 === "t" ? true : false,
         id: Number.parseInt(zp.id),
         pcz_id: Number.parseInt(zp.pcz_id),
+        plndat: zp.plndat
+          ? parse(zp.plndat, "yyyy-MM-dd HH:mm:ssX", new Date())
+          : null,
+        donedat: zp.donedat
+          ? parse(zp.donedat, "yyyy-MM-dd HH:mm:ssX", new Date())
+          : null,
         start_plan: zp.start_plan
           ? parse(zp.start_plan, "yyyy-MM-dd HH:mm:ssX", new Date())
           : null,

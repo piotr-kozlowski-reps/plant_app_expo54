@@ -30,7 +30,6 @@ const ExtraWorksQuantity_GreenhouseCrops_EntryPage = () => {
   const paths: NavElement[] = [
     INDEX,
     GREENHOUSE_CROPS,
-
     { name: "Prace Extra ROZ - Ilości", actionFn: () => {} },
   ];
 
@@ -48,7 +47,7 @@ const ExtraWorksQuantity_GreenhouseCrops_EntryPage = () => {
     extraWorksArray = extra_works_roz as unknown as ExtraWork[];
     filteredExtraWorks = useMemo(() => {
       const foundFilteredExtraWorks = extraWorksArray.filter(
-        (work) => work.is_ordnmb === false
+        (work) => work.is_ordnmb === false,
       );
       //     .filter((work) => {
       //       return work.ishobby === isHobby ? true : false;

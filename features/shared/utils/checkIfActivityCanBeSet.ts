@@ -2,17 +2,19 @@ import { ZpRozActivity } from "../types/interfaces-activities_list";
 
 export function checkIfActivityCanBeSet(
   activity: ZpRozActivity | null,
-  allActivities: ZpRozActivity[] | undefined
+  allActivities: ZpRozActivity[] | undefined,
 ): boolean {
   // if (!activity) throw new Error("checkIfActivityCanBeSet -> !activity");
   // if (!allActivities)
   //   throw new Error("checkIfActivityCanBeSet -> !allActivities");
   if (!activity || !allActivities) return false;
 
+  if (activity.type__ === "EXTRA") return true;
+
   const isStatusSet = activity.status;
   const isActivityEnabled = activity.enabled;
   const activityIndex = allActivities.findIndex(
-    (act) => act.id === activity.id
+    (act) => act.id === activity.id,
   );
   const isFirstActivity = activityIndex === 0;
 
