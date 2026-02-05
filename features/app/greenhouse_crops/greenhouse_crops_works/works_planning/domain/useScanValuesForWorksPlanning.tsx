@@ -13,7 +13,6 @@ import { getIsPossibleToProcess_After13_guard } from "@/features/shared/utils/gu
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-import { useGuard_CheckDataToBeScanned } from "@/features/shared/utils/useGuard_CheckDataToBeScanned";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 import { useScanHelpers } from "@/features/shared/utils/useScanHelpers";
 import { useAudioPlayer } from "expo-audio";
@@ -90,6 +89,9 @@ export const useScanValuesForWorksPlanning = (
         errorHandler,
       );
 
+      // console.log({ zpRozActivities });
+      // console.log({ variant });
+
       const zpRozActivitiesFiltered =
         variant === "greenhouse_crops_works_works_planning_tomato"
           ? zpRozActivities?.filter((item) => item.dscrpt.endsWith("POM"))
@@ -111,6 +113,31 @@ export const useScanValuesForWorksPlanning = (
           `Nie możesz zaplanować tej pracy. Nie ma jej na liście czynności do wykonania dla tego ZP (${ordnmbValue}).`,
         );
         return;
+      }
+
+      // console.log({ zpRozActivitiesFiltered });
+      // console.log({ foundWorkToPlan });
+
+      //check if ZP is Cucumber or Tomato, and guard if work that is to be planned can be planed for this variety
+      const canWorkBePlannedForThisVariety =
+        checkIfWorkCanBePlannedForThisVariety(zpRozActivities, foundWorkToPlan);
+      if (!canWorkBePlannedForThisVariety.canBePlanned) {
+        if (canWorkBePlannedForThisVariety.isCucumber) {
+          toast.error(
+            `Nie możesz zaplanować tej pracy. ZP, który zeskanowałeś (${ordnmbValue}) to ogórek, a chcesz zaplanować pracę dla pomidora.`,
+          );
+          return;
+        }
+        if (canWorkBePlannedForThisVariety.isTomato) {
+          toast.error(
+            `Nie możesz zaplanować tej pracy. ZP, który zeskanowałeś (${ordnmbValue}) to pomidor, a chcesz zaplanować pracę dla ogórka.`,
+          );
+          return;
+        }
+
+        throw new Error(
+          "canWorkBePlannedForThisVariety => canWorkBePlannedForThisVariety => no tomato or cucumber but something else",
+        );
       }
 
       //////
@@ -232,7 +259,12 @@ export const useScanValuesForWorksPlanning = (
       throw new Error("checkIfVariantIsCorrect -> !zpRozActivities.length");
     }
 
+    // console.log("checkIfVariantIsCorrect");
+    // console.log({ variant });
+    // console.log({ zpRozActivities });
+
     const workName = zpRozActivities[0].dscrpt;
+    // console.log({ workName });
     if (
       variant === "greenhouse_crops_works_works_planning_tomato" &&
       !workName.endsWith("POM")
@@ -247,6 +279,49 @@ export const useScanValuesForWorksPlanning = (
     }
 
     return true;
+  }
+
+  function checkIfWorkCanBePlannedForThisVariety(
+    zpRozActivities: ZpRozActivity[] | null,
+    foundWorkToPlan: ZpRozActivity,
+  ):
+    | { canBePlanned: true }
+    | { canBePlanned: false; isTomato: boolean; isCucumber: boolean } {
+    if (!zpRozActivities) {
+      throw new Error(
+        "checkIfWorkCanBePlannedForThisVariety -> !zpRozActivities",
+      );
+    }
+
+    const isZPCucumber = zpRozActivities.find(
+      (zp) => zp.type__ === "TECH" && zp.dscrpt.endsWith("OGÓ"),
+    );
+    const isZPTomato = zpRozActivities.find(
+      (zp) => zp.type__ === "TECH" && zp.dscrpt.endsWith("POM"),
+    );
+
+    if (!isZPTomato && !isZPCucumber) {
+      throw new Error(
+        "checkIfWorkCanBePlannedForThisVariety -> zp is neither Tomato nor Cucumber",
+      );
+    }
+
+    if (isZPCucumber) {
+      const canBeSent = foundWorkToPlan.dscrpt.endsWith("OGÓ");
+      return canBeSent
+        ? { canBePlanned: true }
+        : { canBePlanned: false, isCucumber: true, isTomato: false };
+    }
+    if (isZPTomato) {
+      const canBeSent = foundWorkToPlan.dscrpt.endsWith("POM");
+      return canBeSent
+        ? { canBePlanned: true }
+        : { canBePlanned: false, isCucumber: false, isTomato: true };
+    }
+
+    throw new Error(
+      "checkIfWorkCanBePlannedForThisVariety -> found work cannot be matched with neither Tomato nor Cucumber",
+    );
   }
 
   return {
