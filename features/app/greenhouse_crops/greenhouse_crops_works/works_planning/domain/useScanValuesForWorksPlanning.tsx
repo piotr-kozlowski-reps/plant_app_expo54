@@ -259,12 +259,8 @@ export const useScanValuesForWorksPlanning = (
       throw new Error("checkIfVariantIsCorrect -> !zpRozActivities.length");
     }
 
-    // console.log("checkIfVariantIsCorrect");
-    // console.log({ variant });
-    // console.log({ zpRozActivities });
-
     const workName = zpRozActivities[0].dscrpt;
-    // console.log({ workName });
+
     if (
       variant === "greenhouse_crops_works_works_planning_tomato" &&
       !workName.endsWith("POM")

@@ -247,15 +247,6 @@ const GreenhouseCropsActionsConfirmationScanner = (props: Props) => {
             zp={scannedValue}
             clearScannedValues={clearScannedValues}
           />
-          {/* <ConfirmationActivityModal
-            setIsLoading={setIsLoading}
-            closeFn={closeActionConfirmationModal}
-            currentActivity={currentActivity}
-            openQuantityModal={openActivityQuantityModal}
-            activityDetails={activityDetails}
-            allActivities={scannedValue?.activities}
-            refetchActivitiesData={refetchActivitiesData}
-          /> */}
         </ModalInternal>
 
         {/* choose activity details -  modal */}
