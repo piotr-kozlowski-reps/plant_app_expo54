@@ -1,7 +1,8 @@
 import {
   WorkPlanningDataToSend,
   WorkPlanningResponse,
-  WorkPlanningSendDataDTO,
+  WorkPlanningSendDataDTO_Extra,
+  WorkPlanningSendDataDTO_Tech,
 } from "@/features/shared/types/interfaces-works_planning";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { toast } from "sonner-native";
@@ -55,46 +56,67 @@ export const useSendWorkToPlanInGreenhouseCrops = (
       return;
     }
 
-    const workPlanningDataToBeSent: WorkPlanningSendDataDTO[] = [];
-    for (const zp of scannedValues) {
-      const ZPFoundForThisActivityId:
-        | (ZPItem & { scanned_raw_value: string })[]
-        | null = await checkIfZPExistsInThisActivityId(
-        zp.scanned_raw_value,
-        token,
-        zp.rozActivityId,
-        "zp_roz",
-      );
+    const workPlanningDataToBeSent: (
+      | WorkPlanningSendDataDTO_Tech
+      | WorkPlanningSendDataDTO_Extra
+    )[] = [];
 
-      const ordnmb_jsonObject: ZpScannedValueToBeSent[] | null =
-        ZPFoundForThisActivityId
-          ? ZPFoundForThisActivityId.map((item) => ({
-              ...item,
-              treatid: null,
-              dscrpt: null,
-              plan_id: null,
-            }))
-          : null;
+    if (workToPlan.type__ === "TECH") {
+      scannedValues.forEach((zp) => {
+        const item: WorkPlanningSendDataDTO_Tech = {
+          ordnmb: zp.ordnmb,
+          id: zp.rozActivityId,
+          plndat: addDaysToDate(
+            new Date(Date.now()),
+            inHowManyDays ? inHowManyDays : 0,
+          ),
+          type__: workToPlan.type__,
+          scanned_raw_value: zp.scanned_raw_value,
+        };
 
-      const item: WorkPlanningSendDataDTO = {
-        plndat: addDaysToDate(
-          new Date(Date.now()),
-          inHowManyDays ? inHowManyDays : 0,
-        ),
-        type__: workToPlan.type__,
-        activityid: zp.rozActivityId,
-        ordnmb_json: ordnmb_jsonObject,
-        scanned_raw_value: zp.scanned_raw_value,
-      };
-
-      workPlanningDataToBeSent.push(item);
+        workPlanningDataToBeSent.push(item);
+      });
     }
 
-    // console.log({ workPlanningDataToBeSent });
+    if (workToPlan.type__ === "EXTRA") {
+      for (const zp of scannedValues) {
+        const ZPFoundForThisActivityId:
+          | (ZPItem & { scanned_raw_value: string })[]
+          | null = await checkIfZPExistsInThisActivityId(
+          zp.scanned_raw_value,
+          token,
+          zp.rozActivityId,
+          "zp_roz",
+        );
+
+        const ordnmb_jsonObject: ZpScannedValueToBeSent[] | null =
+          ZPFoundForThisActivityId
+            ? ZPFoundForThisActivityId.map((item) => ({
+                ...item,
+                treatid: null,
+                dscrpt: null,
+                plan_id: null,
+              }))
+            : null;
+
+        const item: WorkPlanningSendDataDTO_Extra = {
+          plndat: addDaysToDate(
+            new Date(Date.now()),
+            inHowManyDays ? inHowManyDays : 0,
+          ),
+          type__: workToPlan.type__,
+          activityid: zp.rozActivityId,
+          ordnmb_json: ordnmb_jsonObject,
+          scanned_raw_value: zp.scanned_raw_value,
+        };
+
+        workPlanningDataToBeSent.push(item);
+      }
+    }
 
     try {
       setIsLoading(true);
-      // alert("useSendWorkToPlanInGreenhouseCrops - turn on send to server");
+
       await sendToServer(workPlanningDataToBeSent);
     } catch (error) {
       errorHandler(error as Error);
@@ -106,7 +128,12 @@ export const useSendWorkToPlanInGreenhouseCrops = (
   };
 
   //helpers
-  async function sendToServer(dataToBeSend: WorkPlanningSendDataDTO[]) {
+  async function sendToServer(
+    dataToBeSend: (
+      | WorkPlanningSendDataDTO_Tech
+      | WorkPlanningSendDataDTO_Extra
+    )[],
+  ) {
     if (!dataToBeSend) {
       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
       return;
@@ -115,7 +142,7 @@ export const useSendWorkToPlanInGreenhouseCrops = (
     //send data to server
     let response: WorkPlanningResponse = await query_postDataAsServerAction<
       WorkPlanningResponse,
-      WorkPlanningSendDataDTO[]
+      (WorkPlanningSendDataDTO_Tech | WorkPlanningSendDataDTO_Extra)[]
     >(
       configPerBuild.apiAddress,
       "/api.php/REST/custom/czynnosciplan",

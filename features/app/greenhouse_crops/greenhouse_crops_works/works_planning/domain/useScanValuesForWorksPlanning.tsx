@@ -89,9 +89,6 @@ export const useScanValuesForWorksPlanning = (
         errorHandler,
       );
 
-      // console.log({ zpRozActivities });
-      // console.log({ variant });
-
       const zpRozActivitiesFiltered =
         variant === "greenhouse_crops_works_works_planning_tomato"
           ? zpRozActivities?.filter((item) => item.dscrpt.endsWith("POM"))
@@ -114,9 +111,6 @@ export const useScanValuesForWorksPlanning = (
         );
         return;
       }
-
-      // console.log({ zpRozActivitiesFiltered });
-      // console.log({ foundWorkToPlan });
 
       //check if ZP is Cucumber or Tomato, and guard if work that is to be planned can be planed for this variety
       const canWorkBePlannedForThisVariety =
@@ -181,10 +175,10 @@ export const useScanValuesForWorksPlanning = (
       }
 
       //is work already planned and plan is not approved - but still cannot plan again
-      // if (foundWorkToPlan.) {
-      // //   toast.error(ERROR_MESSAGES.PLAN_WAS_ALREADY_APPROVED);
-      // //   return;
-      // }
+      if (foundWorkToPlan.plndat) {
+        toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED);
+        return;
+      }
 
       const foundZP = await getZPInfo_Rep113(token!, ordnmbValue, errorHandler);
       if (!foundZP) {

@@ -19,9 +19,14 @@ export type WorkPlanningDataToSend = {
   inHowManyDays: number | null;
 };
 
-export type WorkPlanningSendDataDTO = {
-  // ordnmb: string;
-  // id: number;
+export type WorkPlanningSendDataDTO_Tech = {
+  ordnmb: string;
+  id: number;
+  plndat: Date;
+  type__: WorkType;
+  scanned_raw_value: string;
+};
+export type WorkPlanningSendDataDTO_Extra = {
   plndat: Date;
   ordnmb_json: ZpScannedValueToBeSent[] | null;
   type__: WorkType;
