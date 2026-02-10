@@ -68,7 +68,11 @@ export const useScanValuesForWorksPlanning = (
 
       const ordnmbValue = getPureZPValue(scannedValue);
 
-      /** guards */
+      /**
+       * guards
+       */
+
+      /** guard: check if value is already scanned */
       if (
         checkIfValueIsAlreadyScanned<ZPShortenedInfoWithoutTwrnzw>(
           ordnmbValue,
@@ -79,11 +83,13 @@ export const useScanValuesForWorksPlanning = (
         return;
       }
 
+      /** guard: no info about work to plan */
       if (!workToPlan) {
         toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN);
         return;
       }
 
+      /** guard: check if there are activities in ZP*/
       const zpRozActivities = await getActivitiesList_Report143(
         ordnmbValue,
         errorHandler,
@@ -101,7 +107,7 @@ export const useScanValuesForWorksPlanning = (
         return;
       }
 
-      //is work to plan available for scanned ZP
+      /** guard: check is work to plan available for scanned ZP*/
       const foundWorkToPlan = zpRozActivitiesFiltered.find(
         (act) => act.dscrpt === workToPlan.ptc_kod,
       );
@@ -112,7 +118,7 @@ export const useScanValuesForWorksPlanning = (
         return;
       }
 
-      //check if ZP is Cucumber or Tomato, and guard if work that is to be planned can be planed for this variety
+      /** guard: check if ZP is Cucumber or Tomato, and guard if work that is to be planned can be planed for this variety*/
       const canWorkBePlannedForThisVariety =
         checkIfWorkCanBePlannedForThisVariety(zpRozActivities, foundWorkToPlan);
       if (!canWorkBePlannedForThisVariety.canBePlanned) {
@@ -134,8 +140,7 @@ export const useScanValuesForWorksPlanning = (
         );
       }
 
-      //////
-      //is variant of plant correct according to chosen work planning plant - tomato or cucumber
+      /** guard: check is variant of plant correct according to chosen work planning plant - tomato or cucumber */
       if (!checkIfVariantIsCorrect(variant, zpRozActivitiesFiltered)) {
         if (variant === "greenhouse_crops_works_works_planning_tomato") {
           toast.error(
@@ -151,7 +156,7 @@ export const useScanValuesForWorksPlanning = (
         return;
       }
 
-      //is work already done - status if different than null
+      /** guard: check is work already done - status if different than null */
       if (
         foundWorkToPlan.type__ === "TECH" &&
         foundWorkToPlan.status !== null
@@ -168,17 +173,18 @@ export const useScanValuesForWorksPlanning = (
         return;
       }
 
-      //is work already planned and plan is approved
+      /** guard: check is work already planned and plan is approved */
       if (foundWorkToPlan.start_plan && foundWorkToPlan.stop_plan) {
         toast.error(ERROR_MESSAGES.PLAN_WAS_ALREADY_APPROVED);
         return;
       }
 
-      //is work already planned and plan is not approved - but still cannot plan again
-      if (foundWorkToPlan.plndat) {
-        toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED);
-        return;
-      }
+      /** guard: check is work already planned and plan is not approved - but still cannot plan again */
+      /** turned off */
+      // if (foundWorkToPlan.plndat) {
+      //   toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED);
+      //   return;
+      // }
 
       const foundZP = await getZPInfo_Rep113(token!, ordnmbValue, errorHandler);
       if (!foundZP) {
