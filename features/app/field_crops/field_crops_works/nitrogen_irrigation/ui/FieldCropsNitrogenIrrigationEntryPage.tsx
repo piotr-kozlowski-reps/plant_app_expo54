@@ -12,6 +12,7 @@ import NitrogenIrrigationMainWindow from "./NitrogenIrrigationMainWindow";
 import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
 import edocReport_NitrogenIrrigationList from "@/features/shared/data-access/edocReport_NitrogenIrrigation";
+import edocReport_ExtraWorksNitrogenOnly from "@/features/shared/data-access/edocReport_ExtraWorksNitrogenOnly";
 
 const FieldCropsNitrogenIrrigationEntryPage = () => {
   ////vars
@@ -19,7 +20,7 @@ const FieldCropsNitrogenIrrigationEntryPage = () => {
     useSubmoduleEntryDataAndGuard<FieldCropsSubmodules>(
       "field_crops",
       "field_crops_nitrogen_irrigation",
-      "Zlecenie podlewania azotem"
+      "Zlecenie podlewania azotem",
     );
   const { filterOnlyNitrogenProtectiveTreatments } =
     useNitrogenProtectiveTreatmentsHelpers();
@@ -35,12 +36,12 @@ const FieldCropsNitrogenIrrigationEntryPage = () => {
     reports: [
       edocReport_ProtectiveTreatments,
       edocReport_NitrogenIrrigationList,
-      edocReport_ExtraWorks,
+      edocReport_ExtraWorksNitrogenOnly,
     ],
   });
   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
     filterOnlyNitrogenProtectiveTreatments(
-      protectiveTreatments as ProtectiveTreatment[]
+      protectiveTreatments as ProtectiveTreatment[],
     );
   const extraWorksArray = extra_works as unknown as ExtraWork[];
 

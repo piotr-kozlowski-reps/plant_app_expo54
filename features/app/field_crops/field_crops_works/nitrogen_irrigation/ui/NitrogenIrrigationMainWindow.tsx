@@ -48,8 +48,10 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
   } = props;
 
   const extraWorkForNitrogenIrrigation = extraWorks.find((extraWork) =>
-    extraWork.activityname.startsWith("230")
+    extraWork.activityname.startsWith("230"),
   );
+
+  console.log({ extraWorkForNitrogenIrrigation });
 
   //state
   const [

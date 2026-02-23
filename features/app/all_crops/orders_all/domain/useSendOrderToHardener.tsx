@@ -27,7 +27,7 @@ export const useSendOrderToHardener = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   clearScannedValues: () => void,
   closeFn: () => void,
-  whatOrderType: AllCropsOrdersSubmodules
+  whatOrderType: AllCropsOrdersSubmodules,
 ) => {
   ////vars
   const { addDaysToDate } = useDatesHelper();
@@ -35,7 +35,7 @@ export const useSendOrderToHardener = (
   const { token } = useAuthSessionStore();
 
   async function sendValuesForOrderToHardenerHandler(
-    valuesToSendOrderToHardener: OrderToHardenerDataToSent
+    valuesToSendOrderToHardener: OrderToHardenerDataToSent,
   ) {
     const { scannedValues, targetLocalization, inHowManyDays } =
       valuesToSendOrderToHardener;
@@ -70,7 +70,7 @@ export const useSendOrderToHardener = (
         movtyp: getMoveTyp(whatOrderType),
         movdta: addDaysToDate(
           new Date(Date.now()),
-          inHowManyDays ? inHowManyDays : 0
+          inHowManyDays ? inHowManyDays : 0,
         ),
         scanned_raw_value: zp.scanned_raw_value,
       };
@@ -107,7 +107,7 @@ export const useSendOrderToHardener = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/movementsplan",
       token!,
-      dataToBeSend
+      dataToBeSend,
     );
 
     //check if response array has the same amount of items as sent items
@@ -128,7 +128,7 @@ export const useSendOrderToHardener = (
   }
 
   function getMoveTyp(
-    whatOrderType: AllCropsOrdersSubmodules
+    whatOrderType: AllCropsOrdersSubmodules,
   ): "TEMP" | "MOVE" {
     if (whatOrderType === "field_crops_works_order_to_hardener") return "TEMP";
     if (whatOrderType === "field_crops_works_internal_transport") return "MOVE";

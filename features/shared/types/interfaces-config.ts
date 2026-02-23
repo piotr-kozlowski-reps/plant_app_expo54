@@ -2,6 +2,7 @@ export type Config = {
   apiAddress: string;
   edocReport_UserValidation: number;
   edocReport_ExtraWorks: number;
+  edocReport_ExtraWorks_Nitrogen_Only: number;
   edocReport_TypeOfTreatment: number;
   customRegister_ExtraWork: number;
   edocReport_ExtraWorksRoz: number;
