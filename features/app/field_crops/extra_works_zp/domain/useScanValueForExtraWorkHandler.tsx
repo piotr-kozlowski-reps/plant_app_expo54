@@ -179,7 +179,7 @@ export const useScanValueForExtraWorkHandler = () => {
       toast.warning(
         `Nie znaleziono ${
           scannedZPOnManyFields.length ? scannedZPOnManyFields[0].ordnmb : "ZP"
-        }ś w lokalizacji: ${scannedFieldNumber}`,
+        } w lokalizacji: ${scannedFieldNumber}`,
       );
       return;
     }

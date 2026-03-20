@@ -82,6 +82,8 @@ export type FieldCropsSubmodules = ModuleOverallPermission & {
   extra_works_hobby___overallVisibility: boolean;
   extra_works_hobby_extra_works_quantity: boolean;
   extra_works_hobby_extra_works_zp: boolean;
+  extra_works_hobby_extra_works_technology: boolean;
+
   //tray_operations
   tray_operations___overallVisibility: boolean;
   tray_operations_destroy_tray: boolean;

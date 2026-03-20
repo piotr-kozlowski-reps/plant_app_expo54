@@ -199,6 +199,7 @@ export const useLoginLogic = () => {
             extra_works_hobby___overallVisibility: true,
             extra_works_hobby_extra_works_quantity: true,
             extra_works_hobby_extra_works_zp: true,
+            extra_works_hobby_extra_works_technology: true,
             //tray_operations
             tray_operations___overallVisibility: true,
             tray_operations_destroy_tray: true,
