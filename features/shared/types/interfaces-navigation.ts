@@ -35,6 +35,13 @@ export const EXTRA_WORKS_HOBBY: NavElement = {
   actionFn: () => router.push("/app/field_crops/extra_works_hobby"),
   name: "Prace Hobby",
 };
+export const EXTRA_WORKS_HOBBY_TECHNOLOGY: NavElement = {
+  actionFn: () =>
+    router.push(
+      "/app/field_crops/extra_works_hobby/extra_works_hobby_technology",
+    ),
+  name: "Prace HOBBY",
+};
 export const CUT_GRU: NavElement = {
   actionFn: () => router.push("/app/field_crops/field_crops_works/cut"),
   name: "Cięcie GRU",

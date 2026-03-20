@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-// import { useShowModal } from "@/features/shared/utils/useShowModal";
+import { useShowModal } from "@/features/shared/utils/useShowModal";
 // import ScanCameraModal from "./ScanCameraModal";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
@@ -15,20 +15,20 @@ import {
   FIELD_CROPS,
   INDEX,
 } from "@/features/shared/types/interfaces-navigation";
-// import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
-// import { primaryColor } from "@/features/shared/constants/colorThemeVars";
+import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
+import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 import edocReport_ProtectiveTreatments from "@/features/shared/data-access/edocReport_ProtectiveTreatments";
-// import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
-// import { useNitrogenProtectiveTreatmentsHelpers } from "../../field_crops_works/nitrogen_irrigation/domain/useNitrogenProtectiveTreatmentsHelpers";
+import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+import { useNitrogenProtectiveTreatmentsHelpers } from "../../../field_crops_works/nitrogen_irrigation/domain/useNitrogenProtectiveTreatmentsHelpers";
+import ScanCameraModal from "../../../extra_works_zp/ui/ScanCameraModal";
 
 const ExtraWorksHobbyTechnologyEntryPage = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
-
-  //   const [isShowScanner, setIsShowScanner] = useShowModal(false);
-  //   const [extraWork, setExtraWork] = useState<ExtraWork>();
-  //   const { filterOnlyNitrogenProtectiveTreatments } =
-  //     useNitrogenProtectiveTreatmentsHelpers();
+  const [isShowScanner, setIsShowScanner] = useShowModal(false);
+  const [extraWork, setExtraWork] = useState<ExtraWork>();
+  const { filterOnlyNitrogenProtectiveTreatments } =
+    useNitrogenProtectiveTreatmentsHelpers();
 
   //data fetch and filter
   const { extra_works, protectiveTreatments, refreshAllData } =
@@ -36,31 +36,30 @@ const ExtraWorksHobbyTechnologyEntryPage = () => {
       setIsLoading: setIsLoading,
       reports: [edocReport_ExtraWorks, edocReport_ProtectiveTreatments],
     });
+
   //extra works data
   const extraWorksArray = extra_works as unknown as ExtraWork[];
   const filteredExtraWorks: ExtraWork[] = useMemo(() => {
-    const foundFilteredExtraWorks = extraWorksArray //TODO: do filtration
-      .filter((work) => work.is_ordnmb === true)
-      .filter((work) => {
-        return work.ishobby === true;
-      });
+    const foundFilteredExtraWorks = extraWorksArray.filter((work) => {
+      return work.istech === true;
+    });
     return foundFilteredExtraWorks || [];
   }, [extraWorksArray]);
-  //   //protective treatment data
-  //   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
-  //     filterOnlyNitrogenProtectiveTreatments(
-  //       protectiveTreatments as ProtectiveTreatment[],
-  //     );
-  //   const refreshAllDataFn = refreshAllData as () => void;
-  //   //open scanner handler
-  //   const openScannerHandler = (id: number) => {
-  //     const foundExtraWork = extraWorksArray.find((work) => work.keyval === id);
-  //     if (!foundExtraWork) {
-  //       throw new Error("openScannerHandler -> Extra work not found");
-  //     }
-  //     setExtraWork(foundExtraWork);
-  //     setIsShowScanner(true);
-  //   };
+  //protective treatment data
+  const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
+    filterOnlyNitrogenProtectiveTreatments(
+      protectiveTreatments as ProtectiveTreatment[],
+    );
+  const refreshAllDataFn = refreshAllData as () => void;
+  //open scanner handler
+  const openScannerHandler = (id: number) => {
+    const foundExtraWork = extraWorksArray.find((work) => work.keyval === id);
+    if (!foundExtraWork) {
+      throw new Error("openScannerHandler -> Extra work not found");
+    }
+    setExtraWork(foundExtraWork);
+    setIsShowScanner(true);
+  };
 
   ////tsx
   return (
@@ -78,27 +77,27 @@ const ExtraWorksHobbyTechnologyEntryPage = () => {
             ]}
             refreshAllData={refreshAllData}
             extraWorks={filteredExtraWorks}
-            // actionPerIdFn={openScannerHandler}
-            actionPerIdFn={() => {}}
+            actionPerIdFn={openScannerHandler}
           />
           <View className="w-full mb-6">
             <ButtonBack />
           </View>
         </SafeAreaView>
-        {/* <ModalInternal
-            isOpen={isShowScanner}
-            isTransparent={false}
-            backgroundColor={primaryColor}
-          >
-            <ScanCameraModal
-              closeFn={() => setIsShowScanner(false)}
-              extraWork={extraWork}
-              nitrogenProtectiveTreatments={
-                filteredOnlyNitrogenProtectiveTreatments
-              }
-              refreshAllData={refreshAllDataFn}
-            />
-          </ModalInternal> */}
+        <ModalInternal
+          isOpen={isShowScanner}
+          isTransparent={false}
+          backgroundColor={primaryColor}
+        >
+          <ScanCameraModal
+            closeFn={() => setIsShowScanner(false)}
+            extraWork={extraWork}
+            nitrogenProtectiveTreatments={
+              filteredOnlyNitrogenProtectiveTreatments
+            }
+            refreshAllData={refreshAllDataFn}
+            isHobbyTech={true}
+          />
+        </ModalInternal>
       </View>
     </>
   );

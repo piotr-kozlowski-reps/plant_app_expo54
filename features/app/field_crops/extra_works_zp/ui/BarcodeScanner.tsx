@@ -38,10 +38,11 @@ import {
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import ButtonTextAndIcon from "@/features/shared/ui/button/ButtonTextAndIcon";
 import { useSelectConcentration } from "../domain/useSelectConcentration";
-import { ChevronDown } from "lucide-react-native";
+import { ChevronDown, ChevronRight } from "lucide-react-native";
 import SelectConcentrationOfNitrogenModal from "../../field_crops_works/nitrogen_irrigation/ui/SelectConcentrationOfNitrogenModal";
 import clsx from "clsx";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
+import { useInputTj10Count } from "../domain/useInputTj10Count";
 
 type TProps = {
   closeFn: () => void;
@@ -51,6 +52,7 @@ type TProps = {
   zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[];
   appPath: React.ReactNode;
   isRoz?: boolean;
+  isHobbyTech?: boolean;
 };
 
 const BarcodeScanner = (props: TProps) => {
@@ -61,6 +63,7 @@ const BarcodeScanner = (props: TProps) => {
     zpListWithOrderedNitrogenIrrigation,
     appPath,
     isRoz = false,
+    isHobbyTech = false,
 
     refreshAllData,
     closeFn,
@@ -72,7 +75,7 @@ const BarcodeScanner = (props: TProps) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isExtraWork230, setIsExtraWork230] = useState(
-    extraWork.activityname.startsWith("230")
+    extraWork.activityname.startsWith("230"),
   );
 
   //scan values
@@ -98,7 +101,7 @@ const BarcodeScanner = (props: TProps) => {
   const { sendExtraWork } = useSendExtraWorkData(
     setIsLoading,
     clearScannedValues,
-    closeFn
+    closeFn,
   );
   const sendDataHandler = () => {
     sendExtraWork(
@@ -106,7 +109,7 @@ const BarcodeScanner = (props: TProps) => {
       scannedValues,
       chosenDate,
       selectedProtectiveTreatment,
-      zpListWithOrderedNitrogenIrrigation
+      zpListWithOrderedNitrogenIrrigation,
     );
   };
 
@@ -125,14 +128,29 @@ const BarcodeScanner = (props: TProps) => {
     changeProtectiveTreatment,
   } = useSelectConcentration();
 
+  //tj12 count input
+  const {
+    isShowModalWithTj12CountInput,
+    tj12Count,
+
+    setIsShowModalWithTj12CountInput,
+    changeTj12Count,
+  } = useInputTj10Count();
+
   const isPossibleToScan =
     (!isFieldScanned && !isExtraWork230) ||
     (!isFieldScanned && isExtraWork230 && scannedValues.length < 1) ||
+    (!isFieldScanned && isHobbyTech && scannedValues.length < 1) ||
     (!isFieldScanned && isForceToScanField);
   const isNotPossibleToScanBecauseScannedWholeField = isFieldScanned;
   const isNotPossibleToScanBecauseOfRestrictionsWithWork230 =
     !isFieldScanned &&
     isExtraWork230 &&
+    scannedValues.length > 0 &&
+    !isForceToScanField;
+  const isNotPossibleToScanBecauseOfRestrictionsWithWorkHobbyTech =
+    !isFieldScanned &&
+    isHobbyTech &&
     scannedValues.length > 0 &&
     !isForceToScanField;
 
@@ -141,16 +159,7 @@ const BarcodeScanner = (props: TProps) => {
     <View className="relative w-full h-full">
       {isLoading ? <LoaderWholeScreen /> : null}
       <SafeAreaView className="flex-1 w-full">
-        <View className="w-full px-6 mt-4">
-          {appPath}
-          {/* <AppPath
-            paths={[
-              INDEX,
-              FIELD_CROPS,
-              { actionFn: () => {}, name: "Prace Extra GRU - ZP" },
-            ]}
-          /> */}
-        </View>
+        <View className="w-full px-6 mt-4">{appPath}</View>
         <View className="flex-col items-center justify-between w-[94vw] pl-6 mt-6 ">
           <View className="h-[37vh] w-full relative">
             {Platform.OS === "android" ? <StatusBar hidden /> : null}
@@ -220,12 +229,28 @@ const BarcodeScanner = (props: TProps) => {
                 </View>
               </>
             ) : null}
+            {isNotPossibleToScanBecauseOfRestrictionsWithWorkHobbyTech ? (
+              <>
+                <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full opacity-80 bg-yellow"></View>
+                <View className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center w-full h-full px-20">
+                  <Text className="text-center text-foreground font-default-bold">
+                    {`Zeskanowano ZPka dla technologicznej pracy hobby: \n${extraWork.activityname}`}
+                  </Text>
+                  <Text className="mt-4 text-center text-foreground font-default-normal">
+                    Brak możliwości zeskanowania więcej niż jednego elementu.
+                  </Text>
+                </View>
+              </>
+            ) : null}
           </View>
         </View>
 
         <View className="flex-col items-center justify-between flex-1 w-full">
           <View
-            className={clsx("w-full ", isExtraWork230 ? "h-2" : "h-4")}
+            className={clsx(
+              "w-full ",
+              isExtraWork230 || isHobbyTech ? "h-2" : "h-4",
+            )}
           ></View>
 
           {!isForceToScanField ? (
@@ -233,7 +258,7 @@ const BarcodeScanner = (props: TProps) => {
               {isExtraWork230 ? (
                 <View
                   className={clsx(
-                    "flex-row items-center justify-between w-full"
+                    "flex-row items-center justify-between w-full",
                   )}
                 >
                   <View className="mr-2">
@@ -272,8 +297,50 @@ const BarcodeScanner = (props: TProps) => {
                 </View>
               ) : null}
 
+              {isHobbyTech ? (
+                <View
+                  className={clsx(
+                    "flex-row items-center justify-between w-full",
+                  )}
+                >
+                  <View className="mr-2">
+                    <Text className="text-foreground font-default-bold">
+                      Ilość TJ12:
+                    </Text>
+                  </View>
+                  <View className="flex-1">
+                    <ButtonTextAndIcon
+                      actionFn={() => {
+                        setIsShowModalWithTj12CountInput(true);
+                      }}
+                      text={`${
+                        selectedProtectiveTreatment
+                          ? tj12Count
+                          : "podaj ilość TJ12"
+                      }`}
+                      icon={
+                        <View className="ml-4">
+                          <ChevronRight
+                            size={24}
+                            color={lightColor}
+                            strokeWidth={2}
+                          />
+                        </View>
+                      }
+                      isBackground
+                      isFull={false}
+                      customColor={
+                        selectedProtectiveTreatment
+                          ? darkColor
+                          : destructiveColor
+                      }
+                    />
+                  </View>
+                </View>
+              ) : null}
+
               <View className="flex-col items-center w-full">
-                {isExtraWork230 ? (
+                {isExtraWork230 || isHobbyTech ? (
                   <>
                     <View className="flex-row items-center justify-center w-full mt-[10px] mb-[6px]">
                       <View className="w-24 h-[1px] bg-foreground"></View>
@@ -286,7 +353,7 @@ const BarcodeScanner = (props: TProps) => {
                     </Text>
                   </>
                 ) : null}
-                {!isExtraWork230 ? (
+                {!isExtraWork230 && !isHobbyTech ? (
                   <>
                     <Text className="text-foreground font-default-normal">
                       zeskanowane elementy dla:
@@ -385,7 +452,7 @@ const BarcodeScanner = (props: TProps) => {
                         </Text>{" "}
                         (
                         {Math.round(
-                          (item.stkcnt_loc / item.stkcnt_ordnmb) * 100
+                          (item.stkcnt_loc / item.stkcnt_ordnmb) * 100,
                         )}{" "}
                         %)
                       </Text>
@@ -458,6 +525,7 @@ const BarcodeScanner = (props: TProps) => {
         />
       </ModalInternal>
 
+      {/* select concetration of nitrogen modal */}
       <ModalInternal
         isOpen={isShowModalWithSelectConcentration}
         isTransparent={false}

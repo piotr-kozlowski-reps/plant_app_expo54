@@ -1,5 +1,3 @@
-import { View } from "react-native";
-import Button from "@/features/shared/ui/button/Button";
 import { useCameraPermissions } from "expo-camera";
 import BarcodeScanner from "./BarcodeScanner";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
@@ -7,6 +5,8 @@ import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import {
+  EXTRA_WORKS_HOBBY,
+  EXTRA_WORKS_HOBBY_TECHNOLOGY,
   FIELD_CROPS,
   GREENHOUSE_CROPS,
   INDEX,
@@ -19,6 +19,7 @@ type TProps = {
   nitrogenProtectiveTreatments: ProtectiveTreatment[];
   refreshAllData: () => void;
   isRoz?: boolean;
+  isHobbyTech?: boolean;
 };
 
 const ScanCameraModal = (props: TProps) => {
@@ -29,22 +30,34 @@ const ScanCameraModal = (props: TProps) => {
     nitrogenProtectiveTreatments,
     refreshAllData,
     isRoz = false,
+    isHobbyTech = false,
   } = props;
   const [permission, requestPermission] = useCameraPermissions();
   const isPermissionGranted = Boolean(permission?.granted);
 
   //paths
-  const paths: NavElement[] = isRoz
-    ? [
-        INDEX,
-        GREENHOUSE_CROPS,
-        { actionFn: () => {}, name: "Prace Extra ROZ - ZP" },
-      ]
-    : [
-        INDEX,
-        FIELD_CROPS,
-        { actionFn: () => {}, name: "Prace Extra GRU - ZP" },
-      ];
+  const paths: NavElement[] = [];
+  if (isRoz)
+    paths.push(INDEX, GREENHOUSE_CROPS, {
+      actionFn: () => {},
+      name: "Prace Extra ROZ - ZP",
+    });
+  if (isHobbyTech)
+    paths.push(
+      INDEX,
+      FIELD_CROPS,
+      EXTRA_WORKS_HOBBY,
+      EXTRA_WORKS_HOBBY_TECHNOLOGY,
+      {
+        actionFn: () => {},
+        name: "Prace Extra HOBBY - ZP",
+      },
+    );
+  if (!isRoz && !isHobbyTech)
+    paths.push(INDEX, FIELD_CROPS, {
+      actionFn: () => {},
+      name: "Prace Extra GRU - ZP",
+    });
 
   ////tsx
   return (
@@ -60,6 +73,7 @@ const ScanCameraModal = (props: TProps) => {
         zpListWithOrderedNitrogenIrrigation={[]}
         appPath={<AppPath paths={paths} />}
         isRoz={isRoz}
+        isHobbyTech={isHobbyTech}
       />
     </PermissionsOrGoFurther>
   );

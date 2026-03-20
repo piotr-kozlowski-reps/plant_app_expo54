@@ -4,6 +4,7 @@ export type ExtraWorkDTO = {
   is_ordnmb: string;
   ishobby: string;
   mobile_jm: string | null;
+  istech: string | null;
 };
 export type ExtraWork = {
   keyval: number;
@@ -11,6 +12,7 @@ export type ExtraWork = {
   is_ordnmb: boolean;
   ishobby: boolean;
   mobile_jm: string | null;
+  istech: boolean | null;
 };
 
 export type Post_ExtraWork_ZP_DTO = {
