@@ -98,6 +98,24 @@ const BarcodeScanner = (props: TProps) => {
   //date value
   const [chosenDate, setChosenDate] = useState(new Date(Date.now()));
 
+  //tj12 count input
+  const {
+    isShowModalWithTj12CountInput,
+    tj12Count,
+
+    setIsShowModalWithTj12CountInput,
+    changeTj12Quantity,
+  } = useInputTj10Count();
+
+  //select concentration
+  const {
+    isShowModalWithSelectConcentration,
+    selectedProtectiveTreatment,
+
+    setIsShowModalWithSelectConcentration,
+    changeProtectiveTreatment,
+  } = useSelectConcentration();
+
   //sending data
   const { sendExtraWork } = useSendExtraWorkData(
     setIsLoading,
@@ -111,6 +129,8 @@ const BarcodeScanner = (props: TProps) => {
       chosenDate,
       selectedProtectiveTreatment,
       zpListWithOrderedNitrogenIrrigation,
+      isHobbyTech,
+      tj12Count,
     );
   };
 
@@ -119,24 +139,6 @@ const BarcodeScanner = (props: TProps) => {
   const [isShowZpPercentageModal, setIsShowZpPercentageModal] =
     useShowModal(false);
   const [chosenZP, setChosenZP] = useState<ZpScannedValue>();
-
-  //select concentration
-  const {
-    isShowModalWithSelectConcentration,
-    selectedProtectiveTreatment,
-
-    setIsShowModalWithSelectConcentration,
-    changeProtectiveTreatment,
-  } = useSelectConcentration();
-
-  //tj12 count input
-  const {
-    isShowModalWithTj12CountInput,
-    tj12Count,
-
-    setIsShowModalWithTj12CountInput,
-    changeTj12Quantity,
-  } = useInputTj10Count();
 
   const isPossibleToScan =
     (!isFieldScanned && !isExtraWork230) ||

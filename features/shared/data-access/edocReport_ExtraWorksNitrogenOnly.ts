@@ -5,6 +5,7 @@ import { EdocReport } from "../utils/getEdocReports/lib/EdocReport";
 import { MapDoNotMap } from "../utils/getEdocReports/lib/mapping/implementations/MapDoNotMap";
 import { MapStringIntoInteger } from "../utils/getEdocReports/lib/mapping/implementations/MapStringIntoInteger";
 import { MapStringValueTorFIntoBoolean } from "../utils/getEdocReports/lib/mapping/implementations/MapStringValueTorFIntoBoolean";
+import { MapStringValueTorFOrNullIntoBooleanOrNull } from "../utils/getEdocReports/lib/mapping/implementations/MapStringValueTorFOrNullIntoBooleanOrNull";
 import { SortByProperty } from "../utils/getEdocReports/lib/sorting/implementations/SortByProperty";
 
 const navigationObjectExample: ExtraWork = {
@@ -13,6 +14,7 @@ const navigationObjectExample: ExtraWork = {
   is_ordnmb: true,
   ishobby: true,
   mobile_jm: null,
+  istech: null,
 };
 
 const edocReport_ExtraWorksNitrogenOnly = new EdocReport<
@@ -32,6 +34,7 @@ const edocReport_ExtraWorksNitrogenOnly = new EdocReport<
     new MapStringValueTorFIntoBoolean<ExtraWork>("is_ordnmb"),
     new MapStringValueTorFIntoBoolean<ExtraWork>("ishobby"),
     new MapDoNotMap<ExtraWork, string | null>("mobile_jm"),
+    new MapStringValueTorFOrNullIntoBooleanOrNull<ExtraWork>("istech"),
   ],
 });
 

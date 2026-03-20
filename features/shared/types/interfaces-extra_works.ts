@@ -19,10 +19,12 @@ export type Post_ExtraWork_ZP_DTO = {
   activityid: number;
   scanned_raw_value: string;
   // begindat: Date;
+  tj12Count?: number;
   donedat: Date;
   mobile: boolean;
   ordnmb_json: Omit<ZpScannedValue, "sordid">[];
 };
+
 export type Post_ExtraWork_QUANTITY_DTO = {
   activityid: number;
   begindat: Date;

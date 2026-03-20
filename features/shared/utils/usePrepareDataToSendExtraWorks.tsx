@@ -19,6 +19,7 @@ export const usePrepareDataToSendExtraWorks = () => {
     scannedValues: ZpScannedValue[],
     selectedProtectiveTreatment: ProtectiveTreatment | null,
     zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
+    tj12Count: number | null | undefined,
   ) => {
     const dataToBeSent: Post_ExtraWork_ZP_DTO = {
       activityid: extraWork.keyval,
@@ -26,12 +27,14 @@ export const usePrepareDataToSendExtraWorks = () => {
       scanned_raw_value: scannedValues[0].scanned_raw_value,
       donedat: new Date(Date.now()),
       mobile: true,
+      // tj12Count: tj12Count ? tj12Count : null,
       ordnmb_json: prepareScannedValuesToBeSent(
         scannedValues,
         selectedProtectiveTreatment,
         zpListWithOrderedNitrogenIrrigation,
       ),
     };
+    if (tj12Count) dataToBeSent.tj12Count = tj12Count;
 
     return dataToBeSent;
   };

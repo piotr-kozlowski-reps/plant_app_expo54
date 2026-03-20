@@ -3,7 +3,6 @@ import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/interfaces-localization";
 import {
   ExtraWork,
-  Post_ExtraWork_ZP_DTO,
   ZpScannedValue,
 } from "@/features/shared/types/interfaces-extra_works";
 import {
@@ -34,7 +33,7 @@ export const useSendProtectiveTreatmentHandler = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   clearScannedValues: () => void,
   closeFn: () => void,
-  clearForm: () => void
+  clearForm: () => void,
 ) => {
   ////vars
   const { errorHandler } = useErrorHandler();
@@ -42,7 +41,7 @@ export const useSendProtectiveTreatmentHandler = (
 
   //fn
   const sendProtectiveTreatmentDataHandler = async (
-    valuesToSendProtectiveTreatments: ProtectiveTreatmentDataToSent
+    valuesToSendProtectiveTreatments: ProtectiveTreatmentDataToSent,
   ) => {
     const {
       extraWork,
@@ -74,9 +73,9 @@ export const useSendProtectiveTreatmentHandler = (
           getProperValueOfTreatmentTraysInAllZPs(
             quantity,
             scannedZP,
-            scannedValues
+            scannedValues,
           ),
-          who
+          who,
         ),
         planam: scannedZP.planam,
         activityid: extraWork.keyval,
@@ -127,7 +126,7 @@ export const useSendProtectiveTreatmentHandler = (
         configPerBuild.apiAddress,
         "/api.php/REST/custom/treatment",
         token!,
-        dataToBeSend
+        dataToBeSend,
       );
 
       //check if response array has the same amount of items as sent items
@@ -152,7 +151,7 @@ export const useSendProtectiveTreatmentHandler = (
   function getTreatmentDataToBeSent(
     treatment: ProtectiveTreatment,
     quantity: number,
-    who: WhoDidProtectiveTreatment
+    who: WhoDidProtectiveTreatment,
   ): Pick<ProtectiveTreatmentSendDataDTO, "tretid" | "lvalue" | "is_aut"> {
     return {
       tretid: treatment.id____,
@@ -164,7 +163,7 @@ export const useSendProtectiveTreatmentHandler = (
   function getProperValueOfTreatmentTraysInAllZPs(
     quantity: number,
     scannedZP: ZpScannedValue,
-    scannedValues: ZpScannedValue[]
+    scannedValues: ZpScannedValue[],
   ): number {
     const allTraysCount = scannedValues.reduce((acc, item) => {
       return acc + item.stkcnt_loc;

@@ -64,7 +64,6 @@ export const useScannedValues = (
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     const isZP = whatValueWasScanned === "zp_gru";
-
     const isField = whatValueWasScanned === "field";
 
     try {

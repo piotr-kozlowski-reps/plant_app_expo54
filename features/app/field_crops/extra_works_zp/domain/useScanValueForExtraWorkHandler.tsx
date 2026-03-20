@@ -95,6 +95,8 @@ export const useScanValueForExtraWorkHandler = () => {
       whatWasScanned,
     );
 
+    console.log({ ZPFoundForThisActivityId });
+
     //is ZP already scanned
     const zpOrdnmb =
       ZPFoundForThisActivityId && ZPFoundForThisActivityId.length
