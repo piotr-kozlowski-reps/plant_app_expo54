@@ -10,7 +10,7 @@ export const useInputTj10Count = () => {
     useState(false);
 
   /** functions */
-  const changeTj12Count = (value: number) => {
+  const changeTj12Quantity = (value: number) => {
     setTj12Count(value);
   };
 
@@ -19,6 +19,6 @@ export const useInputTj10Count = () => {
     tj12Count,
 
     setIsShowModalWithTj12CountInput,
-    changeTj12Count,
+    changeTj12Quantity,
   };
 };

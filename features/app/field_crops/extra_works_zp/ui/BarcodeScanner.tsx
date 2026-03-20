@@ -43,6 +43,7 @@ import SelectConcentrationOfNitrogenModal from "../../field_crops_works/nitrogen
 import clsx from "clsx";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import { useInputTj10Count } from "../domain/useInputTj10Count";
+import Tj12CountModal from "../../field_crops_works/nitrogen_irrigation/ui/Tj12CountModal";
 
 type TProps = {
   closeFn: () => void;
@@ -134,7 +135,7 @@ const BarcodeScanner = (props: TProps) => {
     tj12Count,
 
     setIsShowModalWithTj12CountInput,
-    changeTj12Count,
+    changeTj12Quantity,
   } = useInputTj10Count();
 
   const isPossibleToScan =
@@ -303,9 +304,22 @@ const BarcodeScanner = (props: TProps) => {
                     "flex-row items-center justify-between w-full",
                   )}
                 >
-                  <View className="mr-2">
-                    <Text className="text-foreground font-default-bold">
+                  <View className="flex-row items-center justify-start gap-2 mr-6">
+                    <Text
+                      className={clsx(
+                        "font-default-bold",
+                        tj12Count ? "text-foreground" : "text-destructive",
+                      )}
+                    >
                       Ilość TJ12:
+                    </Text>
+                    <Text
+                      className={clsx(
+                        " font-main-menu",
+                        tj12Count ? "text-foreground" : "text-destructive",
+                      )}
+                    >
+                      {tj12Count ? tj12Count : "-"}
                     </Text>
                   </View>
                   <View className="flex-1">
@@ -313,11 +327,7 @@ const BarcodeScanner = (props: TProps) => {
                       actionFn={() => {
                         setIsShowModalWithTj12CountInput(true);
                       }}
-                      text={`${
-                        selectedProtectiveTreatment
-                          ? tj12Count
-                          : "podaj ilość TJ12"
-                      }`}
+                      text={`${tj12Count ? "zmień ilość TJ12" : "podaj ilość TJ12"}`}
                       icon={
                         <View className="ml-4">
                           <ChevronRight
@@ -329,11 +339,7 @@ const BarcodeScanner = (props: TProps) => {
                       }
                       isBackground
                       isFull={false}
-                      customColor={
-                        selectedProtectiveTreatment
-                          ? darkColor
-                          : destructiveColor
-                      }
+                      customColor={tj12Count ? darkColor : destructiveColor}
                     />
                   </View>
                 </View>
@@ -487,7 +493,8 @@ const BarcodeScanner = (props: TProps) => {
                 disabled={
                   scannedValues.length === 0 ||
                   isForceToScanField ||
-                  (isExtraWork230 && !selectedProtectiveTreatment)
+                  (isExtraWork230 && !selectedProtectiveTreatment) ||
+                  (isHobbyTech && !tj12Count)
                 }
               />
             </View>
@@ -525,7 +532,7 @@ const BarcodeScanner = (props: TProps) => {
         />
       </ModalInternal>
 
-      {/* select concetration of nitrogen modal */}
+      {/* select concentration of nitrogen modal */}
       <ModalInternal
         isOpen={isShowModalWithSelectConcentration}
         isTransparent={false}
@@ -537,6 +544,20 @@ const BarcodeScanner = (props: TProps) => {
           refreshAllData={refreshAllData}
           changeProtectiveTreatment={changeProtectiveTreatment}
           isLoading={isLoading}
+        />
+      </ModalInternal>
+
+      {/* input tj12 count modal */}
+      <ModalInternal
+        isOpen={isShowModalWithTj12CountInput}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <Tj12CountModal
+          closeFn={() => setIsShowModalWithTj12CountInput(false)}
+          changeTj12Quantity={changeTj12Quantity}
+          extraWork={extraWork}
+          tj12Count={tj12Count}
         />
       </ModalInternal>
     </View>

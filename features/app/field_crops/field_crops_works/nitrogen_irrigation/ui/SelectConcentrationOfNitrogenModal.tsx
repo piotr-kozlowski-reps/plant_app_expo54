@@ -1,20 +1,11 @@
-// import {
-//   darkColor,
-//   lightNuanceColor,
-// } from "@/features/shared/constants/colorThemeVars";
-// import { InHowManyDaysKeyValue } from "@/features/shared/types/interfaces-general";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-// import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
-// import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
-// import { useDatesHelper } from "@/features/shared/utils/useDatesHelper";
 import {
   darkColor,
   lightNuanceColor,
 } from "@/features/shared/constants/colorThemeVars";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
-import { useEffect } from "react";
 import { NitrogenConcentrationKeyValue } from "@/features/shared/types/interfaces-general";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import { FlatList, RefreshControl } from "react-native-gesture-handler";
@@ -25,8 +16,6 @@ type Props = {
   closeFn: () => void;
   refreshAllData: () => void;
   changeProtectiveTreatment: (protectiveTreatment: ProtectiveTreatment) => void;
-
-  // changeInHowManyDaysHandler: (inHowManyDaysInput: number) => void;
 };
 
 const SelectConcentrationOfNitrogenModal = (props: Props) => {
@@ -48,7 +37,7 @@ const SelectConcentrationOfNitrogenModal = (props: Props) => {
 
   //fn
   const changeProtectiveTreatmentLocalHandler = (
-    protectiveTreatment: ProtectiveTreatment
+    protectiveTreatment: ProtectiveTreatment,
   ) => {
     changeProtectiveTreatment(protectiveTreatment);
     closeFn();

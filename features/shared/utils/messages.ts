@@ -93,6 +93,7 @@ export const ERROR_MESSAGES = {
   WRONG_PARAMETER: "Przekazano zły parametr.",
   MODULE_DOESNT_HANDLE_WITH_TRAY_QR:
     "Ten moduł nie obsługuje skanowania QR kodu tacy.",
+  LACK_OF_TJ12_QUANTITY: "Brak informacji TJ12.",
   LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT:
     "Nie mogę przesłać danych, gdyż nie są kompletne.",
   CHOSEN_ZP_HAS_NO_TRAYS_IN_SCANNED_LOCALIZATION:

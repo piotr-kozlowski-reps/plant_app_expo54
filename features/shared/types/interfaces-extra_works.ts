@@ -87,3 +87,7 @@ export type ConfirmationForExtraWork_PostDTO = {
   ordnmb_json: ZpScannedValueToBeSent[];
 };
 export type ConfirmationForExtraWorkResponse = string[];
+
+export type ExtraWorkTj12QuantityInput = {
+  quantity: number;
+};
