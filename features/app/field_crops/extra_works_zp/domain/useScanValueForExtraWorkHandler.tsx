@@ -59,26 +59,11 @@ export const useScanValueForExtraWorkHandler = () => {
     useGet_CheckIfZPExistsInThisActivityId();
 
   //zp
-  type ScanZpOrTrayBase = {
-    dataForScanZP: DataForScanZP;
-    whatWasScanned: TypeOfScannedValue;
-  };
-  type HobbyTechTrue = {
-    isHobbyTech: true;
-    setTypeOfHobbyZp: React.Dispatch<
-      React.SetStateAction<TypeOfHobbyZp | null>
-    >;
-  };
-  type HobbyTechFalse = {
-    isHobbyTech: false;
-    setTypeOfHobbyZp?: undefined;
-  };
-  type ScanZpOrTray = ScanZpOrTrayBase & (HobbyTechTrue | HobbyTechFalse);
+
   async function scanZpOrTrayHandler(
-    config: ScanZpOrTray,
-    // dataForScanZP: DataForScanZP,
-    // whatWasScanned: TypeOfScannedValue,
-    // isHobbyTech?: boolean,
+    dataForScanZP: DataForScanZP,
+    whatWasScanned: TypeOfScannedValue,
+    isHobbyTech?: boolean,
   ) {
     const {
       scannedValue,
@@ -89,10 +74,9 @@ export const useScanValueForExtraWorkHandler = () => {
       setScannedValues,
       setIsForceToScanField,
       setScannedZPOnManyFields,
-    } = config.dataForScanZP;
-    const whatWasScanned = config.whatWasScanned;
-    const isHobbyTech = config.isHobbyTech;
-    const setTypeOfHobbyZp = config.setTypeOfHobbyZp;
+    } = dataForScanZP;
+
+    console.log("scanZpOrTrayHandler");
 
     if (
       whatWasScanned !== "tray" &&
@@ -133,8 +117,6 @@ export const useScanValueForExtraWorkHandler = () => {
     if (isHobbyTech) {
       const ordnmb = getPureZPValue(scannedValue);
       const whatKindOfHobbyZp = await checkIfIsHobbyZp(ordnmb, token);
-      if (setTypeOfHobbyZp && typeof setTypeOfHobbyZp === "function")
-        setTypeOfHobbyZp(whatKindOfHobbyZp);
 
       if (whatKindOfHobbyZp === "no_hobby" || !whatKindOfHobbyZp) {
         toast.warning(ERROR_MESSAGES.SCANNED_ZP_IS_NOT_HOBBY_ZP);

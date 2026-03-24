@@ -20,10 +20,6 @@ import { usePrepareDataForFormikToTj12Quantity } from "../domain/usePrepareDataF
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import React from "react";
 import InputFormik from "@/features/shared/ui/input/InputFormik";
-// import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
-// import { NitrogenConcentrationKeyValue } from "@/features/shared/types/interfaces-general";
-// import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
-// import { FlatList, RefreshControl } from "react-native-gesture-handler";
 
 type Props = {
   //   protectiveTreatments: ProtectiveTreatment[];

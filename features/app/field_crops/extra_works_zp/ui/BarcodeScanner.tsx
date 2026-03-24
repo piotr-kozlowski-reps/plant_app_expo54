@@ -44,6 +44,10 @@ import clsx from "clsx";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import { useInputTjQuantity } from "../domain/useInputTjQuantity";
 import TjQuantityModal from "../../field_crops_works/nitrogen_irrigation/ui/TjQuantityModal";
+import {
+  getIsHobbyExtraWorkWithTj10,
+  getIsHobbyExtraWorkWithTj12,
+} from "@/features/shared/utils/hobbyExtraWorksHelpers";
 
 type TProps = {
   closeFn: () => void;
@@ -92,8 +96,8 @@ const BarcodeScanner = (props: TProps) => {
   //     mobile_jm: null,
   //   }
   // ];
-  const isActivityIdHobbyWithTj10 = extraWork.keyval === 773246;
-  const isActivityIdHobbyWithTj12 = extraWork.keyval === 30667241;
+  const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(extraWork);
+  const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(extraWork);
   const isTjQuantityRequired =
     isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj12;
 

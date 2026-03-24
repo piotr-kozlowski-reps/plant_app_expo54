@@ -20,6 +20,7 @@ export type Post_ExtraWork_ZP_DTO = {
   scanned_raw_value: string;
   // begindat: Date;
   tj12Count?: number;
+  tj10Count?: number;
   donedat: Date;
   mobile: boolean;
   ordnmb_json: Omit<ZpScannedValue, "sordid">[];

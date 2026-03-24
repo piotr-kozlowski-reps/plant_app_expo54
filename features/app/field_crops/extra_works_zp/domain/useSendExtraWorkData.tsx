@@ -42,7 +42,7 @@ export const useSendExtraWorkData = (
     selectedProtectiveTreatment: ProtectiveTreatment | null,
     zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
     isHobbyTech?: boolean,
-    tj12Count?: number | null,
+    tjCount?: number | null,
   ) => {
     if (!extraWork || !scannedValues.length || !begin_date) {
       if (!extraWork) toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK);
@@ -51,7 +51,7 @@ export const useSendExtraWorkData = (
 
       return;
     }
-    if (isHobbyTech && !tj12Count) {
+    if (isHobbyTech && !tjCount) {
       toast.error(ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY);
       return;
     }
@@ -63,7 +63,7 @@ export const useSendExtraWorkData = (
         scannedValues,
         selectedProtectiveTreatment,
         zpListWithOrderedNitrogenIrrigation,
-        tj12Count,
+        tjCount,
       );
 
     try {

@@ -78,52 +78,20 @@ export const useScannedValues = (
 
       //allowed paths/conditions
       if (!isField && (isZP || isRoz)) {
-        const dataForScanZP = {
-          scannedValue,
-          scannedValues,
-          isZPScanned,
-          setIsZPScanned,
-          activityId,
-          setScannedValues,
-          setIsForceToScanField,
-          setScannedZPOnManyFields,
-        };
-
-        if (isHobbyTech) {
-          await scanZpOrTrayHandler({
-            dataForScanZP,
-            whatWasScanned: isRoz ? "zp_roz" : "zp_gru",
-            isHobbyTech,
-            setTypeOfHobbyZp,
-          });
-        } else {
-          await scanZpOrTrayHandler({
-            dataForScanZP,
-            whatWasScanned: isRoz ? "zp_roz" : "zp_gru",
-            isHobbyTech,
-          });
-        }
-
-        // await scanZpOrTrayHandler(
-        //   {
-        //     dataForScanZP: ,
-        //     whatWasScanned: isRoz ? "zp_roz" : "zp_gru",
-        //     isHobbyTech,
-        //     setTypeOfHobbyZp,
-        //   },
-        //   // {
-        //   //   scannedValue,
-        //   //   scannedValues,
-        //   //   isZPScanned,
-        //   //   setIsZPScanned,
-        //   //   activityId,
-        //   //   setScannedValues,
-        //   //   setIsForceToScanField,
-        //   //   setScannedZPOnManyFields,
-        //   // },
-        //   // isRoz ? "zp_roz" : "zp_gru",
-        //   // isHobbyTech,
-        // );
+        await scanZpOrTrayHandler(
+          {
+            scannedValue,
+            scannedValues,
+            isZPScanned,
+            setIsZPScanned,
+            activityId,
+            setScannedValues,
+            setIsForceToScanField,
+            setScannedZPOnManyFields,
+          },
+          isRoz ? "zp_roz" : "zp_gru",
+          isHobbyTech,
+        );
 
         return;
       }
@@ -200,7 +168,6 @@ export const useScannedValues = (
     scannedValues,
     scannedZPOnManyFields,
     qrLock,
-
     setQrLock,
     scanValueHandler,
     clearScannedValues,

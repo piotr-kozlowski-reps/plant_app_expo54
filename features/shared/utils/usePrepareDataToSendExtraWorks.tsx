@@ -6,6 +6,10 @@ import {
 } from "../types/interfaces-extra_works";
 import { ZpToNitrogenIrrigation } from "../types/interfaces-nitrogen_irrigation";
 import { ProtectiveTreatment } from "../types/interfaces-protective_treatment";
+import {
+  getIsHobbyExtraWorkWithTj10,
+  getIsHobbyExtraWorkWithTj12,
+} from "./hobbyExtraWorksHelpers";
 import { useCheckWhatValueIsScannedHelpers } from "./useCheckWhatValueIsScannedHelpers";
 
 export const usePrepareDataToSendExtraWorks = () => {
@@ -19,7 +23,7 @@ export const usePrepareDataToSendExtraWorks = () => {
     scannedValues: ZpScannedValue[],
     selectedProtectiveTreatment: ProtectiveTreatment | null,
     zpListWithOrderedNitrogenIrrigation: ZpToNitrogenIrrigation[],
-    tj12Count: number | null | undefined,
+    tjCount: number | null | undefined,
   ) => {
     const dataToBeSent: Post_ExtraWork_ZP_DTO = {
       activityid: extraWork.keyval,
@@ -34,7 +38,12 @@ export const usePrepareDataToSendExtraWorks = () => {
         zpListWithOrderedNitrogenIrrigation,
       ),
     };
-    if (tj12Count) dataToBeSent.tj12Count = tj12Count;
+
+    //hobby extra works addition
+    const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(extraWork);
+    const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(extraWork);
+    if (isActivityIdHobbyWithTj12 && tjCount) dataToBeSent.tj12Count = tjCount;
+    if (isActivityIdHobbyWithTj10 && tjCount) dataToBeSent.tj10Count = tjCount;
 
     return dataToBeSent;
   };
