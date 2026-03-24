@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { ZpScannedValue } from "../types/interfaces-extra_works";
+import { TypeOfHobbyZp, ZpScannedValue } from "../types/interfaces-extra_works";
 
 export const useScannedValuesForExtraWorks = (
   isFieldScanned: boolean,
   setIsFieldScanned: React.Dispatch<React.SetStateAction<boolean>>,
   isZPScanned: boolean,
-  setIsZPScanned: React.Dispatch<React.SetStateAction<boolean>>
+  setIsZPScanned: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const [scannedValues, setScannedValues] = useState<ZpScannedValue[]>([]);
   useEffect(() => {

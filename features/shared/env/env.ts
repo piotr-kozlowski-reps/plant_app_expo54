@@ -57,6 +57,7 @@ export let configPerBuild: Config = {
   edocReport_ActivitiesList: 143,
   edocReport_ActivityDetails: 144,
   edocReport_NitrogenIrrigationList: 1619,
+  edocReport_ZpNameData: 1703,
 
   customRegister_ExtraWork: 238,
   customRegister_PhoneInfo: 240,

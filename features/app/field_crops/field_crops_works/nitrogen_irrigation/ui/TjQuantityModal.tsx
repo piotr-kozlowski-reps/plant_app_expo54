@@ -31,20 +31,29 @@ type Props = {
   closeFn: () => void;
   changeTj12Quantity: (value: number) => void;
   extraWork: ExtraWork | undefined;
-  tj12Count: number | null;
+  tjQuantity: number | null;
+  isActivityIdHobbyWithTj10: boolean;
+  isActivityIdHobbyWithTj12: boolean;
   //   refreshAllData: () => void;
   //   changeProtectiveTreatment: (protectiveTreatment: ProtectiveTreatment) => void;
 };
 
-const Tj12CountModal = (props: Props) => {
+const TjQuantityModal = (props: Props) => {
   ////vars
-  const { closeFn, changeTj12Quantity, extraWork, tj12Count } = props;
+  const {
+    closeFn,
+    changeTj12Quantity,
+    extraWork,
+    tjQuantity,
+    isActivityIdHobbyWithTj10,
+    isActivityIdHobbyWithTj12,
+  } = props;
 
   const { formik, availableFormActions, canFormBeSubmitted } =
     usePrepareDataForFormikToTj12Quantity(
       changeTj12Quantity,
       closeFn,
-      tj12Count,
+      tjQuantity,
     );
 
   ////tsx
@@ -69,7 +78,7 @@ const Tj12CountModal = (props: Props) => {
                 },
                 {
                   actionFn: () => {},
-                  name: "Ilość TJ12",
+                  name: "Ilość TJ",
                 },
               ]}
             />
@@ -84,28 +93,11 @@ const Tj12CountModal = (props: Props) => {
                 <Text className="text-foreground font-main-menu">
                   {extraWork?.activityname}
                 </Text>
-                {/* {todaysQuantity > 0 ? (
-                  <View className="mt-2">
-                    <Text className="text-destructive font-default-normal">
-                      Praca extra była już dziś wykonana.
-                    </Text>
-                    <Text className="text-destructive font-default-normal">
-                      Ilość:{" "}
-                      <Text className="text-destructive font-default-bold">
-                        {todaysQuantity}
-                      </Text>
-                      <Text className="text-destructive font-default-normal">
-                        {" "}
-                        szt.
-                      </Text>
-                    </Text>
-                  </View>
-                ) : null} */}
               </View>
 
               <View className="w-full px-6">
                 <InputFormik<ExtraWorkTj12QuantityInput>
-                  label={`Podaj ilość TJ12:`}
+                  label={`Podaj ilość ${isActivityIdHobbyWithTj12 ? "TJ12" : "TJ10"}:`}
                   placeholder="podaj ilość tj12"
                   isSignedAsRequired={true}
                   formik={formik}
@@ -134,63 +126,4 @@ const Tj12CountModal = (props: Props) => {
     </View>
   );
 };
-export default Tj12CountModal;
-
-// <View className="absolute left-0 right-0 w-full bottom-8 top-8">
-//   <View className="relative flex-col items-center justify-center flex-1">
-//     <View className="w-full flex-1 pt-8 pb-[4px] border-t-2 border-b-2 border-gray-600 rounded-app ">
-//       <View className="flex items-center justify-center w-full px-8">
-//         <Text className="text-center text-foreground font-nav">
-//           Wybierz stężenie
-//         </Text>
-//       </View>
-
-//       <ContainerHorizontalRoundedFrame color={lightNuanceColor}>
-//         <View className="mt-2">
-//           <FlatList<NitrogenConcentrationKeyValue>
-//             data={nitrogenConcentrationKeyValue}
-//             renderItem={({
-//               item,
-//             }: {
-//               item: NitrogenConcentrationKeyValue;
-//             }) => (
-//               <View className="flex-col items-center justify-center px-6 mt-2">
-//                 <View
-//                   className={
-//                     "flex-row items-center justify-between w-full focus:border-secondary rounded-tr-xl rounded-bl-xl rounded-br-app rounded-tl-app"
-//                   }
-//                   key={item.name}
-//                 >
-//                   <ButtonTextAndThreeArrows
-//                     actionFn={() => {
-//                       changeProtectiveTreatmentLocalHandler(item.value);
-//                     }}
-//                     text={`${item.name}`}
-//                     isBackground
-//                     color={darkColor}
-//                     // disabled={disabled}
-//                   />
-//                 </View>
-//               </View>
-//             )}
-//             initialNumToRender={20}
-//             refreshControl={
-//               <RefreshControl
-//                 refreshing={isLoading}
-//                 onRefresh={refreshAllData}
-//               />
-//             }
-//             style={{ marginBottom: 12 }}
-//           />
-//         </View>
-//       </ContainerHorizontalRoundedFrame>
-
-//       <View className="flex-row items-center justify-between w-full pl-6 mt-6 mb-[16px]">
-//         <View className="flex-1"></View>
-//         <View className="ml-6">
-//           <ButtonBack actionFn={closeFn} isOutline={false} />
-//         </View>
-//       </View>
-//     </View>
-//   </View>
-// </View>
+export default TjQuantityModal;

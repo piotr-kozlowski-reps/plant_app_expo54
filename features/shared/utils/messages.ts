@@ -22,6 +22,9 @@ export const VALIDATION_MESSAGES = {
 } as const;
 
 export const ERROR_MESSAGES = {
+  SCANNED_ZP_IS_NOT_HOBBY_ZP: "Zeskanowany ZP nie jest zleceniem hobby.",
+  SCANNED_ZP_HAS_TJ10_TRAYS: "Zeskanowany ZP ma tace TJ10.",
+  SCANNED_ZP_HAS_TJ12_TRAYS: "Zeskanowany ZP ma tace TJ12.",
   QUANTITY_TO_BE_SENT_WAS_ZERO:
     "Wybrana ilość była zerowa. Nie przesłano żadnych danych!",
   CANNOT_ORDER_AFTER_13:

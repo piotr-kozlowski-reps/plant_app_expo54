@@ -1,4 +1,7 @@
-import { ZpScannedValue } from "@/features/shared/types/interfaces-extra_works";
+import {
+  TypeOfHobbyZp,
+  ZpScannedValue,
+} from "@/features/shared/types/interfaces-extra_works";
 import { MESSAGES } from "@/features/shared/utils/messages";
 import { useState } from "react";
 import { toast } from "sonner-native";
@@ -16,6 +19,7 @@ export const useScannedValues = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   isExtraWork230: boolean,
   isRoz = false,
+  isHobbyTech = false,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -36,6 +40,9 @@ export const useScannedValues = (
   const [qrLock, setQrLock] = useState(true);
   const [isFieldScanned, setIsFieldScanned] = useState(false);
   const [isZPScanned, setIsZPScanned] = useState(false);
+  const [typeOfHobbyZp, setTypeOfHobbyZp] = useState<TypeOfHobbyZp | null>(
+    null,
+  );
   //scannedValues
   const { scannedValues, setScannedValues } = useScannedValuesForExtraWorks(
     isFieldScanned,
@@ -71,19 +78,52 @@ export const useScannedValues = (
 
       //allowed paths/conditions
       if (!isField && (isZP || isRoz)) {
-        await scanZpOrTrayHandler(
-          {
-            scannedValue,
-            scannedValues,
-            isZPScanned,
-            setIsZPScanned,
-            activityId,
-            setScannedValues,
-            setIsForceToScanField,
-            setScannedZPOnManyFields,
-          },
-          isRoz ? "zp_roz" : "zp_gru",
-        );
+        const dataForScanZP = {
+          scannedValue,
+          scannedValues,
+          isZPScanned,
+          setIsZPScanned,
+          activityId,
+          setScannedValues,
+          setIsForceToScanField,
+          setScannedZPOnManyFields,
+        };
+
+        if (isHobbyTech) {
+          await scanZpOrTrayHandler({
+            dataForScanZP,
+            whatWasScanned: isRoz ? "zp_roz" : "zp_gru",
+            isHobbyTech,
+            setTypeOfHobbyZp,
+          });
+        } else {
+          await scanZpOrTrayHandler({
+            dataForScanZP,
+            whatWasScanned: isRoz ? "zp_roz" : "zp_gru",
+            isHobbyTech,
+          });
+        }
+
+        // await scanZpOrTrayHandler(
+        //   {
+        //     dataForScanZP: ,
+        //     whatWasScanned: isRoz ? "zp_roz" : "zp_gru",
+        //     isHobbyTech,
+        //     setTypeOfHobbyZp,
+        //   },
+        //   // {
+        //   //   scannedValue,
+        //   //   scannedValues,
+        //   //   isZPScanned,
+        //   //   setIsZPScanned,
+        //   //   activityId,
+        //   //   setScannedValues,
+        //   //   setIsForceToScanField,
+        //   //   setScannedZPOnManyFields,
+        //   // },
+        //   // isRoz ? "zp_roz" : "zp_gru",
+        //   // isHobbyTech,
+        // );
 
         return;
       }
@@ -160,6 +200,7 @@ export const useScannedValues = (
     scannedValues,
     scannedZPOnManyFields,
     qrLock,
+
     setQrLock,
     scanValueHandler,
     clearScannedValues,

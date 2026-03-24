@@ -45,12 +45,16 @@ const ExtraWorksHobbyTechnologyEntryPage = () => {
     });
     return foundFilteredExtraWorks || [];
   }, [extraWorksArray]);
+
+  // console.log("filteredExtraWorks", filteredExtraWorks);
+
   //protective treatment data
   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
     filterOnlyNitrogenProtectiveTreatments(
       protectiveTreatments as ProtectiveTreatment[],
     );
   const refreshAllDataFn = refreshAllData as () => void;
+
   //open scanner handler
   const openScannerHandler = (id: number) => {
     const foundExtraWork = extraWorksArray.find((work) => work.keyval === id);

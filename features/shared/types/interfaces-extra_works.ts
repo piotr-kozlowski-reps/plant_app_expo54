@@ -45,6 +45,8 @@ export type ZpScannedValue = {
 };
 export type ZpScannedValuePercentage = Pick<ZpScannedValue, "act_percentage">;
 
+export type TypeOfHobbyZp = "no_hobby" | "hobby_tj10" | "hobby_tj12";
+
 export type ZpScannedValueToBeSent = Pick<
   ZpScannedValue,
   | "scanned_raw_value"

@@ -7,7 +7,10 @@ import {
   ZPItemDTO,
   ZPItemResponse,
 } from "@/features/shared/types/interfaces-zp";
-import { ZpScannedValue } from "@/features/shared/types/interfaces-extra_works";
+import {
+  TypeOfHobbyZp,
+  ZpScannedValue,
+} from "@/features/shared/types/interfaces-extra_works";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
@@ -56,9 +59,26 @@ export const useScanValueForExtraWorkHandler = () => {
     useGet_CheckIfZPExistsInThisActivityId();
 
   //zp
+  type ScanZpOrTrayBase = {
+    dataForScanZP: DataForScanZP;
+    whatWasScanned: TypeOfScannedValue;
+  };
+  type HobbyTechTrue = {
+    isHobbyTech: true;
+    setTypeOfHobbyZp: React.Dispatch<
+      React.SetStateAction<TypeOfHobbyZp | null>
+    >;
+  };
+  type HobbyTechFalse = {
+    isHobbyTech: false;
+    setTypeOfHobbyZp?: undefined;
+  };
+  type ScanZpOrTray = ScanZpOrTrayBase & (HobbyTechTrue | HobbyTechFalse);
   async function scanZpOrTrayHandler(
-    dataForScanZP: DataForScanZP,
-    whatWasScanned: TypeOfScannedValue,
+    config: ScanZpOrTray,
+    // dataForScanZP: DataForScanZP,
+    // whatWasScanned: TypeOfScannedValue,
+    // isHobbyTech?: boolean,
   ) {
     const {
       scannedValue,
@@ -69,7 +89,10 @@ export const useScanValueForExtraWorkHandler = () => {
       setScannedValues,
       setIsForceToScanField,
       setScannedZPOnManyFields,
-    } = dataForScanZP;
+    } = config.dataForScanZP;
+    const whatWasScanned = config.whatWasScanned;
+    const isHobbyTech = config.isHobbyTech;
+    const setTypeOfHobbyZp = config.setTypeOfHobbyZp;
 
     if (
       whatWasScanned !== "tray" &&
@@ -95,8 +118,6 @@ export const useScanValueForExtraWorkHandler = () => {
       whatWasScanned,
     );
 
-    console.log({ ZPFoundForThisActivityId });
-
     //is ZP already scanned
     const zpOrdnmb =
       ZPFoundForThisActivityId && ZPFoundForThisActivityId.length
@@ -105,6 +126,29 @@ export const useScanValueForExtraWorkHandler = () => {
     if (checkIfValueIsAlreadyScanned(zpOrdnmb, scannedValues)) {
       toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
       return;
+    }
+
+    //guard:
+    //for hobby need to check if zp is hobby and if has proper tj trays (tj10 or tj12)
+    if (isHobbyTech) {
+      const ordnmb = getPureZPValue(scannedValue);
+      const whatKindOfHobbyZp = await checkIfIsHobbyZp(ordnmb, token);
+      if (setTypeOfHobbyZp && typeof setTypeOfHobbyZp === "function")
+        setTypeOfHobbyZp(whatKindOfHobbyZp);
+
+      if (whatKindOfHobbyZp === "no_hobby" || !whatKindOfHobbyZp) {
+        toast.warning(ERROR_MESSAGES.SCANNED_ZP_IS_NOT_HOBBY_ZP);
+        return;
+      }
+
+      if (activityId === 30667241 && whatKindOfHobbyZp === "hobby_tj10") {
+        toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ10_TRAYS);
+        return;
+      }
+      if (activityId === 773246 && whatKindOfHobbyZp === "hobby_tj12") {
+        toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ12_TRAYS);
+        return;
+      }
     }
 
     if (!isZPScanned) setIsZPScanned(true);
@@ -413,6 +457,33 @@ export const useScanValueForExtraWorkHandler = () => {
     return foundZPField || null;
   }
 };
+
+async function checkIfIsHobbyZp(
+  ordnmb: string,
+  token: string | null,
+): Promise<TypeOfHobbyZp | null> {
+  const res = await fetch(
+    `${configPerBuild.apiAddress}/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ZpNameData}&ordnmb=${ordnmb}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  const response = await res.json();
+
+  if (response.data.resultMainQuery === -1) {
+    return null;
+  }
+  const zpName: string = response.data.resultMainQuery[0].twr_kod;
+  if (!zpName) return null;
+  if (!zpName.startsWith("HOB")) return "no_hobby";
+  if (zpName.startsWith("HOB") && zpName.endsWith("TJ12")) return "hobby_tj12";
+  if (zpName.startsWith("HOB") && zpName.endsWith("TJ10")) return "hobby_tj10";
+
+  return null;
+}
 
 // function getModuleKind(whatWasScanned: TypeOfScannedValue) {
 //   if (whatWasScanned === "zp_gru") return "GRUNT";

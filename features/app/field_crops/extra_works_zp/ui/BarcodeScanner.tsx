@@ -42,8 +42,8 @@ import { ChevronDown, ChevronRight } from "lucide-react-native";
 import SelectConcentrationOfNitrogenModal from "../../field_crops_works/nitrogen_irrigation/ui/SelectConcentrationOfNitrogenModal";
 import clsx from "clsx";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
-import { useInputTj10Count } from "../domain/useInputTj10Count";
-import Tj12CountModal from "../../field_crops_works/nitrogen_irrigation/ui/Tj12CountModal";
+import { useInputTjQuantity } from "../domain/useInputTjQuantity";
+import TjQuantityModal from "../../field_crops_works/nitrogen_irrigation/ui/TjQuantityModal";
 
 type TProps = {
   closeFn: () => void;
@@ -74,6 +74,29 @@ const BarcodeScanner = (props: TProps) => {
     throw new Error("BarcodeScanner -> Extra work not found");
   }
 
+  // const filteredExtraWorks = [
+  //   {
+  //     activityname: "150 - Pikowanie GRU-HOBBY 10",
+  //     is_ordnmb: true,
+  //     ishobby: true,
+  //     istech: true,
+  //     keyval: 773246,
+  //     mobile_jm: null,
+  //   },
+  //   {
+  //     activityname: "246 - Pikowanie GRU-HOBBY 12",
+  //     is_ordnmb: true,
+  //     ishobby: true,
+  //     istech: true,
+  //     keyval: 30667241,
+  //     mobile_jm: null,
+  //   }
+  // ];
+  const isActivityIdHobbyWithTj10 = extraWork.keyval === 773246;
+  const isActivityIdHobbyWithTj12 = extraWork.keyval === 30667241;
+  const isTjQuantityRequired =
+    isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj12;
+
   const [isLoading, setIsLoading] = useState(false);
   const [isExtraWork230, setIsExtraWork230] = useState(
     extraWork.activityname.startsWith("230"),
@@ -87,13 +110,14 @@ const BarcodeScanner = (props: TProps) => {
     scannedValues,
     scannedZPOnManyFields,
     qrLock,
+
     setQrLock,
     scanValueHandler,
     clearScannedValues,
     deleteScannedValue,
     changePercentageOfScannedValue,
     clearZpOnManyFields,
-  } = useScannedValues(setIsLoading, isExtraWork230, isRoz);
+  } = useScannedValues(setIsLoading, isExtraWork230, isRoz, isHobbyTech);
 
   //date value
   const [chosenDate, setChosenDate] = useState(new Date(Date.now()));
@@ -101,11 +125,11 @@ const BarcodeScanner = (props: TProps) => {
   //tj12 count input
   const {
     isShowModalWithTj12CountInput,
-    tj12Count,
+    tjQuantity,
 
     setIsShowModalWithTj12CountInput,
-    changeTj12Quantity,
-  } = useInputTj10Count();
+    changeTjQuantity,
+  } = useInputTjQuantity();
 
   //select concentration
   const {
@@ -130,7 +154,7 @@ const BarcodeScanner = (props: TProps) => {
       selectedProtectiveTreatment,
       zpListWithOrderedNitrogenIrrigation,
       isHobbyTech,
-      tj12Count,
+      tjQuantity,
     );
   };
 
@@ -300,7 +324,7 @@ const BarcodeScanner = (props: TProps) => {
                 </View>
               ) : null}
 
-              {isHobbyTech ? (
+              {isHobbyTech && isTjQuantityRequired ? (
                 <View
                   className={clsx(
                     "flex-row items-center justify-between w-full",
@@ -310,18 +334,20 @@ const BarcodeScanner = (props: TProps) => {
                     <Text
                       className={clsx(
                         "font-default-bold",
-                        tj12Count ? "text-foreground" : "text-destructive",
+                        tjQuantity ? "text-foreground" : "text-destructive",
                       )}
                     >
-                      Ilość TJ12:
+                      {isActivityIdHobbyWithTj12
+                        ? "Ilość TJ12:"
+                        : "Ilość TJ10:"}
                     </Text>
                     <Text
                       className={clsx(
                         " font-main-menu",
-                        tj12Count ? "text-foreground" : "text-destructive",
+                        tjQuantity ? "text-foreground" : "text-destructive",
                       )}
                     >
-                      {tj12Count ? tj12Count : "-"}
+                      {tjQuantity ? tjQuantity : "-"}
                     </Text>
                   </View>
                   <View className="flex-1">
@@ -329,7 +355,7 @@ const BarcodeScanner = (props: TProps) => {
                       actionFn={() => {
                         setIsShowModalWithTj12CountInput(true);
                       }}
-                      text={`${tj12Count ? "zmień ilość TJ12" : "podaj ilość TJ12"}`}
+                      text={`${tjQuantity ? `zmień ilość ${isActivityIdHobbyWithTj12 ? "TJ12" : "TJ10"} ` : `podaj ilość ${isActivityIdHobbyWithTj12 ? "TJ12" : "TJ10"}`}`}
                       icon={
                         <View className="ml-4">
                           <ChevronRight
@@ -341,7 +367,7 @@ const BarcodeScanner = (props: TProps) => {
                       }
                       isBackground
                       isFull={false}
-                      customColor={tj12Count ? darkColor : destructiveColor}
+                      customColor={tjQuantity ? darkColor : destructiveColor}
                     />
                   </View>
                 </View>
@@ -496,7 +522,7 @@ const BarcodeScanner = (props: TProps) => {
                   scannedValues.length === 0 ||
                   isForceToScanField ||
                   (isExtraWork230 && !selectedProtectiveTreatment) ||
-                  (isHobbyTech && !tj12Count)
+                  (isHobbyTech && !tjQuantity)
                 }
               />
             </View>
@@ -549,17 +575,19 @@ const BarcodeScanner = (props: TProps) => {
         />
       </ModalInternal>
 
-      {/* input tj12 count modal */}
+      {/* input tj quantity modal */}
       <ModalInternal
         isOpen={isShowModalWithTj12CountInput}
         isTransparent={false}
         backgroundColor={yellowColor}
       >
-        <Tj12CountModal
+        <TjQuantityModal
           closeFn={() => setIsShowModalWithTj12CountInput(false)}
-          changeTj12Quantity={changeTj12Quantity}
+          changeTj12Quantity={changeTjQuantity}
           extraWork={extraWork}
-          tj12Count={tj12Count}
+          tjQuantity={tjQuantity}
+          isActivityIdHobbyWithTj10={isActivityIdHobbyWithTj10}
+          isActivityIdHobbyWithTj12={isActivityIdHobbyWithTj12}
         />
       </ModalInternal>
     </View>

@@ -1,24 +1,24 @@
 import { useState } from "react";
 
-export const useInputTj10Count = () => {
+export const useInputTjQuantity = () => {
   /** vars */
   //state
-  const [tj12Count, setTj12Count] = useState<number | null>(null);
+  const [tjQuantity, setTjQuantity] = useState<number | null>(null);
 
   //modals
   const [isShowModalWithTj12CountInput, setIsShowModalWithTj12CountInput] =
     useState(false);
 
   /** functions */
-  const changeTj12Quantity = (value: number) => {
-    setTj12Count(value);
+  const changeTjQuantity = (value: number) => {
+    setTjQuantity(value);
   };
 
   return {
     isShowModalWithTj12CountInput,
-    tj12Count,
+    tjQuantity,
 
     setIsShowModalWithTj12CountInput,
-    changeTj12Quantity,
+    changeTjQuantity,
   };
 };

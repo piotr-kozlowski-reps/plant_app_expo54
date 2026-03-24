@@ -27,10 +27,10 @@ export const useSendExtraWorkData = (
   ////vars
   const { prepareDataToSendExtraWorksHandler } =
     usePrepareDataToSendExtraWorks();
-  const { POSTasyncMutation: send_ExtraWork_PostMutation } =
-    useGetEdocCustomRegisterMutation({
-      customRegister: customRegister_ExtraWork,
-    });
+  // const { POSTasyncMutation: send_ExtraWork_PostMutation } =
+  //   useGetEdocCustomRegisterMutation({
+  //     customRegister: customRegister_ExtraWork,
+  //   });
   const queryClient = useQueryClient();
   const { token } = useAuthSessionStore();
 
