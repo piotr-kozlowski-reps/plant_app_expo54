@@ -19,6 +19,7 @@ export type ZPFromFieldDTO = {
   stkcnt_loc: string;
   stkcnt_ordnmb: string;
   sordid: string;
+  trace_type: string | null;
 };
 export type ZPFromField = {
   planam: string;
@@ -29,6 +30,7 @@ export type ZPFromField = {
   stkcnt_loc: number;
   stkcnt_ordnmb: number;
   sordid: number;
+  trace_type: string | null;
 };
 
 export type ZPFieldListDTO = {
@@ -47,6 +49,7 @@ export type ZPItemDTO = {
   stkcnt_ordnmb: string;
   act_percentage: string;
   sordid: string;
+  trace_type: string | null;
 };
 export type ZPItem = {
   is_repeated: boolean;
@@ -58,6 +61,7 @@ export type ZPItem = {
   stkcnt_ordnmb: number;
   act_percentage: number;
   sordid: number;
+  trace_type: string | null;
 };
 export type ZPItemResponse = {
   data: {

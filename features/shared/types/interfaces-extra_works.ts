@@ -23,7 +23,7 @@ export type Post_ExtraWork_ZP_DTO = {
   tj10Count?: number;
   donedat: Date;
   mobile: boolean;
-  ordnmb_json: Omit<ZpScannedValue, "sordid">[];
+  ordnmb_json: Omit<ZpScannedValue, "sordid" | "trace_type">[];
 };
 
 export type Post_ExtraWork_QUANTITY_DTO = {
@@ -43,6 +43,7 @@ export type ZpScannedValue = {
   stkcnt_loc: number;
   stkcnt_ordnmb: number;
   sordid: number | null;
+  trace_type: string | null;
 };
 export type ZpScannedValuePercentage = Pick<ZpScannedValue, "act_percentage">;
 
@@ -94,5 +95,5 @@ export type ConfirmationForExtraWork_PostDTO = {
 export type ConfirmationForExtraWorkResponse = string[];
 
 export type ExtraWorkTj12QuantityInput = {
-  quantity: number;
+  quantity: number | null;
 };

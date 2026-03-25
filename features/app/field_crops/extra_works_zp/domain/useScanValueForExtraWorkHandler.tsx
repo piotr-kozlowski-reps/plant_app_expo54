@@ -76,8 +76,6 @@ export const useScanValueForExtraWorkHandler = () => {
       setScannedZPOnManyFields,
     } = dataForScanZP;
 
-    console.log("scanZpOrTrayHandler");
-
     if (
       whatWasScanned !== "tray" &&
       whatWasScanned !== "zp_gru" &&
@@ -158,6 +156,7 @@ export const useScanValueForExtraWorkHandler = () => {
           stkcnt_loc: 0,
           stkcnt_ordnmb: 0,
           sordid: null,
+          trace_type: "",
         },
       ]);
     }
@@ -174,6 +173,7 @@ export const useScanValueForExtraWorkHandler = () => {
           stkcnt_loc: ZPFoundForThisActivityId[0].stkcnt_loc,
           stkcnt_ordnmb: ZPFoundForThisActivityId[0].stkcnt_ordnmb,
           sordid: ZPFoundForThisActivityId[0].sordid,
+          trace_type: ZPFoundForThisActivityId[0].trace_type,
         },
       ]);
     }
@@ -336,6 +336,7 @@ export const useScanValueForExtraWorkHandler = () => {
         stkcnt_loc: Number.parseInt(item.stkcnt_loc),
         stkcnt_ordnmb: Number.parseInt(item.stkcnt_ordnmb),
         sordid: Number.parseInt(item.sordid),
+        trace_type: item.trace_type,
       };
     });
 

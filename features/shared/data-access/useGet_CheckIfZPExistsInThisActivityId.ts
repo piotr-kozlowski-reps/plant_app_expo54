@@ -48,6 +48,7 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
       stkcnt_ordnmb: Number.parseInt(item.stkcnt_ordnmb),
       act_percentage: Number.parseInt(item.act_percentage),
       sordid: Number.parseInt(item.sordid),
+      trace_type: item.trace_type,
     }));
     return zpFoundValues;
   }

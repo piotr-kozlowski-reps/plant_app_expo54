@@ -11,7 +11,7 @@ import * as yup from "yup";
 
 type Input = ExtraWorkTj12QuantityInput;
 
-export const usePrepareDataForFormikToTj12Quantity = (
+export const usePrepareDataForFormikToTjQuantity = (
   changeTj12Quantity: (value: number) => void,
   closeFn: () => void,
   tj12Count: number | null,
@@ -32,7 +32,7 @@ export const usePrepareDataForFormikToTj12Quantity = (
   };
 
   const formikTj12Quantity = useFormik<Input>({
-    initialValues: tj12Count ? { quantity: tj12Count } : { quantity: 0 },
+    initialValues: tj12Count ? { quantity: tj12Count } : { quantity: null },
     onSubmit: onSubmit,
     validationSchema: yup.object({
       quantity: yup

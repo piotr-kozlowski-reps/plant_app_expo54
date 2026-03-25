@@ -36,14 +36,16 @@ export default function InputFormik<T>(props: TProps<T>) {
   const { isError, error } = useFormikCustomHelpers<T>(
     isVerifiedAtOnce,
     formik,
-    formikField
+    formikField,
   );
 
   ////tsx
   return (
     <InputText
       label={label}
-      value={formik.values[formikField] as string}
+      value={
+        formik.values[formikField] ? (formik.values[formikField] as string) : ""
+      }
       placeholder={placeholder}
       isSignedAsRequired={isSignedAsRequired}
       isError={isError}

@@ -16,7 +16,7 @@ import {
   ExtraWork,
   ExtraWorkTj12QuantityInput,
 } from "@/features/shared/types/interfaces-extra_works";
-import { usePrepareDataForFormikToTj12Quantity } from "../domain/usePrepareDataForFormikToTj12Quantity";
+import { usePrepareDataForFormikToTjQuantity } from "../domain/usePrepareDataForFormikToTjQuantity";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import React from "react";
 import InputFormik from "@/features/shared/ui/input/InputFormik";
@@ -46,7 +46,7 @@ const TjQuantityModal = (props: Props) => {
   } = props;
 
   const { formik, availableFormActions, canFormBeSubmitted } =
-    usePrepareDataForFormikToTj12Quantity(
+    usePrepareDataForFormikToTjQuantity(
       changeTj12Quantity,
       closeFn,
       tjQuantity,
@@ -94,7 +94,7 @@ const TjQuantityModal = (props: Props) => {
               <View className="w-full px-6">
                 <InputFormik<ExtraWorkTj12QuantityInput>
                   label={`Podaj ilość ${isActivityIdHobbyWithTj12 ? "TJ12" : "TJ10"}:`}
-                  placeholder="podaj ilość tj12"
+                  placeholder={`podaj ilość ${isActivityIdHobbyWithTj12 ? "TJ12" : "TJ10"}`}
                   isSignedAsRequired={true}
                   formik={formik}
                   formikField="quantity"

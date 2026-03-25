@@ -57,6 +57,12 @@ const ZpItem = (props: Props) => {
                   {zpValue.stkcnt_ordnmb}
                 </Text>
               </Text>
+              <Text className="text-background-nuance font-default-normal">
+                typ tacy:{" "}
+                <Text className="text-background-nuance font-default-semibold">
+                  {zpValue.trace_type ? zpValue.trace_type : "-"}
+                </Text>
+              </Text>
             </View>
           ) : null}
 
@@ -69,6 +75,12 @@ const ZpItem = (props: Props) => {
                 ilość:{" "}
                 <Text className="text-background-nuance font-default-semibold">
                   {zpValue.stkcnt_loc}
+                </Text>
+              </Text>
+              <Text className="text-background-nuance font-default-normal">
+                typ tacy:{" "}
+                <Text className="text-background-nuance font-default-semibold">
+                  {zpValue.trace_type}
                 </Text>
               </Text>
             </View>
