@@ -16,6 +16,10 @@ import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
 import { useGet_CheckIfZPExistsInThisActivityId } from "@/features/shared/data-access/useGet_CheckIfZPExistsInThisActivityId";
+import {
+  getIsHobbyExtraWorkWithTj10,
+  getIsHobbyExtraWorkWithTj12,
+} from "@/features/shared/utils/hobbyExtraWorksHelpers";
 
 type DataForScanZP = {
   scannedValue: string;
@@ -112,6 +116,8 @@ export const useScanValueForExtraWorkHandler = () => {
 
     //guard:
     //for hobby need to check if zp is hobby and if has proper tj trays (tj10 or tj12)
+    const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(activityId);
+    const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(activityId);
     if (isHobbyTech) {
       const ordnmb = getPureZPValue(scannedValue);
       const whatKindOfHobbyZp = await checkIfIsHobbyZp(ordnmb, token);
@@ -121,11 +127,11 @@ export const useScanValueForExtraWorkHandler = () => {
         return;
       }
 
-      if (activityId === 30667241 && whatKindOfHobbyZp === "hobby_tj10") {
+      if (isActivityIdHobbyWithTj12 && whatKindOfHobbyZp === "hobby_tj10") {
         toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ10_TRAYS);
         return;
       }
-      if (activityId === 773246 && whatKindOfHobbyZp === "hobby_tj12") {
+      if (isActivityIdHobbyWithTj10 && whatKindOfHobbyZp === "hobby_tj12") {
         toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ12_TRAYS);
         return;
       }
@@ -178,7 +184,13 @@ export const useScanValueForExtraWorkHandler = () => {
       ]);
     }
 
-    if (ZPFoundForThisActivityId && ZPFoundForThisActivityId.length > 1) {
+    const isActivityHobbyWithTjs_soForcingToScanFieldWhenMoreLocalizationsShouldBeTurnedOff =
+      isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj12;
+    if (
+      ZPFoundForThisActivityId &&
+      ZPFoundForThisActivityId.length > 1 &&
+      !isActivityHobbyWithTjs_soForcingToScanFieldWhenMoreLocalizationsShouldBeTurnedOff
+    ) {
       setIsForceToScanField(true);
       setScannedZPOnManyFields(ZPFoundForThisActivityId);
     }

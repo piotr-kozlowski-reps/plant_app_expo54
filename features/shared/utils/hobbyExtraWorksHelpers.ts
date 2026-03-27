@@ -1,8 +1,16 @@
 import { ExtraWork } from "../types/interfaces-extra_works";
 
-export const getIsHobbyExtraWorkWithTj10 = (extraWork: ExtraWork): boolean => {
-  return extraWork.keyval === 773246;
+export const getIsHobbyExtraWorkWithTj10 = (
+  value: ExtraWork | number,
+): boolean => {
+  const activityId = 773246;
+  if (typeof value === "number") return value === activityId;
+  return value.keyval === activityId;
 };
-export const getIsHobbyExtraWorkWithTj12 = (extraWork: ExtraWork): boolean => {
-  return extraWork.keyval === 30667241;
+export const getIsHobbyExtraWorkWithTj12 = (
+  value: ExtraWork | number,
+): boolean => {
+  const activityId = 30667241;
+  if (typeof value === "number") return value === activityId;
+  return value.keyval === activityId;
 };

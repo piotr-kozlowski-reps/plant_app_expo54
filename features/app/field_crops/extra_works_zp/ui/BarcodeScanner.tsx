@@ -98,7 +98,7 @@ const BarcodeScanner = (props: TProps) => {
   // ];
   const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(extraWork);
   const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(extraWork);
-  const isTjQuantityRequired =
+  const isActivityWithTj10OrTj12 =
     isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj12;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -328,7 +328,7 @@ const BarcodeScanner = (props: TProps) => {
                 </View>
               ) : null}
 
-              {isHobbyTech && isTjQuantityRequired ? (
+              {isHobbyTech && isActivityWithTj10OrTj12 ? (
                 <View
                   className={clsx(
                     "flex-row items-center justify-between w-full",
@@ -449,6 +449,7 @@ const BarcodeScanner = (props: TProps) => {
                           canPercentageBeChanged={!isFieldScanned}
                           isActive={isZPScanned}
                           isRoz={isRoz}
+                          isActivityWithTj10OrTj12={isActivityWithTj10OrTj12}
                         />
                       ))}
                     </View>

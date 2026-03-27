@@ -10,6 +10,7 @@ type Props = {
   changeZpPercentageAction: () => void;
   canPercentageBeChanged?: boolean;
   isRoz?: boolean;
+  isActivityWithTj10OrTj12?: boolean;
 };
 
 const ZpItem = (props: Props) => {
@@ -20,6 +21,7 @@ const ZpItem = (props: Props) => {
     isActive,
     changeZpPercentageAction,
     canPercentageBeChanged = true,
+    isActivityWithTj10OrTj12 = false,
     isRoz,
   } = props;
 
@@ -50,7 +52,9 @@ const ZpItem = (props: Props) => {
               <Text className="text-background-nuance font-default-normal">
                 ilość tac:{" "}
                 <Text className="text-background-nuance font-default-semibold">
-                  {zpValue.stkcnt_loc}
+                  {isActivityWithTj10OrTj12
+                    ? zpValue.stkcnt_ordnmb
+                    : zpValue.stkcnt_loc}
                 </Text>{" "}
                 z{" "}
                 <Text className="text-background-nuance font-default-semibold">
@@ -87,7 +91,7 @@ const ZpItem = (props: Props) => {
           ) : null}
 
           <View className="flex-row items-center justify-start">
-            <Text className="text-background-nuance font-default-semibold">{`${zpValue.act_percentage}%`}</Text>
+            <Text className="text-background-nuance font-default-semibold">{`${isActivityWithTj10OrTj12 ? 100 : zpValue.act_percentage}%`}</Text>
             {/* <Button
               title={`procent: ${zpValue.act_percentage}`}
               handlePress={changeZpPercentageAction}
