@@ -40,9 +40,6 @@ export const useScannedValues = (
   const [qrLock, setQrLock] = useState(true);
   const [isFieldScanned, setIsFieldScanned] = useState(false);
   const [isZPScanned, setIsZPScanned] = useState(false);
-  const [typeOfHobbyZp, setTypeOfHobbyZp] = useState<TypeOfHobbyZp | null>(
-    null,
-  );
   //scannedValues
   const { scannedValues, setScannedValues } = useScannedValuesForExtraWorks(
     isFieldScanned,
