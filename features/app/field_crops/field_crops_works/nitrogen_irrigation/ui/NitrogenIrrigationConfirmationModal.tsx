@@ -40,7 +40,7 @@ const NitrogenIrrigationConfirmationModal = (props: Props) => {
     refreshAllData,
   } = props;
 
-  console.log({ extraWork });
+  // console.log({ extraWork });
 
   ////vars
   return (

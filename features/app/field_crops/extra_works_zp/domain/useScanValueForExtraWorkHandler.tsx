@@ -104,6 +104,9 @@ export const useScanValueForExtraWorkHandler = () => {
       whatWasScanned,
     );
 
+    // console.log("scanZpOrTrayHandler");
+    // console.log({ ZPFoundForThisActivityId });
+
     //is ZP already scanned
     const zpOrdnmb =
       ZPFoundForThisActivityId && ZPFoundForThisActivityId.length
@@ -193,6 +196,33 @@ export const useScanValueForExtraWorkHandler = () => {
     ) {
       setIsForceToScanField(true);
       setScannedZPOnManyFields(ZPFoundForThisActivityId);
+    }
+
+    if (
+      ZPFoundForThisActivityId &&
+      ZPFoundForThisActivityId.length > 1 &&
+      isActivityHobbyWithTjs_soForcingToScanFieldWhenMoreLocalizationsShouldBeTurnedOff
+    ) {
+      setScannedValues((prevValues) => [
+        ...prevValues,
+        {
+          scanned_raw_value: scannedValue,
+          planam: ZPFoundForThisActivityId[0].planam,
+          ordnmb: ZPFoundForThisActivityId[0].ordnmb,
+          act_percentage: ZPFoundForThisActivityId[0].act_percentage,
+          prev_percentage: ZPFoundForThisActivityId[0].prev_percentage,
+          stkcnt_loc: ZPFoundForThisActivityId[0].stkcnt_loc,
+          stkcnt_ordnmb: ZPFoundForThisActivityId[0].stkcnt_ordnmb,
+          sordid: ZPFoundForThisActivityId[0].sordid,
+          trace_type: ZPFoundForThisActivityId[0].trace_type,
+        },
+      ]);
+
+      // console.log("zp ma więcej lokalizacji, ale jest hobby");
+      // console.log("w środku");
+
+      // setIsForceToScanField(true);
+      // setScannedZPOnManyFields(ZPFoundForThisActivityId);
     }
   }
   async function scanFieldWhenIsForcedToScanFieldForZP(

@@ -51,7 +51,7 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
     extraWork.activityname.startsWith("230"),
   );
 
-  console.log({ extraWorkForNitrogenIrrigation });
+  // console.log({ extraWorkForNitrogenIrrigation });
 
   //state
   const [

@@ -49,24 +49,29 @@ const ZpItem = (props: Props) => {
               <Text className="text-background-nuance font-default-semibold">
                 {zpValue.ordnmb}
               </Text>
-              <Text className="text-background-nuance font-default-normal">
-                ilość tac:{" "}
-                <Text className="text-background-nuance font-default-semibold">
-                  {isActivityWithTj10OrTj12
-                    ? zpValue.stkcnt_ordnmb
-                    : zpValue.stkcnt_loc}
-                </Text>{" "}
-                z{" "}
-                <Text className="text-background-nuance font-default-semibold">
-                  {zpValue.stkcnt_ordnmb}
+              {isActivityWithTj10OrTj12 ? null : (
+                <Text className="text-background-nuance font-default-normal">
+                  ilość tac:{" "}
+                  <Text className="text-background-nuance font-default-semibold">
+                    {isActivityWithTj10OrTj12
+                      ? zpValue.stkcnt_ordnmb
+                      : zpValue.stkcnt_loc}
+                  </Text>{" "}
+                  z{" "}
+                  <Text className="text-background-nuance font-default-semibold">
+                    {zpValue.stkcnt_ordnmb}
+                  </Text>
                 </Text>
-              </Text>
-              <Text className="text-background-nuance font-default-normal">
-                typ tacy:{" "}
-                <Text className="text-background-nuance font-default-semibold">
-                  {zpValue.trace_type ? zpValue.trace_type : "-"}
+              )}
+
+              {isActivityWithTj10OrTj12 ? null : (
+                <Text className="text-background-nuance font-default-normal">
+                  typ tacy:{" "}
+                  <Text className="text-background-nuance font-default-semibold">
+                    {zpValue.trace_type ? zpValue.trace_type : "-"}
+                  </Text>
                 </Text>
-              </Text>
+              )}
             </View>
           ) : null}
 
