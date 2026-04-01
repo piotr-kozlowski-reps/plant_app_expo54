@@ -29,6 +29,10 @@ import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelp
 import useAppNotUpToDate_Store from "@/features/shared/stores/useAppNotUpToDate_Store";
 import { useBaseAPI_URL_Store } from "@/features/shared/stores/useBaseAPI_URL_Store";
 
+/**
+ * @public
+ * REALIZACJA:
+ */
 export const useLoginLogic = () => {
   ////vars
   const { errorHandler } = useErrorHandler();
@@ -42,7 +46,11 @@ export const useLoginLogic = () => {
 
       if (!username || !password) return null;
 
-      // tokens
+      /**
+       * @public
+       * pobranie tokenów:
+       * {{URL}}/api.php/REST/v1/login
+       */
       const tokens: TokensDTO | TError | null = await getTokens(
         username,
         password,
@@ -58,7 +66,16 @@ export const useLoginLogic = () => {
         return null;
       }
 
-      //user data
+      /**
+       * @public
+       * pobranie informacji o użytkowniku:
+       * {{URL}}/api.php/REST/v1/userProfile
+       */
+      /**
+       * @public
+       * weryfikacja czy użytkownik jest adminem:
+       * {{URL}}/api.php/REST/v1/userProfile
+       */
       const currentToken = (tokens as TokensDTO).token;
       const userProfilePromise = getUser(currentToken, errorHandler);
       const adminUsersGroupPromise = getAdminsUserGroups(
@@ -76,7 +93,11 @@ export const useLoginLogic = () => {
       }
       const isUserAnAdmin = adminUsersIDs.includes(userProfile.usr_id);
 
-      //send phone info to creg (only in production!)
+      /**
+       * @public
+       * przesłanie informacji o telefonie, OS telefonu i wersji aplikacji (tylko produkcja):
+       * {{URL}}/api.php/REST/v1/customRegisters/240/entries
+       */
       const os: OS = checkOS();
       const version = Application.nativeApplicationVersion;
       const build = Application.nativeBuildVersion;
@@ -88,28 +109,6 @@ export const useLoginLogic = () => {
         app_build: addZerosIfNeeded(build ? build : "0"),
         production_or_development: env.NODE_ENV as ProductionOrDevelopment,
       };
-      // console.log("configPerBuild.apiAddress: ", configPerBuild.apiAddress);
-
-      // const currentAppAndPhoneInfo: PhoneInfo = {
-      //   phone_model: Device.modelName,
-      //   os,
-      //   os_version: Device.osVersion,
-      //   app_version: "001.000.010",
-      //   app_build: "017",
-      //   production_or_development: "production",
-      // };
-
-      // if (configPerBuild.apiAddress === "https://ed.mularski.pl") {
-      //   try {
-      //     await sendReportAboutAppVersionCurrentlyUsed(
-      //       currentToken,
-      //       baseURL,
-      //       currentAppAndPhoneInfo
-      //     );
-      //   } catch (error) {
-      //     errorHandler(error as Error);
-      //   }
-      // }
 
       try {
         await sendReportAboutAppVersionCurrentlyUsed(
@@ -121,7 +120,16 @@ export const useLoginLogic = () => {
         errorHandler(error as Error);
       }
 
-      //user permission and recent app versions
+      /**
+       * @public
+       * pobranie raportu o dostępie użytkownika i ostatniej wersji aplikacji jaka została użyta w systemie:
+       * {{URL}}/api.php/REST/v1/system/reports/1567/data
+       *
+       * -> weryfikacja czy uzytkownik ma dostęp do aplikacji
+       *
+       * -> jeżeli jesteśmy na produkcji: weryfikacja czy aplikacja jest w najnowszej możliwej wersji
+       */
+
       const userPermissionAndRecentAppVersions =
         await getUserPermissionAndRecentAppVersions(
           currentToken,
@@ -234,6 +242,12 @@ export const useLoginLogic = () => {
           },
         },
       };
+
+      /**
+       * @public
+       * zapisanie informacji użytkownika w danej sesji logowania: user_info, role, tokeny, widoczność modułów/submodułów aplikacji (robiona na razie ręcznie przeze mnie)
+       */
+
       return user;
     } catch (error) {
       errorHandler(error as Error);

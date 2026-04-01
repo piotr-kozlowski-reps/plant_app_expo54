@@ -4,7 +4,7 @@ import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import LoginForm from "./LoginForm";
 
 const LoginEntryPage = () => {
-  //   ////vars
+  ////vars
   const [isLoading, setIsLoading] = useState(false);
 
   ////tsx

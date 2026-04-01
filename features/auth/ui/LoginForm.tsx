@@ -19,6 +19,15 @@ type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+/**
+ * @public
+ * PROCEDURA:
+ *
+ * formularz:
+ * - login
+ * - hasło
+ */
+
 const LoginForm = (props: Props) => {
   ////vars
   const { isLoading, setIsLoading } = props;
