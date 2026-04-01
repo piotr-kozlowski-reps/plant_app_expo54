@@ -185,6 +185,24 @@ const BarcodeScanner = (props: TProps) => {
     scannedValues.length > 0 &&
     !isForceToScanField;
 
+  // send button disability
+  const isSendButtonDisabled =
+    scannedValues.length === 0 ||
+    isForceToScanField ||
+    (isExtraWork230 && !selectedProtectiveTreatment) ||
+    (isHobbyTech && !tjQuantity && isActivityWithTj10OrTj12);
+  // console.log("scannedValues.length === 0", scannedValues.length === 0);
+  // console.log("isForceToScanField ", isForceToScanField);
+  // console.log(
+  //   "isExtraWork230 && !selectedProtectiveTreatment",
+  //   isExtraWork230 && !selectedProtectiveTreatment,
+  // );
+  // console.log(
+  //   "isHobbyTech && !tjQuantity && isActivityWithTj10OrTj12",
+  //   isHobbyTech && !tjQuantity && isActivityWithTj10OrTj12,
+  // );
+  // console.log("isSendButtonDisabled", isSendButtonDisabled);
+
   ////tsx
   return (
     <View className="relative w-full h-full">
@@ -523,12 +541,7 @@ const BarcodeScanner = (props: TProps) => {
                 actionFn={sendDataHandler}
                 text="wyślij"
                 isBackground
-                disabled={
-                  scannedValues.length === 0 ||
-                  isForceToScanField ||
-                  (isExtraWork230 && !selectedProtectiveTreatment) ||
-                  (isHobbyTech && !tjQuantity)
-                }
+                disabled={isSendButtonDisabled}
               />
             </View>
             <View className="ml-6">

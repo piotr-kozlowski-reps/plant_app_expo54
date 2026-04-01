@@ -13,6 +13,10 @@ import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitro
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { useGetEdocCustomRegisterMutation } from "@/features/shared/utils/getEdocCustomRegister/useGetEdocCustomRegisterMutation";
+import {
+  getIsHobbyExtraWorkWithTj10,
+  getIsHobbyExtraWorkWithTj12,
+} from "@/features/shared/utils/hobbyExtraWorksHelpers";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { usePrepareDataToSendExtraWorks } from "@/features/shared/utils/usePrepareDataToSendExtraWorks";
 import { useQueryClient } from "@tanstack/react-query";
@@ -51,7 +55,12 @@ export const useSendExtraWorkData = (
 
       return;
     }
-    if (isHobbyTech && !tjCount) {
+
+    const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(extraWork);
+    const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(extraWork);
+    const isActivityWithTj10OrTj12 =
+      isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj12;
+    if (isHobbyTech && !tjCount && isActivityWithTj10OrTj12) {
       toast.error(ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY);
       return;
     }
