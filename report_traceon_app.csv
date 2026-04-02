@@ -1,0 +1,50 @@
+2026-04-01,Piotr Kozlowski,feat: generating custom docs script
+2026-04-01,Piotr Kozlowski,feat: move to dev app
+2026-04-01,Piotr Kozlowski,fix: can send data when extra work hobby tech gru without tjcount
+2026-03-31,Piotr Kozlowski,fix: pikowanie - tj10 and 12 - done for ZPs in more localizations
+2026-03-27,Piotr Kozlowski,feat: prod app
+2026-03-27,Piotr Kozlowski,refactor: changed names
+2026-03-25,Piotr Kozlowski,feat: null in trace_type and get rid of 0 in form to input tj12 or tj10 quiantity
+2026-03-24,Piotr Kozlowski,feat: version done with tj10 and tj12 for hobby technological extra works
+2026-03-24,Piotr Kozlowski,feat: many changes to handle tj10 and tj12 in hobby technology
+2026-03-20,Piotr Kozlowski,fix: corrected types errors
+2026-03-20,Piotr Kozlowski,feat: hobby technology - ui corrections and tj12 quantity modal
+2026-03-20,Piotr Kozlowski,feat: extra work hobby tech section with button to open modal to see input of tj12 number
+2026-03-20,Piotr Kozlowski,feat: hobby technology - part one - works list base
+2026-02-23,Piotr Kozlowski,feat: go for production
+2026-02-23,Piotr Kozlowski,fix: nitrogen irrigation confirmation fix tested
+2026-02-23,Piotr Kozlowski,fix: nitrogen irrigation confirmation fix
+2026-02-10,Piotr Kozlowski,fix:  turned off guard: cannot plan already planned tech work in planning works ROZ
+2026-02-09,Piotr Kozlowski,feat: planning works for ROZ, when planned then not possible to plan again
+2026-02-06,Piotr Kozlowski,refactor: few cleanings
+2026-02-06,Piotr Kozlowski,feat: make prod version
+2026-02-05,Piotr Kozlowski,fix: corrected logic to allow planning work for cucumber and tomato, now it cannot pass if work is not for that variety
+2026-02-04,Piotr Kozlowski,feat: colors in confirming activities in ROZ
+2026-02-03,Piotr Kozlowski,feat: send extra work data
+2026-02-03,Piotr Kozlowski,feat: sending data for confirming extra work with new api
+2026-02-02,Piotr Kozlowski,feat: confirmation extra works
+2026-02-02,Piotr Kozlowski,feat: corrected all warnings with using hook inside function -> useGuard_CheckDataToBeScanned
+2026-02-02,Piotr Kozlowski,feat: plan extra works for ROZ
+2026-01-30,Piotr Kozlowski,feat: send all info to plan extra work for pulse separating
+2026-01-30,Piotr Kozlowski,feat: plan extra work - pulse propagation
+2026-01-28,Piotr Kozlowski,feat: production version
+2026-01-28,Piotr Kozlowski,feat: added showing code and name of commodity when technological information
+2026-01-27,Piotr Kozlowski,feat: new prod version
+2026-01-27,Piotr Kozlowski,feat: corrected login form to handle remembering isToRemember and to have already working login button
+2026-01-27,Piotr Kozlowski,fix: back in search by clients goes back to chosen client
+2026-01-26,Piotr Kozlowski,none: prod version
+2026-01-26,Piotr Kozlowski,feat: technological information
+2026-01-26,Piotr Kozlowski,feat: get data from report 1695
+2026-01-26,Piotr Kozlowski,none: new dev branch
+2026-01-26,Piotr Kozlowski,feat: new production version
+2026-01-26,Piotr Kozlowski,feat: change details to value in information
+2026-01-26,Piotr Kozlowski,fix: corrected bug with showing empty strings in info
+2026-01-21,Piotr Kozlowski,feat: updated packages to latest 54.xx from expo-doctor
+2026-01-20,Piotr Kozlowski,none: console.logs
+2026-01-20,Piotr Kozlowski,feat: parsing string
+2026-01-19,Piotr Kozlowski,feat: information: byScan, search byZp, byClient
+2026-01-19,Piotr Kozlowski,feat: before playing with keyboard avoidance component
+2026-01-16,Piotr Kozlowski,feat: search zp by client
+2026-01-16,Piotr Kozlowski,feat: zps in production data - more properties
+2026-01-16,Piotr Kozlowski,feat: information -> scanZP and searchZP
+2026-01-15,Piotr Kozlowski,none: change to dev version

@@ -78,24 +78,9 @@ const BarcodeScanner = (props: TProps) => {
     throw new Error("BarcodeScanner -> Extra work not found");
   }
 
-  // const filteredExtraWorks = [
-  //   {
-  //     activityname: "150 - Pikowanie GRU-HOBBY 10",
-  //     is_ordnmb: true,
-  //     ishobby: true,
-  //     istech: true,
-  //     keyval: 773246,
-  //     mobile_jm: null,
-  //   },
-  //   {
-  //     activityname: "246 - Pikowanie GRU-HOBBY 12",
-  //     is_ordnmb: true,
-  //     ishobby: true,
-  //     istech: true,
-  //     keyval: 30667241,
-  //     mobile_jm: null,
-  //   }
-  // ];
+  console.log("------------");
+  console.log({ extraWork });
+
   const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(extraWork);
   const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(extraWork);
   const isActivityWithTj10OrTj12 =
@@ -202,6 +187,9 @@ const BarcodeScanner = (props: TProps) => {
   //   isHobbyTech && !tjQuantity && isActivityWithTj10OrTj12,
   // );
   // console.log("isSendButtonDisabled", isSendButtonDisabled);
+
+  // {"extraWork": {"activityname": "151 - Konfekcjonowanie GRU-HOBBY ECC12", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 773247, "mobile_jm": null}}
+  // {"extraWork": {"activityname": "242 - Konfekcjonowanie GRU-HOBBY ECC10", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 30667238, "mobile_jm": null}}
 
   ////tsx
   return (

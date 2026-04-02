@@ -17,6 +17,8 @@ import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCh
 import { toast } from "sonner-native";
 import { useGet_CheckIfZPExistsInThisActivityId } from "@/features/shared/data-access/useGet_CheckIfZPExistsInThisActivityId";
 import {
+  getIsHobbyExtraTechWorkPackingWithTj10,
+  getIsHobbyExtraTechWorkPackingWithTj12,
   getIsHobbyExtraWorkWithTj10,
   getIsHobbyExtraWorkWithTj12,
 } from "@/features/shared/utils/hobbyExtraWorksHelpers";
@@ -118,9 +120,16 @@ export const useScanValueForExtraWorkHandler = () => {
     }
 
     //guard:
-    //for hobby need to check if zp is hobby and if has proper tj trays (tj10 or tj12)
+    //1. for hobby tech works "pikowanie gru hobby 10 i 12" need to check if zp is hobby and if has proper tj trays (tj10 or tj12)
     const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(activityId);
     const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(activityId);
+    //2. for hobby tech works "konfekcjonowanie gru hobby ecc 10 i ecc 12" need to check if zp is hobby and if has proper tj trays (tj10 or tj12)
+    //"W tym przypadku operator ma mieć możliwość potwierdzenia operacji tylko jeżeli w materiałach danego ZP znajduje się TJT.ECC i TJ12" - to Kornel na razie kazal olac
+    const isActivityIdHobbyWithTj12AndPackaging =
+      getIsHobbyExtraTechWorkPackingWithTj12(activityId);
+    const isActivityIdHobbyWithTj10AndPackaging =
+      getIsHobbyExtraTechWorkPackingWithTj10(activityId);
+
     if (isHobbyTech) {
       const ordnmb = getPureZPValue(scannedValue);
       const whatKindOfHobbyZp = await checkIfIsHobbyZp(ordnmb, token);
@@ -130,15 +139,28 @@ export const useScanValueForExtraWorkHandler = () => {
         return;
       }
 
-      if (isActivityIdHobbyWithTj12 && whatKindOfHobbyZp === "hobby_tj10") {
+      if (
+        (isActivityIdHobbyWithTj12 || isActivityIdHobbyWithTj12AndPackaging) &&
+        whatKindOfHobbyZp === "hobby_tj10"
+      ) {
         toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ10_TRAYS);
         return;
       }
-      if (isActivityIdHobbyWithTj10 && whatKindOfHobbyZp === "hobby_tj12") {
+      if (
+        (isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj10AndPackaging) &&
+        whatKindOfHobbyZp === "hobby_tj12"
+      ) {
         toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ12_TRAYS);
         return;
       }
     }
+
+    //guard:
+    //for hobby tech works "konfekcjonowanie gru hobby ecc 10 i ecc 12" need to check if zp is hobby and if has proper tj trays (tj10 or tj12)
+    //"W tym przypadku operator ma mieć możliwość potwierdzenia operacji tylko jeżeli w materiałach danego ZP znajduje się TJT.ECC i TJ12" - to Kornel na razie kazal olac
+
+    // {"extraWork": {"activityname": "151 - Konfekcjonowanie GRU-HOBBY ECC12", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 773247, "mobile_jm": null}}
+    // {"extraWork": {"activityname": "242 - Konfekcjonowanie GRU-HOBBY ECC10", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 30667238, "mobile_jm": null}}
 
     if (!isZPScanned) setIsZPScanned(true);
 
