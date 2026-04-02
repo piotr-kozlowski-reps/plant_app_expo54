@@ -78,9 +78,6 @@ const BarcodeScanner = (props: TProps) => {
     throw new Error("BarcodeScanner -> Extra work not found");
   }
 
-  console.log("------------");
-  console.log({ extraWork });
-
   const isActivityIdHobbyWithTj10 = getIsHobbyExtraWorkWithTj10(extraWork);
   const isActivityIdHobbyWithTj12 = getIsHobbyExtraWorkWithTj12(extraWork);
   const isActivityWithTj10OrTj12 =
