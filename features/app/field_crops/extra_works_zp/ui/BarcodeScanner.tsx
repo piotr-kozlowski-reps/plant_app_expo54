@@ -30,11 +30,6 @@ import ZpItem from "./ZpItem";
 import ChangePercentageZpModal from "./ChangePercentageZpModal";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
-import AppPath from "@/features/shared/ui/app-path/AppPath";
-import {
-  FIELD_CROPS,
-  INDEX,
-} from "@/features/shared/types/interfaces-navigation";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import ButtonTextAndIcon from "@/features/shared/ui/button/ButtonTextAndIcon";
 import { useSelectConcentration } from "../domain/useSelectConcentration";
@@ -219,7 +214,9 @@ const BarcodeScanner = (props: TProps) => {
                           title={
                             isForceToScanField
                               ? "skanuj kod lokalizacji"
-                              : "skanuj kod"
+                              : isHobbyTech
+                                ? "skanuj ZP"
+                                : "skanuj kod"
                           }
                           handlePress={() => setQrLock(false)}
                           containerStyles={`h-32`}
@@ -255,7 +252,7 @@ const BarcodeScanner = (props: TProps) => {
                 <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full opacity-80 bg-yellow"></View>
                 <View className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center w-full h-full px-16">
                   <Text className="text-center text-foreground font-default-bold">
-                    {`Zeskanowano ZPka dla pracy: \n${extraWork.activityname}`}
+                    {`Zeskanowano ZP'ka dla pracy: \n${extraWork.activityname}`}
                   </Text>
                   <Text className="text-center text-foreground font-default-normal">
                     Brak możliwości zeskanowania więcej niż jednego elementu.
@@ -268,7 +265,7 @@ const BarcodeScanner = (props: TProps) => {
                 <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full opacity-80 bg-yellow"></View>
                 <View className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center w-full h-full px-20">
                   <Text className="text-center text-foreground font-default-bold">
-                    {`Zeskanowano ZPka dla technologicznej pracy hobby: \n${extraWork.activityname}`}
+                    {`Zeskanowano ZP'ka dla technologicznej pracy hobby: \n${extraWork.activityname}`}
                   </Text>
                   <Text className="mt-4 text-center text-foreground font-default-normal">
                     Brak możliwości zeskanowania więcej niż jednego elementu.

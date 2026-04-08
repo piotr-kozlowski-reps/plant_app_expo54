@@ -45,7 +45,7 @@ export const CutConfirmationModal = (props: Props) => {
       setIsLoading,
       cutsList,
       closeFn,
-      refreshAllData
+      refreshAllData,
     );
 
   ////tsx
@@ -117,7 +117,7 @@ export const CutConfirmationModal = (props: Props) => {
             {!scannedValue ? (
               <View className="mt-8">
                 <Text className="text-center font-nav text-destructive">
-                  zeskanuj kod ZPka lub tacy
+                  zeskanuj kod ZP&apos;ka lub tacy
                 </Text>
               </View>
             ) : null}

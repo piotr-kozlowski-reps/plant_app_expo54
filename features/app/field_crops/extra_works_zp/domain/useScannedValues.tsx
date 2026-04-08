@@ -1,13 +1,9 @@
-import {
-  TypeOfHobbyZp,
-  ZpScannedValue,
-} from "@/features/shared/types/interfaces-extra_works";
-import { MESSAGES } from "@/features/shared/utils/messages";
+import { ZpScannedValue } from "@/features/shared/types/interfaces-extra_works";
+import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { useState } from "react";
 import { toast } from "sonner-native";
 import * as Haptics from "expo-haptics";
 import { useAudioPlayer } from "expo-audio";
-import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
@@ -26,7 +22,6 @@ export const useScannedValues = (
   const { checkWhatValueWasScanned, getPureFieldValue } =
     useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
-  const { token } = useAuthSessionStore();
   const {
     scanZpOrTrayHandler,
     scanFieldWhenIsForcedToScanFieldForZP,
@@ -69,6 +64,11 @@ export const useScannedValues = (
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     const isZP = whatValueWasScanned === "zp_gru";
     const isField = whatValueWasScanned === "field";
+
+    if (isField && isHobbyTech) {
+      toast.warning(ERROR_MESSAGES.WHEN_HOBBY_TECH_ONLY_ZP_CAN_BE_SCANNED);
+      return;
+    }
 
     try {
       setIsLoading(true);

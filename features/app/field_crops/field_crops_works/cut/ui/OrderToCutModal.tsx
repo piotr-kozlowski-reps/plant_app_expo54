@@ -244,7 +244,7 @@ export const OrderToCutModal = (props: Props) => {
             {/* <View className="mt-8">
               {!scannedValue ? (
                 <Text className="text-center font-nav text-destructive">
-                  zeskanuj kod ZPka lub tacy
+                  zeskanuj kod ZP'ka lub tacy
                 </Text>
               ) : null}
               {scannedValue ? (

@@ -22,6 +22,8 @@ export const VALIDATION_MESSAGES = {
 } as const;
 
 export const ERROR_MESSAGES = {
+  WHEN_HOBBY_TECH_ONLY_ZP_CAN_BE_SCANNED:
+    "W pracach extra hobby technologicznych nie ma możliwości zeskanowania lokalizacji. Możliwe jest tylko zeskanowanie ZP.",
   SCANNED_ZP_IS_NOT_HOBBY_ZP: "Zeskanowany ZP nie jest zleceniem hobby.",
   SCANNED_ZP_HAS_TJ10_TRAYS: "Zeskanowany ZP ma tace TJ10.",
   SCANNED_ZP_HAS_TJ12_TRAYS: "Zeskanowany ZP ma tace TJ12.",
@@ -78,13 +80,13 @@ export const ERROR_MESSAGES = {
   NO_ZP_GRU_POSSIBLE: "W tym module nie możesz zeskanować kodu ZP gruntówki.",
   NO_TRAY_POSSIBLE: "W tym module nie możesz zeskanować kodu tacy.",
   ONLY_TRAY_POSSIBLE: "Możesz zeskanować tylko QR kod tacy.",
-  ONLY_ZP_POSSIBLE: "Możesz zeskanować tylko QR kod ZPka.",
+  ONLY_ZP_POSSIBLE: "Możesz zeskanować tylko QR kod ZP'ka.",
   WORK_TO_PLAN_IS_ALREADY_DONE:
     "Nie możesz zaplanować tej pracy, jej wykonanie zostało już potwierdzone.",
   WORK_TO_PLAN_IS_ALREADY_PLANNED:
     "Nie możesz zaplanować tej czynności, ponieważ została już zaplanowana. W celu zmiany zgłoś się do administratora.",
   ONLY_ZP_OR_LOCALIZATION_POSSIBLE:
-    "Możesz zeskanować tylko QR kod lokalizacji lub ZPka.",
+    "Możesz zeskanować tylko QR kod lokalizacji lub ZP'ka.",
   NO_ZPS_WHERE_DATE_OF_ORDER_TO_INTERNAL_TRANSPORT_WAS_NOT_SET:
     "W zeskanowanej lokalizacji brak ZPków, których data zlecenia transportu wewnętrznego nie została jeszcze ustalona.",
   NO_ZPS_WHERE_DATE_OF_ORDER_TO_HARDENER_WAS_NOT_SET:
@@ -163,6 +165,8 @@ export const ERROR_MESSAGES = {
   CANNOT_AUTOMATICALLY_UPDATE:
     "Brak możliwości uaktualnienia danych automatycznie, wyjdź z tego modułu i zeskanuj ZP raz jeszcze.",
   PLAN_WAS_ALREADY_APPROVED: "Plan został już zatwierdzony.",
+  THIS_EXTRA_WORK_CANNOT_BE_REPEATED:
+    "Ta praca extra była już wykonana i nie może być powtarzana.",
 } as const;
 
 export const MESSAGES = {
@@ -173,10 +177,10 @@ export const MESSAGES = {
   FORCE_CHANGE_WHO_DID_PROTECTIVE_TREATMENT_TO_ROBOT: `Ponieważ zeskanowano całą nawę, pole "Wykonał" zostało automatycznie zmienione na wartość "Robot".`,
   SEND_DATA_WITH_SUCCESS: "Pomyślnie przesłano dane.",
   LACK_OF_SCANNED_ZPS: "Brak zeskanowanych ZP'ków.",
-  LACK_OF_SCANNED_ZP: "Nie zeskanowano ZPka",
+  LACK_OF_SCANNED_ZP: "Nie zeskanowano ZP'ka",
   LACK_OF_ACTIVITY_DETAILS: "Brak materiałów do potwierdzenia ilości.",
   LACK_OF_EXTRA_WORKS: "Brak prac.",
-  LACK_OF_SCANNED_ZP_OR_TRAY: "Nie zeskanowano ZPka lub tacy",
+  LACK_OF_SCANNED_ZP_OR_TRAY: "Nie zeskanowano ZP'ka lub tacy",
   LACK_OF_TAKEN_PHOTOS: "Brak zrobionych zdjęć.",
   LACK_OF_SCANNED_TRAYS: "Brak zeskanowanych tac.",
   LACK_OF_SCANNED_TRAY: "Brak zeskanowanej tacy.",

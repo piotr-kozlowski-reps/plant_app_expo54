@@ -46,8 +46,6 @@ const ExtraWorksHobbyTechnologyEntryPage = () => {
     return foundFilteredExtraWorks || [];
   }, [extraWorksArray]);
 
-  // console.log("filteredExtraWorks", filteredExtraWorks);
-
   //protective treatment data
   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
     filterOnlyNitrogenProtectiveTreatments(

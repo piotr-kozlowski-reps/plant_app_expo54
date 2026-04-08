@@ -81,12 +81,12 @@ const OrderExportToCustomerScanner = (props: Props) => {
   } = useScanValuesForOrderExportToCustomer(
     setIsLoading,
     cameraRef,
-    submoduleType
+    submoduleType,
   );
 
   const dateOfOrderToMoveToHardener = addDaysToDate(
     new Date(Date.now()),
-    inHowManyDays ? inHowManyDays : 0
+    inHowManyDays ? inHowManyDays : 0,
   );
 
   /** sending orders to hardener data */
@@ -95,7 +95,7 @@ const OrderExportToCustomerScanner = (props: Props) => {
       scannedValue,
       setIsLoading,
       resetValues,
-      submoduleType
+      submoduleType,
     );
 
   /** */
@@ -108,7 +108,7 @@ const OrderExportToCustomerScanner = (props: Props) => {
     isDayAvailable,
     isSuperData,
     setIsShowModalWithInHowManyDays,
-    scannedValue
+    scannedValue,
   );
 
   /** delete item from list handler */
@@ -215,7 +215,7 @@ const OrderExportToCustomerScanner = (props: Props) => {
                       actionFn={() => {
                         setIsShowModalWithInHowManyDays(true);
                       }}
-                      text={`brak zeskanowanego ZPka`}
+                      text={`brak zeskanowanego ZP'ka`}
                       icon={
                         <View className="ml-2">
                           <ChevronDown
@@ -307,9 +307,9 @@ const OrderExportToCustomerScanner = (props: Props) => {
                   {scannedValue ? (
                     <Text className="font-default-semibold text-foreground">
                       {`${renderDateInPolishWay(
-                        dateOfOrderToMoveToHardener
+                        dateOfOrderToMoveToHardener,
                       )} - ${getDayNameInPolish(
-                        dateOfOrderToMoveToHardener
+                        dateOfOrderToMoveToHardener,
                       )}  (+${inHowManyDays} ${
                         inHowManyDays === 1 ? "dzień" : "dni"
                       })`}
@@ -408,7 +408,7 @@ const OrderExportToCustomerScanner = (props: Props) => {
                   sendValuesForOrderExportToCustomerHandler(
                     scannedValue!,
                     inHowManyDays,
-                    isSuperData
+                    isSuperData,
                   )
                 }
                 text="wyślij"

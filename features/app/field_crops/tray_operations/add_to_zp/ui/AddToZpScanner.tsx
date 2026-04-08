@@ -50,7 +50,7 @@ const AddToZpScanner = () => {
 
   const { sendValuesForAddToZp } = useSendAddToZpData(
     setIsLoading,
-    resetWholeState
+    resetWholeState,
   );
 
   return (
@@ -151,7 +151,7 @@ const AddToZpScanner = () => {
             <View className="w-full h-2"></View>
             <View className="flex-col items-center w-full">
               <Text className="text-foreground font-default-normal">
-                Tace do przypięcia do ZPka:
+                Tace do przypięcia do ZP&apos;ka:
               </Text>
             </View>
 

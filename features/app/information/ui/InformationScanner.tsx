@@ -143,7 +143,7 @@ const InformationScanner = (props: Props) => {
                   zeskanuj kod lokalizacji,
                 </Text>
                 <Text className="text-center font-nav text-destructive">
-                  ZPka lub tacy
+                  ZP&apos;ka lub tacy
                 </Text>
               </View>
             </View>

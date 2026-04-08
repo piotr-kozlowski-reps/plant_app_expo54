@@ -1,12 +1,7 @@
 import { configPerBuild } from "@/features/shared/env/env";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/interfaces-localization";
-import {
-  ZPFieldListDTO,
-  ZPItem,
-  ZPItemDTO,
-  ZPItemResponse,
-} from "@/features/shared/types/interfaces-zp";
+import { ZPFieldListDTO, ZPItem } from "@/features/shared/types/interfaces-zp";
 import {
   TypeOfHobbyZp,
   ZpScannedValue,
@@ -113,6 +108,24 @@ export const useScanValueForExtraWorkHandler = () => {
         : null;
     if (checkIfValueIsAlreadyScanned(zpOrdnmb, scannedValues)) {
       toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
+      return;
+    }
+
+    //guard
+    //additional guard - Kornel zdecydował, jakby mnie pytal i chcial sie tego potem wyprzec
+    //gdy nie znaleziono ZP na obiekcie, to koniec procedury
+    if (!ZPFoundForThisActivityId || ZPFoundForThisActivityId.length === 0) {
+      toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
+      return;
+    }
+
+    //guard
+    //global guard for extra works - check if zp has been done already and if is_repeated - so that user can't scan same zps twice
+    //if activityid=null - can do anything
+    //if activityid=value && is_repeated = true - can do the work again
+    //if activityid=value && is_repeated = false - CANNOT do the work again
+    if (!checkIfExtraWorkCanBeRepeated(ZPFoundForThisActivityId)) {
+      toast.warning(ERROR_MESSAGES.THIS_EXTRA_WORK_CANNOT_BE_REPEATED);
       return;
     }
 
@@ -414,83 +427,21 @@ export const useScanValueForExtraWorkHandler = () => {
     );
     return scannedZpValues.includes(zpValue);
   }
-  // async function checkIfZPExistsInThisActivityId(
-  //   value: string,
-  //   token: string | null,
-  //   activityId: number,
-  //   whatWasScanned: TypeOfScannedValue
-  // ): Promise<(ZPItem & { scanned_raw_value: string })[] | null> {
-  //   let zpFoundValues: (ZPItem & { scanned_raw_value: string })[] | null = null;
+  function checkIfExtraWorkCanBeRepeated(
+    ZPFoundForThisActivityId: ZPItem[] | null,
+  ): boolean {
+    if (!ZPFoundForThisActivityId || ZPFoundForThisActivityId.length === 0)
+      return false;
 
-  //   const queryDependingOnZpOrTray = getQueryDependingOnZpOrTray(
-  //     value,
-  //     activityId,
-  //     whatWasScanned
-  //   );
+    const isRepeated = ZPFoundForThisActivityId[0].is_repeated;
+    const activityId = ZPFoundForThisActivityId[0].activityid;
 
-  //   //fetch data
-  //   let response: ZPItemResponse;
-  //   const res = await fetch(queryDependingOnZpOrTray, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
+    if (isRepeated) return true;
+    if (!isRepeated && activityId) return false;
+    if (!isRepeated && !activityId) return true;
+    return false;
+  }
 
-  //   response = (await res.json()) as ZPItemResponse;
-
-  //   if (
-  //     response.data.resultMainQuery === -1 ||
-  //     response.data.resultMainQuery.length === 0
-  //   ) {
-  //     return null;
-  //   }
-
-  //   const arrayOfZpItemsDTO: ZPItemDTO[] = response.data.resultMainQuery;
-
-  //   zpFoundValues = arrayOfZpItemsDTO.map((item) => ({
-  //     scanned_raw_value: value,
-  //     is_repeated: item.is_repeated === "t" ? true : false,
-  //     activityid: item.activityid ? Number.parseInt(item.activityid) : null,
-  //     planam: item.planam,
-  //     ordnmb: item.ordnmb,
-  //     prev_percentage: Number.parseInt(item.prev_percentage),
-  //     stkcnt_loc: Number.parseInt(item.stkcnt_loc),
-  //     stkcnt_ordnmb: Number.parseInt(item.stkcnt_ordnmb),
-  //     act_percentage: Number.parseInt(item.act_percentage),
-  //     sordid: Number.parseInt(item.sordid),
-  //   }));
-
-  //   return zpFoundValues;
-  // }
-  // function getQueryDependingOnZpOrTray(
-  //   scannedValue: string,
-  //   activityId: number,
-  //   whatWasScanned: TypeOfScannedValue
-  // ): string {
-  //   if (whatWasScanned === "zp_gru" || whatWasScanned === "zp_roz") {
-  //     const moduleKind = getModuleKind(whatWasScanned);
-
-  //     return `${
-  //       configPerBuild.apiAddress
-  //     }/api.php/REST/custom/korsolgetreport?rep_id=${
-  //       configPerBuild.edocReport_ZPForActivityId
-  //     }&ordnmb=${getPureZPValue(
-  //       scannedValue
-  //     )}&activityid=${activityId}&module=${moduleKind}`;
-  //   }
-  //   if (whatWasScanned === "tray") {
-  //     return `${
-  //       configPerBuild.apiAddress
-  //     }/api.php/REST/custom/korsolgetreport?rep_id=${
-  //       configPerBuild.edocReport_ZPForActivityId
-  //     }&stk_id=${getPureTrayValue(
-  //       scannedValue
-  //     )}&activityid=${activityId}&module=GRUNT`;
-  //   }
-
-  //   throw Error("getQueryDependingOnZpOrTray -> only zp and tray is handled");
-  // }
   function findFieldForDesiredZp(
     scannedFieldNumber: string,
     scannedZPOnManyFields: ZpScannedValue[],
@@ -528,10 +479,3 @@ async function checkIfIsHobbyZp(
 
   return null;
 }
-
-// function getModuleKind(whatWasScanned: TypeOfScannedValue) {
-//   if (whatWasScanned === "zp_gru") return "GRUNT";
-//   if (whatWasScanned === "zp_roz") return "SZKLO";
-
-//   throw Error("getModuleKind -> only zp and tray is handled");
-// }

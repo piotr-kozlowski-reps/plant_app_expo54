@@ -17,7 +17,7 @@ import { useGetControlSowingChanges_Report119 } from "@/features/shared/data-acc
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 
 export const useScanValuesForAddToZP = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -97,7 +97,7 @@ export const useScanValuesForAddToZP = (
       //check if there is already the same tray
       if (
         scannedTrays.some(
-          (tray) => tray.stk_id === getPureTrayValue(scannedValue)
+          (tray) => tray.stk_id === getPureTrayValue(scannedValue),
         )
       ) {
         toast.warning(ERROR_MESSAGES.TRAY_ALREADY_IN_LIST);
@@ -122,14 +122,14 @@ export const useScanValuesForAddToZP = (
         //check if plant is the same or same enough to add to ZP
         if (!checkIfPlantOnTrayCanBeAddedToChosenZp(zp, foundTray)) {
           toast.warning(
-            `Taca z towarem o kodzie: "${foundTray.twrkod}" nie może być dodana do ZP z towarem o kodzie: "${zp.twrkod}".`
+            `Taca z towarem o kodzie: "${foundTray.twrkod}" nie może być dodana do ZP z towarem o kodzie: "${zp.twrkod}".`,
           );
           return;
         }
 
         //compare zp from scanned zp and from tray - they cannot be the same
         if (foundTray.ordnmb === zp.ordnmb) {
-          toast.warning(`Zeskanowana taca należy już do wybranego ZPka.`);
+          toast.warning(`Zeskanowana taca należy już do wybranego ZP'ka.`);
           return;
         }
 
@@ -139,7 +139,7 @@ export const useScanValuesForAddToZP = (
           foundTray.stk_id,
           "",
           foundTray.ordnmb,
-          errorHandler
+          errorHandler,
         );
 
         if (!foundDataForReport119) {
@@ -208,7 +208,7 @@ export const useScanValuesForAddToZP = (
 
 function checkIfPlantOnTrayCanBeAddedToChosenZp(
   zp: ZpScannedValueForAddToZp,
-  tray: ZPDetailedInfo
+  tray: ZPDetailedInfo,
 ): boolean {
   const zpPlantCode = zp.twrkod;
   const trayPlantCode = tray.twrkod;

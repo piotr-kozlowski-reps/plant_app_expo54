@@ -141,7 +141,7 @@ const TechnologicalInformationScanner = () => {
             </View>
             <View className="mt-4">
               <Text className="text-center font-nav text-destructive">
-                zeskanuj kod ZPka
+                zeskanuj kod ZP&apos;ka
               </Text>
             </View>
             <View className="h-[1px] w-16 bg-foreground mt-4"></View>

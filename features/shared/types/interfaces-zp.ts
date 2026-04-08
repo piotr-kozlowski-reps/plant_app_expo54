@@ -40,7 +40,7 @@ export type ZPFieldListDTO = {
 };
 
 export type ZPItemDTO = {
-  is_repeated: string;
+  is_repeated: string | null;
   activityid: string | null;
   planam: string;
   ordnmb: string;
@@ -52,7 +52,7 @@ export type ZPItemDTO = {
   trace_type: string | null;
 };
 export type ZPItem = {
-  is_repeated: boolean;
+  is_repeated: boolean | null;
   activityid: number | null;
   planam: string;
   ordnmb: string;

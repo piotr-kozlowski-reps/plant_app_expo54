@@ -4,7 +4,6 @@
 
 PROCEDURA:
 
-scan QR lokalizacji / ZPka / tacy
+scan QR lokalizacji / ZP'ka / tacy
 
 ---
-
