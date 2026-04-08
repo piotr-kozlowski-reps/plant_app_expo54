@@ -66,14 +66,20 @@ const ExtraWorksZpEntryPage = (props: Props) => {
       .filter((work) => work.is_ordnmb === true)
       .filter((work) => {
         return work.ishobby === isHobby ? true : false;
-      });
+      })
+      .filter((work) =>
+        work.ishobby === isHobby && work.istech === true ? false : true,
+      );
     return foundFilteredExtraWorks || [];
-  }, [extraWorksArray]);
+  }, [extraWorksArray, isHobby]);
+
+  // console.log({ isHobby });
+  // console.log({ filteredExtraWorks });
 
   //protective treatment data
   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
     filterOnlyNitrogenProtectiveTreatments(
-      protectiveTreatments as ProtectiveTreatment[]
+      protectiveTreatments as ProtectiveTreatment[],
     );
 
   const refreshAllDataFn = refreshAllData as () => void;
