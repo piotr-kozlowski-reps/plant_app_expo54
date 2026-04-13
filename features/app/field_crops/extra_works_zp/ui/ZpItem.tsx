@@ -11,6 +11,7 @@ type Props = {
   canPercentageBeChanged?: boolean;
   isRoz?: boolean;
   isActivityWithTj10OrTj12?: boolean;
+  isHobbyTech?: boolean;
 };
 
 const ZpItem = (props: Props) => {
@@ -23,6 +24,7 @@ const ZpItem = (props: Props) => {
     canPercentageBeChanged = true,
     isActivityWithTj10OrTj12 = false,
     isRoz,
+    isHobbyTech = false,
   } = props;
 
   ////tsx
@@ -49,7 +51,7 @@ const ZpItem = (props: Props) => {
               <Text className="text-background-nuance font-default-semibold">
                 {zpValue.ordnmb}
               </Text>
-              {isActivityWithTj10OrTj12 ? null : (
+              {isActivityWithTj10OrTj12 || isHobbyTech ? null : (
                 <Text className="text-background-nuance font-default-normal">
                   ilość tac:{" "}
                   <Text className="text-background-nuance font-default-semibold">
@@ -64,7 +66,7 @@ const ZpItem = (props: Props) => {
                 </Text>
               )}
 
-              {isActivityWithTj10OrTj12 ? null : (
+              {isActivityWithTj10OrTj12 || isHobbyTech ? null : (
                 <Text className="text-background-nuance font-default-normal">
                   typ tacy:{" "}
                   <Text className="text-background-nuance font-default-semibold">
@@ -96,7 +98,7 @@ const ZpItem = (props: Props) => {
           ) : null}
 
           <View className="flex-row items-center justify-start">
-            <Text className="text-background-nuance font-default-semibold">{`${isActivityWithTj10OrTj12 ? 100 : zpValue.act_percentage}%`}</Text>
+            <Text className="text-background-nuance font-default-semibold">{`${isActivityWithTj10OrTj12 || isHobbyTech ? 100 : zpValue.act_percentage}%`}</Text>
             {/* <Button
               title={`procent: ${zpValue.act_percentage}`}
               handlePress={changeZpPercentageAction}

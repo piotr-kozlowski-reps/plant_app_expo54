@@ -169,9 +169,6 @@ export const useScanValueForExtraWorkHandler = () => {
     //for hobby tech works "konfekcjonowanie gru hobby ecc 10 i ecc 12" need to check if zp is hobby and if has proper tj trays (tj10 or tj12)
     //"W tym przypadku operator ma mieć możliwość potwierdzenia operacji tylko jeżeli w materiałach danego ZP znajduje się TJT.ECC i TJ12" - to Kornel na razie kazal olac
 
-    // {"extraWork": {"activityname": "151 - Konfekcjonowanie GRU-HOBBY ECC12", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 773247, "mobile_jm": null}}
-    // {"extraWork": {"activityname": "242 - Konfekcjonowanie GRU-HOBBY ECC10", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 30667238, "mobile_jm": null}}
-
     if (!isZPScanned) setIsZPScanned(true);
 
     //conditions
@@ -219,12 +216,11 @@ export const useScanValueForExtraWorkHandler = () => {
       ]);
     }
 
-    const isActivityHobbyWithTjs_soForcingToScanFieldWhenMoreLocalizationsShouldBeTurnedOff =
-      isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj12;
+    // when hobby tech - we shouldn't consider localizations, always take whole ZP, here I fake it with first loc from array, but later, when I send it to backend, API takes whole ZP
     if (
       ZPFoundForThisActivityId &&
       ZPFoundForThisActivityId.length > 1 &&
-      !isActivityHobbyWithTjs_soForcingToScanFieldWhenMoreLocalizationsShouldBeTurnedOff
+      !isHobbyTech
     ) {
       setIsForceToScanField(true);
       setScannedZPOnManyFields(ZPFoundForThisActivityId);
@@ -233,7 +229,7 @@ export const useScanValueForExtraWorkHandler = () => {
     if (
       ZPFoundForThisActivityId &&
       ZPFoundForThisActivityId.length > 1 &&
-      isActivityHobbyWithTjs_soForcingToScanFieldWhenMoreLocalizationsShouldBeTurnedOff
+      isHobbyTech
     ) {
       setScannedValues((prevValues) => [
         ...prevValues,

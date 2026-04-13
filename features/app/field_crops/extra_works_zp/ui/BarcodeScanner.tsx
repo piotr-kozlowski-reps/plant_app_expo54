@@ -180,9 +180,6 @@ const BarcodeScanner = (props: TProps) => {
   // );
   // console.log("isSendButtonDisabled", isSendButtonDisabled);
 
-  // {"extraWork": {"activityname": "151 - Konfekcjonowanie GRU-HOBBY ECC12", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 773247, "mobile_jm": null}}
-  // {"extraWork": {"activityname": "242 - Konfekcjonowanie GRU-HOBBY ECC10", "is_ordnmb": true, "ishobby": true, "istech": true, "keyval": 30667238, "mobile_jm": null}}
-
   ////tsx
   return (
     <View className="relative w-full h-full">
@@ -450,6 +447,7 @@ const BarcodeScanner = (props: TProps) => {
                           isActive={isZPScanned}
                           isRoz={isRoz}
                           isActivityWithTj10OrTj12={isActivityWithTj10OrTj12}
+                          isHobbyTech={isHobbyTech}
                         />
                       ))}
                     </View>
