@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "TraceONtest",
     slug: "traceontest",
-    version: "1.2.14",
+    version: "1.2.15",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "pl.korsol.traceontest",
