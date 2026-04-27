@@ -4,13 +4,25 @@ import { Stack } from "expo-router";
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
 import InformationScanner from "../../ui/InformationScanner";
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+
+/**
+ * @public
+ * @procedureDescription
+ * wyszukaj ZP'ka z listy
+ */
+
 const Information_SearchZP_Page_Page_EntryPage = () => {
   ////vars
   const { isPermissionGranted, requestPermission } =
     useSubmoduleEntryDataAndGuard<InformationSubmodules>(
       "information",
       "information_search_zp",
-      "Wyszukaj ZP"
+      "Wyszukaj ZP",
     );
 
   return (

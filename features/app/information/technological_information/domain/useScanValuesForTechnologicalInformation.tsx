@@ -87,6 +87,12 @@ export const useScanValuesForTechnologicalInformation = (
   async function fetchData(scannedZPValue: string) {
     const zpValue = getPureZPValue(scannedZPValue);
 
+    /**
+     * @public
+     * @procedureItem
+     * pobieranie informacji o ZP:
+     * adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1695</b>&ordnmb=<b>%ordnmb%</b>
+     */
     const response: TechnicalInformation[] = await getRepId1695(
       configPerBuild.apiAddress,
       token!,

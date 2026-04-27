@@ -22,7 +22,7 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import { useScanValuesForTechnologicalInformation } from "../domain/useScanValuesForTechnologicalInformation";
 import DetailedTechnologicalInfoModal from "./DetailedTechnologicalInfoModal";
-import SearchZpByNameModal from "../../ui/SearchZpByNameModal";
+import SearchZpByNameModal from "../../search_zp/ui/SearchZpByNameModal";
 
 type Props = {
   information_type: "scan_zp" | "search_by_client" | "search_zp";
@@ -65,23 +65,29 @@ const TechnologicalInformationScanner = () => {
   const [isShowSearchZp, setIsShowSearchZp] = useShowModal(false);
 
   //scan values
+  /**
+   * @public
+   * @procedureItem
+   * skan ZP lub przeszukanie listy
+   */
   const {
     qrLock,
     isAnyValueScanned,
     informationData,
     scannedPureValue,
-    // isLocalization,
-    // isZP,
-    // isTray,
-    // isAnyValueScanned,
-    // informationData,
-    // scannedPureValue,
+
     setQrLock,
     scanValueHandler,
     detailedTechnologicalInfoModalClose,
     findInfoAboutSearchedZp,
   } = useScanValuesForTechnologicalInformation(setIsLoading);
 
+  /**
+   * @public
+   * @procedureItem
+   * jest dostępny modal do wyszukiwania ZP'ków po nazwie (z listy)
+   * pobieranie listy ZP'ków na zakładzie:
+   * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b>  */
   ////tsx
   return (
     <>
@@ -179,6 +185,7 @@ const TechnologicalInformationScanner = () => {
         </ModalInternal>
 
         {/* search by zp - modal */}
+
         <ModalInternal
           isOpen={isShowSearchZp}
           isTransparent={false}

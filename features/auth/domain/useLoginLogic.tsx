@@ -31,6 +31,7 @@ import { useBaseAPI_URL_Store } from "@/features/shared/stores/useBaseAPI_URL_St
 
 /**
  * @public
+ * @topic
  * REALIZACJA:
  */
 export const useLoginLogic = () => {
@@ -48,8 +49,9 @@ export const useLoginLogic = () => {
 
       /**
        * @public
+       * @procedureItem
        * pobranie tokenów:
-       * {{URL}}/api.php/REST/v1/login
+       * <b>{{URL}}</b>/api.php/REST/v1/login
        */
       const tokens: TokensDTO | TError | null = await getTokens(
         username,
@@ -68,13 +70,15 @@ export const useLoginLogic = () => {
 
       /**
        * @public
+       * @procedureItem
        * pobranie informacji o użytkowniku:
-       * {{URL}}/api.php/REST/v1/userProfile
+       * <b>{{URL}}</b>/api.php/REST/v1/userProfile
        */
       /**
        * @public
+       * @procedureItem
        * weryfikacja czy użytkownik jest adminem:
-       * {{URL}}/api.php/REST/v1/userProfile
+       * <b>{{URL}}</b>/api.php/REST/v1/userProfile
        */
       const currentToken = (tokens as TokensDTO).token;
       const userProfilePromise = getUser(currentToken, errorHandler);
@@ -95,8 +99,9 @@ export const useLoginLogic = () => {
 
       /**
        * @public
+       * @procedureItem
        * przesłanie informacji o telefonie, OS telefonu i wersji aplikacji (tylko produkcja):
-       * {{URL}}/api.php/REST/v1/customRegisters/240/entries
+       * <b>{{URL}}</b>/api.php/REST/v1/customRegisters/240/entries
        */
       const os: OS = checkOS();
       const version = Application.nativeApplicationVersion;
@@ -122,12 +127,16 @@ export const useLoginLogic = () => {
 
       /**
        * @public
+       * @procedureItem
        * pobranie raportu o dostępie użytkownika i ostatniej wersji aplikacji jaka została użyta w systemie:
-       * {{URL}}/api.php/REST/v1/system/reports/1567/data
-       *
-       * -> weryfikacja czy uzytkownik ma dostęp do aplikacji
-       *
-       * -> jeżeli jesteśmy na produkcji: weryfikacja czy aplikacja jest w najnowszej możliwej wersji
+       * <b>{{URL}}</b>/api.php/REST/v1/system/reports/1567/data
+       *@separator
+       */
+
+      /**
+       * @public
+       * @guard
+       * jeżeli jesteśmy na produkcji: weryfikacja czy aplikacja jest w najnowszej możliwej wersji
        */
 
       const userPermissionAndRecentAppVersions =
@@ -245,7 +254,8 @@ export const useLoginLogic = () => {
 
       /**
        * @public
-       * zapisanie informacji użytkownika w danej sesji logowania: user_info, role, tokeny, widoczność modułów/submodułów aplikacji (robiona na razie ręcznie przeze mnie)
+       * @procedureItem
+       * zapisanie informacji użytkownika w danej sesji logowania: user_info, role, tokeny, widoczność modułów/submodułów aplikacji <b>(robiona na razie ręcznie przeze mnie)</b>
        */
 
       return user;

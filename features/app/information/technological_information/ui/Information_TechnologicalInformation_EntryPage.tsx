@@ -4,6 +4,18 @@ import { Stack } from "expo-router";
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
 import TechnologicalInformationScanner from "./TechnologicalInformationScanner";
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+
+/**
+ * @public
+ * @procedureDescription
+ * skan QR ZP'ka / lub wybór z listy
+ */
+
 const Information_TechnologicalInformation_EntryPage = () => {
   ////vars
   const { isPermissionGranted, requestPermission } =

@@ -1,0 +1,70 @@
+
+    <!DOCTYPE html>
+    <html lang="pl">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Dokumentacja: features/app/information/technological_information</title>
+      <style>
+
+      :root {
+        --color-dark: #002539;
+        --color-background_nuance: #FFFDF9;
+        --color-gray: #C2C2C2;
+        --color-procedure-description: #CAEAF2;
+        --color-gray-darker: #B0B0B0;
+        --color-procedure-item: #D1EDD1;
+        --color-guard: #FDAFAF;
+        --border-radius: 32px
+        }
+
+        @font-face {
+        font-family: "euclid";
+        src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
+        font-weight: bold;
+        font-style: bold;
+        }
+        @font-face {
+        font-family: "euclid";
+        src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
+        font-weight: semibold;
+        font-style: semibold;
+        }
+        @font-face {
+        font-family: "euclid";
+        src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+        }
+        @font-face {
+        font-family: "euclid";
+        src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
+        font-weight: light;
+        font-style: light;
+        }
+
+        body { 
+        font-family: "euclid", sans-serif; max-width: 900px; margin: 40px auto; line-height: 1.4; 
+        }
+
+        h1 { 
+        font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
+        }
+
+        h2 {
+        font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+        }
+
+        p {
+        padding-top: -4px; padding-bottom: -4px;
+        }
+
+        code { background: #f5f5f5; padding: 2px 4px; }
+        pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+      </style>
+    </head>
+    <body>
+    <h1>Dokumentacja dla: <b>Informacja -> Informacja technologiczna</b></h1><h2> features/app/information/technological_information/domain/useScanValuesForTechnologicalInformation.tsx</h2><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     pobieranie informacji o ZP:</p><p>     adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1695</b>&ordnmb=<b>%ordnmb%</b></p></div><h2> features/app/information/technological_information/ui/Information_TechnologicalInformation_EntryPage.tsx</h2><div style="margin-left: 32px; font-weight: 600; text-decoration: underline; font-size: 16px"><p> PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+  <p> skan QR ZP'ka / lub wybór z listy</p></div><h2> features/app/information/technological_information/ui/TechnologicalInformationScanner.tsx</h2><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   skan ZP lub przeszukanie listy</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   jest dostępny modal do wyszukiwania ZP'ków po nazwie (z listy)</p><p>   pobieranie listy ZP'ków na zakładzie:</p><p>   adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b></p></div>
+    </body>
+    </html>
+    

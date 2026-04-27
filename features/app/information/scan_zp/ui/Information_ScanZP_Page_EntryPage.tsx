@@ -6,8 +6,13 @@ import InformationScanner from "../../ui/InformationScanner";
 
 /**
  * @public
+ * @topic
  * PROCEDURA:
- *
+ */
+
+/**
+ * @public
+ * @procedureDescription
  * scan QR lokalizacji / ZP'ka / tacy
  */
 const Information_ScanZP_Page_EntryPage = () => {

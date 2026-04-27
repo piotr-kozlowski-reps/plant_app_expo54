@@ -15,7 +15,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ZpInProduction } from "@/features/shared/types/interfaces-zps_in_production";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import InputText from "@/features/shared/ui/input/InputText";
-import ShowClientsList from "./ShowClientsList";
+import ShowClientsList from "../../ui/ShowClientsList";
 import { useDebounce } from "@/features/shared/data-access/useDebounce";
 import { FlatList } from "react-native-gesture-handler";
 import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
@@ -45,6 +45,12 @@ const SearchZpByClientModal = (props: Props) => {
   const getZPsInProduction = useGetZPsInProduction();
 
   // fetch data
+  /**
+   * @public
+   * @procedureItem
+   * pobieranie listy ZP'ków na zakładzie:
+   * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b>
+   */
   const { data: ZPsInProductionBaseArray, refetch: refreshAllData } = useQuery<
     ZpInProduction[]
   >({
@@ -56,8 +62,12 @@ const SearchZpByClientModal = (props: Props) => {
     [ZPsInProductionBaseArray],
   );
 
-  /** */
-  /** */
+  /**
+   * @public
+   * @procedureItem
+   * na podstawie danych z raportu: <b>1694</b>
+   * generowana jest lista unikalnych klientów
+   */
   /** clients */
   // const [chosenClient, setChosenClient] = useState<ZpInProduction | null>(null);
   const [zpsWithUniqueClients, setZpsWithUniqueClients] = useState<
@@ -271,6 +281,13 @@ const SearchZpByClientModal = (props: Props) => {
                   <FlatList<ZpInProduction>
                     data={filteredZPsInProductionByClient}
                     renderItem={({ item }: { item: ZpInProduction }) => (
+                      /**
+                       * @public
+                       * @procedureItem
+                       * po wyszukaniu i wyborze ZP'ka odpala się funkcja: findInfoAboutSearchedZp(ordnmb)
+                       * która, tak na prawdę udaje, że ZPek został zeskanowany i odpytuje raport 163 o jego szczegóły:
+                       * adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>163</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT
+                       */
                       <ListItemName
                         title={item.ordnmb}
                         id={0}

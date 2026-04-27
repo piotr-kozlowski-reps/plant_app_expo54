@@ -7,7 +7,7 @@ import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import { useState } from "react";
 import { View, Platform, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useScanValuesForInformation } from "../domain/useScanValuesForInformation";
+import { useScanValuesForInformation } from "../scan_zp/domain/useScanValuesForInformation";
 import { StatusBar } from "expo-status-bar";
 import { CameraView } from "expo-camera";
 
@@ -20,8 +20,8 @@ import { Overlay } from "@/features/shared/ui/overlay/Overlay";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
-import SearchZpByNameModal from "./SearchZpByNameModal";
-import SearchZpByClientModal from "./SearchZpByClientModal";
+import SearchZpByNameModal from "../search_zp/ui/SearchZpByNameModal";
+import SearchZpByClientModal from "../search_by_client/ui/SearchZpByClientModal";
 import { ZpInProduction } from "@/features/shared/types/interfaces-zps_in_production";
 
 type Props = {

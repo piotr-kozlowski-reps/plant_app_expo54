@@ -9,38 +9,41 @@
       :root {
         --color-dark: #002539;
         --color-background_nuance: #FFFDF9;
+        --color-gray: #C2C2C2;
+        --color-procedure-description: #CAEAF2;
         --color-gray-darker: #B0B0B0;
-        // --color-border: #111;
+        --color-procedure-item: #D1EDD1;
+        --color-guard: #FDAFAF;
         --border-radius: 32px
         }
 
         @font-face {
         font-family: "euclid";
-        src: url("./EuclidCircularBBold.ttf") format("truetype");
+        src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
         font-weight: bold;
         font-style: bold;
         }
         @font-face {
         font-family: "euclid";
-        src: url("./EuclidCircularBSemiBold.ttf") format("truetype");
+        src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
         font-weight: semibold;
         font-style: semibold;
         }
         @font-face {
         font-family: "euclid";
-        src: url("./EuclidCircularBRegular.ttf") format("truetype");
+        src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
         font-weight: normal;
         font-style: normal;
         }
         @font-face {
         font-family: "euclid";
-        src: url("./EuclidCircularBLight.ttf") format("truetype");
+        src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
         font-weight: light;
         font-style: light;
         }
 
         body { 
-        font-family: "euclid", sans-serif; max-width: 900px; margin: 40px auto; line-height: 1.6; 
+        font-family: "euclid", sans-serif; max-width: 900px; margin: 40px auto; line-height: 1.4; 
         }
 
         h1 { 
@@ -48,7 +51,11 @@
         }
 
         h2 {
-        font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content;
+        font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+        }
+
+        p {
+        padding-top: -4px; padding-bottom: -4px;
         }
 
         code { background: #f5f5f5; padding: 2px 4px; }
@@ -56,11 +63,8 @@
       </style>
     </head>
     <body>
-    <h1>Dokumentacja dla: <b>Test</b></h1><h2> features/app/information/scan_zp/ui/Information_ScanZP_Page_EntryPage.tsx</h2><div>fgbdfgb</div>
-
----
-
-
+    <h1>Dokumentacja dla: <b>Informacja -> skanuj ZP</b></h1><h2> features/app/information/scan_zp/domain/useScanValuesForInformation.tsx</h2><div style="margin-left: 32px; font-weight: 600; text-decoration: underline; font-size: 16px"><p> REALIZACJA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   skan QR kod</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>163</b>&<b>%params%</b>&module=GRUNT`,</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     jezeli skan lokalizacji</p><p>     to dochodzi w paramsach: planam=<b>%planam%</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     jezeli skan ZP'ka</p><p>     to dochodzi w paramsach: ordnmb=<b>%ordnmb%</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     jezeli skan tacy</p><p>     to dochodzi w paramsach: stk_id=<b>%stk_id%</b></p></div><h2> features/app/information/scan_zp/ui/Information_ScanZP_Page_EntryPage.tsx</h2><div style="margin-left: 32px; font-weight: 600; text-decoration: underline; font-size: 16px"><p> PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+  <p> scan QR lokalizacji / ZP'ka / tacy</p></div>
     </body>
     </html>
     

@@ -21,8 +21,13 @@ type Props = {
 
 /**
  * @public
+ * @topic
  * PROCEDURA:
- *
+ */
+
+/**
+ * @public
+ * @procedureDescription
  * formularz:
  * - login
  * - hasło

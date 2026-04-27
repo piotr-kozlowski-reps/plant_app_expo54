@@ -8,7 +8,7 @@ import { toast } from "sonner-native";
 import {
   Param,
   TypeOfScannedValue,
-} from "../../../shared/types/interfaces-general";
+} from "../../../../shared/types/interfaces-general";
 import { getRepId163 } from "@/features/shared/data-access/getRepId163";
 import { configPerBuild } from "@/features/shared/env/env";
 import {
@@ -18,6 +18,11 @@ import {
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 
+/**
+ * @public
+ * @topic
+ * REALIZACJA:
+ */
 export const useScanValuesForInformation = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
@@ -99,14 +104,16 @@ export const useScanValuesForInformation = (
   };
 
   //helpers
+
+  /**
+   * @public
+   * @procedureItem
+   * skan QR kod
+   */
   async function fetchData(
     scannedValue: string,
     whatHasBeenScanned: TypeOfScannedValue,
   ) {
-    // console.log("fetchData");
-    // console.log({ scannedValue });
-    // console.log({ whatHasBeenScanned });
-
     if (whatHasBeenScanned === "unknown") {
       scannedUnknownValueHandler(scannedValue);
       return;
@@ -114,6 +121,11 @@ export const useScanValuesForInformation = (
 
     let param: Param = getDesiredParams(scannedValue, whatHasBeenScanned);
 
+    /**
+     * @public
+     * @procedureItem
+     * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>163</b>&<b>%params%</b>&module=GRUNT`,
+     */
     const response: InformationResponse = await getRepId163(
       configPerBuild.apiAddress,
       token!,
@@ -175,18 +187,36 @@ export const useScanValuesForInformation = (
     scannedValue: string,
     whatHasBeenScanned: TypeOfScannedValue,
   ): Param {
+    /**
+     * @public
+     * @procedureItem
+     * jezeli skan lokalizacji
+     * to dochodzi w paramsach: planam=<b>%planam%</b>
+     */
     if (whatHasBeenScanned === "field") {
       return {
         name: "planam",
         value: getPureFieldValue(scannedValue),
       };
     }
+    /**
+     * @public
+     * @procedureItem
+     * jezeli skan ZP'ka
+     * to dochodzi w paramsach: ordnmb=<b>%ordnmb%</b>
+     */
     if (whatHasBeenScanned === "zp_gru" || whatHasBeenScanned === "zp_roz") {
       return {
         name: "ordnmb",
         value: getPureZPValue(scannedValue),
       };
     }
+    /**
+     * @public
+     * @procedureItem
+     * jezeli skan tacy
+     * to dochodzi w paramsach: stk_id=<b>%stk_id%</b>
+     */
     if (whatHasBeenScanned === "tray") {
       return {
         name: "stk_id",
