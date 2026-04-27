@@ -39,6 +39,11 @@ const config: Config = {
       outputFileName: "informacja___informacja_technologiczna",
       label: "Informacja -> Informacja technologiczna",
     },
+    {
+      dir: "features/app/field_crops/field_crops_works/plants_coming_ups_counter",
+      outputFileName: "rozsady_gruntowe___przeliczanie_wschodow",
+      label: "Rozsady gruntowe -> Przeliczanie wschodów",
+    },
   ],
   outputDir: "docs",
 };

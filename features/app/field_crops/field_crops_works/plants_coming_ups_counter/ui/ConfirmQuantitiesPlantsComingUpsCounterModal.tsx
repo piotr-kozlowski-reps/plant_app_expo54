@@ -26,19 +26,25 @@ const ConfirmQuantitiesPlantsComingUpsCounterModal = (props: Props) => {
 
   if (!tray) {
     throw new Error(
-      "ConfirmQuantitiesPlantsComingUpsCounterModal -> tray is null"
+      "ConfirmQuantitiesPlantsComingUpsCounterModal -> tray is null",
     );
   }
 
   //formik
+  /**
+   * @public
+   * @procedureItem
+   * wprowadzenie ilości braków (czy przez przyciski <b>+</b> i <b>-</b>, czy podając konkretne ilości w formularzu)
+   */
   const { formik, availableFormActions, canFormBeSubmitted } =
     useConfirmQuantitiesPlantsComingUpsCounterFormik(
       closeFn,
       tray,
-      addOrChangeQuantityInPlantsComingUpsCounterHandler
+      addOrChangeQuantityInPlantsComingUpsCounterHandler,
     );
 
   //helpers
+
   const changeQuantityValue = (value: number) => {
     formik
       .getFieldHelpers("lckcnt")

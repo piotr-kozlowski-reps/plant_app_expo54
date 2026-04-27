@@ -17,7 +17,7 @@ import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCh
 import { useGetTrayInfo_Report113 } from "@/features/shared/data-access/useGetTrayInfo_Report113";
 
 export const useScanValuesForPlantsComingUpsCounter = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -45,7 +45,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
 
     if (checkWhatValueWasScanned(scannedValue) !== "tray") {
       toast.warning(
-        `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. QRkod tacy ma inny format.`
+        `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. QRkod tacy ma inny format.`,
       );
       return;
     }
@@ -62,7 +62,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
   const sendValuesForPlantsComingUpsCounter = async () => {
     if (!trays || !trays.length) {
       throw new Error(
-        "useScanValuesForPlantsComingUpsCounter -> sendValuesForPlantsComingUpsCounter -> no trays"
+        "useScanValuesForPlantsComingUpsCounter -> sendValuesForPlantsComingUpsCounter -> no trays",
       );
     }
     type TrayToBeSent = Pick<
@@ -84,6 +84,21 @@ export const useScanValuesForPlantsComingUpsCounter = (
       valuesToBeSent.filter((tray) => tray.lckcnt > 0);
 
     //send data to server
+    /**
+     * @public
+     * @procedureItem
+     * wysyłka - custom api:
+     * <b>{{URL}}/api.php/REST/custom/risecount</b>
+     * dane - array obiektów:
+     * {
+     * sordid: number
+        ordnmb: string
+        stk_id: string
+        lckcnt: number
+        scanned_raw_value: string
+     * }
+     *@separator
+     */
     let response: RiseCountResponse;
     try {
       setIsLoading(true);
@@ -94,7 +109,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
         configPerBuild.apiAddress,
         "/api.php/REST/custom/risecount",
         token!,
-        valuesToBeSentFilteredByNonZeroAmountOfLacksOdComingUps
+        valuesToBeSentFilteredByNonZeroAmountOfLacksOdComingUps,
       );
 
       //check if response array has the same amount of items as sent items
@@ -131,13 +146,13 @@ export const useScanValuesForPlantsComingUpsCounter = (
   };
 
   const addOrChangeQuantityInPlantsComingUpsCounterHandler = (
-    passedTray: Tray
+    passedTray: Tray,
   ) => {
     if (!passedTray) {
       errorHandler(
         new Error(
-          "useScanValuesForPlantsComingUpsCounter -> addOrChangeQuantityInPlantsComingUpsCounterHandler -> no tray"
-        )
+          "useScanValuesForPlantsComingUpsCounter -> addOrChangeQuantityInPlantsComingUpsCounterHandler -> no tray",
+        ),
       );
       return;
     }
@@ -148,7 +163,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
 
       //check if Tray that is to be added already exists in the list
       const foundTray = traysLocal.find(
-        (item) => item.stk_id === passedTray.stk_id
+        (item) => item.stk_id === passedTray.stk_id,
       );
 
       if (!foundTray) {
@@ -162,7 +177,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
     }
 
     toast.success(
-      `Dodano do listy/Zmieniono ${passedTray.stk_id} (wraz z informacją o brakach).`
+      `Dodano do listy/Zmieniono ${passedTray.stk_id} (wraz z informacją o brakach).`,
     );
   };
 
@@ -170,8 +185,8 @@ export const useScanValuesForPlantsComingUpsCounter = (
     if (!tray) {
       errorHandler(
         new Error(
-          "useScanValuesForPlantsComingUpsCounter -> addQuantityToExistingTrayHandler -> no tray"
-        )
+          "useScanValuesForPlantsComingUpsCounter -> addQuantityToExistingTrayHandler -> no tray",
+        ),
       );
       return;
     }
@@ -183,7 +198,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
   const addExistingTraysQuantity = (
     trays: Tray[],
     chosenTray: Tray,
-    quantityToBeAdded: number
+    quantityToBeAdded: number,
   ): Tray[] => {
     const traysResult = [...trays];
 
@@ -193,7 +208,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
 
         if (resultValue < 0) {
           toast.warning(
-            ERROR_MESSAGES.NUMBER_OF_TRAY_BAD_PLANTS_CANNOT_BE_LESS_THAN_0
+            ERROR_MESSAGES.NUMBER_OF_TRAY_BAD_PLANTS_CANNOT_BE_LESS_THAN_0,
           );
         } else {
           item.lckcnt = resultValue;
@@ -205,6 +220,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
 
     // setTrays(traysLocal);
   };
+
   async function scanTray(scannedValue: string) {
     const scannedStk_id = getPureTrayValue(scannedValue);
 
@@ -215,20 +231,32 @@ export const useScanValuesForPlantsComingUpsCounter = (
     }
 
     //fetch data
+    /**
+     * @public
+     * @procedureItem
+     * skan QR tacy i wywołanie raportu:
+     * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&stk_id=<b>%stk_id%</b>&module=GRUNT
+     */
     const trayInfo = await getTrayInfo_Rep113(
       token!,
       scannedValue,
-      errorHandler
+      errorHandler,
     );
 
     if (!trayInfo) return;
 
-    //to process tray further property "stkcnt" must be null or -1
+    //to process tray further property "lckcnt" must be null or -1
+    /**
+     * @public
+     * @guard
+     *  w raporcie znajduje się pole: <b>lckcnt</b>
+    - jeżeli wartość jest inna niż: <b>-1</b> lub <b>null</b> to komunikat, mówiący o tym, że dane dla tej tacy zostały już wprowadzone.
+     */
     const isPossibleToPressTray =
       trayInfo.lckcnt === null || trayInfo.lckcnt === -1;
     if (!isPossibleToPressTray) {
       toast.error(
-        `Dla tej tacy (${scannedStk_id}) wprowadzono już ilość braków (${trayInfo.lckcnt}).`
+        `Dla tej tacy (${scannedStk_id}) wprowadzono już ilość braków (${trayInfo.lckcnt}).`,
       );
       return;
     }
@@ -266,7 +294,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
 //utils
 const checkIfTrayIsAlreadyScanned = (
   trayID: string,
-  trays: Tray[]
+  trays: Tray[],
 ): boolean => {
   if (!trays.length) return false;
   return trays.some((tray) => tray.stk_id === trayID);
