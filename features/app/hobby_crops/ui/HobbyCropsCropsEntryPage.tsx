@@ -1,22 +1,18 @@
 import { lightNuanceColor } from "@/features/shared/constants/colorThemeVars";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
-import { FieldCropsSubmodules } from "@/features/shared/types/interfaces-auth";
-import {
-  FIELD_CROPS,
-  INDEX,
-} from "@/features/shared/types/interfaces-navigation";
+import { HobbyCropsSubmodules } from "@/features/shared/types/interfaces-auth";
+import { INDEX } from "@/features/shared/types/interfaces-navigation";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import LeafNavigationButton from "@/features/shared/ui/button/LeafNavigationButton";
 import { router, Stack } from "expo-router";
-import { FileDigit, LeafyGreen, Pickaxe } from "lucide-react-native";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { FileDigit, LeafyGreen, Pickaxe } from "lucide-react-native";
 
-const ExtraWorksHobbyEntryPage = () => {
+const HobbyCropsCropsEntryPage = () => {
   ////vars
-  const { getModuleVisibility, getModuleVisibilitiesObject } =
-    useAuthSessionStore();
+  const { getModuleVisibilitiesObject } = useAuthSessionStore();
 
   ////tsx
   return (
@@ -28,11 +24,7 @@ const ExtraWorksHobbyEntryPage = () => {
           <View className="flex-col items-center justify-between flex-1 w-full mt-8">
             <View className="w-full px-6">
               <AppPath
-                paths={[
-                  INDEX,
-                  FIELD_CROPS,
-                  { name: "Prace Hobby", actionFn: () => {} },
-                ]}
+                paths={[INDEX, { name: "Rozsady Hobby", actionFn: () => {} }]}
               />
             </View>
 
@@ -41,12 +33,12 @@ const ExtraWorksHobbyEntryPage = () => {
                 <LeafNavigationButton
                   side={"left"}
                   actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_technology
+                    getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_technology
                       ? () => {
                           router.push(
-                            "/app/field_crops/extra_works_hobby/extra_works_hobby_technology",
+                            "/app/hobby_crops/extra_works_hobby_technology",
                           );
                         }
                       : () => {}
@@ -60,17 +52,17 @@ const ExtraWorksHobbyEntryPage = () => {
                   }
                   name={`Prace HOBBY`}
                   disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_technology
+                    !getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_technology
                   }
                 />
                 <LeafNavigationButton
                   side={"right"}
                   actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_zp
+                    getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_zp
                       ? () => {
                           router.push(
                             "/app/field_crops/extra_works_zp?ishobby=t",
@@ -87,9 +79,9 @@ const ExtraWorksHobbyEntryPage = () => {
                   }
                   name={`Prace${"\n"}Hobby - ZP`}
                   disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_zp
+                    !getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_zp
                   }
                   visibility={false}
                 />
@@ -98,9 +90,9 @@ const ExtraWorksHobbyEntryPage = () => {
                 <LeafNavigationButton
                   side={"left"}
                   actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_quantity
+                    getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_quantity
                       ? () => {
                           router.push(
                             "/app/field_crops/extra_works_quantity?ishobby=t",
@@ -117,17 +109,17 @@ const ExtraWorksHobbyEntryPage = () => {
                   }
                   name={`Prace${"\n"}Hobby - Ilości`}
                   disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_quantity
+                    !getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_quantity
                   }
                 />
                 <LeafNavigationButton
                   side={"right"}
                   actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_zp
+                    getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_zp
                       ? () => {
                           router.push(
                             "/app/field_crops/extra_works_zp?ishobby=t",
@@ -144,9 +136,9 @@ const ExtraWorksHobbyEntryPage = () => {
                   }
                   name={`Prace${"\n"}Hobby - ZP`}
                   disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops",
-                    ).extra_works_hobby_extra_works_zp
+                    !getModuleVisibilitiesObject<HobbyCropsSubmodules>(
+                      "hobby_crops",
+                    ).hobby_crops_extra_works_zp
                   }
                 />
               </View>
@@ -161,4 +153,4 @@ const ExtraWorksHobbyEntryPage = () => {
     </>
   );
 };
-export default ExtraWorksHobbyEntryPage;
+export default HobbyCropsCropsEntryPage;

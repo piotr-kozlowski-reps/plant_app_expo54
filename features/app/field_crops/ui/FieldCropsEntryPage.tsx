@@ -44,7 +44,7 @@ const FieldCropsEntryPage = () => {
                   side={"left"}
                   actionFn={
                     getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).field_crops_works___overallVisibility
                       ? () => {
                           router.push("/app/field_crops/field_crops_works");
@@ -61,7 +61,7 @@ const FieldCropsEntryPage = () => {
                   name={`Rozsady${"\n"}gruntowe - prace`}
                   disabled={
                     !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).field_crops_works___overallVisibility
                   }
                 />
@@ -69,7 +69,7 @@ const FieldCropsEntryPage = () => {
                   side={"right"}
                   actionFn={
                     getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).extra_works_quantity___overallVisibility
                       ? () => {
                           router.push("/app/field_crops/extra_works_quantity");
@@ -86,7 +86,7 @@ const FieldCropsEntryPage = () => {
                   name={`Prace${"\n"}Extra GRU - Ilości`}
                   disabled={
                     !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).extra_works_quantity___overallVisibility
                   }
                 />
@@ -96,11 +96,11 @@ const FieldCropsEntryPage = () => {
                   side={"left"}
                   actionFn={
                     getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).extra_works_zp___overallVisibility
                       ? () => {
                           router.push(
-                            "/app/field_crops/extra_works_zp?ishobby=f"
+                            "/app/field_crops/extra_works_zp?ishobby=f",
                           );
                         }
                       : () => {}
@@ -115,7 +115,7 @@ const FieldCropsEntryPage = () => {
                   name={`Prace${"\n"}Extra GRU - ZP`}
                   disabled={
                     !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).extra_works_zp___overallVisibility
                   }
                 />
@@ -123,63 +123,7 @@ const FieldCropsEntryPage = () => {
                   side={"right"}
                   actionFn={
                     getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).extra_works_hobby___overallVisibility
-                      ? () => {
-                          router.push("/app/field_crops/extra_works_hobby");
-                        }
-                      : () => {}
-                  }
-                  icon={
-                    <ShoppingBag
-                      size={24}
-                      color={lightNuanceColor}
-                      strokeWidth={2.7}
-                    />
-                  }
-                  name={`Prace${"\n"}Hobby`}
-                  disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).extra_works_hobby___overallVisibility
-                  }
-                />
-              </View>
-
-              <View className="flex-row items-center justify-center w-full gap-2">
-                <LeafNavigationButton
-                  side={"left"}
-                  actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).extra_works_zp___overallVisibility
-                      ? () => {
-                          router.push(
-                            "/app/field_crops/extra_works_zp?ishobby=f"
-                          );
-                        }
-                      : () => {}
-                  }
-                  icon={
-                    <Pickaxe
-                      size={24}
-                      color={lightNuanceColor}
-                      strokeWidth={2.7}
-                    />
-                  }
-                  name={`Prace${"\n"}Extra GRU - ZP`}
-                  disabled={
-                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
-                    ).extra_works_zp___overallVisibility
-                  }
-                  visibility={false}
-                />
-                <LeafNavigationButton
-                  side={"right"}
-                  actionFn={
-                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).tray_operations___overallVisibility
                       ? () => {
                           router.push("/app/field_crops/tray_operations");
@@ -196,11 +140,67 @@ const FieldCropsEntryPage = () => {
                   name={`Operacje${"\n"}na tacach`}
                   disabled={
                     !getModuleVisibilitiesObject<FieldCropsSubmodules>(
-                      "field_crops"
+                      "field_crops",
                     ).tray_operations___overallVisibility
                   }
                 />
               </View>
+
+              {/* <View className="flex-row items-center justify-center w-full gap-2">
+                <LeafNavigationButton
+                  side={"left"}
+                  actionFn={
+                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
+                      "field_crops",
+                    ).extra_works_zp___overallVisibility
+                      ? () => {
+                          router.push(
+                            "/app/field_crops/extra_works_zp?ishobby=f",
+                          );
+                        }
+                      : () => {}
+                  }
+                  icon={
+                    <Pickaxe
+                      size={24}
+                      color={lightNuanceColor}
+                      strokeWidth={2.7}
+                    />
+                  }
+                  name={`Prace${"\n"}Extra GRU - ZP`}
+                  disabled={
+                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
+                      "field_crops",
+                    ).extra_works_zp___overallVisibility
+                  }
+                  visibility={false}
+                />
+                <LeafNavigationButton
+                  side={"right"}
+                  actionFn={
+                    getModuleVisibilitiesObject<FieldCropsSubmodules>(
+                      "field_crops",
+                    ).tray_operations___overallVisibility
+                      ? () => {
+                          router.push("/app/field_crops/tray_operations");
+                        }
+                      : () => {}
+                  }
+                  icon={
+                    <Grid3x3
+                      size={24}
+                      color={lightNuanceColor}
+                      strokeWidth={2.7}
+                    />
+                  }
+                  name={`Operacje${"\n"}na tacach`}
+                  disabled={
+                    !getModuleVisibilitiesObject<FieldCropsSubmodules>(
+                      "field_crops",
+                    ).tray_operations___overallVisibility
+                  }
+                />
+              </View> */}
             </View>
 
             <View className="w-full mb-6">

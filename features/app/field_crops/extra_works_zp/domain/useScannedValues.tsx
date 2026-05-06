@@ -10,6 +10,7 @@ import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCh
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
 import { useScanValueForExtraWorkHandler } from "./useScanValueForExtraWorkHandler";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
+import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
 
 export const useScannedValues = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -55,9 +56,13 @@ export const useScannedValues = (
     player.play();
 
     //check allowed scanned values
+    const allowedValues: TypeOfScannedValue[] = [];
+    if (isHobbyTech) allowedValues.push("zp_roz", "zp_gru");
+    if (isRoz && !isHobbyTech) allowedValues.push("zp_roz", "field");
+    if (!isRoz && !isHobbyTech) allowedValues.push("zp_gru", "field");
     const isScannedDataCorrect = checkIsScannedDataCorrect(
       scannedValue,
-      isRoz ? ["zp_roz", "field"] : ["zp_gru", "field"],
+      allowedValues,
     );
     if (!isScannedDataCorrect) return;
 

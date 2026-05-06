@@ -9,6 +9,7 @@ import {
   EXTRA_WORKS_HOBBY_TECHNOLOGY,
   FIELD_CROPS,
   GREENHOUSE_CROPS,
+  HOBBY_CROPS,
   INDEX,
   NavElement,
 } from "@/features/shared/types/interfaces-navigation";
@@ -43,16 +44,10 @@ const ScanCameraModal = (props: TProps) => {
       name: "Prace Extra ROZ - ZP",
     });
   if (isHobbyTech)
-    paths.push(
-      INDEX,
-      FIELD_CROPS,
-      EXTRA_WORKS_HOBBY,
-      EXTRA_WORKS_HOBBY_TECHNOLOGY,
-      {
-        actionFn: () => {},
-        name: "Prace Extra HOBBY - ZP",
-      },
-    );
+    paths.push(INDEX, HOBBY_CROPS, EXTRA_WORKS_HOBBY, {
+      actionFn: () => {},
+      name: "Prace Extra HOBBY - ZP",
+    });
   if (!isRoz && !isHobbyTech)
     paths.push(INDEX, FIELD_CROPS, {
       actionFn: () => {},

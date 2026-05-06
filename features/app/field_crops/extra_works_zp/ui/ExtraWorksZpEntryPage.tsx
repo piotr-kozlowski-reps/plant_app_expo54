@@ -9,6 +9,7 @@ import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
 import {
   EXTRA_WORKS_HOBBY,
   FIELD_CROPS,
+  HOBBY_CROPS,
   INDEX,
   NavElement,
 } from "@/features/shared/types/interfaces-navigation";
@@ -41,8 +42,9 @@ const ExtraWorksZpEntryPage = (props: Props) => {
   const paths: NavElement[] = isHobby
     ? [
         INDEX,
-        FIELD_CROPS,
-        EXTRA_WORKS_HOBBY,
+        HOBBY_CROPS,
+        // FIELD_CROPS,
+        // EXTRA_WORKS_HOBBY,
         { name: pathNameForAppPathComponent, actionFn: () => {} },
       ]
     : [

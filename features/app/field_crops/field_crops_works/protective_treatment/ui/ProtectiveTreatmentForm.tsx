@@ -83,10 +83,15 @@ const ProtectiveTreatmentForm = (props: Props) => {
   } = useScanValuesForProtectiveTreatment(setIsLoading);
 
   //formik
+  /**
+   * @public
+   * @procedureItem
+   *  Formularz z wprowadzeniem: zabiegu, ilośći środka, kto wykonał, typu zabiegu)
+   */
   const { formik, availableFormActions, canFormBeSubmitted, clearForm } =
     useProtectiveTreatmentFormik(
       setDataForProtectiveTreatment,
-      setIsShowScanner
+      setIsShowScanner,
     );
 
   //combobox protectiveTreatments
@@ -98,7 +103,7 @@ const ProtectiveTreatmentForm = (props: Props) => {
 
   // combobox treatmentType
   const comboboxTreatmentType: Combobox<ExtraWork>[] = typeOfTreatment.map(
-    (item) => ({ visibleText: item.activityname, value: item })
+    (item) => ({ visibleText: item.activityname, value: item }),
   );
 
   ////tsx

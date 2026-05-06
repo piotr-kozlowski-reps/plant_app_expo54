@@ -212,11 +212,11 @@ export const useLoginLogic = () => {
             extra_works_quantity___overallVisibility: true,
             //extra_works_zp
             extra_works_zp___overallVisibility: true,
-            //extra_works_hobby
-            extra_works_hobby___overallVisibility: true,
-            extra_works_hobby_extra_works_quantity: true,
-            extra_works_hobby_extra_works_zp: true,
-            extra_works_hobby_extra_works_technology: true,
+            // //extra_works_hobby
+            // extra_works_hobby___overallVisibility: true,
+            // extra_works_hobby_extra_works_quantity: true,
+            // extra_works_hobby_extra_works_zp: true,
+            // extra_works_hobby_extra_works_technology: true,
             //tray_operations
             tray_operations___overallVisibility: true,
             tray_operations_destroy_tray: true,
@@ -243,6 +243,14 @@ export const useLoginLogic = () => {
 
             //extra_works_zp
             extra_works_zp___overallVisibility: true,
+          },
+
+          hobby_crops: {
+            is_whole_module_available: true,
+            hobby_crops___overallVisibility: true,
+            hobby_crops_extra_works_quantity: true,
+            hobby_crops_extra_works_zp: true,
+            hobby_crops_extra_works_technology: true,
           },
 
           general_works: {

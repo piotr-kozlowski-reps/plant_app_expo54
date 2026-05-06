@@ -86,6 +86,11 @@ export const useScanValuesForProtectiveTreatment = (
     player.play();
 
     //check allowed scanned values
+    /**
+     * @public
+     * @procedureItem
+     * jezeli skan tacy, ZPeka lub lokalizacji
+     */
     const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
       "tray",
       "field",
@@ -103,6 +108,12 @@ export const useScanValuesForProtectiveTreatment = (
 
       //allowed conditions
       if (isZP) {
+        /**
+         * @public
+         * @procedureItem
+         * jeżeli skan ZP:
+         * @readFile `features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
+         */
         await scanZpOrTrayHandler(
           {
             scannedValue,

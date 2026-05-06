@@ -19,6 +19,10 @@ export const FIELD_CROPS: NavElement = {
   actionFn: () => router.push("/app/field_crops"),
   name: "Rozsady gruntowe",
 };
+export const HOBBY_CROPS: NavElement = {
+  actionFn: () => router.push("/app/hobby_crops"),
+  name: "Rozsady hobby",
+};
 export const FIELD_CROPS_WORKS: NavElement = {
   actionFn: () => router.push("/app/field_crops/field_crops_works"),
   name: "Rozsady gruntowe - prace",
@@ -32,14 +36,11 @@ export const GENERAL_WORKS: NavElement = {
   name: "Prace ogólne",
 };
 export const EXTRA_WORKS_HOBBY: NavElement = {
-  actionFn: () => router.push("/app/field_crops/extra_works_hobby"),
+  actionFn: () => router.push("/app/hobby_crops/extra_works_hobby_technology"),
   name: "Prace Hobby",
 };
 export const EXTRA_WORKS_HOBBY_TECHNOLOGY: NavElement = {
-  actionFn: () =>
-    router.push(
-      "/app/field_crops/extra_works_hobby/extra_works_hobby_technology",
-    ),
+  actionFn: () => router.push("/app/hobby_crops/extra_works_hobby_technology"),
   name: "Prace HOBBY",
 };
 export const CUT_GRU: NavElement = {

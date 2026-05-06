@@ -5,6 +5,7 @@ import {
   FieldCropsSubmodules,
   GreenhouseCropsSubmodule,
   InformationSubmodules,
+  HobbyCropsSubmodules,
 } from "../types/interfaces-auth";
 
 export interface TAuthSession {
@@ -19,7 +20,7 @@ export interface TAuthSession {
   removeAuthSession: () => void;
   getModuleVisibility: (module: keyof ModulesPermissions) => boolean;
   getSubModuleVisibility: (
-    module: keyof ModulesPermissions
+    module: keyof ModulesPermissions,
   ) => object | undefined;
   getAllModulesVisibility: () => ModulesPermissions | null;
   getModuleVisibilitiesObject: <
@@ -27,8 +28,9 @@ export interface TAuthSession {
       | FieldCropsSubmodules
       | GreenhouseCropsSubmodule
       | InformationSubmodules
+      | HobbyCropsSubmodules,
   >(
-    module: keyof ModulesPermissions
+    module: keyof ModulesPermissions,
   ) => T;
 }
 
@@ -63,7 +65,7 @@ const useAuthSessionStore = create<TAuthSession>((set, get) => ({
     );
   },
   getSubModuleVisibility: (
-    module: keyof ModulesPermissions
+    module: keyof ModulesPermissions,
   ): object | undefined => {
     return get().user?.modulesVisibility[module];
   },
@@ -75,8 +77,9 @@ const useAuthSessionStore = create<TAuthSession>((set, get) => ({
       | FieldCropsSubmodules
       | GreenhouseCropsSubmodule
       | InformationSubmodules
+      | HobbyCropsSubmodules,
   >(
-    module: keyof ModulesPermissions
+    module: keyof ModulesPermissions,
   ): T => {
     return get().user?.modulesVisibility[module] as T;
   },

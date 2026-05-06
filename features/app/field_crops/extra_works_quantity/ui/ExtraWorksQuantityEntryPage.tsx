@@ -10,6 +10,7 @@ import { useShowModal } from "@/features/shared/utils/useShowModal";
 import {
   EXTRA_WORKS_HOBBY,
   FIELD_CROPS,
+  HOBBY_CROPS,
   INDEX,
   NavElement,
 } from "@/features/shared/types/interfaces-navigation";
@@ -43,8 +44,7 @@ const ExtraWorksQuantityEntryPage = (props: Props) => {
   const paths: NavElement[] = isHobby
     ? [
         INDEX,
-        FIELD_CROPS,
-        EXTRA_WORKS_HOBBY,
+        HOBBY_CROPS,
         { name: pathNameForAppPathComponent, actionFn: () => {} },
       ]
     : [
@@ -53,26 +53,22 @@ const ExtraWorksQuantityEntryPage = (props: Props) => {
         { name: pathNameForAppPathComponent, actionFn: () => {} },
       ];
 
-  try {
-    const { extra_works, refreshAllData: refreshAllDataGotFromHook } =
-      useGetEdocReports({
-        setIsLoading: setIsLoading,
-        reports: [edocReport_ExtraWorks],
+  const { extra_works, refreshAllData: refreshAllDataGotFromHook } =
+    useGetEdocReports({
+      setIsLoading: setIsLoading,
+      reports: [edocReport_ExtraWorks],
+    });
+  refreshAllData = refreshAllDataGotFromHook as () => void;
+  extraWorksArray = extra_works as unknown as ExtraWork[];
+  filteredExtraWorks = useMemo(() => {
+    const foundFilteredExtraWorks = extraWorksArray
+      .filter((work) => work.is_ordnmb === false)
+      .filter((work) => {
+        return work.ishobby === isHobby ? true : false;
       });
-    refreshAllData = refreshAllDataGotFromHook as () => void;
-    extraWorksArray = extra_works as unknown as ExtraWork[];
-    filteredExtraWorks = useMemo(() => {
-      const foundFilteredExtraWorks = extraWorksArray
-        .filter((work) => work.is_ordnmb === false)
-        .filter((work) => {
-          return work.ishobby === isHobby ? true : false;
-        });
 
-      return foundFilteredExtraWorks || [];
-    }, [extraWorksArray]);
-  } catch (error) {
-    chooseWhichErrorToThrow(error as Error);
-  }
+    return foundFilteredExtraWorks || [];
+  }, [extraWorksArray]);
 
   //open scanner handler
   const openModalHandler = (id: number) => {

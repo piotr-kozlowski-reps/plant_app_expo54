@@ -18,12 +18,15 @@ export type ModulesPermissions = {
   information: InformationSubmodules;
   field_crops: FieldCropsSubmodules;
   greenhouse_crops: GreenhouseCropsSubmodule;
-  // concierge: ModuleOverallPermission;
-  // extra_works_quantity: ModuleOverallPermission;
-  // extra_works_zp: ModuleOverallPermission;
-  // extra_works_hobby: ModuleOverallPermission;
+  hobby_crops: HobbyCropsSubmodules;
   general_works: GeneralWorksSubmodules;
-  // tray_operations: TrayOperationsSubModules;
+};
+
+export type HobbyCropsSubmodules = ModuleOverallPermission & {
+  hobby_crops___overallVisibility: boolean;
+  hobby_crops_extra_works_quantity: boolean;
+  hobby_crops_extra_works_zp: boolean;
+  hobby_crops_extra_works_technology: boolean;
 };
 
 export type InformationSubmodules = ModuleOverallPermission & {
@@ -78,11 +81,6 @@ export type FieldCropsSubmodules = ModuleOverallPermission & {
   extra_works_quantity___overallVisibility: boolean;
   //extra_works_zp
   extra_works_zp___overallVisibility: boolean;
-  //extra_works_hobby
-  extra_works_hobby___overallVisibility: boolean;
-  extra_works_hobby_extra_works_quantity: boolean;
-  extra_works_hobby_extra_works_zp: boolean;
-  extra_works_hobby_extra_works_technology: boolean;
 
   //tray_operations
   tray_operations___overallVisibility: boolean;

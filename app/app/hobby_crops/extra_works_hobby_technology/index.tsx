@@ -1,4 +1,5 @@
-import ExtraWorksHobbyTechnologyEntryPage from "@/features/app/field_crops/extra_works_hobby/extra_works_hobby_technology/ui/ExtraWorksHobbyTechnologyEntryPage";
+// import ExtraWorksHobbyTechnologyEntryPage from "@/features/app/field_crops/extra_works_hobby/extra_works_hobby_technology/ui/ExtraWorksHobbyTechnologyEntryPage";
+import ExtraWorksHobbyTechnologyEntryPage from "@/features/app/hobby_crops/extra_works_hobby_technology/ui/ExtraWorksHobbyTechnologyEntryPage";
 import { router, type ErrorBoundaryProps } from "expo-router";
 
 export function ErrorBoundary({ error }: ErrorBoundaryProps) {

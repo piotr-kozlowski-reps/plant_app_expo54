@@ -1,16 +1,16 @@
-import ExtraWorksHobbyEntryPage from "@/features/app/field_crops/extra_works_hobby/ui/ExtraWorksHobbyEntryPage";
+import HobbyCropsCropsEntryPage from "@/features/app/hobby_crops/ui/HobbyCropsCropsEntryPage";
 import { router, type ErrorBoundaryProps } from "expo-router";
 
 export function ErrorBoundary({ error }: ErrorBoundaryProps) {
   router.push(`/global_error?error_message=${error.message}`);
 }
 
-const ExtraWorksHobbyPage = () => {
+const HobbyCropsPage = () => {
   return (
     <>
-      <ExtraWorksHobbyEntryPage />
+      <HobbyCropsCropsEntryPage />
     </>
   );
 };
 
-export default ExtraWorksHobbyPage;
+export default HobbyCropsPage;

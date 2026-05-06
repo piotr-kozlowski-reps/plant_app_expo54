@@ -76,7 +76,8 @@ export const ERROR_MESSAGES = {
     "Data wywozu tego zlecenia do klienta została już ustalona na dzień: ",
   NO_FIELD_POSSIBLE:
     "W tym module nie możesz zeskanować kodu całej lokalizacji.",
-  NO_ZP_ROZ_POSSIBLE: "W tym module nie możesz zeskanować kodu ZP rozsady.",
+  NO_ZP_ROZ_POSSIBLE:
+    "W tym module nie możesz zeskanować kodu ZP rozsady szklarniowej.",
   NO_ZP_GRU_POSSIBLE: "W tym module nie możesz zeskanować kodu ZP gruntówki.",
   NO_TRAY_POSSIBLE: "W tym module nie możesz zeskanować kodu tacy.",
   ONLY_TRAY_POSSIBLE: "Możesz zeskanować tylko QR kod tacy.",

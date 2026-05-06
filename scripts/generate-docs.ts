@@ -44,6 +44,11 @@ const config: Config = {
       outputFileName: "rozsady_gruntowe___przeliczanie_wschodow",
       label: "Rozsady gruntowe -> Przeliczanie wschodów",
     },
+    {
+      dir: "features/app/field_crops/field_crops_works/protective_treatment",
+      outputFileName: "rozsady_gruntowe___zabieg_ochronny",
+      label: "Rozsady gruntowe -> Zabieg ochronny",
+    },
   ],
   outputDir: "docs",
 };
@@ -106,6 +111,19 @@ function formatComment(comment: string): string {
   //   .trim();
 }
 
+async function generateCommentsFromFile(pathToFile: string) {
+  console.log("generateCommentsFromFile");
+  console.log({ pathToFile });
+
+  const matches = [...pathToFile.matchAll(/^\s*\*\s*@readFile\s+`([^`]+)`/gm)];
+  for (const match of matches) {
+    const filePath = match[1];
+    console.log({ filePath });
+    const fileContent = await fs.readFile(filePath, "utf-8");
+    const comments = extractDocComments(fileContent);
+    console.log({ comments });
+  }
+}
 async function generateDocsForDir(input: InputDir, outputDir: string) {
   const { dir, outputFileName, label } = input;
 
@@ -125,6 +143,7 @@ async function generateDocsForDir(input: InputDir, outputDir: string) {
 
     for (const comment of comments) {
       if (!comment.includes("@public")) continue;
+      if (comment.includes("@readFile")) generateCommentsFromFile(comment);
       htmlContent += `${formatComment(comment)}`;
     }
   }

@@ -4,23 +4,22 @@ import { useMemo, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
+import AppPath from "@/features/shared/ui/app-path/AppPath";
+import {
+  HOBBY_CROPS,
+  INDEX,
+} from "@/features/shared/types/interfaces-navigation";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
-// import ScanCameraModal from "./ScanCameraModal";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
 import ItemsList from "@/features/shared/ui/list/ItemsList";
-import {
-  EXTRA_WORKS_HOBBY,
-  FIELD_CROPS,
-  INDEX,
-} from "@/features/shared/types/interfaces-navigation";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 import edocReport_ProtectiveTreatments from "@/features/shared/data-access/edocReport_ProtectiveTreatments";
+import ScanCameraModal from "@/features/app/field_crops/extra_works_zp/ui/ScanCameraModal";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
-import { useNitrogenProtectiveTreatmentsHelpers } from "../../../field_crops_works/nitrogen_irrigation/domain/useNitrogenProtectiveTreatmentsHelpers";
-import ScanCameraModal from "../../../extra_works_zp/ui/ScanCameraModal";
+import { useNitrogenProtectiveTreatmentsHelpers } from "@/features/app/field_crops/field_crops_works/nitrogen_irrigation/domain/useNitrogenProtectiveTreatmentsHelpers";
 
 const ExtraWorksHobbyTechnologyEntryPage = () => {
   ////vars
@@ -73,8 +72,7 @@ const ExtraWorksHobbyTechnologyEntryPage = () => {
           <ItemsList
             paths={[
               INDEX,
-              FIELD_CROPS,
-              EXTRA_WORKS_HOBBY,
+              HOBBY_CROPS,
               { name: "Prace HOBBY", actionFn: () => {} },
             ]}
             refreshAllData={refreshAllData}

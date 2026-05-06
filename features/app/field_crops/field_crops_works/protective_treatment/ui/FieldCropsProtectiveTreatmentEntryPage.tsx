@@ -12,15 +12,39 @@ import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further
 import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import edocReport_TypeOfTreatment from "@/features/shared/data-access/edocReport_TypeOfTreatment";
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+
+/**
+ * @public
+ * @procedureDescription
+ * - formularz do wprowadzenia danych wspólnych
+ * - scan QR lokalizacji / ZPka / tacy
+ */
+
 const FieldCropsProtectiveTreatmentEntryPage = () => {
   ////vars
   const { isLoading, setIsLoading, isPermissionGranted, requestPermission } =
     useSubmoduleEntryDataAndGuard<FieldCropsSubmodules>(
       "field_crops",
       "field_crops_works_protective_treatment",
-      "Zabieg ochronny"
+      "Zabieg ochronny",
     );
 
+  /**
+   * @public
+   * @procedureItem
+   *  pobranie raportów:
+   * 1. raport - zabiegi ochronne:
+   * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>121</b>
+   * 2. raport - prace extra:
+   * <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1568</b>/data
+   * 3. raport -  typ zabiegu:
+   * <b>{{URL}}</b1568>/api.php/REST/v1/system/reports/<b>1610</b>/data
+   */
   //fetch
   const { protectiveTreatments, extra_works, typeOfTreatment, refreshAllData } =
     useGetEdocReports({

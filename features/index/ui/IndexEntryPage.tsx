@@ -2,7 +2,14 @@ import { View } from "react-native";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useFocusEffect, router } from "expo-router";
 
-import { BadgeInfo, House, Menu, Shovel, Sprout } from "lucide-react-native";
+import {
+  BadgeInfo,
+  House,
+  Menu,
+  ShoppingBag,
+  Shovel,
+  Sprout,
+} from "lucide-react-native";
 import {
   darkColor,
   lightNuanceColor,
@@ -64,35 +71,7 @@ const IndexEntryPage = () => {
             name={`Rozsady${"\n"}gruntowe`}
             disabled={!getModuleVisibility("field_crops")}
           />
-
-          {/* <LeafNavigationButton
-            side={"right"}
-            actionFn={() => {}}
-            icon={
-              <House size={24} color={lightNuanceColor} strokeWidth={2.7} />
-            }
-            name={`uprawy${"\n"}szklarniowe`}
-            visibility={false}
-          /> */}
         </View>
-
-        {/* <View className="flex-row items-center justify-center w-full gap-2">
-   
-            <LeafNavigationButton
-              side={"left"}
-              actionFn={() => {}}
-              icon={
-                <DoorOpen
-                  size={24}
-                  color={lightNuanceColor}
-                  strokeWidth={2.7}
-                />
-              }
-              name="portiernia"
-              disabled
-            />
-          )}
-        </View> */}
 
         <View className="flex-row items-center justify-center w-full gap-2">
           <LeafNavigationButton
@@ -108,8 +87,44 @@ const IndexEntryPage = () => {
               <House size={24} color={lightNuanceColor} strokeWidth={2.7} />
             }
             name={`Uprawy${"\n"}szklarniowe`}
-            // disabled={!getModuleVisibility("greenhouse_crops")}
             visibility={getModuleVisibility("greenhouse_crops")}
+          />
+          <LeafNavigationButton
+            side={"right"}
+            actionFn={
+              getModuleVisibility("hobby_crops")
+                ? () => {
+                    router.push("/app/hobby_crops");
+                  }
+                : () => {}
+            }
+            icon={
+              <ShoppingBag
+                size={24}
+                color={lightNuanceColor}
+                strokeWidth={2.7}
+              />
+            }
+            name={`Rozsady hobby`}
+            disabled={!getModuleVisibility("hobby_crops")}
+          />
+        </View>
+
+        <View className="flex-row items-center justify-center w-full gap-2">
+          <LeafNavigationButton
+            side={"left"}
+            actionFn={
+              getModuleVisibility("greenhouse_crops")
+                ? () => {
+                    router.push("/app/greenhouse_crops");
+                  }
+                : () => {}
+            }
+            icon={
+              <House size={24} color={lightNuanceColor} strokeWidth={2.7} />
+            }
+            name={`Uprawy${"\n"}szklarniowe`}
+            visibility={false}
           />
           <LeafNavigationButton
             side={"right"}
@@ -127,24 +142,6 @@ const IndexEntryPage = () => {
             disabled={!getModuleVisibility("general_works")}
           />
         </View>
-
-        {/* 
-          <LeafNavigationButton
-            side={"right"}
-            actionFn={
-              getModuleVisibility("tray_operations")
-                ? () => {
-                    router.push("/app/tray_operations");
-                  }
-                : () => {}
-            }
-            icon={
-              <Grid3x3 size={24} color={lightNuanceColor} strokeWidth={2.7} />
-            }
-            name={`Operacje${"\n"}na tacach`}
-            disabled={!getModuleVisibility("tray_operations")}
-          />
-        </View> */}
       </SafeAreaView>
 
       <View className="absolute top-16 left-6">
@@ -153,12 +150,6 @@ const IndexEntryPage = () => {
           icon={<Menu size={24} color={darkColor} />}
           size={62}
         />
-
-        {/* <ButtonIcon
-          handlePress={() => setIsShowMainMenuModal(true)}
-          icon={<Menu size={24} color={darkColor} style={{ marginLeft: -2 }} />}
-          isOnlyIcon
-        /> */}
       </View>
     </View>
   );

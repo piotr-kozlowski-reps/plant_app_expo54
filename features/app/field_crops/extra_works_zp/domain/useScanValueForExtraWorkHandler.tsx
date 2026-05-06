@@ -92,6 +92,11 @@ export const useScanValueForExtraWorkHandler = () => {
     }
 
     //check in API if ZP has any previous data for that activity
+    /**
+     * @public
+     * @procedureItem
+     * weryfikacja czy zeskanowany ZP lub (lub ZP)
+     */
     const ZPFoundForThisActivityId:
       | (ZPItem & { scanned_raw_value: string })[]
       | null = await checkIfZPExistsInThisActivityId(
