@@ -168,6 +168,21 @@ export const useScanValueForExtraWorkHandler = () => {
         toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ12_TRAYS);
         return;
       }
+
+      //guard
+      //if chosen activity needs tj10 or tj12 and hobby ZP has none of colorThemeVars
+      //info + przerwanie
+      const isActivityThatNeedsTj10OrTj12 =
+        isActivityIdHobbyWithTj12 ||
+        isActivityIdHobbyWithTj10 ||
+        isActivityIdHobbyWithTj12AndPackaging ||
+        isActivityIdHobbyWithTj10AndPackaging;
+      if (isActivityThatNeedsTj10OrTj12 && whatKindOfHobbyZp === "hobby_rest") {
+        toast.warning(
+          ERROR_MESSAGES.SCANNED_ZP_HAS_NO_TJ_TRAYS_AND_THEY_ARE_NECESSARY,
+        );
+        return;
+      }
     }
 
     //guard:
@@ -477,6 +492,7 @@ async function checkIfIsHobbyZp(
   if (!zpName.startsWith("HOB")) return "no_hobby";
   if (zpName.startsWith("HOB") && zpName.endsWith("TJ12")) return "hobby_tj12";
   if (zpName.startsWith("HOB") && zpName.endsWith("TJ10")) return "hobby_tj10";
+  if (zpName.startsWith("HOB")) return "hobby_rest";
 
   return null;
 }

@@ -79,7 +79,7 @@ export const useScannedValues = (
       setIsLoading(true);
 
       //allowed paths/conditions
-      if (!isField && (isZP || isRoz)) {
+      if (!isField && (isZP || isRoz || whatValueWasScanned === "zp_roz")) {
         await scanZpOrTrayHandler(
           {
             scannedValue,
@@ -91,7 +91,7 @@ export const useScannedValues = (
             setIsForceToScanField,
             setScannedZPOnManyFields,
           },
-          isRoz ? "zp_roz" : "zp_gru",
+          isRoz || whatValueWasScanned === "zp_roz" ? "zp_roz" : "zp_gru",
           isHobbyTech,
         );
 

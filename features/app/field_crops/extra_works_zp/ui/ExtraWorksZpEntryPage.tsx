@@ -43,8 +43,6 @@ const ExtraWorksZpEntryPage = (props: Props) => {
     ? [
         INDEX,
         HOBBY_CROPS,
-        // FIELD_CROPS,
-        // EXTRA_WORKS_HOBBY,
         { name: pathNameForAppPathComponent, actionFn: () => {} },
       ]
     : [

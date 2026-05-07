@@ -27,6 +27,8 @@ export const ERROR_MESSAGES = {
   SCANNED_ZP_IS_NOT_HOBBY_ZP: "Zeskanowany ZP nie jest zleceniem hobby.",
   SCANNED_ZP_HAS_TJ10_TRAYS: "Zeskanowany ZP ma tace TJ10.",
   SCANNED_ZP_HAS_TJ12_TRAYS: "Zeskanowany ZP ma tace TJ12.",
+  SCANNED_ZP_HAS_NO_TJ_TRAYS_AND_THEY_ARE_NECESSARY:
+    "Zeskanowany ZP nie ma określonej tacy TJ10 lub TJ12, a jest to wymagane dla wybranej pracy.",
   QUANTITY_TO_BE_SENT_WAS_ZERO:
     "Wybrana ilość była zerowa. Nie przesłano żadnych danych!",
   CANNOT_ORDER_AFTER_13:
