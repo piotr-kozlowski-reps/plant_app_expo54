@@ -13,4 +13,6 @@ export type CommentType =
   | "topic"
   | "guard"
   | "procedureItem"
-  | "procedureDescription";
+  | "procedureDescription"
+  | "transformApi"
+  | "report";

@@ -12,8 +12,8 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
 
   /**
    * @public
-   * @procedureItem
-   *  raport - czy dany zabieg ochronny może być zrobiony dla tego ZPeka:
+   * @reportItem
+   * raport - czy dany zabieg ochronny może być zrobiony dla tego ZPeka:
    * dla ZP:
    * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1571</b>&ordnmb=<b>%ordnmb%</b>&activityid=<b>%activityId%</b>&module=<b>%module%</b>`;
    * dla tacy:

@@ -28,6 +28,16 @@ class HtmlTemplates {
     return html;
   }
 
+  generateTransformApiHtml(commentPrepared: string[], marginLeft?: number) {
+    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
+    return html;
+  }
+
+  generateReportHtml(commentPrepared: string[], marginLeft?: number) {
+    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
+    return html;
+  }
+
   generateMainHtml(dir: string, htmlContent: string): string {
     const fullHtml = `
         <!DOCTYPE html>
@@ -40,9 +50,11 @@ class HtmlTemplates {
             --color-dark: #002539;
             --color-background_nuance: #FFFDF9;
             --color-gray: #C2C2C2;
-            --color-procedure-description: #CAEAF2;
+            --color-procedure-description: #9d89b3;
+            --color-report: #f2ebca;
             --color-gray-darker: #B0B0B0;
             --color-procedure-item: #D1EDD1;
+            --color-api-item: #cadbf2;
             --color-guard: #FDAFAF;
             --border-radius: 32px
             }
@@ -103,7 +115,14 @@ class HtmlTemplates {
     let html = "";
     for (const line of commentPrepared) {
       if (line.includes("@separator")) html += `<br />`;
-      else html += `<p>${line.replace("* ", "")}</p>`;
+      else {
+        const lineWithoutStar = line.replace(/^\s*\*\s/, "");
+        const lineWithNonBreakableSpaces = lineWithoutStar.replace(
+          /\s/g,
+          "&nbsp;",
+        );
+        html += `<p>${lineWithNonBreakableSpaces}</p>`;
+      }
     }
     return html;
   }

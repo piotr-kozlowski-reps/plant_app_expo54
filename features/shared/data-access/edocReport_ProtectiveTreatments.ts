@@ -19,7 +19,7 @@ const protectiveTreatmentsObjectExample: ProtectiveTreatment = {
 
 /**
  * @public
- * @procedureItem
+ * @reportItem
  * raport - zabiegi ochronne:
  * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>121</b>
  */

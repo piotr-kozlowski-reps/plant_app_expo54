@@ -19,7 +19,7 @@ const navigationObjectExample: ExtraWork = {
 
 /**
  * @public
- * @procedureItem
+ * @reportItem
  * raport -  typ zabiegu:
  * <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1610</b>/data
  */

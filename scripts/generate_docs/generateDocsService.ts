@@ -112,8 +112,8 @@ class GenerateDocsService {
       .filter((line) => !line.trim().includes("@procedureDescription"))
       .filter((line) => !line.trim().includes("@guard"))
       .filter((line) => !line.trim().includes("@readFile"))
+      .filter((line) => !line.trim().includes("@reportItem"))
       .filter((line) => line.trim().length > 0); // usuwa puste linie
-
     if (commentType === "topic")
       return htmlTemplates.generateTopicHtml(commentPrepared, marginLeft);
 
@@ -132,7 +132,20 @@ class GenerateDocsService {
         marginLeft,
       );
 
-    return `<div>Have No Idea!! Check function: <b>formatComment()</b></div>`;
+    if (commentType === "transformApi")
+      return htmlTemplates.generateTransformApiHtml(
+        commentPrepared,
+        marginLeft,
+      );
+
+    if (commentType === "report")
+      return htmlTemplates.generateReportHtml(commentPrepared, marginLeft);
+
+    throw new Error(
+      "formatComment - Unknown comment type - have no idea what HTML to generate",
+    );
+
+    // return `<div>Have No Idea!! Check function: <b>formatComment()</b></div>`;
   }
 
   private getCommentType(comment: string): CommentType {
@@ -141,7 +154,8 @@ class GenerateDocsService {
     if (comment.includes("@procedureItem")) return "procedureItem";
     if (comment.includes("@procedureDescription"))
       return "procedureDescription";
-    // return "topic";
+    if (comment.includes("@transformApiItem")) return "transformApi";
+    if (comment.includes("@reportItem")) return "report";
 
     throw new Error("Unknown comment type");
   }

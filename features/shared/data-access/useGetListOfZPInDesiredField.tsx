@@ -10,7 +10,7 @@ export const useGetListOfZPInDesiredField = () => {
 
   /**
    * @public
-   * @procedureItem
+   * @reportItem
    * raport: lista ZPków w danej lokalizacji:
    * adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1569</b>&planam=$<b>%planam%</b>&activityid=<b>%activityId%</b>
    */

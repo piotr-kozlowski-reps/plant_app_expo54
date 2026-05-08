@@ -40,6 +40,39 @@ export const useSendProtectiveTreatmentHandler = (
   const { token } = useAuthSessionStore();
 
   //fn
+  //allowed conditions
+  /**
+   * @public
+   * @transformApiItem
+   * wysyłka - custom api - POST:
+   * @separator
+   * <b>dane</b>:
+   * [
+   *     {
+   *         scanned_raw_value: string
+   * @separator
+   *         //zp
+   *         sordid: number | null;
+   *         ordnmb: string;
+   *         stkcnt: number;
+   * @separator
+   *         //treatment
+   *         tretid: number;
+   *         lvalue: number;
+   *         is_aut: boolean;
+   * @separator
+   *         //localization
+   *         planam: string;
+   * @separator
+   *        //extra work
+   *        activityid: number;
+   *        prev_percentage: number;
+   *        stkcnt_loc: number;
+   *        stkcnt_ordnmb: number;
+   *         act_percentage: number;
+   *     }
+   * ]
+   */
   const sendProtectiveTreatmentDataHandler = async (
     valuesToSendProtectiveTreatments: ProtectiveTreatmentDataToSent,
   ) => {
