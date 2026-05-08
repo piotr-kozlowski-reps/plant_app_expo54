@@ -1,9 +1,40 @@
+class HtmlTemplates {
+  generateTopicHtml(commentPrepared: string[], marginLeft?: number): string {
+    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "32"}px; font-weight: 600; text-decoration: underline; font-size: 16px">${this.generateInsideLines(commentPrepared)}</div>`;
+    return html;
+  }
 
+  generateProcedureItemHtml(
+    commentPrepared: string[],
+    marginLeft?: number,
+  ): string {
+    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
+    return html;
+  }
+
+  generateGuardHtml(commentPrepared: string[], marginLeft?: number): string {
+    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    ${this.generateInsideLines(commentPrepared)}</div>`;
+    return html;
+  }
+
+  generateProcedureDescriptionHtml(
+    commentPrepared: string[],
+    marginLeft?: number,
+  ): string {
+    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    ${this.generateInsideLines(commentPrepared)}</div>`;
+    return html;
+  }
+
+  generateMainHtml(dir: string, htmlContent: string): string {
+    const fullHtml = `
         <!DOCTYPE html>
         <html lang="pl">
         <head>
           <meta charset="UTF-8" />
-          <title>Dokumentacja: features/app/information/search_by_client</title>
+          <title>Dokumentacja: ${dir}</title>
           <style>
           :root {
             --color-dark: #002539;
@@ -59,8 +90,22 @@
           </style>
         </head>
         <body>
-        <h1>Dokumentacja dla: <b>Informacja -> wyszukaj klienta z listy</b></h1><h2> features/app/information/search_by_client/ui/Information_SearchByClient_Page_EntryPage.tsx</h2><div style="margin-left: 32px; font-weight: 600; text-decoration: underline; font-size: 16px"><p> PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
-    <p> 1. wyszukaj klienta z listy</p><p> 2. wyszukaj ZP'ka z listy ZP'ków klienta</p></div><h2> features/app/information/search_by_client/ui/SearchZpByClientModal.tsx</h2><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   pobieranie listy ZP'ków na zakładzie:</p><p>   adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   na podstawie danych z raportu: <b>1694</b></p><p>   generowana jest lista unikalnych klientów</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>                       po wyszukaniu i wyborze ZP'ka odpala się funkcja: findInfoAboutSearchedZp(ordnmb)</p><p>                       która, tak na prawdę udaje, że ZPek został zeskanowany i odpytuje raport 163 o jego szczegóły:</p><p>                       adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>163</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT</p></div>
+        ${htmlContent}
         </body>
         </html>
-        
+        `;
+
+    return fullHtml;
+  }
+
+  ////priv
+  private generateInsideLines(commentPrepared: string[]): string {
+    let html = "";
+    for (const line of commentPrepared) {
+      if (line.includes("@separator")) html += `<br />`;
+      else html += `<p>${line.replace("* ", "")}</p>`;
+    }
+    return html;
+  }
+}
+export const htmlTemplates = new HtmlTemplates();

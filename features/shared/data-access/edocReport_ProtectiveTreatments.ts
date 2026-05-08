@@ -17,6 +17,12 @@ const protectiveTreatmentsObjectExample: ProtectiveTreatment = {
   params: null,
 };
 
+/**
+ * @public
+ * @procedureItem
+ * raport - zabiegi ochronne:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>121</b>
+ */
 const edocReport_ProtectiveTreatments = new EdocReport<
   ProtectiveTreatmentDTO,
   ProtectiveTreatment
@@ -25,7 +31,7 @@ const edocReport_ProtectiveTreatments = new EdocReport<
   address: `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ProtectiveTreatments}`,
   queryKey: [QUERY_KEYS.PROTECTIVE_TREATMENTS],
   requiredPropertiesInResultObject: Object.keys(
-    protectiveTreatmentsObjectExample
+    protectiveTreatmentsObjectExample,
   ) as (keyof ProtectiveTreatment)[],
   sort: new SortByProperty<ProtectiveTreatmentDTO>("dscrpt"),
   mappers: [
@@ -33,7 +39,7 @@ const edocReport_ProtectiveTreatments = new EdocReport<
     new MapDoNotMap<ProtectiveTreatment, string>("dscrpt"),
     new MapDoNotMap<ProtectiveTreatment, string>("typ"),
     new MapStringOrNullIntoParamsNitrogenObjectOrNull<ProtectiveTreatment>(
-      "params"
+      "params",
     ),
   ],
 });

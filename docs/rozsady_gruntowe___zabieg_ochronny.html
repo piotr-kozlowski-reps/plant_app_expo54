@@ -1,70 +1,80 @@
 
-    <!DOCTYPE html>
-    <html lang="pl">
-    <head>
-      <meta charset="UTF-8" />
-      <title>Dokumentacja: features/app/field_crops/field_crops_works/protective_treatment</title>
-      <style>
-
-      :root {
-        --color-dark: #002539;
-        --color-background_nuance: #FFFDF9;
-        --color-gray: #C2C2C2;
-        --color-procedure-description: #CAEAF2;
-        --color-gray-darker: #B0B0B0;
-        --color-procedure-item: #D1EDD1;
-        --color-guard: #FDAFAF;
-        --border-radius: 32px
-        }
-
-        @font-face {
-        font-family: "euclid";
-        src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
-        font-weight: bold;
-        font-style: bold;
-        }
-        @font-face {
-        font-family: "euclid";
-        src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
-        font-weight: semibold;
-        font-style: semibold;
-        }
-        @font-face {
-        font-family: "euclid";
-        src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
-        font-weight: normal;
-        font-style: normal;
-        }
-        @font-face {
-        font-family: "euclid";
-        src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
-        font-weight: light;
-        font-style: light;
-        }
-
-        body { 
-        font-family: "euclid", sans-serif; max-width: 900px; margin: 40px auto; line-height: 1.4; 
-        }
-
-        h1 { 
-        font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
-        }
-
-        h2 {
-        font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
-        }
-
-        p {
-        padding-top: -4px; padding-bottom: -4px;
-        }
-
-        code { background: #f5f5f5; padding: 2px 4px; }
-        pre { background: #f5f5f5; padding: 10px; overflow: auto; }
-      </style>
-    </head>
-    <body>
-    <h1>Dokumentacja dla: <b>Rozsady gruntowe -> Zabieg ochronny</b></h1><h2> features/app/field_crops/field_crops_works/protective_treatment/domain/useScanValuesForProtectiveTreatment.tsx</h2><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     jezeli skan tacy, ZPeka lub lokalizacji</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>         jeżeli skan ZP:</p><p>         @readFile `features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`</p></div><h2> features/app/field_crops/field_crops_works/protective_treatment/ui/FieldCropsProtectiveTreatmentEntryPage.tsx</h2><div style="margin-left: 32px; font-weight: 600; text-decoration: underline; font-size: 16px"><p> PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
-  <p> - formularz do wprowadzenia danych wspólnych</p><p> - scan QR lokalizacji / ZPka / tacy</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>    pobranie raportów:</p><p>   1. raport - zabiegi ochronne:</p><p>   <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>121</b></p><p>   2. raport - prace extra:</p><p>   <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1568</b>/data</p><p>   3. raport -  typ zabiegu:</p><p>   <b>{{URL}}</b1568>/api.php/REST/v1/system/reports/<b>1610</b>/data</p></div><h2> features/app/field_crops/field_crops_works/protective_treatment/ui/ProtectiveTreatmentForm.tsx</h2><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>    Formularz z wprowadzeniem: zabiegu, ilośći środka, kto wykonał, typu zabiegu)</p></div><h2> features/app/field_crops/field_crops_works/protective_treatment/ui/ProtectiveTreatmentScannerModal.tsx</h2>
-    </body>
-    </html>
-    
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+          <meta charset="UTF-8" />
+          <title>Dokumentacja: features/app/field_crops/field_crops_works/protective_treatment</title>
+          <style>
+          :root {
+            --color-dark: #002539;
+            --color-background_nuance: #FFFDF9;
+            --color-gray: #C2C2C2;
+            --color-procedure-description: #CAEAF2;
+            --color-gray-darker: #B0B0B0;
+            --color-procedure-item: #D1EDD1;
+            --color-guard: #FDAFAF;
+            --border-radius: 32px
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
+            font-weight: bold;
+            font-style: bold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
+            font-weight: semibold;
+            font-style: semibold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
+            font-weight: light;
+            font-style: light;
+            }
+            body {
+            font-family: "euclid", sans-serif; max-width: 900px; margin: 40px auto; line-height: 1.4;
+            }
+            h1 {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
+            }
+            h2 {
+            font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
+            h3{
+                     font-weight: 600; font-size: 14px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px;
+            }
+            p {
+            padding-top: -4px; padding-bottom: -4px;
+            }
+            code { background: #f5f5f5; padding: 2px 4px; }
+            pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+          </style>
+        </head>
+        <body>
+        <h1>Dokumentacja dla: <b>Rozsady gruntowe -> Zabieg ochronny</b></h1><h2> features/app/field_crops/field_crops_works/protective_treatment/domain/useScanValuesForProtectiveTreatment.tsx</h2><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     dopuszczony: skan tacy, ZPeka lub lokalizacji</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>       jeżeli skan ZP lub tacy:</p></div><h3> pobrano z pliku: features/app/field_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     raporty:</p></div><h3> pobrano z pliku: features/shared/data-access/useGet_CheckIfZPExistsInThisActivityId.ts</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>    raport - czy dany zabieg ochronny może być zrobiony dla tego ZPeka:</p><p>   dla ZP:</p><p>   <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1571</b>&ordnmb=<b>%ordnmb%</b>&activityid=<b>%activityId%</b>&module=<b>%module%</b>`;</p><p>   dla tacy:</p><p>   <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1571</b>&stk_id=$<b>%stk_id%</b>&activityid=<b>%activityId%</b>&module=<b>GRUNT</b>`;</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>     Jeżeli ZP'ek był już wcześniej zeskanowany i jest na liście -> koniec procedury.</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>     Zabezpieczenie dodatkowe - wyłączone</p><p>     Kornel zdecydował, jakby mnie pytal i chcial sie tego potem wyprzec :)</p><p>     gdy nie znaleziono ZP na obiekcie, to koniec procedury</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>     Globalne zabezpieczenie dla PracExtra - sprawdzanie czy ZP był już wykonany i jaka jest wartość is_repeated -> tak aby użytkownik nie mógł zeskanować tego samego ZPka 2 razy</p><p>     jeżeli: activityid=null - może wszystko</p><p>     jeżeli: activityid=value && is_repeated = true - może wykonać pracę raz jeszcze</p><p>     jeżeli: activityid=value && is_repeated = false - NIE MOŻE wykonać pracy raz jeszcze</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>     Dla hobbytech praca: "pikowanie gru hobby 10 i 12" - weryfikacja czy ZP jest ZP'kiem hobby i czy ma odpowiednie tace TJ -> TJ10 czt TJ12</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>     Dla hobbytech praca: "konfekcjonowanie gru hobby ecc 10 i ecc 12" - weryfikacja czy ZP jest ZP'kiem hobby i czy ma odpowiednie tace TJ -> TJ10 czt TJ12</p><p>     W tym przypadku operator ma mieć możliwość potwierdzenia operacji tylko jeżeli w materiałach danego ZP znajduje się TJT.ECC i TJ12" - to Kornel na razie kazal olac</p><p>      zapytanie adres: <b>{{URL}}</b>api.php/REST/custom/korsolgetreport?rep_id=<b>1703</b>&ordnmb=<b>%ordnmb%</b>`,</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>       Jeżeli dana aktywność wymaga TJ10 lub TJ12 a ZPek nie ma ich określonych. (przykłady HobbyROZ, które nie mają TJotów określonych)</p><p>       Info dla użytkownika i koniec procedury</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>     Dla hobbyTech - nie bieżemy w ogóle możliwości zeskanowania całej lokalizacji, tylko zawsze cały ZPek</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>       jeżeli skan lokalizacji:</p></div><h3> pobrano z pliku: features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>     raporty:</p></div><h3> pobrano z pliku: features/shared/data-access/useGetListOfZPInDesiredField.tsx</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   raport: lista ZPków w danej lokalizacji:</p><p>   adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1569</b>&planam=$<b>%planam%</b>&activityid=<b>%activityId%</b></p></div><h2> features/app/field_crops/field_crops_works/protective_treatment/ui/FieldCropsProtectiveTreatmentEntryPage.tsx</h2><div style="margin-left: 32px; font-weight: 600; text-decoration: underline; font-size: 16px"><p> PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p> - formularz do wprowadzenia danych wspólnych</p><p> - scan QR lokalizacji / ZPka / tacy</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   raporty:</p></div><h3> pobrano z pliku: features/shared/data-access/edocReport_ProtectiveTreatments.ts</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p> raport - zabiegi ochronne:</p><p> <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>121</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   raporty:</p></div><h3> pobrano z pliku: features/shared/data-access/edocReport_ExtraWorks.ts</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p> raport - prace extra:</p><p> <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1568</b>/data</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>   raporty:</p></div><h3> pobrano z pliku: features/shared/data-access/edocReport_TypeOfTreatment.ts</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p> raport -  typ zabiegu:</p><p> <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1610</b>/data</p></div><h2> features/app/field_crops/field_crops_works/protective_treatment/ui/ProtectiveTreatmentForm.tsx</h2><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>    Formularz z wprowadzeniem: zabiegu, ilośći środka, kto wykonał, typu zabiegu)</p></div><h2> features/app/field_crops/field_crops_works/protective_treatment/ui/ProtectiveTreatmentScannerModal.tsx</h2>
+        </body>
+        </html>
+        

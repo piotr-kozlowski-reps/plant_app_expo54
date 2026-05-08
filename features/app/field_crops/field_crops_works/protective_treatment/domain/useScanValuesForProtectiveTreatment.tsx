@@ -19,6 +19,7 @@ import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/i
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
 import { useRestOfLocalizationsHelpers } from "@/features/shared/utils/useRestOfLocalizationsHelpers";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
+import { useScanZpOrTrayHandler } from "../../../extra_works_zp/domain/useScanZpOrTrayHandler";
 
 export const useScanValuesForProtectiveTreatment = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -27,11 +28,9 @@ export const useScanValuesForProtectiveTreatment = (
   const player = useAudioPlayer(audioScanSoundSource);
   const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
-  const {
-    scanZpOrTrayHandler,
-    scanFieldWhenIsForcedToScanFieldForZP,
-    scanField,
-  } = useScanValueForExtraWorkHandler();
+  const { scanFieldWhenIsForcedToScanFieldForZP, scanField } =
+    useScanValueForExtraWorkHandler();
+  const { scanZpOrTrayHandler } = useScanZpOrTrayHandler();
   const { addRestOfLocalizationsWhenScannedFieldHandler } =
     useRestOfLocalizationsHelpers();
   const { checkIsScannedDataCorrect } =
@@ -89,7 +88,7 @@ export const useScanValuesForProtectiveTreatment = (
     /**
      * @public
      * @procedureItem
-     * jezeli skan tacy, ZPeka lub lokalizacji
+     * dopuszczony: skan tacy, ZPeka lub lokalizacji
      */
     const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
       "tray",
@@ -107,13 +106,13 @@ export const useScanValuesForProtectiveTreatment = (
       setIsLoading(true);
 
       //allowed conditions
+      /**
+       * @public
+       * @procedureItem
+       * jeżeli skan ZP lub tacy:
+       * @readFile `features/app/field_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx`
+       */
       if (isZP) {
-        /**
-         * @public
-         * @procedureItem
-         * jeżeli skan ZP:
-         * @readFile `features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
-         */
         await scanZpOrTrayHandler(
           {
             scannedValue,
@@ -147,6 +146,12 @@ export const useScanValuesForProtectiveTreatment = (
         return;
       }
 
+      /**
+       * @public
+       * @procedureItem
+       * jeżeli skan lokalizacji:
+       * @readFile `features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
+       */
       if (isField && isForceToScanField) {
         await scanFieldWhenIsForcedToScanFieldForZP(
           {
@@ -245,42 +250,4 @@ export const useScanValuesForProtectiveTreatment = (
       );
     }
   }
-
-  // async function addRestOfLocalizationsWhenScannedFieldHandler(
-  //   scannedValue: string
-  // ) {
-  //   const planam = getPureFieldValue(scannedValue);
-
-  //   //fetch all desired info
-  //   const ZPsPerLocalizationWithInfoAboutAllLocalizations =
-  //     await getAllZPsInLocalizationWithAllLocalizationsInfo_Report1587(
-  //       token!,
-  //       planam,
-  //       errorHandler
-  //     );
-
-  //   const ZPsWIthMoreThanOneLocalization =
-  //     ZPsPerLocalizationWithInfoAboutAllLocalizations?.filter(
-  //       (zp) => zp.localization.length > 1
-  //     );
-
-  //   if (ZPsWIthMoreThanOneLocalization?.length) {
-  //     const ZPsWithRestOfLocalizations = ZPsWIthMoreThanOneLocalization.map(
-  //       (item) => {
-  //         const ordnmb = item.ordnmb;
-  //         const restOfLocalizations = item.localization.filter(
-  //           (loc) => loc.planam !== planam
-  //         );
-  //         return {
-  //           ordnmb,
-  //           restOfLocalizations: restOfLocalizations.map(
-  //             (locInn) => locInn.planam
-  //           ),
-  //         };
-  //       }
-  //     );
-
-  //     setRestOfLocalizations(ZPsWithRestOfLocalizations);
-  //   }
-  // }
 };

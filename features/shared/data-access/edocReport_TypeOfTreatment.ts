@@ -17,6 +17,12 @@ const navigationObjectExample: ExtraWork = {
   istech: null,
 };
 
+/**
+ * @public
+ * @procedureItem
+ * raport -  typ zabiegu:
+ * <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1610</b>/data
+ */
 const edocReport_TypeOfTreatment = new EdocReport<ExtraWorkDTO, ExtraWork>({
   dataName: "typeOfTreatment",
   address: `/api.php/REST/v1/system/reports/${configPerBuild.edocReport_TypeOfTreatment}/data`,

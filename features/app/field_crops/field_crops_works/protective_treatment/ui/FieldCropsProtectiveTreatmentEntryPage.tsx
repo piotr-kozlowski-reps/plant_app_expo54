@@ -17,7 +17,6 @@ import edocReport_TypeOfTreatment from "@/features/shared/data-access/edocReport
  * @topic
  * PROCEDURA:
  */
-
 /**
  * @public
  * @procedureDescription
@@ -37,14 +36,24 @@ const FieldCropsProtectiveTreatmentEntryPage = () => {
   /**
    * @public
    * @procedureItem
-   *  pobranie raportów:
-   * 1. raport - zabiegi ochronne:
-   * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>121</b>
-   * 2. raport - prace extra:
-   * <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1568</b>/data
-   * 3. raport -  typ zabiegu:
-   * <b>{{URL}}</b1568>/api.php/REST/v1/system/reports/<b>1610</b>/data
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ProtectiveTreatments.ts`
    */
+
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ExtraWorks.ts`
+   */
+
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_TypeOfTreatment.ts`
+   */
+
   //fetch
   const { protectiveTreatments, extra_works, typeOfTreatment, refreshAllData } =
     useGetEdocReports({

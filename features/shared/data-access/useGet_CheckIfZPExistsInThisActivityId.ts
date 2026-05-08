@@ -9,6 +9,16 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
     useCheckWhatValueIsScannedHelpers();
 
   ////logic
+
+  /**
+   * @public
+   * @procedureItem
+   *  raport - czy dany zabieg ochronny może być zrobiony dla tego ZPeka:
+   * dla ZP:
+   * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1571</b>&ordnmb=<b>%ordnmb%</b>&activityid=<b>%activityId%</b>&module=<b>%module%</b>`;
+   * dla tacy:
+   * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1571</b>&stk_id=$<b>%stk_id%</b>&activityid=<b>%activityId%</b>&module=<b>GRUNT</b>`;
+   */
   async function checkIfZPExistsInThisActivityId(
     value: string,
     token: string | null,
