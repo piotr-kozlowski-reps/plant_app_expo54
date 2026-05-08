@@ -1,19 +1,19 @@
 class HtmlTemplates {
-  generateTopicHtml(commentPrepared: string[], marginLeft?: number): string {
-    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "32"}px; font-weight: 600; text-decoration: underline; font-size: 16px">${this.generateInsideLines(commentPrepared)}</div>`;
+  generateTopicHtml(commentPrepared: string[], index: number): string {
+    const html = `<div style="margin-left: ${index * 32 + 32}px; font-weight: 600; text-decoration: underline; font-size: 16px">${this.generateInsideLines(commentPrepared)}</div>`;
     return html;
   }
 
-  generateProcedureItemHtml(
-    commentPrepared: string[],
-    marginLeft?: number,
-  ): string {
-    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
+  generateProcedureItemHtml(commentPrepared: string[], index: number): string {
+    const html = `<div style="margin-left: ${index * 32 + 64}px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
     return html;
   }
 
-  generateGuardHtml(commentPrepared: string[], marginLeft?: number): string {
-    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+  generateGuardHtml(commentPrepared: string[], index: number): string {
+    const html = `<div style="margin-left: ${index * 32 + 64}px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px;                white-space: normal;
+        box-sizing: border-box;
+        max-width: calc(100% - ${index * 32 + 64}px);
+        width: fit-content;">
     <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
     ${this.generateInsideLines(commentPrepared)}</div>`;
     return html;
@@ -21,20 +21,25 @@ class HtmlTemplates {
 
   generateProcedureDescriptionHtml(
     commentPrepared: string[],
-    marginLeft?: number,
+    index: number,
   ): string {
-    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    const html = `<div style="margin-left: ${index * 32 + 64}px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
     ${this.generateInsideLines(commentPrepared)}</div>`;
     return html;
   }
 
-  generateTransformApiHtml(commentPrepared: string[], marginLeft?: number) {
-    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
+  generateTransformApiHtml(commentPrepared: string[], index: number) {
+    const html = `<div style="margin-left: ${index * 32 + 64}px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
     return html;
   }
 
-  generateReportHtml(commentPrepared: string[], marginLeft?: number) {
-    const html = `<div style="margin-left: ${marginLeft ? marginLeft : "64"}px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
+  generateReportHtml(commentPrepared: string[], index: number) {
+    const html = `<div style="margin-left: ${index * 64 + 64}px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">${this.generateInsideLines(commentPrepared)}</div>`;
+    return html;
+  }
+
+  generateH3Html(h3Title: string, index: number) {
+    const html = `<h3 style="font-weight: 600; font-size: 14px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: ${index * 64 + 96}px; opacity: 1; margin-bottom: 8px;">${h3Title}</h3>`;
     return html;
   }
 
@@ -83,16 +88,13 @@ class HtmlTemplates {
             font-style: light;
             }
             body {
-            font-family: "euclid", sans-serif; max-width: 900px; margin: 40px auto; line-height: 1.4;
+            font-family: "euclid", sans-serif; max-width: 80%; margin: 40px auto; line-height: 1.4;
             }
             h1 {
             font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
             }
             h2 {
             font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
-            }
-            h3{
-                     font-weight: 600; font-size: 14px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px;
             }
             p {
             padding-top: -4px; padding-bottom: -4px;

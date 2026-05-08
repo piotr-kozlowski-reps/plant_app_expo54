@@ -9,7 +9,6 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
     useCheckWhatValueIsScannedHelpers();
 
   ////logic
-
   /**
    * @public
    * @reportItem

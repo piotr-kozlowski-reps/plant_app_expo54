@@ -54,7 +54,7 @@ class GenerateDocsService {
 
       htmlContent += `<h2> ${file}</h2>`;
 
-      htmlContent += await this.processComments(comments);
+      htmlContent += await this.processComments(comments, 0);
     }
 
     const fullHtml = htmlTemplates.generateMainHtml(dir, htmlContent);
@@ -69,19 +69,22 @@ class GenerateDocsService {
 
   private async processComments(
     comments: string[],
-    marginLeft?: number,
+    index: number,
   ): Promise<string> {
     let html = "";
 
     for (const comment of comments) {
       if (!comment.includes("@public")) continue;
       if (comment.includes("@readFile")) {
-        const htmlFromFile = await this.generateCommentsFromFile(comment);
-        html += `${this.formatComment(comment, marginLeft)}`;
+        const htmlFromFile = await this.generateCommentsFromFile(
+          comment,
+          index,
+        );
+        html += `${this.formatComment(comment, index)}`;
         html += htmlFromFile;
         continue;
       }
-      html += `${this.formatComment(comment, marginLeft)}`;
+      html += `${this.formatComment(comment, index)}`;
     }
 
     return html;
@@ -102,7 +105,7 @@ class GenerateDocsService {
     return matches;
   }
 
-  private formatComment(comment: string, marginLeft?: number): string {
+  private formatComment(comment: string, index: number): string {
     const commentType = this.getCommentType(comment);
     const commentPrepared = comment
       .split("\n")
@@ -115,31 +118,25 @@ class GenerateDocsService {
       .filter((line) => !line.trim().includes("@reportItem"))
       .filter((line) => line.trim().length > 0); // usuwa puste linie
     if (commentType === "topic")
-      return htmlTemplates.generateTopicHtml(commentPrepared, marginLeft);
+      return htmlTemplates.generateTopicHtml(commentPrepared, index);
 
     if (commentType === "guard")
-      return htmlTemplates.generateGuardHtml(commentPrepared, marginLeft);
+      return htmlTemplates.generateGuardHtml(commentPrepared, index);
 
     if (commentType === "procedureDescription")
       return htmlTemplates.generateProcedureDescriptionHtml(
         commentPrepared,
-        marginLeft,
+        index,
       );
 
     if (commentType === "procedureItem")
-      return htmlTemplates.generateProcedureItemHtml(
-        commentPrepared,
-        marginLeft,
-      );
+      return htmlTemplates.generateProcedureItemHtml(commentPrepared, index);
 
     if (commentType === "transformApi")
-      return htmlTemplates.generateTransformApiHtml(
-        commentPrepared,
-        marginLeft,
-      );
+      return htmlTemplates.generateTransformApiHtml(commentPrepared, index);
 
     if (commentType === "report")
-      return htmlTemplates.generateReportHtml(commentPrepared, marginLeft);
+      return htmlTemplates.generateReportHtml(commentPrepared, index);
 
     throw new Error(
       "formatComment - Unknown comment type - have no idea what HTML to generate",
@@ -169,7 +166,7 @@ class GenerateDocsService {
     await fs.writeFile(outputPath, fullHtml);
   }
 
-  private async generateCommentsFromFile(pathToFile: string) {
+  private async generateCommentsFromFile(pathToFile: string, index: number) {
     const matches = [
       ...pathToFile.matchAll(/^\s*\*\s*@readFile\s+`([^`]+)`/gm),
     ];
@@ -185,8 +182,11 @@ class GenerateDocsService {
       const comments = this.extractDocComments(fileContent);
       if (comments.length === 0) continue;
 
-      html += `<h3> pobrano z pliku: ${filePath}</h3>`;
-      html += await this.processComments(comments, 96);
+      html += htmlTemplates.generateH3Html(
+        `pobrano z pliku: ${filePath}`,
+        index,
+      );
+      html += await this.processComments(comments, index + 1);
     }
 
     return html;
