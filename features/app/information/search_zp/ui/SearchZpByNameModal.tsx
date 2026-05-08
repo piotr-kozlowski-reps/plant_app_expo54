@@ -38,8 +38,8 @@ const SearchZpByNameModal = (props: Props) => {
   /**
    * @public
    * @procedureItem
-   * pobieranie listy ZP'ków na zakładzie:
-   * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b>
+   * raporty:
+   * @readFile `features/shared/data-access/useGetZPsInProduction.ts`
    */
   const {
     data: ZPsInProductionBaseArray,
@@ -92,11 +92,6 @@ const SearchZpByNameModal = (props: Props) => {
       {isLoading || isLoadingZPs ? <LoaderWholeScreen /> : null}
 
       <View className="absolute bottom-0 left-0 right-0 w-full top-8">
-        {/* <KeyboardAwareScrollView
-          bottomOffset={61}
-          className="flex-1"
-          contentContainerStyle={{ flex: 1 }}
-        > */}
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           className="absolute bottom-0 left-0 right-0 w-full top-8"
@@ -145,8 +140,9 @@ const SearchZpByNameModal = (props: Props) => {
                    * @procedureItem
                    * po wyszukaniu i wyborze ZP'ka odpala się funkcja: findInfoAboutSearchedZp(ordnmb)
                    * która, tak na prawdę udaje, że ZPek został zeskanowany i odpytuje raport 163 o jego szczegóły:
-                   * adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>163</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT
+                   * @readFile `features/shared/data-access/getRepId163.ts`
                    */
+
                   <ListItemName
                     title={item.ordnmb}
                     id={item.sordid}
@@ -171,8 +167,6 @@ const SearchZpByNameModal = (props: Props) => {
             </View>
           </View>
         </KeyboardAvoidingView>
-        {/* <KeyboardToolbar doneText={"gotowe"} /> */}
-        {/* </KeyboardAwareScrollView> */}
       </View>
     </>
   );

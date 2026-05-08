@@ -10,10 +10,7 @@ class HtmlTemplates {
   }
 
   generateGuardHtml(commentPrepared: string[], index: number): string {
-    const html = `<div style="margin-left: ${index * 32 + 64}px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px;                white-space: normal;
-        box-sizing: border-box;
-        max-width: calc(100% - ${index * 32 + 64}px);
-        width: fit-content;">
+    const html = `<div style="margin-left: ${index * 32 + 64}px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - ${index * 32 + 64}px); width: fit-content;">
     <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
     ${this.generateInsideLines(commentPrepared)}</div>`;
     return html;

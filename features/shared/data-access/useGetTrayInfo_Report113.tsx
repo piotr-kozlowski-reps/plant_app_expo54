@@ -7,10 +7,16 @@ import { useCheckWhatValueIsScannedHelpers } from "../utils/useCheckWhatValueIsS
 export const useGetTrayInfo_Report113 = () => {
   const { getPureTrayValue } = useCheckWhatValueIsScannedHelpers();
 
+  /**
+   * @public
+   * @reportItem
+   * raport - skan QR tacy i wywołanie raportu:
+   * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&stk_id=<b>%stk_id%</b>&module=GRUNTstk_id=$<b>%stk_id%</b>&activityid=<b>%activityId%</b>&module=<b>GRUNT</b>`;
+   */
   async function getTrayInfo_Rep113(
     token: string,
     scannedValue: string,
-    errorHandler: (error: Error, errorTitle?: string) => void
+    errorHandler: (error: Error, errorTitle?: string) => void,
   ): Promise<Tray | null> {
     //vars
 
@@ -21,7 +27,7 @@ export const useGetTrayInfo_Report113 = () => {
       response = await getRepId113<TrayResponse>(
         configPerBuild.apiAddress,
         scannedStk_id,
-        token
+        token,
       );
 
       if (
@@ -29,7 +35,7 @@ export const useGetTrayInfo_Report113 = () => {
         response.data.resultMainQuery.length === 0
       ) {
         toast.error(
-          `Taca o podanym ID (${scannedStk_id}) nie została odnaleziona.`
+          `Taca o podanym ID (${scannedStk_id}) nie została odnaleziona.`,
         );
         return null;
       }

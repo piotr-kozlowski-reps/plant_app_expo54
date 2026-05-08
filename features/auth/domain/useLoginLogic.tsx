@@ -49,7 +49,7 @@ export const useLoginLogic = () => {
 
       /**
        * @public
-       * @procedureItem
+       * @reportItem
        * pobranie tokenów:
        * <b>{{URL}}</b>/api.php/REST/v1/login
        */
@@ -70,13 +70,13 @@ export const useLoginLogic = () => {
 
       /**
        * @public
-       * @procedureItem
+       * @reportItem
        * pobranie informacji o użytkowniku:
        * <b>{{URL}}</b>/api.php/REST/v1/userProfile
        */
       /**
        * @public
-       * @procedureItem
+       * @reportItem
        * weryfikacja czy użytkownik jest adminem:
        * <b>{{URL}}</b>/api.php/REST/v1/userProfile
        */
@@ -99,7 +99,7 @@ export const useLoginLogic = () => {
 
       /**
        * @public
-       * @procedureItem
+       * @reportItem
        * przesłanie informacji o telefonie, OS telefonu i wersji aplikacji (tylko produkcja):
        * <b>{{URL}}</b>/api.php/REST/v1/customRegisters/240/entries
        */
@@ -127,7 +127,7 @@ export const useLoginLogic = () => {
 
       /**
        * @public
-       * @procedureItem
+       * @reportItem
        * pobranie raportu o dostępie użytkownika i ostatniej wersji aplikacji jaka została użyta w systemie:
        * <b>{{URL}}</b>/api.php/REST/v1/system/reports/1567/data
        *@separator

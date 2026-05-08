@@ -116,6 +116,7 @@ class GenerateDocsService {
       .filter((line) => !line.trim().includes("@guard"))
       .filter((line) => !line.trim().includes("@readFile"))
       .filter((line) => !line.trim().includes("@reportItem"))
+      .filter((line) => !line.trim().includes("@transformApiItem"))
       .filter((line) => line.trim().length > 0); // usuwa puste linie
     if (commentType === "topic")
       return htmlTemplates.generateTopicHtml(commentPrepared, index);

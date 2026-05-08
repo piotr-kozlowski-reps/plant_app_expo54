@@ -86,16 +86,16 @@ export const useScanValuesForPlantsComingUpsCounter = (
     //send data to server
     /**
      * @public
-     * @procedureItem
+     * @transformApiItem
      * wysyłka - custom api:
-     * <b>{{URL}}/api.php/REST/custom/risecount</b>
+     * <b>{{URL}}</b>/api.php/REST/custom/<b>risecount</b>
      * dane - array obiektów:
      * {
-     * sordid: number
-        ordnmb: string
-        stk_id: string
-        lckcnt: number
-        scanned_raw_value: string
+     *  sordid: number
+     *  ordnmb: string
+     *  stk_id: string
+     *  lckcnt: number
+     *  scanned_raw_value: string
      * }
      *@separator
      */
@@ -234,8 +234,8 @@ export const useScanValuesForPlantsComingUpsCounter = (
     /**
      * @public
      * @procedureItem
-     * skan QR tacy i wywołanie raportu:
-     * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&stk_id=<b>%stk_id%</b>&module=GRUNT
+     * raporty:
+     * @readFile `features/shared/data-access/useGetTrayInfo_Report113.tsx`
      */
     const trayInfo = await getTrayInfo_Rep113(
       token!,

@@ -8,6 +8,12 @@ import {
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
 import { mapStringIntoInteger } from "./mapping_helpers";
 
+/**
+ * @public
+ * @reportItem
+ * raport - pobieranie listy ZP'ków na zakładzie:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b>`;
+ */
 export const useGetZPsInProduction = () => {
   const { baseURL } = useBaseAPI_URL_Store();
   const { user } = useAuthSessionStore();

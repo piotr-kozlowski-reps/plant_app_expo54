@@ -104,12 +104,6 @@ export const useScanValuesForInformation = (
   };
 
   //helpers
-
-  /**
-   * @public
-   * @procedureItem
-   * skan QR kod
-   */
   async function fetchData(
     scannedValue: string,
     whatHasBeenScanned: TypeOfScannedValue,
@@ -124,7 +118,8 @@ export const useScanValuesForInformation = (
     /**
      * @public
      * @procedureItem
-     * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>163</b>&<b>%params%</b>&module=GRUNT`,
+     * skan QR kod
+     * @readFile `features/shared/data-access/getRepId163.ts`
      */
     const response: InformationResponse = await getRepId163(
       configPerBuild.apiAddress,
@@ -189,7 +184,7 @@ export const useScanValuesForInformation = (
   ): Param {
     /**
      * @public
-     * @procedureItem
+     * @reportItem
      * jezeli skan lokalizacji
      * to dochodzi w paramsach: planam=<b>%planam%</b>
      */
@@ -201,7 +196,7 @@ export const useScanValuesForInformation = (
     }
     /**
      * @public
-     * @procedureItem
+     * @reportItem
      * jezeli skan ZP'ka
      * to dochodzi w paramsach: ordnmb=<b>%ordnmb%</b>
      */
@@ -213,7 +208,7 @@ export const useScanValuesForInformation = (
     }
     /**
      * @public
-     * @procedureItem
+     * @reportItem
      * jezeli skan tacy
      * to dochodzi w paramsach: stk_id=<b>%stk_id%</b>
      */

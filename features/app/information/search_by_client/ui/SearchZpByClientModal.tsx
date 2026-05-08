@@ -48,8 +48,8 @@ const SearchZpByClientModal = (props: Props) => {
   /**
    * @public
    * @procedureItem
-   * pobieranie listy ZP'ków na zakładzie:
-   * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b>
+   * raporty:
+   * @readFile `features/shared/data-access/useGetZPsInProduction.ts`
    */
   const { data: ZPsInProductionBaseArray, refetch: refreshAllData } = useQuery<
     ZpInProduction[]
@@ -286,7 +286,7 @@ const SearchZpByClientModal = (props: Props) => {
                        * @procedureItem
                        * po wyszukaniu i wyborze ZP'ka odpala się funkcja: findInfoAboutSearchedZp(ordnmb)
                        * która, tak na prawdę udaje, że ZPek został zeskanowany i odpytuje raport 163 o jego szczegóły:
-                       * adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>163</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT
+                       * @readFile `features/shared/data-access/getRepId163.ts`
                        */
                       <ListItemName
                         title={item.ordnmb}

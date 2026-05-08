@@ -31,35 +31,6 @@ type Props = {
 const TechnologicalInformationScanner = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
-  // const isScanZP = information_type === "scan_zp";
-  // const isSearchByClient = information_type === "search_by_client";
-  // const isSearchZp = information_type === "search_zp";
-
-  // //modals
-  // const [isShowSearchZp, setIsShowSearchZp] = useShowModal(
-  //   isSearchZp ? true : false,
-  // );
-  // const [isShowSearchByClient, setIsShowSearchByClient] = useShowModal(
-  //   isSearchByClient ? true : false,
-  // );
-
-  // //app path name
-  // let appPathName = "";
-  // if (isScanZP) appPathName = "Skanuj ZP";
-  // if (isSearchByClient) appPathName = "Wyszukaj po kliencie";
-  // if (isSearchZp) appPathName = "Wyszukaj ZP";
-
-  // const detailedInfoModalClose = () => {
-  //   if (isScanZP) resetValuesToScanNextItem();
-  //   if (isSearchZp) {
-  //     resetValuesToScanNextItem();
-  //     setIsShowSearchZp(true);
-  //   }
-  //   if (isSearchByClient) {
-  //     resetValuesToScanNextItem();
-  //     setIsShowSearchByClient(true);
-  //   }
-  // };
 
   //modals
   const [isShowSearchZp, setIsShowSearchZp] = useShowModal(false);
@@ -86,8 +57,10 @@ const TechnologicalInformationScanner = () => {
    * @public
    * @procedureItem
    * jest dostępny modal do wyszukiwania ZP'ków po nazwie (z listy)
-   * pobieranie listy ZP'ków na zakładzie:
-   * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1694</b>  */
+   * raport:
+   * @readFile `features/shared/data-access/getRepId163.ts`
+   */
+
   ////tsx
   return (
     <>
