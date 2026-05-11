@@ -1,7 +1,7 @@
 {
   "name": "traceONtest",
   "main": "expo-router/entry",
-  "version": "1.2.15",
+  "version": "1.2.16",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -10,7 +10,7 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "check-types": "tsc --noEmit --skipLibCheck",
-    "docs": "npx ts-node scripts/generate-docs.ts"
+    "docs": "tsx scripts/generate_docs/generate-docs.ts"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -70,6 +70,7 @@
     "baseline-browser-mapping": "^2.9.18",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.2"
   },
   "private": true
