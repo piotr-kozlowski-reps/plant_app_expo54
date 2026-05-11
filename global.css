@@ -25,7 +25,6 @@
 .font-input {
   @apply font-euclid_semibold text-[14px] tracking-tight;
 }
-
 .font-l-normal {
   @apply font-euclid_regular text-[16px] tracking-tight;
 }
