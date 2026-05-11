@@ -49,16 +49,41 @@ class GenerateConfigService {
         (route) => route.path === mainModuleRoutePathName,
       );
       if (!isMainModule) {
-        const config = await this.readConfig(mainModulePath);
-        const newRoute: AppRoute = {
-          path: mainModuleRoutePathName,
-          label: config?.label || mainModuleRoutePathName,
-          order: config?.order || Number.MAX_SAFE_INTEGER,
-        };
-        if (config?.docsDir) newRoute.docsDir = config.docsDir;
-        if (config?.outputDocFileName)
-          newRoute.outputDocFileName = config.outputDocFileName;
-        appRoutesConfig.routes.push(newRoute);
+        appRoutesConfig.routes.push(
+          await this.createNewAppRouteConfig(
+            mainModulePath,
+            mainModuleRoutePathName,
+          ),
+        );
+      }
+
+      //first level submodule
+      const firstLevelSubModuleRoutePathName = parts[1];
+      if (!firstLevelSubModuleRoutePathName) continue;
+      const firstLevelSubModulePath = path.join(
+        mainModulePath,
+        firstLevelSubModuleRoutePathName,
+      );
+      const foundMainModule = appRoutesConfig.routes.find(
+        (mod) => mod.path === mainModuleRoutePathName,
+      );
+      if (!foundMainModule) {
+        throw new Error("getAppRoutesConfig -> foundMainModule is undefined");
+      }
+
+      const submodulesFirstLevel = foundMainModule.routes;
+      if (!submodulesFirstLevel) foundMainModule.routes = [];
+      const foundSubmoduleFirstLevel = submodulesFirstLevel?.find(
+        (submod) => submod.path === firstLevelSubModuleRoutePathName,
+      );
+
+      if (!foundSubmoduleFirstLevel) {
+        foundMainModule.routes?.push(
+          await this.createNewAppRouteConfig(
+            firstLevelSubModulePath,
+            firstLevelSubModuleRoutePathName,
+          ),
+        );
       }
     }
 
@@ -91,6 +116,22 @@ class GenerateConfigService {
     } catch (error) {
       return null;
     }
+  }
+  private async createNewAppRouteConfig(
+    pathToDirWithConfigFile: string,
+    pathName: string,
+  ) {
+    const config = await this.readConfig(pathToDirWithConfigFile);
+    const newRoute: AppRoute = {
+      path: pathName,
+      label: config?.label || pathName,
+      order: config?.order || Number.MAX_SAFE_INTEGER,
+    };
+    if (config?.docsDir) newRoute.docsDir = config.docsDir;
+    if (config?.outputDocFileName)
+      newRoute.outputDocFileName = config.outputDocFileName;
+
+    return newRoute;
   }
 }
 

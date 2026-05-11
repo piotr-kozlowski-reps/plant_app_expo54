@@ -11,6 +11,7 @@ import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScanne
 import { useScanValueForExtraWorkHandler } from "./useScanValueForExtraWorkHandler";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
+import { useScanZpOrTrayHandler } from "./useScanZpOrTrayHandler";
 
 export const useScannedValues = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -23,11 +24,9 @@ export const useScannedValues = (
   const { checkWhatValueWasScanned, getPureFieldValue } =
     useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
-  const {
-    scanZpOrTrayHandler,
-    scanFieldWhenIsForcedToScanFieldForZP,
-    scanField,
-  } = useScanValueForExtraWorkHandler();
+  const { scanFieldWhenIsForcedToScanFieldForZP, scanField } =
+    useScanValueForExtraWorkHandler();
+  const { scanZpOrTrayHandler } = useScanZpOrTrayHandler();
   const { checkIsScannedDataCorrect } =
     useGuard_CheckDataToBeScanned_ReturnFunction();
 
