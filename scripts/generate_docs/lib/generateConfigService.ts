@@ -85,6 +85,45 @@ class GenerateConfigService {
           ),
         );
       }
+
+      //second level submodule
+      const secondLevelSubModuleRoutePathName = parts[2];
+      if (!secondLevelSubModuleRoutePathName) continue;
+      const secondLevelSubModulePath = path.join(
+        firstLevelSubModulePath,
+        secondLevelSubModuleRoutePathName,
+      );
+
+      if (!foundSubmoduleFirstLevel) {
+        throw new Error(
+          "getAppRoutesConfig -> foundSubmoduleFirstLevel is undefined",
+        );
+      }
+      console.log({ foundSubmoduleFirstLevel });
+      const foundSecondLevelModule = foundSubmoduleFirstLevel!.routes?.find(
+        (mod) => mod.path === secondLevelSubModuleRoutePathName,
+      );
+      console.log({ foundSecondLevelModule });
+      if (!foundSecondLevelModule) {
+        throw new Error(
+          "getAppRoutesConfig -> foundSecondLevelModule is undefined",
+        );
+      }
+
+      const submodulesSecondLevel = foundSecondLevelModule.routes;
+      if (!submodulesSecondLevel) foundSecondLevelModule.routes = [];
+      const foundSubmoduleSecondLevel = submodulesSecondLevel?.find(
+        (submod) => submod.path === secondLevelSubModuleRoutePathName,
+      );
+
+      if (!foundSubmoduleSecondLevel) {
+        foundSecondLevelModule.routes?.push(
+          await this.createNewAppRouteConfig(
+            secondLevelSubModulePath,
+            secondLevelSubModuleRoutePathName,
+          ),
+        );
+      }
     }
 
     return appRoutesConfig;
