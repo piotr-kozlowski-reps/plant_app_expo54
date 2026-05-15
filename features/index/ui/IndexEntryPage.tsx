@@ -9,6 +9,7 @@ import {
   ShoppingBag,
   Shovel,
   Sprout,
+  ToolCase,
 } from "lucide-react-native";
 import {
   darkColor,
@@ -114,17 +115,16 @@ const IndexEntryPage = () => {
           <LeafNavigationButton
             side={"left"}
             actionFn={
-              getModuleVisibility("greenhouse_crops")
+              getModuleVisibility("potted_plants")
                 ? () => {
-                    router.push("/app/greenhouse_crops");
+                    router.push("/app/potted_plants");
                   }
                 : () => {}
             }
             icon={
-              <House size={24} color={lightNuanceColor} strokeWidth={2.7} />
+              <ToolCase size={24} color={lightNuanceColor} strokeWidth={2.7} />
             }
-            name={`Uprawy${"\n"}szklarniowe`}
-            visibility={false}
+            name={`Rośliny${"\n"}doniczkowe`}
           />
           <LeafNavigationButton
             side={"right"}

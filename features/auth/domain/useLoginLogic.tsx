@@ -253,6 +253,13 @@ export const useLoginLogic = () => {
             hobby_crops_extra_works_technology: true,
           },
 
+          potted_plants: {
+            is_whole_module_available: true,
+            potted_plants_works___overallVisibility: false,
+            potted_plants_quantity___overallVisibility: false,
+            potted_plants_zp___overallVisibility: false,
+          },
+
           general_works: {
             is_whole_module_available: true,
             watering_plants: true,

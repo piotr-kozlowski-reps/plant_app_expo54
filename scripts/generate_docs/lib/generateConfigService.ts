@@ -95,6 +95,8 @@ class GenerateConfigService {
       );
 
       if (!foundSubmoduleFirstLevel) {
+        console.log({ secondLevelSubModuleRoutePathName });
+        console.log({ secondLevelSubModulePath });
         throw new Error(
           "getAppRoutesConfig -> foundSubmoduleFirstLevel is undefined",
         );

@@ -86,6 +86,10 @@ export default function RootLayout() {
                   name="app/greenhouse_crops/index"
                   options={{ headerShown: false }}
                 />
+                <Stack.Screen
+                  name="app/potted_plants/index"
+                  options={{ headerShown: false }}
+                />
               </Stack>
 
               {isProduction ? null : (

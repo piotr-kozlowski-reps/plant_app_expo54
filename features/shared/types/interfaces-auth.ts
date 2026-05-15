@@ -19,9 +19,15 @@ export type ModulesPermissions = {
   field_crops: FieldCropsSubmodules;
   greenhouse_crops: GreenhouseCropsSubmodule;
   hobby_crops: HobbyCropsSubmodules;
+  potted_plants: PottedPlantsSubmodules;
   general_works: GeneralWorksSubmodules;
 };
 
+export type PottedPlantsSubmodules = ModuleOverallPermission & {
+  potted_plants_works___overallVisibility: boolean;
+  potted_plants_quantity___overallVisibility: boolean;
+  potted_plants_zp___overallVisibility: boolean;
+};
 export type HobbyCropsSubmodules = ModuleOverallPermission & {
   hobby_crops___overallVisibility: boolean;
   hobby_crops_extra_works_quantity: boolean;

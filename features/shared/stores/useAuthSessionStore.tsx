@@ -6,6 +6,7 @@ import {
   GreenhouseCropsSubmodule,
   InformationSubmodules,
   HobbyCropsSubmodules,
+  PottedPlantsSubmodules,
 } from "../types/interfaces-auth";
 
 export interface TAuthSession {
@@ -28,7 +29,8 @@ export interface TAuthSession {
       | FieldCropsSubmodules
       | GreenhouseCropsSubmodule
       | InformationSubmodules
-      | HobbyCropsSubmodules,
+      | HobbyCropsSubmodules
+      | PottedPlantsSubmodules,
   >(
     module: keyof ModulesPermissions,
   ) => T;
@@ -77,7 +79,8 @@ const useAuthSessionStore = create<TAuthSession>((set, get) => ({
       | FieldCropsSubmodules
       | GreenhouseCropsSubmodule
       | InformationSubmodules
-      | HobbyCropsSubmodules,
+      | HobbyCropsSubmodules
+      | PottedPlantsSubmodules,
   >(
     module: keyof ModulesPermissions,
   ): T => {
