@@ -15,6 +15,9 @@ const cotyledonQuiltingListObjectExample: CotyledonQuilting = {
   sordid: 3456,
   ordnmb: "sdfg",
   open: true,
+  pcm_ilosc: "",
+  twr_kod: "",
+  twr_nazwa: "",
 };
 
 const edocReport_zpToCotyledonQuilting = new EdocReport<
@@ -32,6 +35,9 @@ const edocReport_zpToCotyledonQuilting = new EdocReport<
     new MapStringIntoInteger<CotyledonQuilting>("sordid"),
     new MapDoNotMap<CotyledonQuilting, string>("ordnmb"),
     new MapStringValueTorFIntoBoolean<CotyledonQuilting>("open"),
+    new MapDoNotMap<CotyledonQuilting, string>("pcm_ilosc"),
+    new MapDoNotMap<CotyledonQuilting, string>("twr_kod"),
+    new MapDoNotMap<CotyledonQuilting, string>("twr_nazwa"),
   ],
 });
 

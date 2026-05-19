@@ -7,15 +7,23 @@ type Props = {
   closeFn: () => void;
   tray: Tray | null;
   deleteExistingTrayHandler: (tray: Tray) => void;
+  isShowLacksInfo?: boolean;
+  titleText?: string;
 };
 
 const DeleteTrayFromPlantsComingUpsCounterListModal = (props: Props) => {
   ////vars
-  const { tray, closeFn, deleteExistingTrayHandler } = props;
+  const {
+    tray,
+    closeFn,
+    deleteExistingTrayHandler,
+    isShowLacksInfo = true,
+    titleText,
+  } = props;
 
   if (!tray) {
     throw new Error(
-      "DeleteTrayFromPlantsComingUpsCounterListModal -> tray is null"
+      "DeleteTrayFromPlantsComingUpsCounterListModal -> tray is null",
     );
   }
 
@@ -30,16 +38,31 @@ const DeleteTrayFromPlantsComingUpsCounterListModal = (props: Props) => {
     <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
       <View className="relative flex-col items-center justify-center flex-1">
         <View className="w-full pt-16 pb-[4px] border-t-2 border-b-2 border-gray-600 rounded-app">
-          <View className="flex items-center justify-center w-full ">
-            <Text className="text-center text-foreground font-euclid_semibold">
-              Czy chcesz usunąć informację o brakach
-            </Text>
-            <Text className="text-center text-foreground font-euclid_semibold">
-              w wybranej tacy?
-            </Text>
-          </View>
+          {titleText ? (
+            <View className="flex items-center justify-center w-full ">
+              <Text className="text-center text-foreground font-euclid_semibold">
+                {titleText}
+              </Text>
+            </View>
+          ) : null}
+          {!titleText ? (
+            <View className="flex items-center justify-center w-full ">
+              <Text className="text-center text-foreground font-euclid_semibold">
+                Czy chcesz usunąć informację o brakach
+              </Text>
+              <Text className="text-center text-foreground font-euclid_semibold">
+                w wybranej tacy?
+              </Text>
+            </View>
+          ) : null}
+
           <View className="flex items-center justify-center w-full mt-2">
-            <ButtonTrayBadge tray={tray} actionFn={() => {}} isCentered />
+            <ButtonTrayBadge
+              tray={tray}
+              actionFn={() => {}}
+              isCentered
+              isShowLacksInfo={isShowLacksInfo}
+            />
           </View>
 
           <View className="flex-col justify-center w-full gap-4 px-6 mt-8 items-between">

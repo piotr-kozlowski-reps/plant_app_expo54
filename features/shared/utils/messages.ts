@@ -11,6 +11,7 @@ export const VALIDATION_MESSAGES = {
   MAX_VALUE_13: "Maksymalna wartość to 13.",
   MAX_VALUE_INTEGER: "Maksymalna wartość została przekroczona.",
   FIELD_REQUIRED: "Pole jest wymagane.",
+  CHOICE_REQUIRED: "Wybór jest wymagany.",
   DATE_FORMAT: "Wartość musi być poprawną datą.",
   MUST_BE_INTEGER: "Wartość musi być liczbą całkowitą.",
   MUST_BE_FLOAT: "Wartość musi być liczbą.",

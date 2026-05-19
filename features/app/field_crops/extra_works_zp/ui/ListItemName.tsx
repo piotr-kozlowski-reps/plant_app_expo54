@@ -31,16 +31,16 @@ const ListItemName = (props: Props) => {
     <TouchableOpacity
       className={clsx(
         "h-[64px] flex-row items-center justify-between  rounded-app mb-4 shadow-sm px-6",
-        isActive ? "bg-background-nuance opacity-100" : "bg-gray opacity-80"
+        isActive ? "bg-background-nuance opacity-100" : "bg-gray opacity-80",
       )}
       onPress={isActive ? () => actionFn(id) : undefined}
     >
       <View className="flex items-start justify-start">
-        <View>
+        <View className="w-[90%] ">
           <Text
             className={clsx(
               "font-default-bold text-foreground",
-              isActive ? "opacity-100" : "opacity-70"
+              isActive ? "opacity-100" : "opacity-70",
             )}
           >
             {title}
@@ -50,7 +50,7 @@ const ListItemName = (props: Props) => {
           <Text
             className={clsx(
               "font-default-normal text-foreground",
-              isActive ? "opacity-100" : "opacity-70"
+              isActive ? "opacity-100" : "opacity-70",
             )}
           >
             {subTitleName ? `${subTitleName}: ` : ""}

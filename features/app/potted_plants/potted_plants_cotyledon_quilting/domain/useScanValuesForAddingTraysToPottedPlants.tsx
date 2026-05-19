@@ -8,6 +8,7 @@ import { Tray } from "@/features/shared/types/interfaces-tray";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
 import { useGetScannedTrayInfo } from "@/features/shared/data-access/useGetScannedTrayInfo";
+import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 
 export const useScanValuesForAddingTraysToPottedPlants = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -23,13 +24,15 @@ export const useScanValuesForAddingTraysToPottedPlants = (
 
   //states
   const [qrLock, setQrLock] = useState(true);
-  // const [currentTray, setCurrentTray] = useState<Tray | null>(null);
+  const [currentTray, setCurrentTray] = useState<Tray | null>(null);
   const [trays, setTrays] = useState<Tray[]>([]);
   // const [
   //   isShowModalWithTrayComingUpCounter,
   //   setIsShowModalWithTrayComingUpCounter,
   // ] = useState(false);
-  // const [isShowDeleteTrayModal, setIsShowDeleteTrayModal] = useState(false);
+  const [isShowDeleteTrayModal, setIsShowDeleteTrayModal] = useState(false);
+  const [isShowQuantityAndSendModal, setIsShowQuantityAndSendModal] =
+    useState(false);
 
   //fn
   const scanValueHandler = async (scannedValue: string) => {
@@ -53,8 +56,8 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     setIsLoading(true);
     try {
       const scannedTrayInfo = await getScannedTrayInfo(scannedValue);
-      alert("scannedTrayInfo");
-      console.log({ scannedTrayInfo });
+      if (!scannedTrayInfo) return;
+      setTrays((prevTrays) => [...prevTrays, scannedTrayInfo]);
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -132,140 +135,20 @@ export const useScanValuesForAddingTraysToPottedPlants = (
   //   }
   // };
 
-  // const deleteExistingTrayHandler = (tray: Tray) => {
-  //   const traysLocal = [...trays];
+  const deleteExistingTrayHandler = (tray: Tray) => {
+    const traysLocal = [...trays];
 
-  //   const foundTray = traysLocal.find((item) => item.stk_id === tray.stk_id);
+    const foundTray = traysLocal.find((item) => item.stk_id === tray.stk_id);
 
-  //   if (!foundTray) {
-  //     toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST);
-  //     return;
-  //   }
+    if (!foundTray) {
+      toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST);
+      return;
+    }
 
-  //   traysLocal.splice(traysLocal.indexOf(foundTray), 1);
-  //   toast.success(MESSAGES.TRAY_REMOVED_WITH_SUCCESS);
-  //   setTrays(traysLocal);
-  // };
-
-  // const addOrChangeQuantityInPlantsComingUpsCounterHandler = (
-  //   passedTray: Tray,
-  // ) => {
-  //   if (!passedTray) {
-  //     errorHandler(
-  //       new Error(
-  //         "useScanValuesForPlantsComingUpsCounter -> addOrChangeQuantityInPlantsComingUpsCounterHandler -> no tray",
-  //       ),
-  //     );
-  //     return;
-  //   }
-
-  //   if (!trays.length) setTrays([passedTray]);
-  //   if (trays.length) {
-  //     const traysLocal = [...trays];
-
-  //     //check if Tray that is to be added already exists in the list
-  //     const foundTray = traysLocal.find(
-  //       (item) => item.stk_id === passedTray.stk_id,
-  //     );
-
-  //     if (!foundTray) {
-  //       traysLocal.push(passedTray);
-  //       setTrays(traysLocal);
-  //     }
-  //     50;
-  //     if (foundTray) {
-  //       setTrays(addExistingTraysQuantity(traysLocal, passedTray, 0));
-  //     }
-  //   }
-
-  //   toast.success(
-  //     `Dodano do listy/Zmieniono ${passedTray.stk_id} (wraz z informacją o brakach).`,
-  //   );
-  // };
-
-  // const addQuantityToExistingTrayHandler = (tray: Tray, quantity: number) => {
-  //   if (!tray) {
-  //     errorHandler(
-  //       new Error(
-  //         "useScanValuesForPlantsComingUpsCounter -> addQuantityToExistingTrayHandler -> no tray",
-  //       ),
-  //     );
-  //     return;
-  //   }
-
-  //   setTrays(addExistingTraysQuantity([...trays], tray, quantity));
-  // };
-
-  // //helpers
-  // const addExistingTraysQuantity = (
-  //   trays: Tray[],
-  //   chosenTray: Tray,
-  //   quantityToBeAdded: number,
-  // ): Tray[] => {
-  //   const traysResult = [...trays];
-
-  //   for (let item of traysResult) {
-  //     if (item.stk_id === chosenTray.stk_id) {
-  //       const resultValue = chosenTray.lckcnt + quantityToBeAdded;
-
-  //       if (resultValue < 0) {
-  //         toast.warning(
-  //           ERROR_MESSAGES.NUMBER_OF_TRAY_BAD_PLANTS_CANNOT_BE_LESS_THAN_0,
-  //         );
-  //       } else {
-  //         item.lckcnt = resultValue;
-  //       }
-  //     }
-  //   }
-
-  //   return traysResult;
-
-  //   // setTrays(traysLocal);
-  // };
-
-  // async function scanTray(scannedValue: string) {
-  //   const scannedStk_id = getPureTrayValue(scannedValue);
-
-  //   //check if tray is already scanned
-  //   if (checkIfTrayIsAlreadyScanned(scannedStk_id, trays)) {
-  //     toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED);
-  //     return;
-  //   }
-
-  //   //fetch data
-  //   /**
-  //    * @public
-  //    * @procedureItem
-  //    * raporty:
-  //    * @readFile `features/shared/data-access/useGetTrayInfo_Report113.tsx`
-  //    */
-  //   const trayInfo = await getTrayInfo_Rep113(
-  //     token!,
-  //     scannedValue,
-  //     errorHandler,
-  //   );
-
-  //   if (!trayInfo) return;
-
-  //   //to process tray further property "lckcnt" must be null or -1
-  //   /**
-  //    * @public
-  //    * @guard
-  //    *  w raporcie znajduje się pole: <b>lckcnt</b>
-  //   - jeżeli wartość jest inna niż: <b>-1</b> lub <b>null</b> to komunikat, mówiący o tym, że dane dla tej tacy zostały już wprowadzone.
-  //    */
-  //   const isPossibleToPressTray =
-  //     trayInfo.lckcnt === null || trayInfo.lckcnt === -1;
-  //   if (!isPossibleToPressTray) {
-  //     toast.error(
-  //       `Dla tej tacy (${scannedStk_id}) wprowadzono już ilość braków (${trayInfo.lckcnt}).`,
-  //     );
-  //     return;
-  //   }
-
-  //   setCurrentTray(trayInfo);
-  //   setIsShowModalWithTrayComingUpCounter(true);
-  // }
+    traysLocal.splice(traysLocal.indexOf(foundTray), 1);
+    toast.success(MESSAGES.TRAY_REMOVED_WITH_SUCCESS);
+    setTrays(traysLocal);
+  };
 
   // function resetWholeState() {
   //   setCurrentTray(null);
@@ -276,11 +159,11 @@ export const useScanValuesForAddingTraysToPottedPlants = (
 
   //hook return
   return {
-    // currentTray,
-    // trays,
+    currentTray,
     qrLock,
-    // isShowModalWithTrayComingUpCounter,
-    // isShowDeleteTrayModal,
+    trays,
+    isShowQuantityAndSendModal,
+    isShowDeleteTrayModal,
 
     setQrLock,
     scanValueHandler,
@@ -288,8 +171,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     // sendValuesForPlantsComingUpsCounter,
     // addOrChangeQuantityInPlantsComingUpsCounterHandler,
     // addQuantityToExistingTrayHandler,
-    // setCurrentTray,
-    // setIsShowDeleteTrayModal,
-    // deleteExistingTrayHandler,
+    setCurrentTray,
+    setIsShowDeleteTrayModal,
+    setIsShowQuantityAndSendModal,
+    deleteExistingTrayHandler,
   };
 };

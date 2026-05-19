@@ -1,7 +1,5 @@
 import { CameraView } from "expo-camera";
 import {
-  CUT_GRU,
-  FIELD_CROPS_WORKS,
   INDEX,
   POTTED_PLANTS,
   POTTED_PLANTS_COTYLEDON_QUILTING,
@@ -10,17 +8,29 @@ import AppPath from "@/features/shared/ui/app-path/AppPath";
 import { Overlay } from "@/features/shared/ui/overlay/Overlay";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
+import images from "@/features/shared/constants/images";
+import { Image } from "expo-image";
 // import Button from "@/features/shared/ui/button/Button";
 // import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 // import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 // import Scanning from "@/features/shared/ui/scanning/Scanning";
 // import { CameraView } from "expo-camera";
 import { StatusBar } from "expo-status-bar";
-import { View, Text, Platform, StyleSheet } from "react-native";
+import { View, Text, Platform, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useScanValuesForAddingTraysToPottedPlants } from "../domain/useScanValuesForAddingTraysToPottedPlants";
 import Button from "@/features/shared/ui/button/Button";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
+import { MESSAGES } from "@/features/shared/utils/messages";
+import TrayItem from "@/features/app/field_crops/field_crops_works/plants_coming_ups_counter/ui/TrayItem";
+import { Tray } from "@/features/shared/types/interfaces-tray";
+import CotyledonQuilting_TrayItem from "./CotyledonQuilting_TrayItem";
+import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
+import { yellowColor } from "@/features/shared/constants/colorThemeVars";
+import DeleteTrayFromPlantsComingUpsCounterListModal from "@/features/app/field_crops/field_crops_works/plants_coming_ups_counter/ui/DeleteTrayFromPlantsComingUpsCounterListModal";
+import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
+import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
+import CotyledonQuilting_QuantityAndSend_Modal from "./CotyledonQuilting_QuantityAndSend_Modal";
 // import { useScanValuesForCutGRU } from "../domain/useScanValuesForCutGRU";
 // import { useCutConfirmationFormik } from "../domain/useCutConfirmationFormik";
 // import ComboboxFormik from "@/features/shared/ui/combobox/ComboboxFormik";
@@ -29,42 +39,35 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 type Props = {
   closeFn: () => void;
   ordnmb: string | null;
+  chosenColor: CotyledonQuilting | null;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
   ////vars
-  const { closeFn, setIsLoading, ordnmb } = props;
+  const { closeFn, setIsLoading, ordnmb, chosenColor } = props;
   //   const { comboboxCutHeights } = useGetComboboxItems();
 
   //scan values
   const {
     qrLock,
-    // trays,
-    // isShowModalWithTrayComingUpCounter,
-    // currentTray,
-    // isShowDeleteTrayModal,
+    trays,
+    isShowDeleteTrayModal,
+    currentTray,
+    isShowQuantityAndSendModal,
 
     setQrLock,
     scanValueHandler,
-    // setIsShowModalWithTrayComingUpCounter,
-    // setIsShowDeleteTrayModal,
-    // sendValuesForPlantsComingUpsCounter,
-    // addOrChangeQuantityInPlantsComingUpsCounterHandler,
-    // addQuantityToExistingTrayHandler,
-    // setCurrentTray,
-    // deleteExistingTrayHandler,
+    setIsShowDeleteTrayModal,
+    setIsShowQuantityAndSendModal,
+    setCurrentTray,
+    deleteExistingTrayHandler,
   } = useScanValuesForAddingTraysToPottedPlants(setIsLoading);
 
-  //   //formik
-  //   const { formik, canFormBeSubmitted, availableFormActions } =
-  //     useCutConfirmationFormik(
-  //       scannedValue,
-  //       setIsLoading,
-  //       cutsList,
-  //       closeFn,
-  //       refreshAllData,
-  //     );
+  const openModalToDeleteTray = (tray: Tray) => {
+    setCurrentTray(tray);
+    setIsShowDeleteTrayModal(true);
+  };
 
   ////tsx
   return (
@@ -140,7 +143,7 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
             </Text>
             <View className="ml-2">
               <Text className="font-default-semibold text-foreground">
-                tu bedzie kolor
+                {chosenColor?.twr_nazwa}
               </Text>
             </View>
           </View>
@@ -150,8 +153,7 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
 
             <View className="flex-col items-start justify-start flex-1 w-full px-6">
               <ContainerHorizontalRoundedFrame>
-                <></>
-                {/* {trays.length === 0 ? (
+                {trays.length === 0 ? (
                   <View className="relative flex-1 w-full h-full">
                     <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
                       <View className="flex items-center justify-center w-full h-full">
@@ -175,38 +177,34 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
                       </View>
                     </View>
                   </View>
-                ) : null} */}
+                ) : null}
 
-                {/* {trays.length > 0 ? (
+                {trays.length > 0 ? (
                   <ScrollView className="w-full">
                     <View className="flex-row flex-wrap items-center justify-start py-4">
                       {trays.map((tray) => (
-                        <TrayItem
+                        <CotyledonQuilting_TrayItem
                           key={tray.stk_id}
                           tray={tray}
-                          actionFn={() => {
-                            openModalToUpdateTray(tray);
-                          }}
-                          addQuantityToExistingTrayHandler={
-                            addQuantityToExistingTrayHandler
-                          }
+                          // actionFn={() => {}}
+                          // addQuantityToExistingTrayHandler={() => {}}
                           openDeleteModal={() => openModalToDeleteTray(tray)}
                         />
                       ))}
                     </View>
                   </ScrollView>
-                ) : null} */}
+                ) : null}
               </ContainerHorizontalRoundedFrame>
             </View>
 
             <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
               <View className="flex-1">
-                {/* <ButtonTextAndThreeArrows
-                  actionFn={sendValuesForPlantsComingUpsCounter}
-                  text="wyślij"
+                <ButtonTextAndThreeArrows
+                  actionFn={() => setIsShowQuantityAndSendModal(true)}
+                  text="Podaj ilość i wyślij"
                   isBackground
                   disabled={trays.length === 0}
-                /> */}
+                />
               </View>
               <View className="ml-6">
                 <ButtonBack
@@ -220,6 +218,36 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
           </View>
         </SafeAreaView>
       </View>
+
+      {/* delete tray from the list -  modal */}
+      <ModalInternal
+        isOpen={isShowDeleteTrayModal}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <DeleteTrayFromPlantsComingUpsCounterListModal
+          closeFn={() => setIsShowDeleteTrayModal(false)}
+          tray={currentTray}
+          deleteExistingTrayHandler={deleteExistingTrayHandler}
+          isShowLacksInfo={false}
+          titleText={"Czy chcesz usunąć tacę z listy?"}
+        />
+      </ModalInternal>
+
+      {/* quantity and send -  modal */}
+      <ModalInternal
+        isOpen={isShowQuantityAndSendModal}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <CotyledonQuilting_QuantityAndSend_Modal
+          closeFn={() => setIsShowQuantityAndSendModal(false)}
+          // tray={currentTray}
+          // deleteExistingTrayHandler={deleteExistingTrayHandler}
+          // isShowLacksInfo={false}
+          // titleText={"Czy chcesz usunąć tacę z listy?"}
+        />
+      </ModalInternal>
     </View>
   );
 };

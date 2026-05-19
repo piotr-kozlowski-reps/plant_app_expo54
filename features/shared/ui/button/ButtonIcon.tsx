@@ -49,7 +49,7 @@ const ButtonIcon = (props: TProps) => {
           disabled && isOutline ? "opacity-50 border-gray" : "",
           isOutline ? "border-2 rounded-app" : "bg-primary",
           // isOutline && outlineColorClass ? outlineColorClass : "border-primary",
-          isOnlyIcon ? "border-none bg-transparent" : ""
+          isOnlyIcon ? "border-none bg-transparent" : "",
         )}
         style={
           backgroundColorWithHash
@@ -62,7 +62,7 @@ const ButtonIcon = (props: TProps) => {
                 width: size ? size : 48,
                 height: size ? size : 48,
                 paddingLeft: marginLeft ? marginLeft : 12,
-                borderColor: outlineColor ? primaryColor : outlineColor,
+                borderColor: outlineColor ? outlineColor : primaryColor,
               }
         }
       >

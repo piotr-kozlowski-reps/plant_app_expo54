@@ -26,7 +26,7 @@ type Props<InputType, ValueType> = {
   refreshAllData: () => void;
 };
 export default function ComboboxFormik<InputType, ValueType>(
-  props: Props<InputType, ValueType>
+  props: Props<InputType, ValueType>,
 ) {
   ////vars
   const {
@@ -52,7 +52,7 @@ export default function ComboboxFormik<InputType, ValueType>(
   const { isError, error } = useFormikCustomHelpers<InputType>(
     isVerifiedAtOnce,
     formik,
-    formikField
+    formikField,
   );
   const setFormikValue = (value: ValueType | null) => {
     formik.getFieldHelpers(formikField as string).setValue(value);
@@ -80,7 +80,7 @@ export default function ComboboxFormik<InputType, ValueType>(
       typeof formik.values[formikField] === "number"
     ) {
       const foundItem = comboboxItems.find(
-        (item) => item.value === (formik.values[formikField] as ValueType)
+        (item) => item.value === (formik.values[formikField] as ValueType),
       );
 
       if (!foundItem) {
@@ -94,7 +94,7 @@ export default function ComboboxFormik<InputType, ValueType>(
       const foundItem = comboboxItems.find(
         (item) =>
           renderDateInPolishWay(item.value as Date) ===
-          renderDateInPolishWay(formik.values[formikField] as Date)
+          renderDateInPolishWay(formik.values[formikField] as Date),
       );
 
       if (!foundItem) {

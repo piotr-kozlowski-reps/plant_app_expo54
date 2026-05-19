@@ -33,7 +33,7 @@ const ButtonTextAndIcon = (props: Props) => {
     <ButtonAsChild
       handlePress={actionFn}
       className={clsx(
-        "flex-row items-center ",
+        "flex-row items-center w-full",
         isBackground && !disabled && !isWhite && !isBlack
           ? "justify-center bg-foreground rounded-app h-[64px]"
           : "justify-end h-[48px]",
@@ -44,31 +44,31 @@ const ButtonTextAndIcon = (props: Props) => {
         isBlack ? "bg-foreground justify-center rounded-app h-[64px]" : "",
         isWhite
           ? "bg-background-nuance justify-center rounded-app h-[64px]"
-          : ""
+          : "",
       )}
       style={customColor ? { backgroundColor: customColor } : {}}
       disabled={disabled}
     >
       <View
         className={clsx(
-          "flex-row items-center justify-between  px-6",
-          isFull ? "w-full" : ""
+          "flex-row items-center justify-between  px-6 relative",
+          isFull ? "w-full" : "",
         )}
       >
         <View>
           <Text
             className={clsx(
-              "font-default-bold ",
+              "font-default-bold w-[80%]",
               isBackground || isBlack
                 ? "text-background-nuance"
                 : "text-foreground",
-              disabled ? "opacity-70" : "opacity-100"
+              disabled ? "opacity-70" : "opacity-100",
             )}
           >
             {text}
           </Text>
         </View>
-        <View>{icon}</View>
+        <View className="absolute right-6">{icon}</View>
       </View>
     </ButtonAsChild>
   );

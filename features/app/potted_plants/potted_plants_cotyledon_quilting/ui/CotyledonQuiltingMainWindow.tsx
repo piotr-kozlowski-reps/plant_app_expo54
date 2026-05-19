@@ -1,15 +1,3 @@
-// import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
-// import images from "@/features/shared/constants/images";
-// import { ZpToCut } from "@/features/shared/types/interfaces-cut";
-// import {
-//   FIELD_CROPS,
-//   FIELD_CROPS_WORKS,
-//   INDEX,
-// } from "@/features/shared/types/interfaces-navigation";
-// import AppPath from "@/features/shared/ui/app-path/AppPath";
-// import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-// import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
-// import { MESSAGES } from "@/features/shared/utils/messages";
 import { router } from "expo-router";
 import {
   INDEX,
@@ -19,16 +7,19 @@ import AppPath from "@/features/shared/ui/app-path/AppPath";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
-// import { Image } from "expo-image";
-// import ZpToCutInfoItem from "./ZpToListInfoItem";
-// import { FlatList, RefreshControl } from "react-native-gesture-handler";
+import {
+  ColorForCotyledonQuiltingInput,
+  CotyledonQuilting,
+} from "@/features/shared/types/interfaces-cotyledon_quilting";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import { CotyledonQuilting_AddingTrays_Modal } from "./CotyledonQuilting_AddingTrays_Modal";
-// import CutConfirmationModal from "./CutConfirmationModal";
-// import OrderToCutModal from "./OrderToCutModal";
+import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
+import { useChooseColorForCotyledonQuiltingFormik } from "../domain/useChooseColorForCotyledonQuiltingFormik";
+import ComboboxFormik from "@/features/shared/ui/combobox/ComboboxFormik";
+import { Combobox } from "@/features/shared/types/interfaces-general";
+import { useState } from "react";
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,15 +30,41 @@ type Props = {
 
 const CotyledonQuiltingMainWindow = (props: Props) => {
   ////vars
-  const { setIsLoading, isLoading, zpToCotyledonQuiltingArray } = props;
-  const [isShowAddingTraysModal, setIsShowAddingTraysModal] =
-    useShowModal(true);
-  //   const [isShowOrderToCutModal, setIsShowOrderToCutModal] = useShowModal();
+  const {
+    setIsLoading,
+    isLoading,
+    zpToCotyledonQuiltingArray,
+    refreshAllData,
+  } = props;
+  const [isShowAddingTraysModal, setIsShowAddingTraysModal] = useShowModal();
+  const [chosenColor, setChosenColor] = useState<CotyledonQuilting | null>(
+    null,
+  );
 
+  //active ordnmb
   let ordnmb = "";
   if (zpToCotyledonQuiltingArray.length > 0) {
     ordnmb = zpToCotyledonQuiltingArray[0].ordnmb;
   }
+  //formik
+  /**
+   * @public
+   * @procedureItem
+   *  Formularz z wyborem dostępnego koloru
+   */
+  const { formik, availableFormActions, canFormBeSubmitted, clearForm } =
+    useChooseColorForCotyledonQuiltingFormik(
+      setChosenColor,
+      setIsShowAddingTraysModal,
+    );
+
+  //combobox protectiveTreatments
+  const comboboxItems: Combobox<CotyledonQuilting>[] =
+    zpToCotyledonQuiltingArray.map((item) => ({
+      value: item,
+      visibleText: item.twr_nazwa,
+    }));
+
   ////tsx
   return (
     <View className="relative w-full h-full">
@@ -71,93 +88,33 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
                 </Text>
               </View>
               <View>
-                <Text className="font-main-menu">
-                  {ordnmb ? ordnmb : "sdfvdf"}
-                </Text>
+                <Text className="font-title">{ordnmb ? ordnmb : "-"}</Text>
               </View>
             </View>
-            {/* <View className="flex-col items-center w-full mb-[4px]">
-              <View className="flex-col items-center justify-between w-full">
-                <View className="w-full">
-                  <Text className="mb-2 font-default-semibold text-background-nuance">
-                    Wybierz co chcesz zrobić:
-                  </Text>
-                </View>
 
-                <View className="w-full">
-                  <ListItemName
-                    title="zlecenie cięcia"
-                    id={0}
-                    actionFn={() => setIsShowOrderToCutModal(true)}
-                  />
-                </View>
-
-                <View className="w-full">
-                  <ListItemName
-                    title="potwierdzenie wykonania"
-                    id={0}
-                    actionFn={() => setIsShowCutConfirmationModal(true)}
-                  />
-                </View>
-              </View>
-            </View> */}
-
-            {/* <View className="flex-col items-center w-full mt-8">
-              <Text className="text-foreground font-default-normal">
-                lista ZPków zleconych do cięcia:
-              </Text>
-            </View> */}
-
-            {/* <ContainerHorizontalRoundedFrame>
-              {!cutsList || !cutsList.length ? (
-                <View className="relative flex-1 w-full h-full">
-                  <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
-                    <View className="flex items-center justify-center w-full h-full">
-                      <Image
-                        source={images.hashed_background}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          resizeMode: "cover",
-                          borderRadius: 32,
-                        }}
-                        contentFit="cover"
-                      />
-                    </View>
-                  </View>
-                  <View className="absolute top-0 bottom-0 left-0 right-0 rounded-app">
-                    <View className="flex items-center justify-center w-full h-full ">
-                      <Text className="p-6 bg-yellow font-default-bold text-background-nuance rounded-app">
-                        {MESSAGES.LACK_OF_ZPS_TO_CUT}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              ) : null}
-
-              {cutsList && cutsList.length ? (
-                <View className="w-full h-full mt-2">
-                  <FlatList<ZpToCut>
-                    data={cutsList}
-                    renderItem={({ item }: { item: ZpToCut }) => (
-                      <ZpToCutInfoItem zpToShow={item} />
-                    )}
-                    initialNumToRender={20}
-                    refreshControl={
-                      <RefreshControl
-                        refreshing={isLoading}
-                        onRefresh={refreshAllData}
-                      />
-                    }
-                    style={{ marginBottom: 12 }}
-                  />
-                </View>
-              ) : null}
-            </ContainerHorizontalRoundedFrame> */}
+            <View className="w-full mt-16">
+              <ComboboxFormik<ColorForCotyledonQuiltingInput, CotyledonQuilting>
+                label="Kolor:"
+                placeholder="wybierz dostępny kolor"
+                formik={formik}
+                formikField="colorTray"
+                isVerifiedAtOnce={true}
+                comboboxItems={comboboxItems}
+                itemPropertyToBeDisplayed={"twr_nazwa"}
+                refreshAllData={refreshAllData}
+              />
+            </View>
           </View>
 
           <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
-            <View className="flex-1"></View>
+            <View className="flex-1">
+              <ButtonTextAndThreeArrows
+                actionFn={availableFormActions}
+                text="Przejdź do skanowania tac"
+                isBackground
+                disabled={!canFormBeSubmitted}
+              />
+            </View>
             <View className="ml-6">
               <ButtonBack actionFn={() => router.back()} isOutline={false} />
             </View>
@@ -173,22 +130,10 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
         <CotyledonQuilting_AddingTrays_Modal
           closeFn={() => setIsShowAddingTraysModal(false)}
           ordnmb={ordnmb}
+          chosenColor={chosenColor}
           setIsLoading={setIsLoading}
         />
       </ModalInternal>
-
-      {/* <ModalInternal
-        isOpen={isShowOrderToCutModal}
-        isTransparent={false}
-        backgroundColor={yellowColor}
-      >
-        <OrderToCutModal
-          closeFn={() => setIsShowOrderToCutModal(false)}
-          cutsList={cutsList}
-          setIsLoading={setIsLoading}
-          refreshAllData={refreshAllData}
-        />
-      </ModalInternal> */}
     </View>
   );
 };
