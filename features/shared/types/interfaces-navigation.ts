@@ -15,6 +15,16 @@ export const INDEX: NavElement = {
   actionFn: () => router.push("/"),
   name: "Menu",
 } as const;
+export const POTTED_PLANTS: NavElement = {
+  actionFn: () => router.push("/app/potted_plants"),
+  name: "Rośliny doniczkowe",
+} as const;
+export const POTTED_PLANTS_COTYLEDON_QUILTING: NavElement = {
+  actionFn: () =>
+    router.push("/app/potted_plants/potted_plants_cotyledon_quilting"),
+  name: "Pikowanie liścieni",
+} as const;
+
 export const FIELD_CROPS: NavElement = {
   actionFn: () => router.push("/app/field_crops"),
   name: "Rozsady gruntowe",

@@ -17,7 +17,6 @@ import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import { useScanValuesForPlantsComingUpsCounter } from "../domain/useScanValuesForPlantsComingUpsCounter";
 import Button from "@/features/shared/ui/button/Button";
-import clsx from "clsx";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
 import images from "@/features/shared/constants/images";
 import { Image } from "expo-image";

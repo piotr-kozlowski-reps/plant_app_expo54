@@ -27,6 +27,7 @@ export type PottedPlantsSubmodules = ModuleOverallPermission & {
   potted_plants_works___overallVisibility: boolean;
   potted_plants_quantity___overallVisibility: boolean;
   potted_plants_zp___overallVisibility: boolean;
+  potted_plants_cotyledon_quilting: boolean;
 };
 export type HobbyCropsSubmodules = ModuleOverallPermission & {
   hobby_crops___overallVisibility: boolean;

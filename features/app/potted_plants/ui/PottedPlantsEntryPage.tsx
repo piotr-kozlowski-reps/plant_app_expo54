@@ -8,7 +8,14 @@ import { router } from "expo-router";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { lightNuanceColor } from "@/features/shared/constants/colorThemeVars";
 import { PottedPlantsSubmodules } from "@/features/shared/types/interfaces-auth";
-import { FileDigit, Grid3x3, Pickaxe, Sprout } from "lucide-react-native";
+import {
+  DiscAlbum,
+  FileDigit,
+  GitPullRequestCreateArrow,
+  Grid3x3,
+  Pickaxe,
+  Sprout,
+} from "lucide-react-native";
 
 const PottedPlantsEntryPage = () => {
   ////vars
@@ -90,26 +97,27 @@ const PottedPlantsEntryPage = () => {
                   actionFn={
                     getModuleVisibilitiesObject<PottedPlantsSubmodules>(
                       "potted_plants",
-                    ).potted_plants_zp___overallVisibility
+                    ).potted_plants_cotyledon_quilting
                       ? () => {
-                          router.push("/app/potted_plants/potted_plants_zp");
+                          router.push(
+                            "/app/potted_plants/potted_plants_cotyledon_quilting",
+                          );
                         }
                       : () => {}
                   }
                   icon={
-                    <Pickaxe
+                    <GitPullRequestCreateArrow
                       size={24}
                       color={lightNuanceColor}
                       strokeWidth={2.7}
                     />
                   }
-                  name={`Prace${"\n"}Extra GRU - ZP`}
+                  name={`Pikowanie${"\n"}liścieni`}
                   disabled={
                     !getModuleVisibilitiesObject<PottedPlantsSubmodules>(
                       "potted_plants",
-                    ).potted_plants_zp___overallVisibility
+                    ).potted_plants_cotyledon_quilting
                   }
-                  visibility={false}
                 />
                 <LeafNavigationButton
                   side={"right"}

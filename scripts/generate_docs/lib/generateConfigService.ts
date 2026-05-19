@@ -95,31 +95,21 @@ class GenerateConfigService {
       );
 
       if (!foundSubmoduleFirstLevel) {
-        console.log({ secondLevelSubModuleRoutePathName });
-        console.log({ secondLevelSubModulePath });
         throw new Error(
           "getAppRoutesConfig -> foundSubmoduleFirstLevel is undefined",
         );
       }
-      console.log({ foundSubmoduleFirstLevel });
-      const foundSecondLevelModule = foundSubmoduleFirstLevel!.routes?.find(
-        (mod) => mod.path === secondLevelSubModuleRoutePathName,
-      );
-      console.log({ foundSecondLevelModule });
-      if (!foundSecondLevelModule) {
-        throw new Error(
-          "getAppRoutesConfig -> foundSecondLevelModule is undefined",
-        );
+
+      let submodulesSecondLevel = foundSubmoduleFirstLevel.routes;
+      if (!submodulesSecondLevel) {
+        submodulesSecondLevel = foundSubmoduleFirstLevel.routes = [];
       }
 
-      const submodulesSecondLevel = foundSecondLevelModule.routes;
-      if (!submodulesSecondLevel) foundSecondLevelModule.routes = [];
       const foundSubmoduleSecondLevel = submodulesSecondLevel?.find(
         (submod) => submod.path === secondLevelSubModuleRoutePathName,
       );
-
       if (!foundSubmoduleSecondLevel) {
-        foundSecondLevelModule.routes?.push(
+        submodulesSecondLevel.push(
           await this.createNewAppRouteConfig(
             secondLevelSubModulePath,
             secondLevelSubModuleRoutePathName,
