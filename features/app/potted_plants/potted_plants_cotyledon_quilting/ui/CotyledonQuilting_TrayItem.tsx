@@ -1,11 +1,11 @@
 import { lightColor } from "@/features/shared/constants/colorThemeVars";
-import { Tray } from "@/features/shared/types/interfaces-tray";
+import { TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import ButtonIcon from "@/features/shared/ui/button/ButtonIcon";
 import { X } from "lucide-react-native";
 import { View, Text } from "react-native";
 
 type Props = {
-  tray: Tray;
+  tray: TrayShortInfo;
   // actionFn: () => void;
   // addQuantityToExistingTrayHandler: (tray: Tray, quantity: number) => void;
   openDeleteModal: () => void;

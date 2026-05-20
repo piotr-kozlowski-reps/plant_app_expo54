@@ -17,7 +17,7 @@ type AnyObjectWithPictures = {
 export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
   scannedValue: T | null,
   cameraRef: React.MutableRefObject<CameraView | null>,
-  setScannedValue: (value: React.SetStateAction<T | null>) => void
+  setScannedValue: (value: React.SetStateAction<T | null>) => void,
 ) => {
   //pictures state
   const [chosenPicture, setChosenPicture] =
@@ -33,7 +33,7 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
   const takePhotoHandler = async () => {
     if (cameraRef.current) {
       const options: CameraPictureOptions = {
-        quality: 0.4,
+        quality: 0.1,
         base64: true,
         exif: false,
         imageType: "png",
@@ -54,7 +54,7 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
     const appCachePath = FileSystemLegacy.cacheDirectory;
     if (!appCachePath) {
       toast.warning(
-        "Błąd podczas usuwania zdjęć, brak informacji o katalogu z cache'em aplikacji."
+        "Błąd podczas usuwania zdjęć, brak informacji o katalogu z cache'em aplikacji.",
       );
       return;
     }
@@ -70,7 +70,7 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
   const addPhoto = (photo: CameraCapturedPicture) => {
     if (!photo || !scannedValue) {
       throw new Error(
-        "useScanValuesForOrderToHardener -> addPhoto - no photo or no scanned value."
+        "useScanValuesForOrderToHardener -> addPhoto - no photo or no scanned value.",
       );
     }
 
@@ -91,7 +91,7 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
 
     const currentPicturesCopy = [...scannedValue.pictures];
     const updatedPictures = currentPicturesCopy.filter(
-      (picture) => picture.uri !== chosenPicture.uri
+      (picture) => picture.uri !== chosenPicture.uri,
     );
     toast.success(MESSAGES.PICTURE_DELETED_SUCCESS);
     setScannedValue({ ...scannedValue, pictures: updatedPictures });

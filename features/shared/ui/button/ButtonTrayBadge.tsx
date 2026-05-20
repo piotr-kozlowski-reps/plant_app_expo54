@@ -1,13 +1,17 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { Tray } from "../../types/interfaces-tray";
+import { Tray, TrayShortInfo } from "../../types/interfaces-tray";
 
-type TProps = {
+type Base = {
   actionFn: () => void;
   isActive?: boolean;
   isCentered?: boolean;
-  tray: Tray;
-  isShowLacksInfo?: boolean;
 };
+
+type TProps = Base &
+  (
+    | { isShowLacksInfo: false; tray: TrayShortInfo }
+    | { isShowLacksInfo: true; tray: Tray }
+  );
 
 const ButtonTrayBadge = (props: TProps) => {
   ////vars
@@ -16,7 +20,7 @@ const ButtonTrayBadge = (props: TProps) => {
     actionFn,
     isActive = true,
     isCentered,
-    isShowLacksInfo = true,
+    isShowLacksInfo,
   } = props;
 
   ////tsx
@@ -28,17 +32,6 @@ const ButtonTrayBadge = (props: TProps) => {
         activeOpacity={0.7}
         disabled={!isActive}
       >
-        {/* {zpItem.planam === "BRAK" ? (
-          <View className="flex-col items-start justify-start w-full">
-            <Text className="w-full text-center text-background-nuance font-default-semibold">
-              {zpItem.ordnmb}
-            </Text>
-            <Text className="w-full text-center text-background-nuance font-default-normal">
-              {ERROR_MESSAGES.NOT_FOUND_IN_LOC}
-            </Text>
-          </View>
-        ) : null} */}
-
         {tray ? (
           <View className="flex-col items-start justify-start w-full ">
             <Text className="w-full text-center text-background-nuance font-default-semibold">

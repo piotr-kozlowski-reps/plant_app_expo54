@@ -2,7 +2,7 @@ import { useAudioPlayer } from "expo-audio";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useState } from "react";
 import * as Haptics from "expo-haptics";
-import { Tray } from "@/features/shared/types/interfaces-tray";
+import { Tray, TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
 import { useGetScannedTrayInfo } from "@/features/shared/data-access/useGetScannedTrayInfo";
@@ -17,12 +17,12 @@ export const useScanValuesForAddingTraysToPottedPlants = (
   const player = useAudioPlayer(audioScanSoundSource);
   const { checkWhatValueWasScanned, getPureTrayValue } =
     useCheckWhatValueIsScannedHelpers();
-  const { getScannedTrayInfo } = useGetScannedTrayInfo();
+  // const { getScannedTrayInfo } = useGetScannedTrayInfo();
 
   //states
   const [qrLock, setQrLock] = useState(true);
-  const [currentTray, setCurrentTray] = useState<Tray | null>(null);
-  const [trays, setTrays] = useState<Tray[]>([]);
+  const [currentTray, setCurrentTray] = useState<TrayShortInfo | null>(null);
+  const [trays, setTrays] = useState<TrayShortInfo[]>([]);
   const [isShowDeleteTrayModal, setIsShowDeleteTrayModal] = useState(false);
   const [isShowQuantityAndSendModal, setIsShowQuantityAndSendModal] =
     useState(false);
@@ -63,15 +63,21 @@ export const useScanValuesForAddingTraysToPottedPlants = (
 
     setIsLoading(true);
     try {
-      const scannedTrayInfo = await getScannedTrayInfo(scannedValue);
-      if (!scannedTrayInfo) return;
+      // const scannedTrayInfo = await getScannedTrayInfo(scannedValue);
+      // if (!scannedTrayInfo) return;
       setTrays((prevTrays) => {
         const foundTray = prevTrays.find(
-          (item) => item.stk_id === scannedTrayInfo.stk_id,
+          (item) => item.stk_id === getPureTrayValue(scannedValue),
         );
         if (foundTray) return prevTrays;
 
-        return [...prevTrays, scannedTrayInfo];
+        return [
+          ...prevTrays,
+          {
+            stk_id: getPureTrayValue(scannedValue),
+            scanned_raw_value: scannedValue,
+          },
+        ];
       });
     } catch (error) {
       console.error(error);
@@ -80,7 +86,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     }
   };
 
-  const deleteExistingTrayHandler = (tray: Tray) => {
+  const deleteExistingTrayHandler = (tray: TrayShortInfo) => {
     const traysLocal = [...trays];
 
     const foundTray = traysLocal.find((item) => item.stk_id === tray.stk_id);

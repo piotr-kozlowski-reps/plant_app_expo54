@@ -12,7 +12,7 @@ import {
   POTTED_PLANTS,
   POTTED_PLANTS_COTYLEDON_QUILTING,
 } from "@/features/shared/types/interfaces-navigation";
-import { Tray } from "@/features/shared/types/interfaces-tray";
+import { Tray, TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import {
   CotyledonQuilting,
   QuantityForCotyledonQuiltingInput,
@@ -25,7 +25,7 @@ type TProps = {
   closeFn: () => void;
   ordnmb: string | null;
   chosenColor: CotyledonQuilting | null;
-  trays: Tray[];
+  trays: TrayShortInfo[];
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 

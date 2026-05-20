@@ -7,6 +7,7 @@ import * as Haptics from "expo-haptics";
 import {
   RiseCountResponse,
   Tray,
+  TrayShortInfo,
 } from "@/features/shared/types/interfaces-tray";
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
@@ -130,7 +131,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
     }
   };
 
-  const deleteExistingTrayHandler = (tray: Tray) => {
+  const deleteExistingTrayHandler = (tray: Tray | TrayShortInfo) => {
     const traysLocal = [...trays];
 
     const foundTray = traysLocal.find((item) => item.stk_id === tray.stk_id);

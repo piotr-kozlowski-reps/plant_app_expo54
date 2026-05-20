@@ -13,7 +13,7 @@ import {
 import { FormikHelpers, useFormik } from "formik";
 import { Keyboard } from "react-native";
 import * as yup from "yup";
-import { Tray } from "@/features/shared/types/interfaces-tray";
+import { Tray, TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import { toast } from "sonner-native";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { configPerBuild } from "@/features/shared/env/env";
@@ -24,7 +24,7 @@ import { router } from "expo-router";
 export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   closeFn: () => void,
-  trays: Tray[],
+  trays: TrayShortInfo[],
   chosenColor: CotyledonQuilting | null,
 ) => {
   ////vars

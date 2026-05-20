@@ -1,12 +1,12 @@
-import { Tray } from "@/features/shared/types/interfaces-tray";
+import { Tray, TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import { View, Text } from "react-native";
 import Button from "@/features/shared/ui/button/Button";
 import ButtonTrayBadge from "@/features/shared/ui/button/ButtonTrayBadge";
 
 type Props = {
   closeFn: () => void;
-  tray: Tray | null;
-  deleteExistingTrayHandler: (tray: Tray) => void;
+  tray: Tray | TrayShortInfo | null;
+  deleteExistingTrayHandler: (tray: TrayShortInfo) => void;
   isShowLacksInfo?: boolean;
   titleText?: string;
 };
@@ -57,12 +57,21 @@ const DeleteTrayFromPlantsComingUpsCounterListModal = (props: Props) => {
           ) : null}
 
           <View className="flex items-center justify-center w-full mt-2">
-            <ButtonTrayBadge
-              tray={tray}
-              actionFn={() => {}}
-              isCentered
-              isShowLacksInfo={isShowLacksInfo}
-            />
+            {isShowLacksInfo ? (
+              <ButtonTrayBadge
+                tray={tray as Tray}
+                actionFn={() => {}}
+                isCentered
+                isShowLacksInfo={true}
+              />
+            ) : (
+              <ButtonTrayBadge
+                tray={tray}
+                actionFn={() => {}}
+                isCentered
+                isShowLacksInfo={false}
+              />
+            )}
           </View>
 
           <View className="flex-col justify-center w-full gap-4 px-6 mt-8 items-between">

@@ -81,8 +81,7 @@ export const useScanValuesForOrderExportToCustomer = (
     }
 
     ///////
-    const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
-
+    // const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     // const { isZP, isTray, isNoZpOrTray, whatValueWasScanned, } =
     //   useAllowScanOnlyZpOrTray(scannedValue);
     // if (isNoZpOrTray) return;

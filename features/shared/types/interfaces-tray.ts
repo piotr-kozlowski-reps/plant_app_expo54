@@ -38,3 +38,5 @@ export type TrayResponse = {
 };
 
 export type RiseCountResponse = string[];
+
+export type TrayShortInfo = Pick<Tray, "stk_id" | "scanned_raw_value">;
