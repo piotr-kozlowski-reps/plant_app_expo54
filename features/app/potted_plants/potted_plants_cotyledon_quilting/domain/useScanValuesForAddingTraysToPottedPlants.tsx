@@ -26,6 +26,8 @@ export const useScanValuesForAddingTraysToPottedPlants = (
 
   //fn
   const scanValueHandler = async (scannedValue: string) => {
+    // console.log("scanValueHandler");
+    // console.log({ scannedValue });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
     player.play();
@@ -47,8 +49,16 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     try {
       const scannedTrayInfo = await getScannedTrayInfo(scannedValue);
       if (!scannedTrayInfo) return;
-      setTrays((prevTrays) => [...prevTrays, scannedTrayInfo]);
+      setTrays((prevTrays) => {
+        const foundTray = prevTrays.find(
+          (item) => item.stk_id === scannedTrayInfo.stk_id,
+        );
+        if (foundTray) return prevTrays;
+
+        return [...prevTrays, scannedTrayInfo];
+      });
     } catch (error) {
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

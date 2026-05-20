@@ -19,6 +19,7 @@ import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelp
 import { configPerBuild } from "@/features/shared/env/env";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import * as Network from "expo-network";
+import { router } from "expo-router";
 
 export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -69,12 +70,13 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
       await sendToServer(dataToSent);
       toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
     } catch (error) {
+      console.error(error);
       toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
     } finally {
       Keyboard.dismiss();
       formikHelpers.resetForm();
       setIsLoading(false);
-      closeFn();
+      router.push("/app/potted_plants/potted_plants_cotyledon_quilting");
     }
   };
 
@@ -97,18 +99,23 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
         dataToBeSend,
       );
 
-    //check if response array has the same amount of items as sent items
-    const responseIDsQuantity = response.length;
-    const sentItemsQuantity = 1;
+    // console.log(response);
 
-    if (responseIDsQuantity === sentItemsQuantity) {
-      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
-      // queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CUTS_LIST] });
-      closeFn();
-    }
-    if (responseIDsQuantity !== sentItemsQuantity) {
-      toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
-    }
+    //check if response array has the same amount of items as sent items
+    // const responseIDsQuantity = response.length;
+    // const sentItemsQuantity = 1;
+
+    // console.log({ responseIDsQuantity });
+    // console.log({ sentItemsQuantity });
+
+    // if (responseIDsQuantity === sentItemsQuantity) {
+    //   toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+    // queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CUTS_LIST] });
+    // closeFn();
+    // }
+    // if (responseIDsQuantity !== sentItemsQuantity) {
+    //   toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+    // }
   }
 
   const formik = useFormik<QuantityForCotyledonQuiltingInput>({
