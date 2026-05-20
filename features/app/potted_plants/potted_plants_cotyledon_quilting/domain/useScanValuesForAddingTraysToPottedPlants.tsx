@@ -7,13 +7,16 @@ import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCh
 import { toast } from "sonner-native";
 import { useGetScannedTrayInfo } from "@/features/shared/data-access/useGetScannedTrayInfo";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
+import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
 
 export const useScanValuesForAddingTraysToPottedPlants = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  cotyledonQuiltingArray: CotyledonQuilting[],
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
-  const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
+  const { checkWhatValueWasScanned, getPureTrayValue } =
+    useCheckWhatValueIsScannedHelpers();
   const { getScannedTrayInfo } = useGetScannedTrayInfo();
 
   //states
@@ -42,6 +45,19 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       toast.warning(
         `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. QRkod tacy ma inny format.`,
       );
+      return;
+    }
+
+    //allowed conditions
+    /**
+     * @public
+     * @guard
+     * Jeżeli taca jest już podpięta do ZP - info, w którym kolorze jest podpięta + koniec procedury.
+     */
+    const zpAlreadyIncludesScannedTrayMessageInfo =
+      getIfZpAlreadyIncludesScannedTray(scannedValue, cotyledonQuiltingArray);
+    if (zpAlreadyIncludesScannedTrayMessageInfo) {
+      toast.warning(zpAlreadyIncludesScannedTrayMessageInfo);
       return;
     }
 
@@ -78,6 +94,29 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     toast.success(MESSAGES.TRAY_REMOVED_WITH_SUCCESS);
     setTrays(traysLocal);
   };
+
+  //helpers
+  function getIfZpAlreadyIncludesScannedTray(
+    scannedValue: string,
+    cotyledonQuiltingArray: CotyledonQuilting[],
+  ): string | null {
+    for (const colorKind of cotyledonQuiltingArray) {
+      const traysArrayAsString = colorKind.array_agg;
+      if (traysArrayAsString === "{NULL}") continue;
+
+      const traysArray = traysArrayAsString
+        .replace("{", "")
+        .replace("}", "")
+        .split(",");
+      const trayId = getPureTrayValue(scannedValue);
+
+      if (traysArray.includes(trayId)) {
+        return `Zeskanowana taca (${trayId}) jest już podpięta do tego ZP, w kolorze: "${colorKind.twr_nazwa}".`;
+      }
+    }
+
+    return null;
+  }
 
   // function resetWholeState() {
   //   setCurrentTray(null);

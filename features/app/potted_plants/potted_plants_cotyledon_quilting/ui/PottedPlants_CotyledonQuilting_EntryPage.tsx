@@ -50,7 +50,6 @@ const PottedPlants_CotyledonQuilting_EntryPage = () => {
         <CotyledonQuiltingMainWindow
           setIsLoading={setIsLoading}
           zpToCotyledonQuiltingArray={zpToCotyledonQuiltingArray}
-          isLoading={isLoading}
           refreshAllData={refreshAllData}
         />
       </PermissionsOrGoFurther>

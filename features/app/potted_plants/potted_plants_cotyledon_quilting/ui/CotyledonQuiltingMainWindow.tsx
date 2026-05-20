@@ -24,18 +24,12 @@ import { useState } from "react";
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   zpToCotyledonQuiltingArray: CotyledonQuilting[];
-  isLoading: boolean;
   refreshAllData: () => void;
 };
 
 const CotyledonQuiltingMainWindow = (props: Props) => {
   ////vars
-  const {
-    setIsLoading,
-    isLoading,
-    zpToCotyledonQuiltingArray,
-    refreshAllData,
-  } = props;
+  const { setIsLoading, zpToCotyledonQuiltingArray, refreshAllData } = props;
   const [isShowAddingTraysModal, setIsShowAddingTraysModal] = useShowModal();
   const [chosenColor, setChosenColor] = useState<CotyledonQuilting | null>(
     null,
@@ -132,6 +126,7 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
           ordnmb={ordnmb}
           chosenColor={chosenColor}
           setIsLoading={setIsLoading}
+          cotyledonQuiltingArray={zpToCotyledonQuiltingArray}
         />
       </ModalInternal>
     </View>

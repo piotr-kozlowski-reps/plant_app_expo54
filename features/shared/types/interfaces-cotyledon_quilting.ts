@@ -7,6 +7,8 @@ export type CotyledonQuiltingDTO = {
   pcm_ilosc: string;
   twr_kod: string;
   twr_nazwa: string;
+  tray_type: string;
+  array_agg: string;
 };
 export type CotyledonQuilting = {
   sordid: number;
@@ -15,6 +17,8 @@ export type CotyledonQuilting = {
   pcm_ilosc: string;
   twr_kod: string;
   twr_nazwa: string;
+  tray_type: string;
+  array_agg: string;
 };
 
 export type ColorForCotyledonQuiltingInput = {

@@ -18,6 +18,8 @@ const cotyledonQuiltingListObjectExample: CotyledonQuilting = {
   pcm_ilosc: "",
   twr_kod: "",
   twr_nazwa: "",
+  tray_type: "",
+  array_agg: "",
 };
 
 const edocReport_zpToCotyledonQuilting = new EdocReport<
@@ -38,6 +40,8 @@ const edocReport_zpToCotyledonQuilting = new EdocReport<
     new MapDoNotMap<CotyledonQuilting, string>("pcm_ilosc"),
     new MapDoNotMap<CotyledonQuilting, string>("twr_kod"),
     new MapDoNotMap<CotyledonQuilting, string>("twr_nazwa"),
+    new MapDoNotMap<CotyledonQuilting, string>("tray_type"),
+    new MapDoNotMap<CotyledonQuilting, string>("array_agg"),
   ],
 });
 

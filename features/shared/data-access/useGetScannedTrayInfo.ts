@@ -1,12 +1,9 @@
 import useAuthSessionStore from "../stores/useAuthSessionStore";
-import { useCheckWhatValueIsScannedHelpers } from "../utils/useCheckWhatValueIsScannedHelpers";
 import { useErrorHandler } from "../utils/useErrorHandler";
 import { useGetTrayInfo_Report113 } from "./useGetTrayInfo_Report113";
 
 export const useGetScannedTrayInfo = () => {
   ////vars
-  const { checkWhatValueWasScanned, getPureTrayValue } =
-    useCheckWhatValueIsScannedHelpers();
   const { getTrayInfo_Rep113 } = useGetTrayInfo_Report113();
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();

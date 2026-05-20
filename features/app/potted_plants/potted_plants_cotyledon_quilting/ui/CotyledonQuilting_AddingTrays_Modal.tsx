@@ -32,11 +32,15 @@ type Props = {
   ordnmb: string | null;
   chosenColor: CotyledonQuilting | null;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  cotyledonQuiltingArray: CotyledonQuilting[];
 };
 
 export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
   ////vars
-  const { closeFn, setIsLoading, ordnmb, chosenColor } = props;
+  const { closeFn, setIsLoading, ordnmb, chosenColor, cotyledonQuiltingArray } =
+    props;
+
+  console.log({ cotyledonQuiltingArray });
 
   //scan values
   const {
@@ -52,7 +56,10 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
     setIsShowQuantityAndSendModal,
     setCurrentTray,
     deleteExistingTrayHandler,
-  } = useScanValuesForAddingTraysToPottedPlants(setIsLoading);
+  } = useScanValuesForAddingTraysToPottedPlants(
+    setIsLoading,
+    cotyledonQuiltingArray,
+  );
 
   const openModalToDeleteTray = (tray: Tray) => {
     setCurrentTray(tray);
