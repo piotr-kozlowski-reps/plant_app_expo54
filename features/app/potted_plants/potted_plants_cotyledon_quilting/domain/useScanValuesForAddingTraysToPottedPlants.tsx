@@ -1,7 +1,5 @@
 import { useAudioPlayer } from "expo-audio";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
-import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
-import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useState } from "react";
 import * as Haptics from "expo-haptics";
 import { Tray } from "@/features/shared/types/interfaces-tray";
@@ -15,21 +13,13 @@ export const useScanValuesForAddingTraysToPottedPlants = (
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
-  const { token } = useAuthSessionStore();
-  const { errorHandler } = useErrorHandler();
-  const { checkWhatValueWasScanned, getPureTrayValue } =
-    useCheckWhatValueIsScannedHelpers();
+  const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
   const { getScannedTrayInfo } = useGetScannedTrayInfo();
-  // const { getTrayInfo_Rep113 } = useGetTrayInfo_Report113();
 
   //states
   const [qrLock, setQrLock] = useState(true);
   const [currentTray, setCurrentTray] = useState<Tray | null>(null);
   const [trays, setTrays] = useState<Tray[]>([]);
-  // const [
-  //   isShowModalWithTrayComingUpCounter,
-  //   setIsShowModalWithTrayComingUpCounter,
-  // ] = useState(false);
   const [isShowDeleteTrayModal, setIsShowDeleteTrayModal] = useState(false);
   const [isShowQuantityAndSendModal, setIsShowQuantityAndSendModal] =
     useState(false);
@@ -64,77 +54,6 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     }
   };
 
-  // const sendValuesForPlantsComingUpsCounter = async () => {
-  //   if (!trays || !trays.length) {
-  //     throw new Error(
-  //       "useScanValuesForPlantsComingUpsCounter -> sendValuesForPlantsComingUpsCounter -> no trays",
-  //     );
-  //   }
-  //   type TrayToBeSent = Pick<
-  //     Tray,
-  //     "sordid" | "ordnmb" | "stk_id" | "lckcnt" | "scanned_raw_value"
-  //   > & { scanned_raw_value: string };
-  //   const valuesToBeSent: TrayToBeSent[] = [];
-  //   trays.forEach((tray) => {
-  //     const trayToBeSent: TrayToBeSent = {
-  //       sordid: tray.sordid,
-  //       ordnmb: tray.ordnmb,
-  //       stk_id: tray.stk_id,
-  //       lckcnt: tray.lckcnt,
-  //       scanned_raw_value: tray.scanned_raw_value,
-  //     };
-  //     valuesToBeSent.push(trayToBeSent);
-  //   });
-  //   const valuesToBeSentFilteredByNonZeroAmountOfLacksOdComingUps =
-  //     valuesToBeSent.filter((tray) => tray.lckcnt > 0);
-
-  //   //send data to server
-  //   /**
-  //    * @public
-  //    * @transformApiItem
-  //    * wysyłka - custom api:
-  //    * <b>{{URL}}</b>/api.php/REST/custom/<b>risecount</b>
-  //    * dane - array obiektów:
-  //    * {
-  //    *  sordid: number
-  //    *  ordnmb: string
-  //    *  stk_id: string
-  //    *  lckcnt: number
-  //    *  scanned_raw_value: string
-  //    * }
-  //    *@separator
-  //    */
-  //   let response: RiseCountResponse;
-  //   try {
-  //     setIsLoading(true);
-  //     response = await query_postDataAsServerAction<
-  //       RiseCountResponse,
-  //       TrayToBeSent[]
-  //     >(
-  //       configPerBuild.apiAddress,
-  //       "/api.php/REST/custom/risecount",
-  //       token!,
-  //       valuesToBeSentFilteredByNonZeroAmountOfLacksOdComingUps,
-  //     );
-
-  //     //check if response array has the same amount of items as sent items
-  //     const responseIDsQuantity = response.length;
-  //     const sentItemsQuantity =
-  //       valuesToBeSentFilteredByNonZeroAmountOfLacksOdComingUps.length;
-
-  //     if (responseIDsQuantity === sentItemsQuantity) {
-  //       toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
-  //       resetWholeState();
-  //     }
-  //     if (responseIDsQuantity !== sentItemsQuantity) {
-  //       toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
-  //     }
-  //   } catch (error) {
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const deleteExistingTrayHandler = (tray: Tray) => {
     const traysLocal = [...trays];
 
@@ -167,10 +86,6 @@ export const useScanValuesForAddingTraysToPottedPlants = (
 
     setQrLock,
     scanValueHandler,
-    // setIsShowModalWithTrayComingUpCounter,
-    // sendValuesForPlantsComingUpsCounter,
-    // addOrChangeQuantityInPlantsComingUpsCounterHandler,
-    // addQuantityToExistingTrayHandler,
     setCurrentTray,
     setIsShowDeleteTrayModal,
     setIsShowQuantityAndSendModal,

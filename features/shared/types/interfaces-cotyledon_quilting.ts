@@ -1,3 +1,5 @@
+import { Tray } from "./interfaces-tray";
+
 export type CotyledonQuiltingDTO = {
   sordid: string;
   ordnmb: string;
@@ -18,3 +20,19 @@ export type CotyledonQuilting = {
 export type ColorForCotyledonQuiltingInput = {
   colorTray: CotyledonQuilting | null;
 };
+
+export type QuantityForCotyledonQuiltingInput = {
+  quantity: number;
+};
+
+export type CotyledonQuiltingPostDTO = {
+  ip: string;
+  sordid: number;
+  ordnmb: string;
+  twr_kod: string;
+  twr_nazwa: string;
+  quantity: number;
+  trays: Pick<Tray, "stk_id" | "scanned_raw_value">[];
+};
+
+export type CotyledonQuiltingResponse = string[];

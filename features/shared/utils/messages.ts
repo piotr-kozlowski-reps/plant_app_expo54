@@ -113,9 +113,12 @@ export const ERROR_MESSAGES = {
     "Liczba braków na tacy nie może być mniejsza od zera.",
   NO_INFO_TO_SEND: "Brak informacji do wysłania.",
   NO_INFO_ABOUT_TRAY: "Brak informacji o tacy.",
+  NO_INFO_ABOUT_CHOSEN_TRAYS: "Brak informacji o tacach.",
   NO_INFO_ABOUT_LOCALIZATION: "Brak informacji o lokalizacji.",
   NO_INFO_ABOUT_WORK_TO_PLAN: "Brak informacji o pracy do zaplanowania.",
+  NO_INFO_ABOUT_CHOSEN_COLOR: "Brak informacji o kolorze i ZP'ku.",
   LOCALIZATION_NOT_FOUND: "W systemie nie znaleziono lokalizacji.",
+  NO_INFO_ABOUT_QUANTITY: "Brak informacji o ilości.",
   MODULE_NOT_AVAILABLE_FOR_THIS_USER:
     "Zalogowany użytkownik nie ma dostępu do tego modułu.",
   APP_NOT_UP_TO_DATE: "Posiadasz nieaktualną wersję. Uaktualnij aplikację.",

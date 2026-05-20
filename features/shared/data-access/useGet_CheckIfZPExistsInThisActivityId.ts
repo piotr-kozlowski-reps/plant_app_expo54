@@ -31,8 +31,6 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
       whatWasScanned,
     );
 
-    console.log({ queryDependingOnZpOrTray });
-
     //fetch data
     let response: ZPItemResponse;
     const res = await fetch(queryDependingOnZpOrTray, {

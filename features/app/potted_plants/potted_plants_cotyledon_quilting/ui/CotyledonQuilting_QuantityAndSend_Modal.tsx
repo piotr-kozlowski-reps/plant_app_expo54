@@ -1,21 +1,7 @@
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import {
-//   ExtraWork,
-//   ExtraWorkQuantityInput,
-// } from "@/features/shared/types/interfaces-extra_works";
-// import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
-// import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-// import React from "react";
-// import AppPath from "@/features/shared/ui/app-path/AppPath";
-// import {
-//   FIELD_CROPS,
-//   INDEX,
-//   QUANTITY_FORM,
-//   GREENHOUSE_CROPS,
-// } from "@/features/shared/types/interfaces-navigation";
-// import { usePrepareDataForFormikToExtraWorkQuantity } from "../domain/usePrepareDataForFormikToExtraWorkQuantity";
-// import InputFormik from "@/features/shared/ui/input/InputFormik";
+import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
+import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
@@ -25,32 +11,35 @@ import {
   INDEX,
   POTTED_PLANTS,
   POTTED_PLANTS_COTYLEDON_QUILTING,
-  QUANTITY_FORM,
 } from "@/features/shared/types/interfaces-navigation";
-// import { useCheckIfExtraWorkWasDoneToday } from "../domain/useCheckIfExtraWorkWasDoneToday";
+import { Tray } from "@/features/shared/types/interfaces-tray";
+import {
+  CotyledonQuilting,
+  QuantityForCotyledonQuiltingInput,
+} from "@/features/shared/types/interfaces-cotyledon_quilting";
+import React from "react";
+import InputFormik from "@/features/shared/ui/input/InputFormik";
+import { usePrepareDataForFormikToCotyledonQuiltingQuantity } from "../domain/usePrepareDataForFormikToCotyledonQuiltingQuantity";
 
 type TProps = {
   closeFn: () => void;
-  // extraWork: ExtraWork | undefined;
-  // setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  // isRoz?: boolean;
+  ordnmb: string | null;
+  chosenColor: CotyledonQuilting | null;
+  trays: Tray[];
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
   ////vars
-  const { closeFn } = props;
+  const { closeFn, ordnmb, chosenColor, trays, setIsLoading } = props;
 
-  //   const { todaysQuantity } = useCheckIfExtraWorkWasDoneToday(
-  //     setIsLoading,
-  //     extraWork,
-  //   );
-
-  //   const { formik, availableFormActions, canFormBeSubmitted } =
-  //     usePrepareDataForFormikToExtraWorkQuantity(
-  //       setIsLoading,
-  //       extraWork,
-  //       closeFn,
-  //     );
+  const { formik, availableFormActions, canFormBeSubmitted } =
+    usePrepareDataForFormikToCotyledonQuiltingQuantity(
+      setIsLoading,
+      closeFn,
+      trays,
+      chosenColor,
+    );
 
   ////tsx
   return (
@@ -72,64 +61,66 @@ const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
               ]}
             />
           </View>
-          {/* 
+
           <View className="flex-col items-center justify-between flex-1 w-full h-full ">
             <View className="flex-col items-center justify-center flex-1 w-full">
-              <View className="w-full px-6 mb-16">
-                <Text className="text-foreground font-default-normal">
-                  Praca extra:{" "}
-                </Text>
-                <Text className="text-foreground font-main-menu">
-                  {extraWork?.activityname}
-                </Text>
-                {todaysQuantity > 0 ? (
-                  <View className="mt-2">
-                    <Text className="text-destructive font-default-normal">
-                      Praca extra była już dziś wykonana.
-                    </Text>
-                    <Text className="text-destructive font-default-normal">
-                      Ilość:{" "}
-                      <Text className="text-destructive font-default-bold">
-                        {todaysQuantity}
-                      </Text>
-                      <Text className="text-destructive font-default-normal">
-                        {" "}
-                        szt.
-                      </Text>
-                    </Text>
-                  </View>
-                ) : null}
+              <View className="flex-col items-center justify-center w-full">
+                <View>
+                  <Text className="font-title">{ordnmb ? ordnmb : "-"}</Text>
+                </View>
               </View>
 
-              <View className="w-full px-6">
-                <InputFormik<ExtraWorkQuantityInput>
-                  label={`Podaj ilość${
-                    extraWork?.mobile_jm
-                      ? " - (" + extraWork?.mobile_jm + ") "
-                      : ""
-                  }:`}
+              <View className="flex-col items-center justify-center w-full px-6 mt-4">
+                <Text className=" font-default-normal text-foreground">
+                  kolor:{" "}
+                </Text>
+                <View className="ml-2">
+                  <Text className="font-default-semibold text-foreground">
+                    {chosenColor?.twr_nazwa}
+                  </Text>
+                </View>
+              </View>
+
+              <View className="flex-col items-center justify-center w-full px-6 mt-4">
+                <Text className=" font-default-normal text-foreground">
+                  tace:{" "}
+                </Text>
+                {trays.map((tray) => (
+                  <View className="ml-2" key={tray.stk_id}>
+                    <Text className="font-default-semibold text-foreground">
+                      {tray.stk_id}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+
+              <View className="w-full px-6 mt-8">
+                <InputFormik<QuantityForCotyledonQuiltingInput>
+                  label={`Podaj ilość:`}
                   placeholder="podaj ilość"
                   isSignedAsRequired={true}
                   formik={formik}
-                  formikField="qntity"
+                  formikField="quantity"
                   keyboardType="numeric"
                   isVerifiedAtOnce={true}
                 />
               </View>
             </View>
 
-            <View className="w-full px-6 mt-4 mb-4">
-              <ButtonTextAndThreeArrows
-                actionFn={() => availableFormActions()}
-                text="wyślij"
-                isBackground
-                disabled={!canFormBeSubmitted}
-              />
+            <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
+              <View className="flex-1">
+                <ButtonTextAndThreeArrows
+                  actionFn={() => availableFormActions()}
+                  text="wyślij"
+                  isBackground
+                  disabled={!canFormBeSubmitted}
+                />
+              </View>
+              <View className="ml-6">
+                <ButtonBack actionFn={closeFn} isOutline={false} />
+              </View>
             </View>
-            <View className="w-full mb-4">
-              <ButtonBack actionFn={closeFn} isOutline={false} />
-            </View>
-          </View> */}
+          </View>
         </KeyboardAwareScrollView>
         <KeyboardToolbar doneText={"gotowe"} />
       </SafeAreaView>

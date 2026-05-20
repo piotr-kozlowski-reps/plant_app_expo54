@@ -10,11 +10,6 @@ import Scanning from "@/features/shared/ui/scanning/Scanning";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
 import images from "@/features/shared/constants/images";
 import { Image } from "expo-image";
-// import Button from "@/features/shared/ui/button/Button";
-// import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-// import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
-// import Scanning from "@/features/shared/ui/scanning/Scanning";
-// import { CameraView } from "expo-camera";
 import { StatusBar } from "expo-status-bar";
 import { View, Text, Platform, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -31,10 +26,6 @@ import DeleteTrayFromPlantsComingUpsCounterListModal from "@/features/app/field_
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
 import CotyledonQuilting_QuantityAndSend_Modal from "./CotyledonQuilting_QuantityAndSend_Modal";
-// import { useScanValuesForCutGRU } from "../domain/useScanValuesForCutGRU";
-// import { useCutConfirmationFormik } from "../domain/useCutConfirmationFormik";
-// import ComboboxFormik from "@/features/shared/ui/combobox/ComboboxFormik";
-// import { useGetComboboxItems } from "../domain/useGetComboboxItems";
 
 type Props = {
   closeFn: () => void;
@@ -46,7 +37,6 @@ type Props = {
 export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
   ////vars
   const { closeFn, setIsLoading, ordnmb, chosenColor } = props;
-  //   const { comboboxCutHeights } = useGetComboboxItems();
 
   //scan values
   const {
@@ -186,8 +176,6 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
                         <CotyledonQuilting_TrayItem
                           key={tray.stk_id}
                           tray={tray}
-                          // actionFn={() => {}}
-                          // addQuantityToExistingTrayHandler={() => {}}
                           openDeleteModal={() => openModalToDeleteTray(tray)}
                         />
                       ))}
@@ -242,10 +230,10 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
       >
         <CotyledonQuilting_QuantityAndSend_Modal
           closeFn={() => setIsShowQuantityAndSendModal(false)}
-          // tray={currentTray}
-          // deleteExistingTrayHandler={deleteExistingTrayHandler}
-          // isShowLacksInfo={false}
-          // titleText={"Czy chcesz usunąć tacę z listy?"}
+          ordnmb={ordnmb}
+          chosenColor={chosenColor}
+          trays={trays}
+          setIsLoading={setIsLoading}
         />
       </ModalInternal>
     </View>
