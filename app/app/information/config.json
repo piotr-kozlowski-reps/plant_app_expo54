@@ -1,4 +1,5 @@
 {
   "label": "Informacja",
-  "order": 10
+  "order": 10,
+  "docsDir": "features/auth"
 }

@@ -27,7 +27,7 @@ export type AppRoute = {
   label: string;
   order: number;
   docsDir?: string;
-  outputDocFileName?: string;
+  // outputDocFileName?: string;
   routes?: AppRoute[];
 };
 export type AppRouteConfig = {

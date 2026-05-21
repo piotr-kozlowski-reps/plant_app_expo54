@@ -37,7 +37,26 @@ class HtmlTemplates {
     return html;
   }
 
-  generateRouteItemHtml() {}
+  generateRouteItemHtml(
+    route: AppRoute,
+    index: number,
+    path: string,
+    docsDir?: string,
+  ) {
+    let additionalCss = "";
+    if (index === 0)
+      additionalCss =
+        "border-left: 4px solid #444; border-right: 4px solid #444; background-color: var(--color-api-item); margin-top: 44px;";
+    if (index === 1)
+      additionalCss = "background-color: var(--color-procedure-item);";
+    if (index === 2) additionalCss = "background-color: var(--color-report);";
+
+    let html = `<div style="margin-left: ${index * 64 + 64}px; font-weight: 500; font-size: 16px; padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; ${additionalCss}">${route.label}
+${docsDir ? `<a href="${path}" style="margin-left: 32px; color: var(--color-dark); font-weight: 800; font-size: 14px; background-color: var(--color-background_nuance); padding: 2px 16px; border-radius: var(--border-radius); text-decoration: none;">Zobacz dokumentację</a>` : ""}
+    </div>`;
+
+    return html;
+  }
 
   generateH3Html(h3Title: string, index: number) {
     const html = `<h3 style="font-weight: 600; font-size: 14px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: ${index * 64 + 96}px; opacity: 1; margin-bottom: 8px;">${h3Title}</h3>`;
@@ -47,11 +66,31 @@ class HtmlTemplates {
   generateIndexHtml(htmlContent: string) {
     return this.generateMainHtml("dokumentacja index", htmlContent);
   }
-  generateRoutesHtml(routes: AppRoute[], index: number, htmlContent: string) {
-    for (const route of routes) {
+  generateRoutesHtml(
+    routes: AppRoute[],
+    index: number,
+    prevPath: string,
+  ): string {
+    let localHtmlContent = "";
+    const sortedRoute = routes.sort((a, b) => a.order - b.order);
+    for (const route of sortedRoute) {
       console.log({ route });
-      htmlContent += this.generateTopicHtml([route.label], index);
+      localHtmlContent += this.generateRouteItemHtml(
+        route,
+        index,
+        `${prevPath ? `${prevPath}__${route.path}` : `${route.path}`} `,
+        route.docsDir,
+      );
+      if (route.routes && route.routes.length > 0) {
+        localHtmlContent += this.generateRoutesHtml(
+          route.routes,
+          index + 1,
+          route.path,
+        );
+      }
     }
+
+    return localHtmlContent;
   }
 
   generateMainHtml(dir: string, htmlContent: string): string {

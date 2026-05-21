@@ -14,7 +14,7 @@ type WriteFileOptions = {
 
 class GenerateDocsService {
   async generateDocs(config: DocsConfig) {
-    this.initialClear(config.outputDir);
+    await this.initialClear(config.outputDir);
     await this.generateIndexHtml(config);
     // for (const input of inputDirs) {
     //   await this.generateHtmlDocsForDir(input, outputDir);
@@ -48,7 +48,7 @@ class GenerateDocsService {
       htmlContent += htmlTemplates.generateRoutesHtml(
         config.routes.routes,
         0,
-        htmlContent,
+        "",
       );
 
       const fullHtml = htmlTemplates.generateIndexHtml(htmlContent);

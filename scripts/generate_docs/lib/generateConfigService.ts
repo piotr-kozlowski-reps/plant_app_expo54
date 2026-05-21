@@ -163,8 +163,8 @@ class GenerateConfigService {
       order: config?.order || Number.MAX_SAFE_INTEGER,
     };
     if (config?.docsDir) newRoute.docsDir = config.docsDir;
-    if (config?.outputDocFileName)
-      newRoute.outputDocFileName = config.outputDocFileName;
+    // if (config?.outputDocFileName)
+    //   newRoute.outputDocFileName = config.outputDocFileName;
 
     return newRoute;
   }
