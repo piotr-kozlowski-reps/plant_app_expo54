@@ -167,6 +167,7 @@ export const ERROR_MESSAGES = {
     "Nie mogę przesłać danych. Brak informacji o wybranej aktywności.",
   LACK_OF_SCANNED_VALUE:
     "Nie mogę przesłać danych. Brak informacji o zeskanowanym ZP.",
+  LACK_OF_CHOOSEN_COLOR: "Nie wybrano koloru.",
   PROBLEM_WHEN_SENDING_DATA:
     "Wystąpił problem podczas przesyłania danych, spróbuj ponownie.",
   NO_FUTURE_DATA: "Data może być późniejsza niż dzisiaj.",
@@ -175,6 +176,9 @@ export const ERROR_MESSAGES = {
   PLAN_WAS_ALREADY_APPROVED: "Plan został już zatwierdzony.",
   THIS_EXTRA_WORK_CANNOT_BE_REPEATED:
     "Ta praca extra była już wykonana i nie może być powtarzana.",
+  MAX_NUMBER_OF_TRAYS_EXCEEDED_FOR_THAT_COLOR:
+    "Maksymalna ilość tac dla wybranego koloru została przekroczona.",
+  TRAY_ALREADY_ON_THE_LIST: "Taca już znajduje się na liście.",
 } as const;
 
 export const MESSAGES = {

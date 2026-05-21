@@ -15,7 +15,7 @@ type WriteFileOptions = {
 class GenerateDocsService {
   async generateDocs(config: DocsConfig) {
     this.initialClear(config.outputDir);
-    this.generateIndexHtml(config);
+    await this.generateIndexHtml(config);
     // for (const input of inputDirs) {
     //   await this.generateHtmlDocsForDir(input, outputDir);
     // }
@@ -40,8 +40,18 @@ class GenerateDocsService {
     }
   }
 
-  private generateIndexHtml(config: DocsConfig) {
-    let htmlContent = `<h1>Dokumentacja aplikacji: <b>${label}</b></h1>`;
+  private async generateIndexHtml(config: DocsConfig) {
+    const { appName, outputDir } = config;
+    let htmlContent = `<h1>Dokumentacja aplikacji: <b>${appName}</b></h1>`;
+
+    const fullHtml = htmlTemplates.generateIndexHtml(htmlContent);
+    await this.writeFile({
+      dir: "index",
+      outputDir,
+      outputFileName: "index",
+      extension: "html",
+      fullHtml,
+    });
   }
 
   private async generateHtmlDocsForDir(input: DocsInputDir, outputDir: string) {

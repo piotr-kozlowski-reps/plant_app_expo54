@@ -40,6 +40,10 @@ class HtmlTemplates {
     return html;
   }
 
+  generateIndexHtml(htmlContent: string) {
+    return this.generateMainHtml("dokumentacja index", htmlContent);
+  }
+
   generateMainHtml(dir: string, htmlContent: string): string {
     const fullHtml = `
         <!DOCTYPE html>

@@ -9,6 +9,9 @@ export type CotyledonQuiltingDTO = {
   twr_nazwa: string;
   tray_type: string;
   array_agg: string;
+  iletac: string;
+  cid: string;
+  mid: string;
 };
 export type CotyledonQuilting = {
   sordid: number;
@@ -19,6 +22,9 @@ export type CotyledonQuilting = {
   twr_nazwa: string;
   tray_type: string;
   array_agg: string;
+  iletac: number;
+  cid: number;
+  mid: number;
 };
 
 export type ColorForCotyledonQuiltingInput = {
@@ -36,6 +42,8 @@ export type CotyledonQuiltingPostDTO = {
   twr_kod: string;
   twr_nazwa: string;
   quantity: number;
+  cid: number;
+  mid: number;
   trays: Pick<Tray, "stk_id" | "scanned_raw_value">[];
 };
 

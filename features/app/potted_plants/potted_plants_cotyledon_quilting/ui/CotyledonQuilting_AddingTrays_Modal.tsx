@@ -57,6 +57,7 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
   } = useScanValuesForAddingTraysToPottedPlants(
     setIsLoading,
     cotyledonQuiltingArray,
+    chosenColor,
   );
 
   const openModalToDeleteTray = (tray: TrayShortInfo) => {

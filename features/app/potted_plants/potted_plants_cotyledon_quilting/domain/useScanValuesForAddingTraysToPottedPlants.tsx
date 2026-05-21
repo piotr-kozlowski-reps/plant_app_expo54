@@ -13,6 +13,7 @@ import { useGetTrayInfoForDon_Report1711 } from "@/features/shared/data-access/u
 export const useScanValuesForAddingTraysToPottedPlants = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   cotyledonQuiltingArray: CotyledonQuilting[],
+  chosenColor: CotyledonQuilting | null,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -76,6 +77,43 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       return;
     }
 
+    /**
+     * @public
+     * @guard
+     * Musi byc wybrany kolor, jeżeli nie to -> info + koniec procedury.
+     */
+    if (!chosenColor) {
+      toast.warning(ERROR_MESSAGES.LACK_OF_CHOOSEN_COLOR);
+      return;
+    }
+
+    /**
+     * @public
+     * @guard
+     * Weryfikacja maksymalnej ilości tac, jakie mogą być wysiane dla tego koloru. Jeżeli ilość skanowanych tac, będzie większa niż dopuszczalna-> info + koniec procedury.
+     */
+    const isMaxNumberOfTraysExceeded = checkIfMaxNumberOfTraysExceeded(
+      chosenColor,
+      trays,
+    );
+    if (isMaxNumberOfTraysExceeded) {
+      toast.warning(ERROR_MESSAGES.MAX_NUMBER_OF_TRAYS_EXCEEDED_FOR_THAT_COLOR);
+      return;
+    }
+
+    /**
+     * @public
+     * @guard
+     * Jeżeli zeskanowana taca, już znajduje się na liście -> info + koniec procedury.
+     */
+    const foundTrayOnTheList = trays.find(
+      (tray) => tray.stk_id === getPureTrayValue(scannedValue),
+    );
+    if (foundTrayOnTheList) {
+      toast.warning(ERROR_MESSAGES.TRAY_ALREADY_ON_THE_LIST);
+      return;
+    }
+
     setIsLoading(true);
     try {
       const scannedTrayInfo = await getTrayInfoForDon_Report1711(scannedValue);
@@ -129,6 +167,21 @@ export const useScanValuesForAddingTraysToPottedPlants = (
   };
 
   //helpers
+  function checkIfMaxNumberOfTraysExceeded(
+    chosenColor: CotyledonQuilting,
+    trays: TrayShortInfo[],
+  ): boolean {
+    const numberOfAlreadyScannedTraysForThatColor =
+      getTraysArrayOutOfArrayAsString(chosenColor.array_agg).length;
+    const numberOfAllTraysScannedWithCurrent =
+      trays.length + numberOfAlreadyScannedTraysForThatColor + 1;
+    const maxNumberOfAllowedTraysForThatColor = chosenColor.iletac;
+
+    return (
+      numberOfAllTraysScannedWithCurrent > maxNumberOfAllowedTraysForThatColor
+    );
+  }
+
   function getErrorMessageInfo(allowedTrayType: string, scannedValue: string) {
     return `Zeskanowałeś tacę: "${getPureTrayValue(scannedValue)}". Dozwolony typ tacy dla tego ZP'ka to: "${allowedTrayType}".`;
   }
@@ -147,10 +200,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       const traysArrayAsString = colorKind.array_agg;
       if (traysArrayAsString === "{NULL}") continue;
 
-      const traysArray = traysArrayAsString
-        .replace("{", "")
-        .replace("}", "")
-        .split(",");
+      const traysArray = getTraysArrayOutOfArrayAsString(traysArrayAsString);
       const trayId = getPureTrayValue(scannedValue);
 
       if (traysArray.includes(trayId)) {
@@ -159,6 +209,19 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     }
 
     return null;
+  }
+
+  function getTraysArrayOutOfArrayAsString(
+    traysArrayAsString: string,
+  ): string[] {
+    if (traysArrayAsString === "{NULL}") return [];
+
+    const traysArray = traysArrayAsString
+      .replace("{", "")
+      .replace("}", "")
+      .split(",");
+
+    return traysArray;
   }
 
   // function resetWholeState() {

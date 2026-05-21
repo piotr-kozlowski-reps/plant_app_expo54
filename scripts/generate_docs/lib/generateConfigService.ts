@@ -6,19 +6,23 @@ import {
 } from "./generateDocsTypes";
 import fs from "fs/promises";
 import path from "path";
+import { appDocsMainConfig } from "./appDocsMainConfig";
 
 class GenerateConfigService {
   private outputDir: string;
   private appDir: string;
+  private appName: string;
 
-  constructor(outputDir: string, appDir: string) {
+  constructor(outputDir: string, appDir: string, appName: string) {
     this.outputDir = outputDir;
     this.appDir = appDir;
+    this.appName = appName;
   }
 
   async generateConfig(): Promise<DocsConfig> {
     const config: DocsConfig = {
       outputDir: this.outputDir,
+      appName: this.appName,
     };
 
     const appRoutesConfig = await this.getAppRoutesConfig(this.appDir);
@@ -168,6 +172,7 @@ class GenerateConfigService {
 
 ////export init
 export const generateConfigService = new GenerateConfigService(
-  "docs",
-  path.join(process.cwd(), "app", "app"),
+  appDocsMainConfig.outputDir,
+  appDocsMainConfig.appDir,
+  appDocsMainConfig.appName,
 );

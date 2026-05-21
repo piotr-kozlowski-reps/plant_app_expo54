@@ -60,6 +60,8 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
           twr_kod: chosenColor.twr_kod,
           quantity: values.quantity,
           twr_nazwa: chosenColor.twr_nazwa,
+          cid: chosenColor.cid,
+          mid: chosenColor.mid,
           trays: trays.map((tray) => ({
             stk_id: tray.stk_id,
             scanned_raw_value: tray.scanned_raw_value,
