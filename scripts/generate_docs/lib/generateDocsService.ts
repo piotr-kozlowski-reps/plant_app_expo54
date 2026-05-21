@@ -44,14 +44,22 @@ class GenerateDocsService {
     const { appName, outputDir } = config;
     let htmlContent = `<h1>Dokumentacja aplikacji: <b>${appName}</b></h1>`;
 
-    const fullHtml = htmlTemplates.generateIndexHtml(htmlContent);
-    await this.writeFile({
-      dir: "index",
-      outputDir,
-      outputFileName: "index",
-      extension: "html",
-      fullHtml,
-    });
+    if (config.routes) {
+      htmlContent += htmlTemplates.generateRoutesHtml(
+        config.routes.routes,
+        0,
+        htmlContent,
+      );
+
+      const fullHtml = htmlTemplates.generateIndexHtml(htmlContent);
+      await this.writeFile({
+        dir: "index",
+        outputDir,
+        outputFileName: "index",
+        extension: "html",
+        fullHtml,
+      });
+    }
   }
 
   private async generateHtmlDocsForDir(input: DocsInputDir, outputDir: string) {

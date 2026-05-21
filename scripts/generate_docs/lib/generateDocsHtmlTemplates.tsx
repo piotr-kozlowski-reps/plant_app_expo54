@@ -1,3 +1,5 @@
+import { AppRoute } from "./generateDocsTypes";
+
 class HtmlTemplates {
   generateTopicHtml(commentPrepared: string[], index: number): string {
     const html = `<div style="margin-left: ${index * 32 + 32}px; font-weight: 600; text-decoration: underline; font-size: 16px">${this.generateInsideLines(commentPrepared)}</div>`;
@@ -35,6 +37,8 @@ class HtmlTemplates {
     return html;
   }
 
+  generateRouteItemHtml() {}
+
   generateH3Html(h3Title: string, index: number) {
     const html = `<h3 style="font-weight: 600; font-size: 14px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: ${index * 64 + 96}px; opacity: 1; margin-bottom: 8px;">${h3Title}</h3>`;
     return html;
@@ -42,6 +46,12 @@ class HtmlTemplates {
 
   generateIndexHtml(htmlContent: string) {
     return this.generateMainHtml("dokumentacja index", htmlContent);
+  }
+  generateRoutesHtml(routes: AppRoute[], index: number, htmlContent: string) {
+    for (const route of routes) {
+      console.log({ route });
+      htmlContent += this.generateTopicHtml([route.label], index);
+    }
   }
 
   generateMainHtml(dir: string, htmlContent: string): string {
