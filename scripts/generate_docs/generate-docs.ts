@@ -6,9 +6,8 @@ import { generateDocsService } from "./lib/generateDocsService";
 
 async function main() {
   const config = await generateConfigService.generateConfig();
-  console.log({ config });
-  // await generateDocsService.generateDocs(config.inputDirs, config.outputDir);
-  // console.log("✅ Docs generated");
+  await generateDocsService.generateDocs(config);
+  console.log("✅ Docs generated");
 }
 
 main();

@@ -8,6 +8,7 @@ import { toast } from "sonner-native";
 import { useGetScannedTrayInfo } from "@/features/shared/data-access/useGetScannedTrayInfo";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
+import { useGetTrayInfoForDon_Report1711 } from "@/features/shared/data-access/useGetTrayInfoForDon_Report1711";
 
 export const useScanValuesForAddingTraysToPottedPlants = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -17,7 +18,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
   const player = useAudioPlayer(audioScanSoundSource);
   const { checkWhatValueWasScanned, getPureTrayValue } =
     useCheckWhatValueIsScannedHelpers();
-  // const { getScannedTrayInfo } = useGetScannedTrayInfo();
+  const { getTrayInfoForDon_Report1711 } = useGetTrayInfoForDon_Report1711();
 
   //states
   const [qrLock, setQrLock] = useState(true);
@@ -48,7 +49,6 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       return;
     }
 
-    //allowed conditions
     /**
      * @public
      * @guard
@@ -61,20 +61,47 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       return;
     }
 
+    /**
+     * @public
+     * @guard
+     * Jeżeli zeskanowana taca ma inny typ niż przekazany w cotyledonQuiltingArray[].tray_type -> info + koniec procedury.
+     */
+    const allowedTrayType = cotyledonQuiltingArray[0].tray_type;
+    const isProperScannedTrayType = getIsProperScannedTrayType(
+      scannedValue,
+      allowedTrayType,
+    );
+    if (!isProperScannedTrayType) {
+      toast.warning(getErrorMessageInfo(allowedTrayType, scannedValue));
+      return;
+    }
+
     setIsLoading(true);
     try {
-      // const scannedTrayInfo = await getScannedTrayInfo(scannedValue);
-      // if (!scannedTrayInfo) return;
+      const scannedTrayInfo = await getTrayInfoForDon_Report1711(scannedValue);
+      if (!scannedTrayInfo) return;
+
+      /**
+       * @public
+       * @guard
+       * Zeskanowana taca musi być umyta.
+       * Jeżeli taca ma inny paramert event_type niz "WASH" -> info + koniec procedury.
+       */
+      if (scannedTrayInfo.event_type !== "WASH") {
+        toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_WASHED);
+        return;
+      }
+
       setTrays((prevTrays) => {
         const foundTray = prevTrays.find(
-          (item) => item.stk_id === getPureTrayValue(scannedValue),
+          (item) => item.stk_id === scannedTrayInfo.stk_id,
         );
         if (foundTray) return prevTrays;
 
         return [
           ...prevTrays,
           {
-            stk_id: getPureTrayValue(scannedValue),
+            stk_id: scannedTrayInfo.stk_id,
             scanned_raw_value: scannedValue,
           },
         ];
@@ -102,6 +129,16 @@ export const useScanValuesForAddingTraysToPottedPlants = (
   };
 
   //helpers
+  function getErrorMessageInfo(allowedTrayType: string, scannedValue: string) {
+    return `Zeskanowałeś tacę: "${getPureTrayValue(scannedValue)}". Dozwolony typ tacy dla tego ZP'ka to: "${allowedTrayType}".`;
+  }
+  function getIsProperScannedTrayType(
+    scannedValue: string,
+    allowedTrayType: string,
+  ): boolean {
+    const trayId = getPureTrayValue(scannedValue);
+    return trayId.startsWith(allowedTrayType);
+  }
   function getIfZpAlreadyIncludesScannedTray(
     scannedValue: string,
     cotyledonQuiltingArray: CotyledonQuilting[],

@@ -1,3 +1,7 @@
+export const appDocsMainConfig = {
+  outputDir: "docs",
+};
+
 // import { DocsConfig } from "./generateDocsTypes";
 
 // export const generateDocsConfig: DocsConfig = {

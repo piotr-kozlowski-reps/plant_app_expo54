@@ -22,7 +22,7 @@ class GenerateConfigService {
     };
 
     const appRoutesConfig = await this.getAppRoutesConfig(this.appDir);
-    console.log(JSON.stringify(appRoutesConfig, null, 2));
+    config.routes = appRoutesConfig;
 
     return config;
   }

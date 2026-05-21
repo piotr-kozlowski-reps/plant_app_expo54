@@ -1,7 +1,7 @@
 import fg from "fast-glob";
 import fs from "fs-extra";
 import path from "path";
-import { CommentType, DocsInputDir } from "./generateDocsTypes";
+import { CommentType, DocsConfig, DocsInputDir } from "./generateDocsTypes";
 import { htmlTemplates } from "./generateDocsHtmlTemplates";
 
 type WriteFileOptions = {
@@ -13,11 +13,12 @@ type WriteFileOptions = {
 };
 
 class GenerateDocsService {
-  async generateDocs(inputDirs: DocsInputDir[], outputDir: string) {
-    this.initialClear(outputDir);
-    for (const input of inputDirs) {
-      await this.generateHtmlDocsForDir(input, outputDir);
-    }
+  async generateDocs(config: DocsConfig) {
+    this.initialClear(config.outputDir);
+    this.generateIndexHtml(config);
+    // for (const input of inputDirs) {
+    //   await this.generateHtmlDocsForDir(input, outputDir);
+    // }
   }
 
   //// priv
@@ -37,6 +38,10 @@ class GenerateDocsService {
     } catch (error) {
       console.error((error as Error).message);
     }
+  }
+
+  private generateIndexHtml(config: DocsConfig) {
+    let htmlContent = `<h1>Dokumentacja aplikacji: <b>${label}</b></h1>`;
   }
 
   private async generateHtmlDocsForDir(input: DocsInputDir, outputDir: string) {

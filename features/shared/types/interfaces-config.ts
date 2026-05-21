@@ -28,6 +28,7 @@ export type Config = {
   edocReport_NitrogenIrrigationList: number;
   edocReport_ZpNameData: number;
   edocReport_zpToCotyledonQuilting: number;
+  edocReport_TrayForDonInfo: number;
 
   customRegister_PhoneInfo: number;
   customRegister_AllLocalizations: number;

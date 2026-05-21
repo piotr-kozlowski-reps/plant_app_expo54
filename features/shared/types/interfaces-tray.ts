@@ -40,3 +40,32 @@ export type TrayResponse = {
 export type RiseCountResponse = string[];
 
 export type TrayShortInfo = Pick<Tray, "stk_id" | "scanned_raw_value">;
+
+//tray for don
+export type TrayForDonDTO = {
+  id____: string;
+  stk_id: string;
+  ordnmb: string;
+  stkprt: string;
+  stkdat: string;
+  bacdat: null | string;
+  is_del: string;
+  event_dat: string;
+  event_type: string;
+};
+export type TrayForDon = {
+  id____: number;
+  stk_id: string;
+  ordnmb: string;
+  stkprt: number;
+  stkdat: Date;
+  bacdat: null | Date;
+  is_del: boolean;
+  event_dat: Date;
+  event_type: string;
+};
+export type TrayForDonResponse = {
+  data: {
+    resultMainQuery: TrayForDonDTO[] | -1;
+  };
+};

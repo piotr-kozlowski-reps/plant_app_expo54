@@ -1,6 +1,8 @@
 export type DocsConfig = {
   // inputDirs: DocsInputDir[];
+  appName: string;
   outputDir: string;
+  routes?: AppRoutesConfig;
 };
 
 export type DocsInputDir = {

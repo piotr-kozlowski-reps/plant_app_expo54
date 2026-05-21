@@ -48,6 +48,7 @@ export const ERROR_MESSAGES = {
     "Nowa taca nie została umyta lub jest przeznaczona do zniszczenia! Wykonaj czynności od początku.",
   TRAY_IS_NOT_SOWN:
     "Wymieniana taca nie jest wysiana! Wykonaj czynności od początku.",
+  TRAY_IS_NOT_WASHED: "Zeskanowałeś nieumytą tacę.",
   WRONG_PIN: "Wpisano zły PIN.",
   NO_PIN_FOR_MODULE: "Ten moduł nie posiada PINu.",
   TRAY_ALREADY_DESTROYED:
