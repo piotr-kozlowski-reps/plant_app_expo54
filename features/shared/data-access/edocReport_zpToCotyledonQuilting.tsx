@@ -44,7 +44,7 @@ const edocReport_zpToCotyledonQuilting = new EdocReport<
     new MapDoNotMap<CotyledonQuilting, string>("twr_kod"),
     new MapDoNotMap<CotyledonQuilting, string>("twr_nazwa"),
     new MapDoNotMap<CotyledonQuilting, string>("tray_type"),
-    new MapDoNotMap<CotyledonQuilting, string>("array_agg"),
+    new MapDoNotMap<CotyledonQuilting, string | null>("array_agg"),
     new MapStringIntoInteger<CotyledonQuilting>("iletac"),
     new MapStringIntoInteger<CotyledonQuilting>("cid"),
     new MapStringIntoInteger<CotyledonQuilting>("mid"),

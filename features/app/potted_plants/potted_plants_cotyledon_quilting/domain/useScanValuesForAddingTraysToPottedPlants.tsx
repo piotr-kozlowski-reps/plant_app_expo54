@@ -171,8 +171,10 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     chosenColor: CotyledonQuilting,
     trays: TrayShortInfo[],
   ): boolean {
-    const numberOfAlreadyScannedTraysForThatColor =
-      getTraysArrayOutOfArrayAsString(chosenColor.array_agg).length;
+    const arrayAgg = chosenColor.array_agg;
+    const numberOfAlreadyScannedTraysForThatColor = arrayAgg
+      ? getTraysArrayOutOfArrayAsString(arrayAgg).length
+      : 0;
     const numberOfAllTraysScannedWithCurrent =
       trays.length + numberOfAlreadyScannedTraysForThatColor + 1;
     const maxNumberOfAllowedTraysForThatColor = chosenColor.iletac;
@@ -198,7 +200,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
   ): string | null {
     for (const colorKind of cotyledonQuiltingArray) {
       const traysArrayAsString = colorKind.array_agg;
-      if (traysArrayAsString === "{NULL}") continue;
+      if (!traysArrayAsString || traysArrayAsString === "{NULL}") continue;
 
       const traysArray = getTraysArrayOutOfArrayAsString(traysArrayAsString);
       const trayId = getPureTrayValue(scannedValue);

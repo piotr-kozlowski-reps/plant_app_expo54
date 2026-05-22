@@ -99,7 +99,7 @@ class GenerateDocsService {
 
     for (const route of routes) {
       if (route.docsDir) {
-        await this.generateHtmlDocsForDir(input, outputDir);
+        // await this.generateHtmlDocsForDir(input, outputDir);
       }
 
       const subRoutes = route.routes;

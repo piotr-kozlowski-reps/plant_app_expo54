@@ -8,7 +8,7 @@ export type CotyledonQuiltingDTO = {
   twr_kod: string;
   twr_nazwa: string;
   tray_type: string;
-  array_agg: string;
+  array_agg: string | null;
   iletac: string;
   cid: string;
   mid: string;
@@ -21,7 +21,7 @@ export type CotyledonQuilting = {
   twr_kod: string;
   twr_nazwa: string;
   tray_type: string;
-  array_agg: string;
+  array_agg: string | null;
   iletac: number;
   cid: number;
   mid: number;
