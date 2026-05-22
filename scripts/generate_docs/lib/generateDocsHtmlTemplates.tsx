@@ -52,14 +52,14 @@ class HtmlTemplates {
     if (index === 2) additionalCss = "background-color: var(--color-report);";
 
     let html = `<div style="margin-left: ${index * 64 + 64}px; font-weight: 500; font-size: 16px; padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; ${additionalCss}">${route.label}
-${docsDir ? `<a href="${path}" style="margin-left: 32px; color: var(--color-dark); font-weight: 800; font-size: 14px; background-color: var(--color-background_nuance); padding: 2px 16px; border-radius: var(--border-radius); text-decoration: none;">Zobacz dokumentację</a>` : ""}
+${docsDir ? `<a href="${path.trim() + ".html"}" style="margin-left: 32px; color: var(--color-dark); font-weight: 800; font-size: 14px; background-color: var(--color-background_nuance); padding: 2px 16px; border-radius: var(--border-radius); text-decoration: none;">Zobacz dokumentację</a>` : ""}
     </div>`;
 
     return html;
   }
 
   generateH3Html(h3Title: string, index: number) {
-    const html = `<h3 style="font-weight: 600; font-size: 14px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: ${index * 64 + 96}px; opacity: 1; margin-bottom: 8px;">${h3Title}</h3>`;
+    const html = `<h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: ${index * 64 + 96}px; opacity: 1; margin-bottom: 8px;">${h3Title}</h3>`;
     return html;
   }
 
@@ -75,17 +75,18 @@ ${docsDir ? `<a href="${path}" style="margin-left: 32px; color: var(--color-dark
     let localHtmlContent = "";
     const sortedRoute = routes.sort((a, b) => a.order - b.order);
     for (const route of sortedRoute) {
+      const currentPath = `${prevPath ? `${prevPath}__${route.path}` : `${route.path}`}`;
       localHtmlContent += this.generateRouteItemHtml(
         route,
         index,
-        `${prevPath ? `${prevPath}__${route.path}` : `${route.path}`} `,
+        currentPath,
         route.docsDir,
       );
       if (route.routes && route.routes.length > 0) {
         localHtmlContent += this.generateRoutesHtml(
           route.routes,
           index + 1,
-          route.path,
+          currentPath,
         );
       }
     }
@@ -146,11 +147,22 @@ ${docsDir ? `<a href="${path}" style="margin-left: 32px; color: var(--color-dark
             h2 {
             font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
             }
+            h4 {
+            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
             p {
             padding-top: -4px; padding-bottom: -4px;
             }
             code { background: #f5f5f5; padding: 2px 4px; }
             pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+
+            .back-button {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-background_nuance); color: var(--color-dark); padding-top: 4px; padding-bottom: 6px; padding-left: 16px; padding-right: 16px; border: 2px solid var(--color-dark); border-radius: var(--border-radius); text-decoration: none; 
+            }
+            .back-button:hover {
+            background-color: var(--color-dark); color: var(--color-background_nuance);
+            }
+
           </style>
         </head>
         <body>

@@ -26,12 +26,13 @@ type IndividualDocsFilesOptions = {
 
 type HtmlDocsForDirOptions = {
   dir: string;
-  outputFileName?: string;
   label: string;
+  prevLabel: string;
   outputDir: string;
+  path: string;
+  prevPath: string;
+  isShowBackToIndex?: boolean;
   // routes: AppRoute[];
-  // prevPath: string;
-  // prevLabel: string;
 };
 
 class GenerateDocsService {
@@ -39,9 +40,6 @@ class GenerateDocsService {
     await this.initialClear(config.outputDir);
     await this.generateIndexHtml(config);
     await this.generateIndividualDocsFiles(config);
-    // for (const input of inputDirs) {
-    //   await this.generateHtmlDocsForDir(input, outputDir);
-    // }
   }
 
   //// priv main
@@ -99,7 +97,16 @@ class GenerateDocsService {
 
     for (const route of routes) {
       if (route.docsDir) {
-        // await this.generateHtmlDocsForDir(input, outputDir);
+        await this.generateHtmlDocsForDir({
+          dir: route.docsDir,
+          label: route.label,
+          prevLabel: prevLabel,
+          outputDir,
+          path: route.path,
+          prevPath: prevPath,
+          isShowBackToIndex: true,
+          // outputFileName: route.path,
+        });
       }
 
       const subRoutes = route.routes;
@@ -119,27 +126,48 @@ class GenerateDocsService {
     }
   }
 
-  private async generateHtmlDocsForDir(input: DocsInputDir, outputDir: string) {
-    // const { dir, outputFileName, label } = input;
-    // const files = await fg([`${dir}/**/*.{ts,tsx}`], {
-    //   ignore: ["**/*.d.ts"],
-    // });
-    // let htmlContent = `<h1>Dokumentacja dla: <b>${label}</b></h1>`;
-    // for (const file of files) {
-    //   const fileContent = await fs.readFile(file, "utf-8");
-    //   const comments = this.extractDocComments(fileContent);
-    //   if (comments.length === 0) continue;
-    //   htmlContent += `<h2> ${file}</h2>`;
-    //   htmlContent += await this.processComments(comments, 0);
-    // }
-    // const fullHtml = htmlTemplates.generateMainHtml(dir, htmlContent);
-    // await this.writeFile({
-    //   dir,
-    //   outputDir,
-    //   outputFileName,
-    //   extension: "html",
-    //   fullHtml,
-    // });
+  private async generateHtmlDocsForDir(options: HtmlDocsForDirOptions) {
+    const {
+      dir,
+      label,
+      prevLabel,
+      outputDir,
+      path,
+      prevPath,
+      isShowBackToIndex,
+    } = options;
+    const files = await fg([`${dir}/**/*.{ts,tsx}`], {
+      ignore: ["**/*.d.ts"],
+    });
+
+    const currentLabel = `${prevLabel ? `${prevLabel} -> ${label}` : `${label}`}`;
+    let htmlContent = `<h1>Dokumentacja dla: <b>${currentLabel}</b></h1>`;
+
+    if (isShowBackToIndex) {
+      htmlContent += `<a href="./index.html" class="back-button">powrót do indexu</a>`;
+    }
+
+    const currentPath = `${prevPath ? `${prevPath}__${path}` : `${path}`}`;
+    for (const file of files) {
+      const fileContent = await fs.readFile(file, "utf-8");
+      const comments = this.extractDocComments(fileContent);
+      if (comments.length === 0) continue;
+      htmlContent += `<h4> ${file}</h4>`;
+      htmlContent += await this.processComments(comments, 0);
+    }
+
+    if (isShowBackToIndex) {
+      htmlContent += `<a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót do indexu</a>`;
+    }
+
+    const fullHtml = htmlTemplates.generateMainHtml(dir, htmlContent);
+    await this.writeFile({
+      dir,
+      outputDir,
+      outputFileName: currentPath,
+      extension: "html",
+      fullHtml,
+    });
   }
 
   private async processComments(
