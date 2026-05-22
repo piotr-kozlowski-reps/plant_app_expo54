@@ -28,6 +28,10 @@ export type PottedPlantsSubmodules = ModuleOverallPermission & {
   potted_plants_quantity___overallVisibility: boolean;
   potted_plants_zp___overallVisibility: boolean;
   potted_plants_cotyledon_quilting: boolean;
+
+  //potted_plants_works
+  potted_plants_works_internal_transport: boolean;
+  potted_plants_works_order_to_internal_transport: boolean;
 };
 export type HobbyCropsSubmodules = ModuleOverallPermission & {
   hobby_crops___overallVisibility: boolean;
@@ -106,7 +110,8 @@ export type AllCropsOrdersSubmodules =
   | "field_crops_works_internal_transport"
   | "field_crops_works_order_export_to_customer"
   | "greenhouse_crops_works_order_to_spacing"
-  | "greenhouse_crops_works_order_export_to_customer";
+  | "greenhouse_crops_works_order_export_to_customer"
+  | "potted_plants_works_order_export_to_customer";
 
 export type AllExportToCustomerSubmodules =
   | "field_crops_works_order_export_to_customer"
