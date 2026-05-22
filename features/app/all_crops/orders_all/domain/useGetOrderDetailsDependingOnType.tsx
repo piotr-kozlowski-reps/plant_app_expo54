@@ -3,7 +3,7 @@ import { InHowManyDaysKeyValue } from "@/features/shared/types/interfaces-genera
 import { useEffect, useState } from "react";
 
 export const useGetOrderDetailsDependingOnType = (
-  whatOrderType: AllCropsOrdersSubmodules
+  whatOrderType: AllCropsOrdersSubmodules,
 ) => {
   //submodule name
   const [submoduleName, setSubmoduleName] = useState("");
@@ -28,20 +28,25 @@ export const useGetOrderDetailsDependingOnType = (
       return;
     }
 
+    if (whatOrderType === "potted_plants_works_order_to_internal_transport") {
+      setSubmoduleName("Zlecenie transportu");
+      return;
+    }
+
     throw new Error(
-      "useGetOrderDetailsDependingOnType -> whatOrderType is not valid"
+      "useGetOrderDetailsDependingOnType -> whatOrderType is not valid",
     );
   }, [whatOrderType]);
 
   //inHowManyDaysPlaceOrder_Array
   const [inHowManyDaysPlaceOrder_Array, setInHowManyDaysPlaceOrder_Array] =
     useState<InHowManyDaysKeyValue[]>(
-      getProperArrayForInHowManyDaysPlaceOrder(whatOrderType)
+      getProperArrayForInHowManyDaysPlaceOrder(whatOrderType),
     );
 
   //in how many days modal text
   const [inHowManyDaysText, setInHowManyDaysText] = useState(
-    getInHowManyDaysText(whatOrderType)
+    getInHowManyDaysText(whatOrderType),
   );
 
   ////return
@@ -53,12 +58,13 @@ export const useGetOrderDetailsDependingOnType = (
 
   ////helpers
   function getInHowManyDaysText(
-    whatOrderType: AllCropsOrdersSubmodules
+    whatOrderType: AllCropsOrdersSubmodules,
   ): string {
     if (
       whatOrderType === "field_crops_works_order_to_hardener" ||
       whatOrderType === "field_crops_works_internal_transport" ||
-      whatOrderType === "greenhouse_crops_works_order_to_spacing"
+      whatOrderType === "greenhouse_crops_works_order_to_spacing" ||
+      "potted_plants_works_order_to_internal_transport"
     )
       return "Wybierz za ile dni";
     if (
@@ -70,7 +76,7 @@ export const useGetOrderDetailsDependingOnType = (
     throw new Error("getInHowManyDaysText -> whatOrderType is not valid");
   }
   function getProperArrayForInHowManyDaysPlaceOrder(
-    whatOrderType: AllCropsOrdersSubmodules
+    whatOrderType: AllCropsOrdersSubmodules,
   ): InHowManyDaysKeyValue[] {
     if (whatOrderType === "greenhouse_crops_works_order_to_spacing") {
       return [
@@ -173,8 +179,21 @@ export const useGetOrderDetailsDependingOnType = (
       ];
     }
 
+    if (whatOrderType === "potted_plants_works_order_to_internal_transport") {
+      return [
+        // { name: "dziś", value: 0 },
+        { name: "+ 1 dzień", value: 1 },
+        { name: "+ 2 dni", value: 2 },
+        { name: "+ 3 dni", value: 3 },
+        { name: "+ 4 dni", value: 4 },
+        { name: "+ 5 dni", value: 5 },
+        { name: "+ 6 dni", value: 6 },
+        { name: "+ 7 dni", value: 7 },
+      ];
+    }
+
     throw new Error(
-      "getProperArrayForInHowManyDaysPlaceOrder -> whatOrderType is not valid"
+      "getProperArrayForInHowManyDaysPlaceOrder -> whatOrderType is not valid",
     );
   }
 };

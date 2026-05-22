@@ -255,7 +255,7 @@ export const useLoginLogic = () => {
 
           potted_plants: {
             is_whole_module_available: true,
-            potted_plants_works___overallVisibility: false,
+            potted_plants_works___overallVisibility: true,
             potted_plants_quantity___overallVisibility: false,
             potted_plants_zp___overallVisibility: false,
             potted_plants_cotyledon_quilting: true,

@@ -8,7 +8,7 @@ export function ErrorBoundary({ error }: ErrorBoundaryProps) {
 const PottedPlantsOrderInternalTransportPage = () => {
   return (
     <>
-      <AllCropsOrdersAllEntryPage whatOrderType="potted_plants_works_order_export_to_customer" />
+      <AllCropsOrdersAllEntryPage whatOrderType="potted_plants_works_order_to_internal_transport" />
     </>
   );
 };

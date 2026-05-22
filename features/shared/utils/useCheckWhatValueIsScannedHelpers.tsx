@@ -17,6 +17,15 @@ export const useCheckWhatValueIsScannedHelpers = () => {
       value.replace("ZLEC_", "").replace("GRU", "").length > 0;
     return isPrefixCorrect && isSuffixCorrect && isInteriorAnyLength;
   };
+
+  const checkIfValueIsZP_DON = (value: string): boolean => {
+    const isPrefixCorrect = value.startsWith("ZLEC_ZP");
+    const isSuffixCorrect = value.endsWith("DON");
+    const isInteriorAnyLength =
+      value.replace("ZLEC_", "").replace("DON", "").length > 0;
+    return isPrefixCorrect && isSuffixCorrect && isInteriorAnyLength;
+  };
+
   const checkIfValueIsZP_ROZ = (value: string): boolean => {
     const isPrefixCorrect = value.startsWith("ZLEC_ZP");
     const isSuffixCorrect = value.endsWith("ROZ");
@@ -26,12 +35,13 @@ export const useCheckWhatValueIsScannedHelpers = () => {
   };
 
   const checkWhatValueWasScanned = (
-    scannedValue: string
+    scannedValue: string,
   ): TypeOfScannedValue => {
     if (checkIfValueIsTray(scannedValue)) return "tray";
     if (checkIfValueIsField(scannedValue)) return "field";
     if (checkIfValueIsZP_GRU(scannedValue)) return "zp_gru";
     if (checkIfValueIsZP_ROZ(scannedValue)) return "zp_roz";
+    if (checkIfValueIsZP_DON(scannedValue)) return "zp_don";
     return "unknown";
   };
 

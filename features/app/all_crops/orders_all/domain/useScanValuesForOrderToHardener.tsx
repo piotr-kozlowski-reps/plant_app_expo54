@@ -68,11 +68,16 @@ export const useScanValuesForOrderToHardener = (
       "tray",
       "field",
       "zp_gru",
+      "zp_don",
     ]);
-    if (!isScannedDataCorrect) return;
+    if (!isScannedDataCorrect) {
+      toast.warning(ERROR_MESSAGES.SCANNED_WRONG_ELEMENT);
+      return;
+    }
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
-    const isZP = whatValueWasScanned === "zp_gru";
+    const isZP =
+      whatValueWasScanned === "zp_gru" || whatValueWasScanned === "zp_don";
     const isField = whatValueWasScanned === "field";
     const isTray = whatValueWasScanned === "tray";
 
@@ -80,8 +85,12 @@ export const useScanValuesForOrderToHardener = (
       setIsLoading(true);
 
       //allowed conditions
+      //////////////
       if (isZP) {
-        await scanZpOrTrayForOrderToHardenerHandler(scannedValue, "zp_gru");
+        await scanZpOrTrayForOrderToHardenerHandler(
+          scannedValue,
+          whatValueWasScanned,
+        );
         return;
       }
 
@@ -193,7 +202,11 @@ export const useScanValuesForOrderToHardener = (
     scannedValue: string,
     whatValueWasScanned: TypeOfScannedValue,
   ) {
-    if (whatValueWasScanned !== "tray" && whatValueWasScanned !== "zp_gru") {
+    if (
+      whatValueWasScanned !== "tray" &&
+      whatValueWasScanned !== "zp_gru" &&
+      whatValueWasScanned !== "zp_don"
+    ) {
       toast.warning(
         ERROR_MESSAGES.WRONG_PARAMETER +
           "-> " +
@@ -202,8 +215,9 @@ export const useScanValuesForOrderToHardener = (
       );
       return;
     }
+    /////////////////////
 
-    if (whatValueWasScanned === "zp_gru") {
+    if (whatValueWasScanned === "zp_gru" || whatValueWasScanned === "zp_don") {
       //check if ZP is already on list
       const scannedOrdnmb = getPureZPValue(scannedValue);
       if (

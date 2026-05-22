@@ -80,6 +80,7 @@ export const useSendOrderToHardener = (
 
     try {
       setIsLoading(true);
+      console.log({ orderToHardenerDataToBeSent });
       await sendToServer(orderToHardenerDataToBeSent);
     } catch (error) {
       errorHandler(error as Error);
@@ -131,7 +132,11 @@ export const useSendOrderToHardener = (
     whatOrderType: AllCropsOrdersSubmodules,
   ): "TEMP" | "MOVE" {
     if (whatOrderType === "field_crops_works_order_to_hardener") return "TEMP";
-    if (whatOrderType === "field_crops_works_internal_transport") return "MOVE";
+    if (
+      whatOrderType === "field_crops_works_internal_transport" ||
+      "potted_plants_works_order_to_internal_transport"
+    )
+      return "MOVE";
 
     throw new Error("getMoveTyp -> whatOrderType is not valid");
   }

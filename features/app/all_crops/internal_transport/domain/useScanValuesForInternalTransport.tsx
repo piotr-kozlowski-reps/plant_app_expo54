@@ -25,7 +25,7 @@ import { getRepId116 } from "@/features/shared/data-access/getRepId116";
 
 export const useScanValuesForInternalTransport = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  submoduleType: AllInternalTransportSubmodules
+  submoduleType: AllInternalTransportSubmodules,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -41,7 +41,7 @@ export const useScanValuesForInternalTransport = (
   //states
   const [localization, setLocalization] = useState<Localization | null>(null);
   const [zpCombinedInfo, setZpCombinedInfo] = useState<ZPCombinedInfo | null>(
-    null
+    null,
   );
   const [overallZPsWithQuantities, setOverallZPsWithQuantities] = useState<
     ZPCombinedInfo[]
@@ -73,13 +73,13 @@ export const useScanValuesForInternalTransport = (
   };
 
   const changeQuantityHandler = (
-    localizationWithNewQuantity: ZPLocalizationInfoPlusQuantityToBeMoved
+    localizationWithNewQuantity: ZPLocalizationInfoPlusQuantityToBeMoved,
   ) => {
     if (!zpCombinedInfo) {
       errorHandler(
         new Error(
-          "useScanValuesForInternalTransport -> changeQuantityHandler -> no localization to update."
-        )
+          "useScanValuesForInternalTransport -> changeQuantityHandler -> no localization to update.",
+        ),
       );
       return;
     }
@@ -91,8 +91,8 @@ export const useScanValuesForInternalTransport = (
     if (!foundLocalization) {
       errorHandler(
         new Error(
-          "useScanValuesForInternalTransport -> changeQuantityHandler -> Localization not found."
-        )
+          "useScanValuesForInternalTransport -> changeQuantityHandler -> Localization not found.",
+        ),
       );
       return;
     }
@@ -118,8 +118,8 @@ export const useScanValuesForInternalTransport = (
     if (!currentZPWithQuantities) {
       errorHandler(
         new Error(
-          "useScanValuesForInternalTransport -> changeOverallZPsWithQuantities -> no zpCombinedInfo"
-        )
+          "useScanValuesForInternalTransport -> changeOverallZPsWithQuantities -> no zpCombinedInfo",
+        ),
       );
       return;
     }
@@ -133,7 +133,7 @@ export const useScanValuesForInternalTransport = (
 
       //check if ZP that is to be added already exists in the list
       const foundZP = overallZPsWithQuantitiesLocal.find(
-        (item) => item.ordnmb === currentZPWithQuantities.ordnmb
+        (item) => item.ordnmb === currentZPWithQuantities.ordnmb,
       );
 
       if (!foundZP) {
@@ -153,7 +153,7 @@ export const useScanValuesForInternalTransport = (
     }
 
     toast.success(
-      `Dodano do listy ${currentZPWithQuantities.ordnmb} (wraz z informacją o zabieranych ilościach).`
+      `Dodano do listy ${currentZPWithQuantities.ordnmb} (wraz z informacją o zabieranych ilościach).`,
     );
   };
 
@@ -169,7 +169,7 @@ export const useScanValuesForInternalTransport = (
       !overallZPsWithQuantities.length
     ) {
       throw new Error(
-        "useScanValuesForInternalTransport -> sendValuesForInternalTransport -> no localization or overallZPsWithQuantities"
+        "useScanValuesForInternalTransport -> sendValuesForInternalTransport -> no localization or overallZPsWithQuantities",
       );
     }
 
@@ -189,7 +189,7 @@ export const useScanValuesForInternalTransport = (
     });
 
     const valuesToBeSentFilteredToOnlyMovedItems = valuesToBeSent.filter(
-      (loc) => loc.movqty > 0
+      (loc) => loc.movqty > 0,
     );
     if (valuesToBeSentFilteredToOnlyMovedItems.length === 0) {
       toast.warning(ERROR_MESSAGES.QUANTITY_TO_BE_SENT_WAS_ZERO);
@@ -208,7 +208,7 @@ export const useScanValuesForInternalTransport = (
         configPerBuild.apiAddress,
         "/api.php/REST/custom/movements",
         token!,
-        valuesToBeSentFilteredToOnlyMovedItems
+        valuesToBeSentFilteredToOnlyMovedItems,
       );
 
       //check if response array has the same amount of items as sent items
@@ -257,7 +257,7 @@ export const useScanValuesForInternalTransport = (
   async function scanField(scannedValue: string) {
     if (checkWhatValueWasScanned(scannedValue) !== "field") {
       toast.warning(
-        `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Lokalizacja musi mieć format: POLE_<numer>`
+        `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Lokalizacja musi mieć format: POLE_<numer>`,
       );
       return;
     }
@@ -266,7 +266,7 @@ export const useScanValuesForInternalTransport = (
     const localizationInfo = await getLocalizationInfoInfo_Report1580(
       token!,
       fieldName,
-      errorHandler
+      errorHandler,
     );
 
     if (!localizationInfo) return;
@@ -275,7 +275,7 @@ export const useScanValuesForInternalTransport = (
   }
   async function scanZP(
     scannedValue: string,
-    submoduleType: AllInternalTransportSubmodules
+    submoduleType: AllInternalTransportSubmodules,
   ) {
     if (
       checkWhatValueWasScanned(scannedValue) === "field" ||
@@ -287,15 +287,14 @@ export const useScanValuesForInternalTransport = (
     }
 
     const desiredTypOfScannedValue: TypeOfScannedValue =
-      submoduleType === "field_crops_works_internal_transport"
-        ? "zp_gru"
-        : "zp_roz";
+      getDesiredTypOfScannedValue(submoduleType);
 
     if (checkWhatValueWasScanned(scannedValue) !== desiredTypOfScannedValue) {
-      const toastMessage =
-        desiredTypOfScannedValue === "zp_gru"
-          ? `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Zeskanowałeś ZP rozsady szklarniowej, a dopuszczalny jest tylko ZP rozsady gruntowej.`
-          : `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Zeskanowałeś ZP rozsady gruntowej, a dopuszczalny jest tylko ZP rozsady szklarniowej.`;
+      const toastMessage = getToastMessageBasedOnDesiredTypOfScannedValue(
+        desiredTypOfScannedValue,
+        scannedValue,
+      );
+
       toast.warning(toastMessage);
       return;
     }
@@ -306,24 +305,25 @@ export const useScanValuesForInternalTransport = (
     if (
       checkIfZpIsAlreadyScanned(
         ZPWithoutAdditional_ZLEC_,
-        overallZPsWithQuantities
+        overallZPsWithQuantities,
       )
     ) {
       toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED);
       return;
     }
 
+    /////////
     //fetch all desired info
     const ZPInfoPromise = getZPInfo_Rep113(
       token!,
       ZPWithoutAdditional_ZLEC_,
-      errorHandler
+      errorHandler,
     );
     const ZPLocalizationInfoPromise = getZpLocalizationInfo(
       token!,
       ZPWithoutAdditional_ZLEC_,
       errorHandler,
-      desiredTypOfScannedValue === "zp_roz" ? true : false
+      desiredTypOfScannedValue === "zp_roz" ? true : false,
     );
     const [ZPInfo, ZPLocalizationInfo] = await Promise.all([
       ZPInfoPromise,
@@ -349,7 +349,7 @@ async function getZpLocalizationInfo(
   token: string,
   ZPWithoutAdditional_ZLEC: string,
   errorHandler: (error: Error, errorTitle?: string) => void,
-  isRoz?: boolean
+  isRoz?: boolean,
 ): Promise<ZPLocalizationInfoPlusQuantityToBeMoved[] | null> {
   let response: ZPLocalizationInfoPlusQuantityToBeMoved[] | null;
 
@@ -362,4 +362,43 @@ async function getZpLocalizationInfo(
   }
 
   return null;
+}
+
+function getDesiredTypOfScannedValue(
+  submoduleType: AllInternalTransportSubmodules,
+): TypeOfScannedValue {
+  switch (submoduleType) {
+    case "field_crops_works_internal_transport":
+      return "zp_gru";
+
+    case "greenhouse_crops_works_internal_transport":
+      return "zp_roz";
+
+    case "potted_plants_works_internal_transport":
+      return "zp_don";
+
+    default:
+      throw new Error("getDesiredTypOfScannedValue -> Unknown submodule type");
+  }
+}
+
+function getToastMessageBasedOnDesiredTypOfScannedValue(
+  desiredTypOfScannedValue: TypeOfScannedValue,
+  scannedValue: string,
+) {
+  switch (desiredTypOfScannedValue) {
+    case "zp_gru":
+      return `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Zeskanowałeś ZP rozsady szklarniowej lub roślinę doniczkową, a dopuszczalny jest tylko ZP rozsady gruntowej.`;
+
+    case "zp_roz":
+      return `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Zeskanowałeś ZP rozsady gruntowej lub roślinę doniczkową, a dopuszczalny jest tylko ZP rozsady szklarniowej.`;
+
+    case "zp_don":
+      return `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Zeskanowałeś ZP rozsady gruntowej lub rozsady szklarniowej, a dopuszczalny jest tylko ZP rośliny doniczkowej.`;
+
+    default:
+      throw new Error(
+        "getToastMessageBasedOnDesiredTypOfScannedValue -> Unknown desiredTypOfScannedValue",
+      );
+  }
 }

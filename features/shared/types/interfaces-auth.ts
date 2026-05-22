@@ -111,7 +111,7 @@ export type AllCropsOrdersSubmodules =
   | "field_crops_works_order_export_to_customer"
   | "greenhouse_crops_works_order_to_spacing"
   | "greenhouse_crops_works_order_export_to_customer"
-  | "potted_plants_works_order_export_to_customer";
+  | "potted_plants_works_order_to_internal_transport";
 
 export type AllExportToCustomerSubmodules =
   | "field_crops_works_order_export_to_customer"

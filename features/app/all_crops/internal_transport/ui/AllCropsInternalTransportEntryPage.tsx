@@ -5,6 +5,7 @@ import {
   FieldCropsSubmodules,
   GreenhouseCropsSubmodule,
   ModulesPermissions,
+  PottedPlantsSubmodules,
 } from "@/features/shared/types/interfaces-auth";
 import { useCameraPermissions } from "expo-camera";
 
@@ -26,11 +27,7 @@ const AllCropsInternalTransportEntryPage = (props: Props) => {
 
   //permission
   const { getSubmodulePermission } = useGetSubmodulePermission();
-
-  const moduleName: keyof ModulesPermissions =
-    submoduleType === "field_crops_works_internal_transport"
-      ? "field_crops"
-      : "greenhouse_crops";
+  let moduleName: keyof ModulesPermissions = getModuleName(submoduleType);
 
   useEffect(() => {
     //field crops
@@ -47,6 +44,19 @@ const AllCropsInternalTransportEntryPage = (props: Props) => {
     if (submoduleType === "greenhouse_crops_works_internal_transport") {
       if (
         !getSubmodulePermission<GreenhouseCropsSubmodule>(
+          moduleName,
+          submoduleType,
+        )
+      ) {
+        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
+        router.back();
+      }
+    }
+
+    //potted plants
+    if (submoduleType === "potted_plants_works_internal_transport") {
+      if (
+        !getSubmodulePermission<PottedPlantsSubmodules>(
           moduleName,
           submoduleType,
         )
@@ -72,3 +82,15 @@ const AllCropsInternalTransportEntryPage = (props: Props) => {
 };
 
 export default AllCropsInternalTransportEntryPage;
+
+//helpers
+function getModuleName(
+  submoduleType: AllInternalTransportSubmodules,
+): keyof ModulesPermissions {
+  let moduleName: keyof ModulesPermissions = "field_crops";
+  if (submoduleType === "greenhouse_crops_works_internal_transport")
+    moduleName = "greenhouse_crops";
+  if (submoduleType === "potted_plants_works_internal_transport")
+    moduleName = "potted_plants";
+  return moduleName;
+}

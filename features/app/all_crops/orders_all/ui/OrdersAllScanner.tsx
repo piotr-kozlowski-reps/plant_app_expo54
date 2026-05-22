@@ -61,8 +61,6 @@ const OrdersAllScanner = (props: Props) => {
     isShowDeleteModal,
     ZPSelected,
     isShowModalWithInHowManyDays,
-    isRememberMe,
-    setIsRememberMe,
     setIsShowModalWithInHowManyDays,
     setZPSelected,
     setIsShowDeleteModal,
@@ -80,7 +78,7 @@ const OrdersAllScanner = (props: Props) => {
     setIsLoading,
     clearScannedValues,
     () => setIsShowModalTargetLocalization(true),
-    whatOrderType
+    whatOrderType,
   );
 
   /** delete item from list handler */
@@ -174,7 +172,7 @@ const OrdersAllScanner = (props: Props) => {
                     </View>
                   </View>
 
-                  <View className="ml-4">
+                  <View className="">
                     <ButtonTextAndIcon
                       actionFn={() => {
                         setIsShowModalWithInHowManyDays(true);
@@ -193,6 +191,7 @@ const OrdersAllScanner = (props: Props) => {
                       }
                       isBackground
                       isFull={false}
+                      width={120}
                     />
                   </View>
                 </View>

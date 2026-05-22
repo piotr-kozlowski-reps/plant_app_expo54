@@ -9,14 +9,14 @@ import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnSe
 export async function getRepId113<T>(
   baseURL: string,
   ordnmbOrStk_id: string,
-  token: string
+  token: string,
 ): Promise<T> {
   const queryAddress = getRightQueryAddress(ordnmbOrStk_id);
 
   const response = await query_getDataAsServerAction<T>(
     baseURL,
     queryAddress,
-    token
+    token,
   );
 
   return response as T;
@@ -30,6 +30,9 @@ function getRightQueryAddress(ordnmbOrStk_id: string): string {
 
   if (ordnmbOrStk_id.startsWith("ZP-") && ordnmbOrStk_id.endsWith("ROZ"))
     return `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ZPDetailedInfo}&ordnmb=${ordnmbOrStk_id}&module=SZKLO`;
+
+  if (ordnmbOrStk_id.startsWith("ZP-") && ordnmbOrStk_id.endsWith("DON"))
+    return `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ZPDetailedInfo}&ordnmb=${ordnmbOrStk_id}&module=GRUNT`;
 
   //tray with SK
   if (ordnmbOrStk_id.startsWith("SK."))

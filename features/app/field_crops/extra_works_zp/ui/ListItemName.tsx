@@ -36,10 +36,10 @@ const ListItemName = (props: Props) => {
       onPress={isActive ? () => actionFn(id) : undefined}
     >
       <View className="flex items-start justify-start">
-        <View className="w-[90%] ">
+        <View className="w-[90%]">
           <Text
             className={clsx(
-              "font-default-bold text-foreground",
+              "font-default-bold text-foreground min-w-full",
               isActive ? "opacity-100" : "opacity-70",
             )}
           >

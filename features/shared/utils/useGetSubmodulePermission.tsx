@@ -6,7 +6,7 @@ export function useGetSubmodulePermission() {
 
   const getSubmodulePermission = <T,>(
     moduleName: keyof ModulesPermissions,
-    submoduleValue: keyof T
+    submoduleValue: keyof T,
   ): boolean => {
     const modulePermissions = getSubModuleVisibility(moduleName) as
       | T

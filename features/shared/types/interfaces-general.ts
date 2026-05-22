@@ -4,6 +4,7 @@ export type TypeOfScannedValue =
   | "tray"
   | "zp_gru"
   | "zp_roz"
+  | "zp_don"
   | "field"
   | "unknown";
 
