@@ -18,7 +18,7 @@ type Props = {
   submoduleType: AllInternalTransportSubmodules;
 };
 
-const FieldCropsInternalTransportEntryPage = (props: Props) => {
+const AllCropsInternalTransportEntryPage = (props: Props) => {
   ////vars
   const { submoduleType } = props;
   const [permission, requestPermission] = useCameraPermissions();
@@ -48,7 +48,7 @@ const FieldCropsInternalTransportEntryPage = (props: Props) => {
       if (
         !getSubmodulePermission<GreenhouseCropsSubmodule>(
           moduleName,
-          submoduleType
+          submoduleType,
         )
       ) {
         toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
@@ -71,4 +71,4 @@ const FieldCropsInternalTransportEntryPage = (props: Props) => {
   );
 };
 
-export default FieldCropsInternalTransportEntryPage;
+export default AllCropsInternalTransportEntryPage;

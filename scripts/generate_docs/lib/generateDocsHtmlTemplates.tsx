@@ -66,6 +66,7 @@ ${docsDir ? `<a href="${path}" style="margin-left: 32px; color: var(--color-dark
   generateIndexHtml(htmlContent: string) {
     return this.generateMainHtml("dokumentacja index", htmlContent);
   }
+
   generateRoutesHtml(
     routes: AppRoute[],
     index: number,
@@ -74,7 +75,6 @@ ${docsDir ? `<a href="${path}" style="margin-left: 32px; color: var(--color-dark
     let localHtmlContent = "";
     const sortedRoute = routes.sort((a, b) => a.order - b.order);
     for (const route of sortedRoute) {
-      console.log({ route });
       localHtmlContent += this.generateRouteItemHtml(
         route,
         index,

@@ -1,4 +1,5 @@
 {
   "label": "Skanuj ZP",
-  "order": 10
+  "order": 10,
+  "docsDir": "features/app/information/scan_zp"
 }

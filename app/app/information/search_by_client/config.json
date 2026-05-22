@@ -1,4 +1,5 @@
 {
   "label": "Wyszukaj po kliencie",
-  "order": 40
+  "order": 40,
+  "docsDir": "features/app/information/search_by_client"
 }

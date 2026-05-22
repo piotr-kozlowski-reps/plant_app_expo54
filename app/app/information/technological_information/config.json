@@ -1,4 +1,5 @@
 {
   "label": "Informacja technologiczna",
-  "order": 30
+  "order": 30,
+  "docsDir": "features/app/information/technological_information"
 }

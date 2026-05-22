@@ -42,7 +42,7 @@ export const useGetSubNavigationFieldCropsElements = () => {
         title: "Przeliczanie wschodów",
         actionFn: () => {
           router.push(
-            "/app/field_crops/field_crops_works/plants_coming_ups_counter"
+            "/app/field_crops/field_crops_works/plants_coming_ups_counter",
           );
         },
         subModuleName: "field_crops_works_plants_coming_ups_counter",
@@ -59,7 +59,7 @@ export const useGetSubNavigationFieldCropsElements = () => {
         title: "Zabieg ochronny",
         actionFn: () => {
           router.push(
-            "/app/field_crops/field_crops_works/protective_treatment"
+            "/app/field_crops/field_crops_works/protective_treatment",
           );
         },
         subModuleName: "field_crops_works_protective_treatment",
@@ -84,7 +84,7 @@ export const useGetSubNavigationFieldCropsElements = () => {
         title: "Zlecenie transportu wewnętrznego",
         actionFn: () => {
           router.push(
-            "/app/field_crops/field_crops_works/order_to_internal_transport"
+            "/app/field_crops/field_crops_works/order_to_internal_transport",
           );
         },
         subModuleName: "field_crops_works_order_to_internal_transport",
@@ -93,7 +93,7 @@ export const useGetSubNavigationFieldCropsElements = () => {
         title: "Zlecenie wywozu do klienta",
         actionFn: () => {
           router.push(
-            "/app/field_crops/field_crops_works/order_export_to_customer"
+            "/app/field_crops/field_crops_works/order_export_to_customer",
           );
         },
         subModuleName: "field_crops_works_order_export_to_customer",
@@ -103,7 +103,7 @@ export const useGetSubNavigationFieldCropsElements = () => {
     fieldCropsSubNavigationAllElements.forEach((navItem) => {
       const isActive = getSubmodulePermission<FieldCropsSubmodules>(
         "field_crops",
-        navItem.subModuleName
+        navItem.subModuleName,
       );
 
       if (isActive) {

@@ -1,4 +1,4 @@
-import FieldCropsInternalTransportEntryPage from "@/features/app/all_crops/internal_transport/ui/AllCropsInternalTransportEntryPage";
+import AllCropsInternalTransportEntryPage from "@/features/app/all_crops/internal_transport/ui/AllCropsInternalTransportEntryPage";
 import { router, type ErrorBoundaryProps } from "expo-router";
 import { FieldCropsSubmodules } from "../../../../../features/shared/types/interfaces-auth";
 
@@ -9,7 +9,7 @@ export function ErrorBoundary({ error }: ErrorBoundaryProps) {
 const AllCropsInternalTransportEntryPage = () => {
   return (
     <>
-      <FieldCropsInternalTransportEntryPage
+      <AllCropsInternalTransportEntryPage
         submoduleType={"greenhouse_crops_works_internal_transport"}
       />
       {/* <AllCropsOrdersAllEntryPage whatOrderType="greenhouse_crops_works_order_to_spacing" /> */}

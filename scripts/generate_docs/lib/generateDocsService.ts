@@ -1,7 +1,12 @@
 import fg from "fast-glob";
 import fs from "fs-extra";
 import path from "path";
-import { CommentType, DocsConfig, DocsInputDir } from "./generateDocsTypes";
+import {
+  AppRoute,
+  CommentType,
+  DocsConfig,
+  DocsInputDir,
+} from "./generateDocsTypes";
 import { htmlTemplates } from "./generateDocsHtmlTemplates";
 
 type WriteFileOptions = {
@@ -12,22 +17,34 @@ type WriteFileOptions = {
   fullHtml: string;
 };
 
+type IndividualDocsFilesOptions = {
+  outputDir: string;
+  routes: AppRoute[];
+  prevPath: string;
+  prevLabel: string;
+};
+
+type HtmlDocsForDirOptions = {
+  dir: string;
+  outputFileName?: string;
+  label: string;
+  outputDir: string;
+  // routes: AppRoute[];
+  // prevPath: string;
+  // prevLabel: string;
+};
+
 class GenerateDocsService {
   async generateDocs(config: DocsConfig) {
     await this.initialClear(config.outputDir);
     await this.generateIndexHtml(config);
+    await this.generateIndividualDocsFiles(config);
     // for (const input of inputDirs) {
     //   await this.generateHtmlDocsForDir(input, outputDir);
     // }
   }
 
-  //// priv
-  private async deleteFiles(files: string[]) {
-    for (const file of files) {
-      await fs.remove(file);
-    }
-  }
-
+  //// priv main
   private async initialClear(path: string) {
     const htmlFiles = await fg([`${path}/*.html`]);
     const mdFiles = await fg([`${path}/*.md`]);
@@ -62,32 +79,67 @@ class GenerateDocsService {
     }
   }
 
-  private async generateHtmlDocsForDir(input: DocsInputDir, outputDir: string) {
-    const { dir, outputFileName, label } = input;
+  private async generateIndividualDocsFiles(config: DocsConfig) {
+    const { outputDir, routes } = config;
+    const existingRoutes = routes?.routes || [];
 
-    const files = await fg([`${dir}/**/*.{ts,tsx}`], {
-      ignore: ["**/*.d.ts"],
-    });
-    let htmlContent = `<h1>Dokumentacja dla: <b>${label}</b></h1>`;
-    for (const file of files) {
-      const fileContent = await fs.readFile(file, "utf-8");
-      const comments = this.extractDocComments(fileContent);
-
-      if (comments.length === 0) continue;
-
-      htmlContent += `<h2> ${file}</h2>`;
-
-      htmlContent += await this.processComments(comments, 0);
-    }
-
-    const fullHtml = htmlTemplates.generateMainHtml(dir, htmlContent);
-    await this.writeFile({
-      dir,
+    await this.generateIndividualDocsFilesRecursively({
       outputDir,
-      outputFileName,
-      extension: "html",
-      fullHtml,
+      routes: existingRoutes,
+      prevPath: "",
+      prevLabel: "",
     });
+  }
+
+  ////priv helpers
+  private async generateIndividualDocsFilesRecursively(
+    options: IndividualDocsFilesOptions,
+  ) {
+    const { outputDir, routes, prevPath, prevLabel } = options;
+
+    for (const route of routes) {
+      if (route.docsDir) {
+        await this.generateHtmlDocsForDir(input, outputDir);
+      }
+
+      const subRoutes = route.routes;
+      if (subRoutes && subRoutes.length) {
+        await this.generateIndividualDocsFilesRecursively({
+          outputDir,
+          routes: subRoutes,
+          prevPath: `${prevPath ? `${prevPath}__${route.path}` : `${route.path}`}`,
+          prevLabel: `${prevLabel ? `${prevLabel} -> ${route.label}` : `${route.label}`}`,
+        });
+      }
+    }
+  }
+  private async deleteFiles(files: string[]) {
+    for (const file of files) {
+      await fs.remove(file);
+    }
+  }
+
+  private async generateHtmlDocsForDir(input: DocsInputDir, outputDir: string) {
+    // const { dir, outputFileName, label } = input;
+    // const files = await fg([`${dir}/**/*.{ts,tsx}`], {
+    //   ignore: ["**/*.d.ts"],
+    // });
+    // let htmlContent = `<h1>Dokumentacja dla: <b>${label}</b></h1>`;
+    // for (const file of files) {
+    //   const fileContent = await fs.readFile(file, "utf-8");
+    //   const comments = this.extractDocComments(fileContent);
+    //   if (comments.length === 0) continue;
+    //   htmlContent += `<h2> ${file}</h2>`;
+    //   htmlContent += await this.processComments(comments, 0);
+    // }
+    // const fullHtml = htmlTemplates.generateMainHtml(dir, htmlContent);
+    // await this.writeFile({
+    //   dir,
+    //   outputDir,
+    //   outputFileName,
+    //   extension: "html",
+    //   fullHtml,
+    // });
   }
 
   private async processComments(

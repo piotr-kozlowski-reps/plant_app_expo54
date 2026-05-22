@@ -1,4 +1,5 @@
 {
   "label": "Wyszukaj ZP",
-  "order": 20
+  "order": 20,
+  "docsDir": "features/app/information/search_zp"
 }

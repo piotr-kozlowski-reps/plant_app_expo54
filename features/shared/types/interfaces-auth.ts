@@ -118,7 +118,8 @@ export type AllLoadingForecastSubmodules =
 
 export type AllInternalTransportSubmodules =
   | "field_crops_works_internal_transport"
-  | "greenhouse_crops_works_internal_transport";
+  | "greenhouse_crops_works_internal_transport"
+  | "potted_plants_works_internal_transport";
 
 export type TokensDTO = {
   token: string;
