@@ -80,7 +80,6 @@ export const useSendOrderToHardener = (
 
     try {
       setIsLoading(true);
-      console.log({ orderToHardenerDataToBeSent });
       await sendToServer(orderToHardenerDataToBeSent);
     } catch (error) {
       errorHandler(error as Error);
