@@ -25,6 +25,7 @@ import DeleteTrayFromPlantsComingUpsCounterListModal from "@/features/app/field_
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
 import CotyledonQuilting_QuantityAndSend_Modal from "./CotyledonQuilting_QuantityAndSend_Modal";
+import { useSendTraysToBeAddedToChosenColor } from "../domain/useSendTraysToBeAddedToChosenColor";
 
 type Props = {
   closeFn: () => void;
@@ -45,12 +46,10 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
     trays,
     isShowDeleteTrayModal,
     currentTray,
-    isShowQuantityAndSendModal,
 
     setQrLock,
     scanValueHandler,
     setIsShowDeleteTrayModal,
-    setIsShowQuantityAndSendModal,
     setCurrentTray,
     deleteExistingTrayHandler,
   } = useScanValuesForAddingTraysToPottedPlants(
@@ -63,6 +62,9 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
     setCurrentTray(tray);
     setIsShowDeleteTrayModal(true);
   };
+
+  const { sendTraysToBeAddedToChosenColor } =
+    useSendTraysToBeAddedToChosenColor(setIsLoading, chosenColor);
 
   ////tsx
   return (
@@ -193,8 +195,8 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
             <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
               <View className="flex-1">
                 <ButtonTextAndThreeArrows
-                  actionFn={() => setIsShowQuantityAndSendModal(true)}
-                  text="Podaj ilość i wyślij"
+                  actionFn={() => sendTraysToBeAddedToChosenColor(trays)}
+                  text="Wyślij"
                   isBackground
                   disabled={trays.length === 0}
                 />
@@ -224,21 +226,6 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
           deleteExistingTrayHandler={deleteExistingTrayHandler}
           isShowLacksInfo={false}
           titleText={"Czy chcesz usunąć tacę z listy?"}
-        />
-      </ModalInternal>
-
-      {/* quantity and send -  modal */}
-      <ModalInternal
-        isOpen={isShowQuantityAndSendModal}
-        isTransparent={false}
-        backgroundColor={yellowColor}
-      >
-        <CotyledonQuilting_QuantityAndSend_Modal
-          closeFn={() => setIsShowQuantityAndSendModal(false)}
-          ordnmb={ordnmb}
-          chosenColor={chosenColor}
-          trays={trays}
-          setIsLoading={setIsLoading}
         />
       </ModalInternal>
     </View>

@@ -20,9 +20,9 @@ import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_
  * @public
  * @procedureDescription
  * Wyświetlany jest aktualnie pikowany Zpek.
- * Należy wybrać kolor z dostępnych kolorów dla ZP.
- * Skanowanie tac i podpinanie ich do wybranego koloru.
- * Na końcu podanie wypikowanej ilości i wysyłka.
+ * Należy wybrać kolor z dostępnych kolorów dla ZP, poten wybór czy:
+ * -  skanujemy tace i dodajemy do koloru w ZP
+ * -  zamykany kolor i podajemy finalną ilość liścieni
  */
 const PottedPlants_CotyledonQuilting_EntryPage = () => {
   ////vars

@@ -25,8 +25,6 @@ SplashScreen.preventAutoHideAsync();
 const client = new QueryClient();
 
 export default function RootLayout() {
-  console.log({ Application });
-
   ////fonts
   const [fontsLoaded, error] = useFonts({
     EuclidCircularBLight: require("../assets/fonts/EuclidCircularBLight.ttf"),

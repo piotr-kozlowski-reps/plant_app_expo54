@@ -21,6 +21,7 @@ import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import { AllLoadingForecastSubmodules } from "@/features/shared/types/interfaces-auth";
 import { useState } from "react";
 import { useGetAppPathForLoadingForecast } from "../domain/useGetAppPathForLoadingForecast";
+import SeparatorHorizontal from "@/features/shared/ui/separator/SeparatorHorizontal";
 
 type Props = {
   submoduleType: AllLoadingForecastSubmodules;
@@ -184,7 +185,7 @@ const LoadingForecastScanner = (props: Props) => {
                               "font-default-semibold ",
                               isValueOfTraysLowerThanAmountToPleaseClient
                                 ? "text-destructive underline"
-                                : "text-foreground"
+                                : "text-foreground",
                             )}
                           >
                             {scannedValue.risecnt}
@@ -208,7 +209,7 @@ const LoadingForecastScanner = (props: Props) => {
                           <Text className="font-default-semibold text-foreground">
                             {getPalletsResult(
                               scannedValue.risecnt,
-                              scannedValue.wsk_palet
+                              scannedValue.wsk_palet,
                             )}
                           </Text>
                         ) : null}
@@ -237,7 +238,7 @@ const LoadingForecastScanner = (props: Props) => {
                               "font-default-semibold ",
                               isValueOfTraysLowerThanAmountToPleaseClient
                                 ? "text-destructive underline"
-                                : "text-foreground"
+                                : "text-foreground",
                             )}
                           >
                             {scannedValue.risecnt}
@@ -253,9 +254,7 @@ const LoadingForecastScanner = (props: Props) => {
                   </View>
                 ) : null}
 
-                <View className="flex-row items-center justify-center w-full mt-2">
-                  <View className="w-24 h-[1px] bg-foreground"></View>
-                </View>
+                <SeparatorHorizontal />
 
                 <View className="w-full mt-4">
                   <InputFormik<LoadingForecastInput>
@@ -293,7 +292,7 @@ const LoadingForecastScanner = (props: Props) => {
                                 "font-default-semibold ",
                                 isValueOfTraysLowerThanAmountToPleaseClient
                                   ? "text-destructive underline"
-                                  : "text-foreground"
+                                  : "text-foreground",
                               )}
                             >
                               {scannedValue.stkcnt}
@@ -320,7 +319,7 @@ const LoadingForecastScanner = (props: Props) => {
                             <Text className="font-nav text-foreground">
                               {getPalletsResult(
                                 formik.values.traysQuantity,
-                                scannedValue.wsk_palet
+                                scannedValue.wsk_palet,
                               )}
                             </Text>
                           ) : null}
@@ -351,7 +350,7 @@ const LoadingForecastScanner = (props: Props) => {
                                 "font-default-semibold ",
                                 isValueOfTraysLowerThanAmountToPleaseClient
                                   ? "text-destructive underline"
-                                  : "text-foreground"
+                                  : "text-foreground",
                               )}
                             >
                               {scannedValue.stkcnt}
@@ -424,7 +423,7 @@ export default LoadingForecastScanner;
 
 function getPalletsResult(
   forecastedTraysAmount: number | null,
-  amountPerPalet: number | null
+  amountPerPalet: number | null,
 ): string {
   if (forecastedTraysAmount === null || amountPerPalet === null) {
     return "0";

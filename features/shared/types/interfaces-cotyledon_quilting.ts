@@ -41,7 +41,7 @@ export type CotyledonQuiltingPostDTO = {
   ordnmb: string;
   twr_kod: string;
   twr_nazwa: string;
-  quantity: number;
+  // quantity: number;
   cid: number;
   mid: number;
   trays: Pick<Tray, "stk_id" | "scanned_raw_value">[];

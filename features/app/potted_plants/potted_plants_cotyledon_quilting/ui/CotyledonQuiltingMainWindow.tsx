@@ -19,7 +19,11 @@ import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndT
 import { useChooseColorForCotyledonQuiltingFormik } from "../domain/useChooseColorForCotyledonQuiltingFormik";
 import ComboboxFormik from "@/features/shared/ui/combobox/ComboboxFormik";
 import { Combobox } from "@/features/shared/types/interfaces-general";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Button from "@/features/shared/ui/button/Button";
+import SeparatorHorizontal from "@/features/shared/ui/separator/SeparatorHorizontal";
+import { useHandleChosenColor } from "../domain/useHandleChosenColor";
+import CotyledonQuilting_QuantityAndSend_Modal from "./CotyledonQuilting_QuantityAndSend_Modal";
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,9 +35,8 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
   ////vars
   const { setIsLoading, zpToCotyledonQuiltingArray, refreshAllData } = props;
   const [isShowAddingTraysModal, setIsShowAddingTraysModal] = useShowModal();
-  const [chosenColor, setChosenColor] = useState<CotyledonQuilting | null>(
-    null,
-  );
+  const [isShowQuantityAndSendModal, setIsShowQuantityAndSendModal] =
+    useState(false);
 
   //active ordnmb
   let ordnmb = "";
@@ -46,11 +49,7 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
    * @procedureItem
    *  Formularz z wyborem dostępnego koloru
    */
-  const { formik, availableFormActions, canFormBeSubmitted, clearForm } =
-    useChooseColorForCotyledonQuiltingFormik(
-      setChosenColor,
-      setIsShowAddingTraysModal,
-    );
+  const { chosenColor, formik } = useHandleChosenColor();
 
   //combobox protectiveTreatments
   const comboboxItems: Combobox<CotyledonQuilting>[] =
@@ -58,6 +57,13 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
       value: item,
       visibleText: item.twr_nazwa,
     }));
+
+  const handleAddTraysToChosenColor = () => {
+    setIsShowAddingTraysModal(true);
+  };
+  const handleEnterQuantityAndCloseChosenColor = () => {
+    setIsShowQuantityAndSendModal(true);
+  };
 
   ////tsx
   return (
@@ -85,7 +91,6 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
                 <Text className="font-title">{ordnmb ? ordnmb : "-"}</Text>
               </View>
             </View>
-
             <View className="w-full mt-16">
               <ComboboxFormik<ColorForCotyledonQuiltingInput, CotyledonQuilting>
                 label="Kolor:"
@@ -98,16 +103,39 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
                 refreshAllData={refreshAllData}
               />
             </View>
+            <View className="mt-16">
+              <SeparatorHorizontal />
+            </View>
+
+            <View className="w-full mt-6">
+              <Button
+                title="Dodaj tace do koloru"
+                handlePress={handleAddTraysToChosenColor}
+                disabled={!chosenColor}
+              />
+            </View>
+
+            <View className="w-full my-2">
+              <Text className="text-center font-default-normal">lub</Text>
+            </View>
+
+            <View className="w-full">
+              <Button
+                title="Podaj ilość i zamknij kolor"
+                handlePress={handleEnterQuantityAndCloseChosenColor}
+                disabled={!chosenColor}
+              />
+            </View>
           </View>
 
           <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
             <View className="flex-1">
-              <ButtonTextAndThreeArrows
+              {/* <ButtonTextAndThreeArrows
                 actionFn={availableFormActions}
                 text="Przejdź do skanowania tac"
                 isBackground
                 disabled={!canFormBeSubmitted}
-              />
+              /> */}
             </View>
             <View className="ml-6">
               <ButtonBack actionFn={() => router.back()} isOutline={false} />
@@ -127,6 +155,20 @@ const CotyledonQuiltingMainWindow = (props: Props) => {
           chosenColor={chosenColor}
           setIsLoading={setIsLoading}
           cotyledonQuiltingArray={zpToCotyledonQuiltingArray}
+        />
+      </ModalInternal>
+
+      {/* quantity and send -  modal */}
+      <ModalInternal
+        isOpen={isShowQuantityAndSendModal}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <CotyledonQuilting_QuantityAndSend_Modal
+          closeFn={() => setIsShowQuantityAndSendModal(false)}
+          ordnmb={ordnmb}
+          chosenColor={chosenColor}
+          setIsLoading={setIsLoading}
         />
       </ModalInternal>
     </View>

@@ -26,8 +26,6 @@ export const useScanValuesForAddingTraysToPottedPlants = (
   const [currentTray, setCurrentTray] = useState<TrayShortInfo | null>(null);
   const [trays, setTrays] = useState<TrayShortInfo[]>([]);
   const [isShowDeleteTrayModal, setIsShowDeleteTrayModal] = useState(false);
-  const [isShowQuantityAndSendModal, setIsShowQuantityAndSendModal] =
-    useState(false);
 
   //fn
   /**
@@ -249,14 +247,12 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     currentTray,
     qrLock,
     trays,
-    isShowQuantityAndSendModal,
     isShowDeleteTrayModal,
 
     setQrLock,
     scanValueHandler,
     setCurrentTray,
     setIsShowDeleteTrayModal,
-    setIsShowQuantityAndSendModal,
     deleteExistingTrayHandler,
   };
 };

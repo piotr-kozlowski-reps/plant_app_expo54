@@ -25,13 +25,12 @@ type TProps = {
   closeFn: () => void;
   ordnmb: string | null;
   chosenColor: CotyledonQuilting | null;
-  trays: TrayShortInfo[];
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
   ////vars
-  const { closeFn, ordnmb, chosenColor, trays, setIsLoading } = props;
+  const { closeFn, ordnmb, chosenColor, setIsLoading } = props;
 
   /**
    * @public
@@ -42,7 +41,6 @@ const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
     usePrepareDataForFormikToCotyledonQuiltingQuantity(
       setIsLoading,
       closeFn,
-      trays,
       chosenColor,
     );
 
@@ -86,7 +84,7 @@ const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
                 </View>
               </View>
 
-              <View className="flex-col items-center justify-center w-full px-6 mt-4">
+              {/* <View className="flex-col items-center justify-center w-full px-6 mt-4">
                 <Text className=" font-default-normal text-foreground">
                   tace:{" "}
                 </Text>
@@ -97,7 +95,7 @@ const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
                     </Text>
                   </View>
                 ))}
-              </View>
+              </View> */}
 
               <View className="w-full px-6 mt-8">
                 <InputFormik<QuantityForCotyledonQuiltingInput>
