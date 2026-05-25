@@ -1,7 +1,8 @@
 import { validateFormOnDemand } from "@/features/shared/utils/validation";
 import {
   CotyledonQuilting,
-  CotyledonQuiltingPostDTO,
+  CotyledonQuiltingAddingTraysPostDTO,
+  CotyledonQuiltingQuantityAndCloseColorPostDTO,
   CotyledonQuiltingResponse,
   QuantityForCotyledonQuiltingInput,
 } from "@/features/shared/types/interfaces-cotyledon_quilting";
@@ -39,10 +40,7 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
       toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_QUANTITY);
       return;
     }
-    // if (!trays || trays.length === 0) {
-    //   toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_TRAYS);
-    //   return;
-    // }
+
     if (!chosenColor) {
       toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_COLOR);
       return;
@@ -52,20 +50,16 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
       setIsLoading(true);
       const ip = await Network.getIpAddressAsync();
 
-      const dataToSent: CotyledonQuiltingPostDTO[] = [
+      const dataToSent: CotyledonQuiltingQuantityAndCloseColorPostDTO[] = [
         {
           ip,
           sordid: chosenColor.sordid,
           ordnmb: chosenColor.ordnmb,
           twr_kod: chosenColor.twr_kod,
-          // quantity: values.quantity,
+          quantity: values.quantity,
           twr_nazwa: chosenColor.twr_nazwa,
           cid: chosenColor.cid,
           mid: chosenColor.mid,
-          trays: trays.map((tray) => ({
-            stk_id: tray.stk_id,
-            scanned_raw_value: tray.scanned_raw_value,
-          })),
         },
       ];
 
@@ -83,7 +77,9 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
   };
 
   //helpers
-  async function sendToServer(dataToBeSend: CotyledonQuiltingPostDTO[]) {
+  async function sendToServer(
+    dataToBeSend: CotyledonQuiltingQuantityAndCloseColorPostDTO[],
+  ) {
     if (!dataToBeSend) {
       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
       return;
@@ -93,8 +89,8 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
     /**
      * @public
      * @transformApiItem
-     * wysyłka - custom api:
-     * <b>{{URL}}</b>/api.php/REST/custom/<b>addstktoorderdon</b>
+     * wysyłka ilości liścieni do wybranego koloru w ZP roślin doniczkowych (przy okazji zamknięcie danego koloru) - custom api:
+     * <b>{{URL}}</b>/api.php/REST/custom/<b>addquantitymattoorderdon</b>
      * dane - array obiektów:
      * [
      *  {
@@ -106,10 +102,6 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
      *     quantity: number;
      *     cid: number;
      *     mid: number;
-     *     trays: [
-     *        stk_id: number
-     *        scanned_raw_value: string
-     *     ]
      *   }
      * ]
      * @separator
@@ -117,10 +109,10 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
     let response: CotyledonQuiltingResponse =
       await query_postDataAsServerAction<
         CotyledonQuiltingResponse,
-        CotyledonQuiltingPostDTO[]
+        CotyledonQuiltingQuantityAndCloseColorPostDTO[]
       >(
         configPerBuild.apiAddress,
-        "/api.php/REST/custom/addstktoorderdon",
+        "/api.php/REST/custom/addquantitymattoorderdon",
         token!,
         dataToBeSend,
       );

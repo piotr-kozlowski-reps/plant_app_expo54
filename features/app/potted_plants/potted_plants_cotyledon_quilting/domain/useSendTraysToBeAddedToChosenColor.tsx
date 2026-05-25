@@ -1,6 +1,6 @@
 import {
   CotyledonQuilting,
-  CotyledonQuiltingPostDTO,
+  CotyledonQuiltingAddingTraysPostDTO,
   CotyledonQuiltingResponse,
 } from "@/features/shared/types/interfaces-cotyledon_quilting";
 import { TrayShortInfo } from "@/features/shared/types/interfaces-tray";
@@ -34,7 +34,7 @@ export const useSendTraysToBeAddedToChosenColor = (
     try {
       setIsLoading(true);
       const ip = await Network.getIpAddressAsync();
-      const dataToSent: CotyledonQuiltingPostDTO[] = [
+      const dataToSent: CotyledonQuiltingAddingTraysPostDTO[] = [
         {
           ip,
           sordid: chosenColor.sordid,
@@ -62,7 +62,9 @@ export const useSendTraysToBeAddedToChosenColor = (
   };
 
   //helpers
-  async function sendToServer(dataToBeSend: CotyledonQuiltingPostDTO[]) {
+  async function sendToServer(
+    dataToBeSend: CotyledonQuiltingAddingTraysPostDTO[],
+  ) {
     if (!dataToBeSend) {
       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
       return;
@@ -95,7 +97,7 @@ export const useSendTraysToBeAddedToChosenColor = (
     let response: CotyledonQuiltingResponse =
       await query_postDataAsServerAction<
         CotyledonQuiltingResponse,
-        CotyledonQuiltingPostDTO[]
+        CotyledonQuiltingAddingTraysPostDTO[]
       >(
         configPerBuild.apiAddress,
         "/api.php/REST/custom/addstktoorderdon",

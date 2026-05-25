@@ -35,7 +35,7 @@ export type QuantityForCotyledonQuiltingInput = {
   quantity: number;
 };
 
-export type CotyledonQuiltingPostDTO = {
+export type CotyledonQuiltingAddingTraysPostDTO = {
   ip: string;
   sordid: number;
   ordnmb: string;
@@ -45,6 +45,17 @@ export type CotyledonQuiltingPostDTO = {
   cid: number;
   mid: number;
   trays: Pick<Tray, "stk_id" | "scanned_raw_value">[];
+};
+
+export type CotyledonQuiltingQuantityAndCloseColorPostDTO = {
+  ip: string;
+  sordid: number;
+  ordnmb: string;
+  twr_kod: string;
+  twr_nazwa: string;
+  quantity: number;
+  cid: number;
+  mid: number;
 };
 
 export type CotyledonQuiltingResponse = string[];

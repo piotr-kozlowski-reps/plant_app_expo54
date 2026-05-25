@@ -78,24 +78,11 @@ const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
                   kolor:{" "}
                 </Text>
                 <View className="ml-2">
-                  <Text className="font-default-semibold text-foreground">
+                  <Text className="text-center font-default-semibold text-foreground">
                     {chosenColor?.twr_nazwa}
                   </Text>
                 </View>
               </View>
-
-              {/* <View className="flex-col items-center justify-center w-full px-6 mt-4">
-                <Text className=" font-default-normal text-foreground">
-                  tace:{" "}
-                </Text>
-                {trays.map((tray) => (
-                  <View className="ml-2" key={tray.stk_id}>
-                    <Text className="font-default-semibold text-foreground">
-                      {tray.stk_id}
-                    </Text>
-                  </View>
-                ))}
-              </View> */}
 
               <View className="w-full px-6 mt-8">
                 <InputFormik<QuantityForCotyledonQuiltingInput>
@@ -114,7 +101,7 @@ const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
               <View className="flex-1">
                 <ButtonTextAndThreeArrows
                   actionFn={() => availableFormActions()}
-                  text="wyślij"
+                  text="wyślij i zamknij wybrany kolor"
                   isBackground
                   disabled={!canFormBeSubmitted}
                 />
