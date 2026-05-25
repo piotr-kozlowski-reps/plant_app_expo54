@@ -1,4 +1,5 @@
 {
   "label": "Pikowanie liścieni",
-  "order": 30
+  "order": 30,
+  "docsDir": "features/app/potted_plants/potted_plants_cotyledon_quilting"
 }

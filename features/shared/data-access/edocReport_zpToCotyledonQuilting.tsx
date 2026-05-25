@@ -25,6 +25,12 @@ const cotyledonQuiltingListObjectExample: CotyledonQuilting = {
   mid: 0,
 };
 
+/**
+ * @public
+ * @reportItem
+ * raport - pobiera aktualnie pikowanego ZP:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1709</b>
+ */
 const edocReport_zpToCotyledonQuilting = new EdocReport<
   CotyledonQuiltingDTO,
   CotyledonQuilting

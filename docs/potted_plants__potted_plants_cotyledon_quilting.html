@@ -1,0 +1,90 @@
+
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+          <meta charset="UTF-8" />
+          <title>Dokumentacja: features/app/potted_plants/potted_plants_cotyledon_quilting</title>
+          <style>
+          :root {
+            --color-dark: #002539;
+            --color-background_nuance: #FFFDF9;
+            --color-gray: #C2C2C2;
+            --color-procedure-description: #9d89b3;
+            --color-report: #f2ebca;
+            --color-gray-darker: #B0B0B0;
+            --color-procedure-item: #D1EDD1;
+            --color-api-item: #cadbf2;
+            --color-guard: #FDAFAF;
+            --border-radius: 32px
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
+            font-weight: bold;
+            font-style: bold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
+            font-weight: semibold;
+            font-style: semibold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
+            font-weight: light;
+            font-style: light;
+            }
+            body {
+            font-family: "euclid", sans-serif; max-width: 80%; margin: 40px auto; line-height: 1.4;
+            }
+            h1 {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
+            }
+            h2 {
+            font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
+            h4 {
+            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
+            p {
+            padding-top: -4px; padding-bottom: -4px;
+            }
+            code { background: #f5f5f5; padding: 2px 4px; }
+            pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+
+            .back-button {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-background_nuance); color: var(--color-dark); padding-top: 4px; padding-bottom: 6px; padding-left: 16px; padding-right: 16px; border: 2px solid var(--color-dark); border-radius: var(--border-radius); text-decoration: none; 
+            }
+            .back-button:hover {
+            background-color: var(--color-dark); color: var(--color-background_nuance);
+            }
+
+          </style>
+        </head>
+        <body>
+        <h1>Dokumentacja dla: <b>Rośliny doniczkowe -> Pikowanie liścieni</b></h1><a href="./index.html" class="back-button">powrót do indexu</a><h4> features/app/potted_plants/potted_plants_cotyledon_quilting/domain/usePrepareDataForFormikToCotyledonQuiltingQuantity.tsx</h4><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>wysyłka&nbsp;-&nbsp;custom&nbsp;api:</p><p><b>{{URL}}</b>/api.php/REST/custom/<b>addstktoorderdon</b></p><p>dane&nbsp;-&nbsp;array&nbsp;obiektów:</p><p>[</p><p>&nbsp;{</p><p>&nbsp;&nbsp;&nbsp;&nbsp;ip:&nbsp;string;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;sordid:&nbsp;number;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;ordnmb:&nbsp;string;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;twr_kod:&nbsp;string;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;twr_nazwa:&nbsp;string;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;quantity:&nbsp;number;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;cid:&nbsp;number;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;mid:&nbsp;number;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;trays:&nbsp;[</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stk_id:&nbsp;number</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanned_raw_value:&nbsp;string</p><p>&nbsp;&nbsp;&nbsp;&nbsp;]</p><p>&nbsp;&nbsp;}</p><p>]</p><br /></div><h4> features/app/potted_plants/potted_plants_cotyledon_quilting/domain/useScanValuesForAddingTraysToPottedPlants.tsx</h4><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>Dopuszczalny&nbsp;tylko&nbsp;skan&nbsp;tacy.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>Jeżeli&nbsp;taca&nbsp;była&nbsp;już&nbsp;wcześniej&nbsp;zeskanowana&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>Jeżeli&nbsp;taca&nbsp;jest&nbsp;już&nbsp;podpięta&nbsp;do&nbsp;ZP&nbsp;parametr:&nbsp;array_agg</p><p>->&nbsp;info,&nbsp;w&nbsp;którym&nbsp;kolorze&nbsp;jest&nbsp;podpięta&nbsp;+&nbsp;koniec&nbsp;procedury.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>Jeżeli&nbsp;zeskanowana&nbsp;taca&nbsp;ma&nbsp;inny&nbsp;typ&nbsp;niż&nbsp;przekazany&nbsp;w&nbsp;tray_type&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>Musi&nbsp;byc&nbsp;wybrany&nbsp;kolor,&nbsp;jeżeli&nbsp;nie&nbsp;to&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>Weryfikacja&nbsp;maksymalnej&nbsp;ilości&nbsp;tac,&nbsp;jakie&nbsp;mogą&nbsp;być&nbsp;wysiane&nbsp;dla&nbsp;tego&nbsp;koloru.&nbsp;Jeżeli&nbsp;ilość&nbsp;skanowanych&nbsp;tac,&nbsp;będzie&nbsp;większa&nbsp;niż&nbsp;dopuszczalna->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury.</p><p>ilość&nbsp;wpisów&nbsp;w&nbsp;arrayAgg&nbsp;+&nbsp;ilość&nbsp;zeskanowanych&nbsp;tac&nbsp;+&nbsp;1&nbsp;>&nbsp;parametr:&nbsp;iletac</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>Jeżeli&nbsp;zeskanowana&nbsp;taca,&nbsp;już&nbsp;znajduje&nbsp;się&nbsp;na&nbsp;liście&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>raporty:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px;">pobrano z pliku: features/shared/data-access/useGetTrayInfoForDon_Report1711.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>raport&nbsp;-&nbsp;skan&nbsp;QR&nbsp;tacy&nbsp;i&nbsp;wywołanie&nbsp;raportu&nbsp;z&nbsp;informacjami&nbsp;o&nbsp;tacy&nbsp;dla&nbsp;roślin&nbsp;doniczkowych:</p><p>adres:&nbsp;/api.php/REST/custom/korsolgetreport?rep_id=<b>1711</b>&stk_id=<b>%stk_id%</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p>Zeskanowana&nbsp;taca&nbsp;musi&nbsp;być&nbsp;umyta.</p><p>Jeżeli&nbsp;taca&nbsp;ma&nbsp;inny&nbsp;paramert&nbsp;<b>event_type</b>&nbsp;niz&nbsp;<b>WASH</b>&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury.</p></div><h4> features/app/potted_plants/potted_plants_cotyledon_quilting/ui/CotyledonQuiltingMainWindow.tsx</h4><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>&nbsp;Formularz&nbsp;z&nbsp;wyborem&nbsp;dostępnego&nbsp;koloru</p></div><h4> features/app/potted_plants/potted_plants_cotyledon_quilting/ui/CotyledonQuilting_QuantityAndSend_Modal.tsx</h4><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>Formularz&nbsp;z&nbsp;wpisem&nbsp;ilości&nbsp;pikowanych&nbsp;liścieni.</p></div><h4> features/app/potted_plants/potted_plants_cotyledon_quilting/ui/PottedPlants_CotyledonQuilting_EntryPage.tsx</h4><div style="margin-left: 32px; font-weight: 600; text-decoration: underline; font-size: 16px"><p>PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p>Wyświetlany&nbsp;jest&nbsp;aktualnie&nbsp;pikowany&nbsp;Zpek.</p><p>Należy&nbsp;wybrać&nbsp;kolor&nbsp;z&nbsp;dostępnych&nbsp;kolorów&nbsp;dla&nbsp;ZP.</p><p>Skanowanie&nbsp;tac&nbsp;i&nbsp;podpinanie&nbsp;ich&nbsp;do&nbsp;wybranego&nbsp;koloru.</p><p>Na&nbsp;końcu&nbsp;podanie&nbsp;wypikowanej&nbsp;ilości&nbsp;i&nbsp;wysyłka.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>raporty:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px;">pobrano z pliku: features/shared/data-access/edocReport_zpToCotyledonQuilting.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p>raport&nbsp;-&nbsp;pobiera&nbsp;aktualnie&nbsp;pikowanego&nbsp;ZP:</p><p><b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1709</b></p></div><a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót do indexu</a>
+        </body>
+        </html>
+        

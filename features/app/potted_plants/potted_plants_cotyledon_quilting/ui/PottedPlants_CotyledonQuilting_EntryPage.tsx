@@ -9,13 +9,21 @@ import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGet
 import edocReport_zpToCotyledonQuilting from "@/features/shared/data-access/edocReport_zpToCotyledonQuilting";
 import { useMemo } from "react";
 import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
-// import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 
-// import { useMemo } from "react";
-// import { ZpToCut } from "@/features/shared/types/interfaces-cut";
-// import { FieldCropsSubmodules } from "@/features/shared/types/interfaces-auth";
-// import edocReport_CutsList from "@/features/shared/data-access/edocReport_CutsList";
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
 
+/**
+ * @public
+ * @procedureDescription
+ * Wyświetlany jest aktualnie pikowany Zpek.
+ * Należy wybrać kolor z dostępnych kolorów dla ZP.
+ * Skanowanie tac i podpinanie ich do wybranego koloru.
+ * Na końcu podanie wypikowanej ilości i wysyłka.
+ */
 const PottedPlants_CotyledonQuilting_EntryPage = () => {
   ////vars
   const { isLoading, setIsLoading, isPermissionGranted, requestPermission } =
@@ -26,6 +34,12 @@ const PottedPlants_CotyledonQuilting_EntryPage = () => {
     );
 
   //fetch
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_zpToCotyledonQuilting.tsx`
+   */
   const { zpToCotyledonQuilting, refreshAllData: refreshAllDataGotFromHook } =
     useGetEdocReports({
       setIsLoading: setIsLoading,

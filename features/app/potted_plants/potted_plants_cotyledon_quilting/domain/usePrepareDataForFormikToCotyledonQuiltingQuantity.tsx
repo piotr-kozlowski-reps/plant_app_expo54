@@ -90,6 +90,30 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
     }
 
     //send data to server
+    /**
+     * @public
+     * @transformApiItem
+     * wysyłka - custom api:
+     * <b>{{URL}}</b>/api.php/REST/custom/<b>addstktoorderdon</b>
+     * dane - array obiektów:
+     * [
+     *  {
+     *     ip: string;
+     *     sordid: number;
+     *     ordnmb: string;
+     *     twr_kod: string;
+     *     twr_nazwa: string;
+     *     quantity: number;
+     *     cid: number;
+     *     mid: number;
+     *     trays: [
+     *        stk_id: number
+     *        scanned_raw_value: string
+     *     ]
+     *   }
+     * ]
+     * @separator
+     */
     let response: CotyledonQuiltingResponse =
       await query_postDataAsServerAction<
         CotyledonQuiltingResponse,

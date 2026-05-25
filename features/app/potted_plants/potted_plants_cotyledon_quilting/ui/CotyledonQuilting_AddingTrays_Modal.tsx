@@ -17,8 +17,7 @@ import { useScanValuesForAddingTraysToPottedPlants } from "../domain/useScanValu
 import Button from "@/features/shared/ui/button/Button";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { MESSAGES } from "@/features/shared/utils/messages";
-import TrayItem from "@/features/app/field_crops/field_crops_works/plants_coming_ups_counter/ui/TrayItem";
-import { Tray, TrayShortInfo } from "@/features/shared/types/interfaces-tray";
+import { TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import CotyledonQuilting_TrayItem from "./CotyledonQuilting_TrayItem";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { yellowColor } from "@/features/shared/constants/colorThemeVars";

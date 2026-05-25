@@ -30,9 +30,12 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     useState(false);
 
   //fn
+  /**
+   * @public
+   * @procedureItem
+   * Dopuszczalny tylko skan tacy.
+   */
   const scanValueHandler = async (scannedValue: string) => {
-    // console.log("scanValueHandler");
-    // console.log({ scannedValue });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
     player.play();
@@ -41,7 +44,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     /**
      * @public
      * @guard
-     * Jeżeli taca była już wcześniej zeskanowana - info + koniec procedury.
+     * Jeżeli taca była już wcześniej zeskanowana -> info + koniec procedury.
      */
     if (checkWhatValueWasScanned(scannedValue) !== "tray") {
       toast.warning(
@@ -53,7 +56,8 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     /**
      * @public
      * @guard
-     * Jeżeli taca jest już podpięta do ZP - info, w którym kolorze jest podpięta + koniec procedury.
+     * Jeżeli taca jest już podpięta do ZP parametr: array_agg
+     * -> info, w którym kolorze jest podpięta + koniec procedury.
      */
     const zpAlreadyIncludesScannedTrayMessageInfo =
       getIfZpAlreadyIncludesScannedTray(scannedValue, cotyledonQuiltingArray);
@@ -65,7 +69,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     /**
      * @public
      * @guard
-     * Jeżeli zeskanowana taca ma inny typ niż przekazany w cotyledonQuiltingArray[].tray_type -> info + koniec procedury.
+     * Jeżeli zeskanowana taca ma inny typ niż przekazany w tray_type -> info + koniec procedury.
      */
     const allowedTrayType = cotyledonQuiltingArray[0].tray_type;
     const isProperScannedTrayType = getIsProperScannedTrayType(
@@ -91,6 +95,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
      * @public
      * @guard
      * Weryfikacja maksymalnej ilości tac, jakie mogą być wysiane dla tego koloru. Jeżeli ilość skanowanych tac, będzie większa niż dopuszczalna-> info + koniec procedury.
+     * ilość wpisów w arrayAgg + ilość zeskanowanych tac + 1 > parametr: iletac
      */
     const isMaxNumberOfTraysExceeded = checkIfMaxNumberOfTraysExceeded(
       chosenColor,
@@ -116,6 +121,12 @@ export const useScanValuesForAddingTraysToPottedPlants = (
 
     setIsLoading(true);
     try {
+      /**
+       * @public
+       * @procedureItem
+       * raporty:
+       * @readFile `features/shared/data-access/useGetTrayInfoForDon_Report1711.tsx`
+       */
       const scannedTrayInfo = await getTrayInfoForDon_Report1711(scannedValue);
       if (!scannedTrayInfo) return;
 
@@ -123,7 +134,7 @@ export const useScanValuesForAddingTraysToPottedPlants = (
        * @public
        * @guard
        * Zeskanowana taca musi być umyta.
-       * Jeżeli taca ma inny paramert event_type niz "WASH" -> info + koniec procedury.
+       * Jeżeli taca ma inny paramert <b>event_type</b> niz <b>WASH</b> -> info + koniec procedury.
        */
       if (scannedTrayInfo.event_type !== "WASH") {
         toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_WASHED);

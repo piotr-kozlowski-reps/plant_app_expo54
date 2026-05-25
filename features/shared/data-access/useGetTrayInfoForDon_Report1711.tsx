@@ -16,7 +16,7 @@ export const useGetTrayInfoForDon_Report1711 = () => {
    * @public
    * @reportItem
    * raport - skan QR tacy i wywołanie raportu z informacjami o tacy dla roślin doniczkowych:
-   * adres: /api.php/REST/custom/korsolgetreport?rep_id=1711&stk_id=<b>%stk_id%</b>
+   * adres: /api.php/REST/custom/korsolgetreport?rep_id=<b>1711</b>&stk_id=<b>%stk_id%</b>
    */
   async function getTrayInfoForDon_Report1711(
     scannedValue: string,

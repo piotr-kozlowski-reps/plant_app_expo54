@@ -39,6 +39,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
   const [isShowDeleteTrayModal, setIsShowDeleteTrayModal] = useState(false);
 
   //fn
+
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
@@ -98,7 +99,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
      *  lckcnt: number
      *  scanned_raw_value: string
      * }
-     *@separator
+     * @separator
      */
     let response: RiseCountResponse;
     try {

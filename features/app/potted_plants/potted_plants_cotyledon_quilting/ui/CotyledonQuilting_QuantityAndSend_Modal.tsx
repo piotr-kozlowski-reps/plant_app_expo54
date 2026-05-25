@@ -33,6 +33,11 @@ const CotyledonQuilting_QuantityAndSend_Modal = (props: TProps) => {
   ////vars
   const { closeFn, ordnmb, chosenColor, trays, setIsLoading } = props;
 
+  /**
+   * @public
+   * @procedureItem
+   * Formularz z wpisem ilości pikowanych liścieni.
+   */
   const { formik, availableFormActions, canFormBeSubmitted } =
     usePrepareDataForFormikToCotyledonQuiltingQuantity(
       setIsLoading,
