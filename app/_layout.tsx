@@ -14,6 +14,7 @@ import { configPerBuild } from "@/features/shared/env/env";
 import { useTestOrProductionStore } from "@/features/shared/stores/useTestOrProductionStore";
 import { useDateOfLastLoginSecureStoreHandler } from "@/features/shared/utils/useDateOfLastLoginSecureStoreHandler";
 import { ThemeProvider } from "@/features/shared/providers/ThemeProvider";
+import * as Application from "expo-application";
 
 import "react-native-reanimated";
 
@@ -24,6 +25,8 @@ SplashScreen.preventAutoHideAsync();
 const client = new QueryClient();
 
 export default function RootLayout() {
+  console.log({ Application });
+
   ////fonts
   const [fontsLoaded, error] = useFonts({
     EuclidCircularBLight: require("../assets/fonts/EuclidCircularBLight.ttf"),
@@ -93,11 +96,33 @@ export default function RootLayout() {
               </Stack>
 
               {isProduction ? null : (
-                <View className="w-full h-[16px] bg-emerald-400">
-                  <Text className="text-center text-foreground font-default-normal">
-                    Środowisko testowe:{" "}
-                    <Text className="text-foreground font-default-semibold">{`${configPerBuild.apiAddress}`}</Text>
-                  </Text>
+                <View className="w-full h-[16px] bg-emerald-400 ">
+                  <View className="flex-row items-center justify-between px-6">
+                    <View>
+                      <Text className="text-foreground font-default-normal">
+                        Środowisko testowe:{" "}
+                        <Text className="text-foreground font-default-semibold">{`${configPerBuild.apiAddress}`}</Text>
+                      </Text>
+                    </View>
+                    <View>
+                      <Text className="text-foreground font-default-normal">
+                        App:{" "}
+                        <Text className="text-foreground font-default-semibold">{`${Application.nativeApplicationVersion} (${Application.nativeBuildVersion})`}</Text>
+                      </Text>
+                    </View>
+                  </View>
+                  {/* <View>
+                    <Text className="text-foreground font-default-normal">
+                      Środowisko testowe:{" "}
+                      <Text className="text-foreground font-default-semibold">{`${configPerBuild.apiAddress}`}</Text>
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-foreground font-default-normal">
+                      App:{" "}
+                      <Text className="text-foreground font-default-semibold">{`${configPerBuild.apiAddress}`}</Text>
+                    </Text>
+                  </View> */}
                 </View>
               )}
 
