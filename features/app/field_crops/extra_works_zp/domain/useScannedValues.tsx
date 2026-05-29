@@ -65,8 +65,6 @@ export const useScannedValues = (
     );
     if (!isScannedDataCorrect) return;
 
-    // console.log({scan})
-
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     const isZP = whatValueWasScanned === "zp_gru";
     const isField = whatValueWasScanned === "field";

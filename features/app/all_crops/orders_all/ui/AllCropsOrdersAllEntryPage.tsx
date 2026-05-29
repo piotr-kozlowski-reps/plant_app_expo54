@@ -36,6 +36,7 @@ const AllCropsOrdersAllEntryPage = (props: Props) => {
   });
   const availableLocalizationsArray =
     availableLocalizations as unknown as Localization[];
+
   const filteredLocalizations: Localization[] = useMemo(() => {
     if (whatOrderType === "field_crops_works_order_to_hardener") {
       const foundFilteredLocalizations = availableLocalizationsArray.filter(
@@ -44,7 +45,7 @@ const AllCropsOrdersAllEntryPage = (props: Props) => {
             Number.parseInt(loc.planam) >= 80 &&
             Number.parseInt(loc.planam) < 200
           );
-        }
+        },
       );
 
       return foundFilteredLocalizations || [];
@@ -54,7 +55,7 @@ const AllCropsOrdersAllEntryPage = (props: Props) => {
       const foundFilteredLocalizations = availableLocalizationsArray.filter(
         (loc) => {
           return Number.parseInt(loc.planam) <= 80;
-        }
+        },
       );
 
       return foundFilteredLocalizations || [];
