@@ -2,7 +2,7 @@ import { AppRoute } from "./generateDocsTypes";
 
 class HtmlTemplates {
   generateTopicHtml(commentPrepared: string[], index: number): string {
-    const html = `<div style="margin-left: ${index * 32 + 32}px; font-weight: 600; text-decoration: underline; font-size: 16px">${this.generateInsideLines(commentPrepared)}</div>`;
+    const html = `<div style="margin-left: ${index * 32 + 32}px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);">${this.generateInsideLines(commentPrepared, true)}</div>`;
     return html;
   }
 
@@ -105,7 +105,7 @@ ${docsDir ? `<a href="${path.trim() + ".html"}" style="margin-left: 32px; color:
           :root {
             --color-dark: #002539;
             --color-background_nuance: #FFFDF9;
-            --color-gray: #C2C2C2;
+            --color-gray: #ddd;
             --color-procedure-description: #9d89b3;
             --color-report: #f2ebca;
             --color-gray-darker: #B0B0B0;
@@ -148,7 +148,7 @@ ${docsDir ? `<a href="${path.trim() + ".html"}" style="margin-left: 32px; color:
             font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
             }
             h4 {
-            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px; opacity: 0.3;
             }
             p {
             padding-top: -4px; padding-bottom: -4px;
@@ -175,7 +175,10 @@ ${docsDir ? `<a href="${path.trim() + ".html"}" style="margin-left: 32px; color:
   }
 
   ////priv
-  private generateInsideLines(commentPrepared: string[]): string {
+  private generateInsideLines(
+    commentPrepared: string[],
+    isInvert?: boolean,
+  ): string {
     let html = "";
     for (const line of commentPrepared) {
       if (line.includes("@separator")) html += `<br />`;
@@ -185,7 +188,7 @@ ${docsDir ? `<a href="${path.trim() + ".html"}" style="margin-left: 32px; color:
           /\s/g,
           "&nbsp;",
         );
-        html += `<p>${lineWithNonBreakableSpaces}</p>`;
+        html += `<p ${isInvert ? 'style="color: var(--color-background_nuance);"' : null}>${lineWithNonBreakableSpaces}</p>`;
       }
     }
     return html;

@@ -22,6 +22,7 @@ type Props = {
 /**
  * @public
  * @topic
+ * @order 10
  * PROCEDURA:
  */
 
@@ -49,8 +50,6 @@ const LoginForm = (props: Props) => {
     formik,
     setIsRememberMe,
   );
-
-  // console.log({ formik });
 
   //reset form and secure store
   const reset = async () => {

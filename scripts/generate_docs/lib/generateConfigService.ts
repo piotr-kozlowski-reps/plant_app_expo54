@@ -6,7 +6,7 @@ import {
 } from "./generateDocsTypes";
 import fs from "fs/promises";
 import path from "path";
-import { appDocsMainConfig } from "./appDocsMainConfig";
+import { appDocsMainConfig } from "../../../appDocsMainConfig";
 
 class GenerateConfigService {
   private outputDir: string;

@@ -1,0 +1,5 @@
+{
+  "label": "Autentykacja / Autoryzacja",
+  "order": 1,
+  "docsDir": "features/auth"
+}

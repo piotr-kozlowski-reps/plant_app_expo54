@@ -35,6 +35,13 @@ type HtmlDocsForDirOptions = {
   // routes: AppRoute[];
 };
 
+type CustomComment = {
+  type: CommentType;
+  order: number;
+  comment: string;
+  // level: number;
+};
+
 class GenerateDocsService {
   async generateDocs(config: DocsConfig) {
     await this.initialClear(config.outputDir);
@@ -105,7 +112,6 @@ class GenerateDocsService {
           path: route.path,
           prevPath: prevPath,
           isShowBackToIndex: true,
-          // outputFileName: route.path,
         });
       }
 
@@ -136,30 +142,58 @@ class GenerateDocsService {
       prevPath,
       isShowBackToIndex,
     } = options;
+
+    //files
     const files = await fg([`${dir}/**/*.{ts,tsx}`], {
       ignore: ["**/*.d.ts"],
     });
 
+    //html start
     const currentLabel = `${prevLabel ? `${prevLabel} -> ${label}` : `${label}`}`;
     let htmlContent = `<h1>Dokumentacja dla: <b>${currentLabel}</b></h1>`;
-
     if (isShowBackToIndex) {
-      htmlContent += `<a href="./index.html" class="back-button">powrót do indexu</a>`;
+      htmlContent += `<a href="./index.html" class="back-button">powrót</a>`;
     }
-
     const currentPath = `${prevPath ? `${prevPath}__${path}` : `${path}`}`;
+
+    //comments
+    const dirCommentsMap: Record<string, CustomComment[]> = {};
     for (const file of files) {
+      // //TODO: get rid of that if below
+      // if (!file.includes("features/auth/")) return;
+
+      const allFileComments: CustomComment[] = [];
       const fileContent = await fs.readFile(file, "utf-8");
       const comments = this.extractDocComments(fileContent);
       if (comments.length === 0) continue;
-      htmlContent += `<h4> ${file}</h4>`;
-      htmlContent += await this.processComments(comments, 0);
+
+      this.addFileComments(comments, allFileComments);
+      const sortedComments = allFileComments.sort((a, b) => {
+        return a.order - b.order;
+      });
+      dirCommentsMap[file] = sortedComments;
     }
+    const allSortedComments = Object.entries(dirCommentsMap).sort(
+      ([keyA], [keyB]) => {
+        const a = dirCommentsMap[keyA];
+        const b = dirCommentsMap[keyB];
+
+        const lastAItemOrder = a[a.length - 1]?.order;
+        const lastBItemOrder = b[0]?.order;
+
+        if (!lastAItemOrder) return 1;
+        if (!lastBItemOrder) return -1;
+        if (lastAItemOrder > lastBItemOrder) return 1;
+        if (lastAItemOrder < lastBItemOrder) return -1;
+        return 0;
+      },
+    );
+
+    htmlContent += await this.processCommentsList(allSortedComments, 0);
 
     if (isShowBackToIndex) {
-      htmlContent += `<a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót do indexu</a>`;
+      htmlContent += `<a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót</a>`;
     }
-
     const fullHtml = htmlTemplates.generateMainHtml(dir, htmlContent);
     await this.writeFile({
       dir,
@@ -168,6 +202,79 @@ class GenerateDocsService {
       extension: "html",
       fullHtml,
     });
+  }
+
+  private async processCommentsList(
+    allSortedComments: [string, CustomComment[]][],
+    index: number,
+  ): Promise<string> {
+    let html = "";
+
+    for (const fileComments of allSortedComments) {
+      const fileName = fileComments[0];
+      const commentObject = fileComments[1];
+
+      html += this.addFileNameItem(
+        fileName,
+        commentObject[0]?.order,
+        commentObject[commentObject.length - 1]?.order,
+      );
+
+      for (const commentItem of commentObject) {
+        const comment = commentItem.comment;
+        if (!comment.includes("@public")) continue;
+        if (comment.includes("@readFile")) {
+          const htmlFromFile = await this.generateCommentsFromFile(
+            comment,
+            index,
+          );
+          html += `${this.formatComment(comment, index)}`;
+          html += htmlFromFile;
+          continue;
+        }
+        html += `${this.formatComment(comment, index)}`;
+      }
+    }
+    return html;
+  }
+
+  private addFileNameItem(
+    fileName: string,
+    startIndex: number,
+    endIndex: number,
+  ) {
+    return `<div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>${fileName}</h4>
+      <div style="font-size: 10px;">(${startIndex} - ${endIndex})</div>
+    </div>`;
+  }
+
+  private addFileComments(
+    comments: string[],
+    allFileComments: CustomComment[],
+  ) {
+    let currentOrder = 0;
+    for (const comment of comments) {
+      if (!comment.includes("@public")) continue;
+
+      const commentType = this.getCommentType(comment);
+      const extractedCommentOrder = this.getCommentOrder(comment);
+      if (extractedCommentOrder) {
+        currentOrder = extractedCommentOrder;
+        allFileComments.push({
+          type: commentType,
+          order: currentOrder,
+          comment,
+        });
+      } else {
+        currentOrder++;
+        allFileComments.push({
+          type: commentType,
+          order: currentOrder,
+          comment,
+        });
+      }
+    }
   }
 
   private async processComments(
@@ -220,6 +327,7 @@ class GenerateDocsService {
       .filter((line) => !line.trim().includes("@readFile"))
       .filter((line) => !line.trim().includes("@reportItem"))
       .filter((line) => !line.trim().includes("@transformApiItem"))
+      .filter((line) => !line.trim().includes("@order"))
       .filter((line) => line.trim().length > 0); // usuwa puste linie
     if (commentType === "topic")
       return htmlTemplates.generateTopicHtml(commentPrepared, index);
@@ -259,6 +367,18 @@ class GenerateDocsService {
     if (comment.includes("@reportItem")) return "report";
 
     throw new Error("Unknown comment type");
+  }
+
+  private getCommentOrder(comment: string): number | null {
+    const match = comment.match(/@order\s+(\d+)/);
+    if (match) {
+      const orderNumber = Number.parseInt(
+        match[0].replace("@order ", "").trim(),
+      );
+      return orderNumber;
+    }
+
+    return 0;
   }
 
   private async writeFile(options: WriteFileOptions) {
