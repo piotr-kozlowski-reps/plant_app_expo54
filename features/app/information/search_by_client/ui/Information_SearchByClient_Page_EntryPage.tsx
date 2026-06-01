@@ -7,6 +7,7 @@ import InformationScanner from "../../ui/InformationScanner";
 /**
  * @public
  * @topic
+ * @order 10
  * PROCEDURA:
  */
 

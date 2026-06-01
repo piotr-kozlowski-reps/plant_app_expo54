@@ -21,6 +21,7 @@ import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 /**
  * @public
  * @topic
+ * @order 20
  * REALIZACJA:
  */
 export const useScanValuesForInformation = (

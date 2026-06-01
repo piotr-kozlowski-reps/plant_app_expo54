@@ -34,6 +34,7 @@ const ConfirmQuantitiesPlantsComingUpsCounterModal = (props: Props) => {
   /**
    * @public
    * @procedureItem
+   * @order 100
    * wprowadzenie ilości braków (czy przez przyciski <b>+</b> i <b>-</b>, czy podając konkretne ilości w formularzu)
    */
   const { formik, availableFormActions, canFormBeSubmitted } =

@@ -86,6 +86,7 @@ const ProtectiveTreatmentForm = (props: Props) => {
   /**
    * @public
    * @procedureItem
+   * @order 30
    *  Formularz z wprowadzeniem: zabiegu, ilośći środka, kto wykonał, typu zabiegu)
    */
   const { formik, availableFormActions, canFormBeSubmitted, clearForm } =

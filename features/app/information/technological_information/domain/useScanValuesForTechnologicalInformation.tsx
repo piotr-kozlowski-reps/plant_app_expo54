@@ -90,6 +90,7 @@ export const useScanValuesForTechnologicalInformation = (
     /**
      * @public
      * @procedureItem
+     * @order 30
      * pobieranie informacji o ZP:
      * adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1695</b>&ordnmb=<b>%ordnmb%</b>
      */

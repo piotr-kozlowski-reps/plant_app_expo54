@@ -44,6 +44,7 @@ export const useSendProtectiveTreatmentHandler = (
   /**
    * @public
    * @transformApiItem
+   * @order 200
    * wysyłka - custom api - POST:
    * @separator
    * <b>dane</b>:

@@ -15,6 +15,7 @@ import edocReport_TypeOfTreatment from "@/features/shared/data-access/edocReport
 /**
  * @public
  * @topic
+ * @order 10
  * PROCEDURA:
  */
 /**
@@ -32,6 +33,13 @@ const FieldCropsProtectiveTreatmentEntryPage = () => {
       "field_crops_works_protective_treatment",
       "Zabieg ochronny",
     );
+
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
 
   /**
    * @public

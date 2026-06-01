@@ -7,6 +7,7 @@ import TechnologicalInformationScanner from "./TechnologicalInformationScanner";
 /**
  * @public
  * @topic
+ * @order 10
  * PROCEDURA:
  */
 

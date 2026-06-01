@@ -88,6 +88,7 @@ export const useScanValuesForProtectiveTreatment = (
     /**
      * @public
      * @procedureItem
+     * @order 100
      * dopuszczony: skan tacy, ZPeka lub lokalizacji
      */
     const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [

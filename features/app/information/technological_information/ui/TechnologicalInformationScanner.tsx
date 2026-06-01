@@ -39,6 +39,7 @@ const TechnologicalInformationScanner = () => {
   /**
    * @public
    * @procedureItem
+   * @order 20
    * skan ZP lub przeszukanie listy
    */
   const {

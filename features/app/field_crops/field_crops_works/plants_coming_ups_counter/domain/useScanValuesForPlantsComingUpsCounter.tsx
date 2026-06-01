@@ -89,6 +89,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
     /**
      * @public
      * @transformApiItem
+     * @order 40
      * wysyłka - custom api:
      * <b>{{URL}}</b>/api.php/REST/custom/<b>risecount</b>
      * dane - array obiektów:
@@ -236,6 +237,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
     /**
      * @public
      * @procedureItem
+     * @order 20
      * raporty:
      * @readFile `features/shared/data-access/useGetTrayInfo_Report113.tsx`
      */
@@ -251,6 +253,7 @@ export const useScanValuesForPlantsComingUpsCounter = (
     /**
      * @public
      * @guard
+      * @order 30
      *  w raporcie znajduje się pole: <b>lckcnt</b>
     - jeżeli wartość jest inna niż: <b>-1</b> lub <b>null</b> to komunikat, mówiący o tym, że dane dla tej tacy zostały już wprowadzone.
      */

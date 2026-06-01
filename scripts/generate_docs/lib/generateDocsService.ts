@@ -159,9 +159,6 @@ class GenerateDocsService {
     //comments
     const dirCommentsMap: Record<string, CustomComment[]> = {};
     for (const file of files) {
-      // //TODO: get rid of that if below
-      // if (!file.includes("features/auth/")) return;
-
       const allFileComments: CustomComment[] = [];
       const fileContent = await fs.readFile(file, "utf-8");
       const comments = this.extractDocComments(fileContent);
