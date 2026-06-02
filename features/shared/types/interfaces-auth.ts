@@ -28,6 +28,7 @@ export type PottedPlantsSubmodules = ModuleOverallPermission & {
   potted_plants_quantity___overallVisibility: boolean;
   potted_plants_zp___overallVisibility: boolean;
   potted_plants_cotyledon_quilting: boolean;
+  potted_plants_potting: boolean;
 
   //potted_plants_works
   potted_plants_works_internal_transport: boolean;

@@ -9,6 +9,7 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { lightNuanceColor } from "@/features/shared/constants/colorThemeVars";
 import { PottedPlantsSubmodules } from "@/features/shared/types/interfaces-auth";
 import {
+  Boxes,
   DiscAlbum,
   FileDigit,
   GitPullRequestCreateArrow,
@@ -142,6 +143,65 @@ const PottedPlantsEntryPage = () => {
                     !getModuleVisibilitiesObject<PottedPlantsSubmodules>(
                       "potted_plants",
                     ).potted_plants_zp___overallVisibility
+                  }
+                />
+              </View>
+
+              {/* -------------------------- */}
+              <View className="flex-row items-center justify-center w-full gap-2">
+                <LeafNavigationButton
+                  side={"left"}
+                  actionFn={
+                    getModuleVisibilitiesObject<PottedPlantsSubmodules>(
+                      "potted_plants",
+                    ).potted_plants_cotyledon_quilting
+                      ? () => {
+                          router.push(
+                            "/app/potted_plants/potted_plants_cotyledon_quilting",
+                          );
+                        }
+                      : () => {}
+                  }
+                  icon={
+                    <GitPullRequestCreateArrow
+                      size={24}
+                      color={lightNuanceColor}
+                      strokeWidth={2.7}
+                    />
+                  }
+                  name={`Pikowanie${"\n"}liścieni`}
+                  disabled={
+                    !getModuleVisibilitiesObject<PottedPlantsSubmodules>(
+                      "potted_plants",
+                    ).potted_plants_cotyledon_quilting
+                  }
+                  visibility={false}
+                />
+                <LeafNavigationButton
+                  side={"right"}
+                  actionFn={
+                    getModuleVisibilitiesObject<PottedPlantsSubmodules>(
+                      "potted_plants",
+                    ).potted_plants_potting
+                      ? () => {
+                          router.push(
+                            "/app/potted_plants/potted_plants_potting",
+                          );
+                        }
+                      : () => {}
+                  }
+                  icon={
+                    <Boxes
+                      size={24}
+                      color={lightNuanceColor}
+                      strokeWidth={2.7}
+                    />
+                  }
+                  name={`Doniczkowanie`}
+                  disabled={
+                    !getModuleVisibilitiesObject<PottedPlantsSubmodules>(
+                      "potted_plants",
+                    ).potted_plants_potting
                   }
                 />
               </View>

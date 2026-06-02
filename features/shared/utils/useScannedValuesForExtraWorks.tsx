@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TypeOfHobbyZp, ZpScannedValue } from "../types/interfaces-extra_works";
+import { ZpScannedValue } from "../types/interfaces-extra_works";
 
 export const useScannedValuesForExtraWorks = (
   isFieldScanned: boolean,

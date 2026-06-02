@@ -260,6 +260,7 @@ export const useLoginLogic = () => {
             potted_plants_quantity___overallVisibility: false,
             potted_plants_zp___overallVisibility: false,
             potted_plants_cotyledon_quilting: true,
+            potted_plants_potting: true,
 
             //potted_plants_works
             potted_plants_works_internal_transport: true,
