@@ -1,10 +1,7 @@
 import {
   darkColor,
-  grayColor,
-  grayColorPlaceholder,
   lightColor,
   lightNuanceColor,
-  primaryColor,
   yellowColor,
   yellowDarkColor,
 } from "@/features/shared/constants/colorThemeVars";
@@ -19,7 +16,7 @@ import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndT
 import Label from "@/features/shared/ui/label/Label";
 
 import { router, Stack } from "expo-router";
-import { Check, ChevronLeft, ChevronRight } from "lucide-react-native";
+import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Calendar, DateData, LocaleConfig } from "react-native-calendars";
@@ -40,7 +37,7 @@ const FieldCropsReportDamagedTraysEntryPage = () => {
   useSubmoduleEntryDataAndGuard<FieldCropsSubmodules>(
     "field_crops",
     "tray_operations_report_damaged_trays",
-    "Raport zniszczonych tac"
+    "Raport zniszczonych tac",
   );
 
   LocaleConfig.locales["pl"] = {
@@ -155,7 +152,7 @@ const FieldCropsReportDamagedTraysEntryPage = () => {
                           },
                         }}
                         maxDate={createYearMonthDayString(
-                          addDaysToDate(new Date(Date.now()), 0)
+                          addDaysToDate(new Date(Date.now()), 0),
                         )}
                         enableSwipeMonths={true}
                         onDayPress={(day: DateData) => {

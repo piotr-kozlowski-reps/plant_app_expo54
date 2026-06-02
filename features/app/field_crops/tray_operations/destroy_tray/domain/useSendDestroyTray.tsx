@@ -16,7 +16,7 @@ import { toast } from "sonner-native";
 export const useSendDestroyTray = (
   scannedValue: TrayInfoWithPics | null,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  resetValues: () => void
+  resetValues: () => void,
 ) => {
   const { isSendingDataAvailable } = useIsSendingDataAvailable(scannedValue);
   const { token } = useAuthSessionStore();
@@ -28,6 +28,27 @@ export const useSendDestroyTray = (
       return;
     }
 
+    /**
+     * @public
+     * @transformApiItem
+     * @order 80
+     * wysyłka - custom api:
+     * <b>{{URL}}</b>/api.php/REST/custom/<b>destroystickers</b>
+     * dane - array obiektów:
+     * {
+     *      ordnmb: string;
+     *      stk_id: string;
+     *      scanned_raw_value: string;
+     *      pictures: ImageDTO[];
+     * @separator
+     * ImageDTO:
+     * {
+     *      fileName: string;
+     *      fileContent: string;
+     *      transferEncoding: "base64";
+     * }
+     * @separator
+     */
     const dataToSent: Post_DestroyTray_DTO[] = [
       {
         ordnmb: scannedValue.ordnmb,
@@ -35,7 +56,7 @@ export const useSendDestroyTray = (
         scanned_raw_value: scannedValue.scannedRawValue,
         pictures: preparePicturesForSending(
           scannedValue.pictures,
-          scannedValue.stk_id
+          scannedValue.stk_id,
         ),
       },
     ];
@@ -64,7 +85,7 @@ export const useSendDestroyTray = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/destroystickers",
       token!,
-      dataToBeSend
+      dataToBeSend,
     );
 
     //check if response array has the same amount of items as sent items
@@ -85,7 +106,7 @@ export const useSendDestroyTray = (
 
 function preparePicturesForSending(
   pictures: CameraCapturedPicture[],
-  stk_id: string
+  stk_id: string,
 ): ImageDTO[] {
   const preparedPictures: ImageDTO[] = pictures.map((picture, index) => ({
     fileName: `${stk_id}_${index}.png`,

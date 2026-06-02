@@ -46,11 +46,23 @@ export const useScanValuesForDestroyTray = (
   );
 
   //fn
+  /**
+   * @public
+   * @procedureItem
+   * @order 20
+   * skan QR tacy
+   */
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
     player.play();
 
+    /**
+     * @public
+     * @guard
+     * @order 20
+     * zeskanowac można tylko tacę
+     */
     //check allowed scanned values
     const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
       "tray",
@@ -67,6 +79,12 @@ export const useScanValuesForDestroyTray = (
     try {
       setIsLoading(true);
 
+      /**
+       * @public
+       * @procedureItem
+       * raporty:
+       * @readFile `features/shared/data-access/useScanTrayToBeDestroyedRep84.tsx`
+       */
       const foundTray = await scanTrayToBeDestroyedRep84(scannedValue);
 
       if (!foundTray || !foundTray.stk_id || !foundTray.ordnmb) {
@@ -75,6 +93,11 @@ export const useScanValuesForDestroyTray = (
       }
 
       /** guards */
+      /**
+       * @public
+       * @guard
+       * zabezpieczenie: parametr: doc_id (jeżeli jest doc_id/nie jest nullem - to znaczy, że taca już zniszczona -> info + koniec procedury)
+       */
       if (foundTray.doc_id) {
         toast.warning(ERROR_MESSAGES.TRAY_ALREADY_DESTROYED);
         return;

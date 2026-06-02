@@ -1,4 +1,5 @@
 {
   "label": "Niszczenie tacy",
-  "order": 10
+  "order": 10,
+  "docsDir": "features/app/field_crops/tray_operations/destroy_tray"
 }

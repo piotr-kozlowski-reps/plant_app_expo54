@@ -4,13 +4,26 @@ import { Stack } from "expo-router";
 import DestroyTrayScanner from "./DestroyTrayScanner";
 import { FieldCropsSubmodules } from "@/features/shared/types/interfaces-auth";
 
+/**
+ * @public
+ * @topic
+ * @order 10
+ * PROCEDURA:
+ */
+
+/**
+ * @public
+ * @procedureDescription
+ * 1. skan QR tacy
+ * 2. wykonanie zdjęć
+ */
 const TrayOperationsDestroyTrayEntryPage = () => {
   ////vars
   const { isPermissionGranted, requestPermission } =
     useSubmoduleEntryDataAndGuard<FieldCropsSubmodules>(
       "field_crops",
       "tray_operations_destroy_tray",
-      "Niszczenie tacy"
+      "Niszczenie tacy",
     );
 
   ////tsx

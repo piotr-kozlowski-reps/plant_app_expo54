@@ -51,6 +51,12 @@ const DestroyTrayScanner = () => {
   } = useScanValuesForDestroyTray(setIsLoading, cameraRef);
 
   //fn
+  /**
+   * @public
+   * @procedureItem
+   * @order 60
+   * wykonanie zdjęć zniszczeń tacy: <b>min = 2 / max = 5</b>
+   */
   const takePictureHandler = async () => {
     await takePhotoHandler();
   };

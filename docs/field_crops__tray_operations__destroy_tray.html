@@ -1,0 +1,92 @@
+
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+          <meta charset="UTF-8" />
+          <title>Dokumentacja: features/app/field_crops/tray_operations/destroy_tray</title>
+          <style>
+          :root {
+            --color-dark: #002539;
+            --color-background_nuance: #FFFDF9;
+            --color-gray: #ddd;
+            --color-procedure-description: #9d89b3;
+            --color-report: #f2ebca;
+            --color-gray-darker: #B0B0B0;
+            --color-procedure-item: #D1EDD1;
+            --color-api-item: #cadbf2;
+            --color-guard: #FDAFAF;
+            --border-radius: 32px
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
+            font-weight: bold;
+            font-style: bold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
+            font-weight: semibold;
+            font-style: semibold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
+            font-weight: light;
+            font-style: light;
+            }
+            body {
+            font-family: "euclid", sans-serif; max-width: 80%; margin: 40px auto; line-height: 1.4;
+            }
+            h1 {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
+            }
+            h2 {
+            font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
+            h4 {
+            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px; opacity: 0.3;
+            }
+            p {
+            padding-top: -4px; padding-bottom: -4px;
+            }
+            code { background: #f5f5f5; padding: 2px 4px; }
+            pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+
+            .back-button {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-background_nuance); color: var(--color-dark); padding-top: 4px; padding-bottom: 6px; padding-left: 16px; padding-right: 16px; border: 2px solid var(--color-dark); border-radius: var(--border-radius); text-decoration: none; 
+            }
+            .back-button:hover {
+            background-color: var(--color-dark); color: var(--color-background_nuance);
+            }
+
+          </style>
+        </head>
+        <body>
+        <h1>Dokumentacja dla: <b>Rozsady gruntowe -> Operacje na tacach - PIN -> Niszczenie tacy</b></h1><a href="./index.html" class="back-button">powrót</a><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/field_crops/tray_operations/destroy_tray/ui/FieldCropsDestroyTrayEntryPage.tsx</h4>
+      <div style="font-size: 10px;">(10 - 11)</div>
+    </div><div style="margin-left: 32px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);"><p style="color: var(--color-background_nuance);">PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p null>1.&nbsp;skan&nbsp;QR&nbsp;tacy</p><p null>2.&nbsp;wykonanie&nbsp;zdjęć</p></div><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/field_crops/tray_operations/destroy_tray/domain/useScanValuesForDestroyTray.tsx</h4>
+      <div style="font-size: 10px;">(20 - 22)</div>
+    </div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>skan&nbsp;QR&nbsp;tacy</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zeskanowac&nbsp;można&nbsp;tylko&nbsp;tacę</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raporty:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/useScanTrayToBeDestroyedRep84.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raport&nbsp;-&nbsp;taca&nbsp;do&nbsp;zniszczenia:</p><p null><b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>84</b>&stk_id=<b>%trayId%</b>'&module=<b>GRUNT</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zabezpieczenie:&nbsp;parametr:&nbsp;doc_id&nbsp;(jeżeli&nbsp;jest&nbsp;doc_id/nie&nbsp;jest&nbsp;nullem&nbsp;-&nbsp;to&nbsp;znaczy,&nbsp;że&nbsp;taca&nbsp;już&nbsp;zniszczona&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury)</p></div><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/field_crops/tray_operations/destroy_tray/ui/DestroyTrayScanner.tsx</h4>
+      <div style="font-size: 10px;">(60 - 60)</div>
+    </div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>wykonanie&nbsp;zdjęć&nbsp;zniszczeń&nbsp;tacy:&nbsp;<b>min&nbsp;=&nbsp;2&nbsp;/&nbsp;max&nbsp;=&nbsp;5</b></p></div><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/field_crops/tray_operations/destroy_tray/domain/useSendDestroyTray.tsx</h4>
+      <div style="font-size: 10px;">(80 - 80)</div>
+    </div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>wysyłka&nbsp;-&nbsp;custom&nbsp;api:</p><p null><b>{{URL}}</b>/api.php/REST/custom/<b>destroystickers</b></p><p null>dane&nbsp;-&nbsp;array&nbsp;obiektów:</p><p null>{</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ordnmb:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stk_id:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanned_raw_value:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pictures:&nbsp;ImageDTO[];</p><br /><p null>ImageDTO:</p><p null>{</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileName:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileContent:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transferEncoding:&nbsp;"base64";</p><p null>}</p><br /></div><a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót</a>
+        </body>
+        </html>
+        

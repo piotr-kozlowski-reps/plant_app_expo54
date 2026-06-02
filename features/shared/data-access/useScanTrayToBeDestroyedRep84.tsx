@@ -13,11 +13,16 @@ export const useScanTrayToBeDestroyedRep84 = () => {
   const { checkWhatValueWasScanned, getPureTrayValue } =
     useCheckWhatValueIsScannedHelpers();
   const { token } = useAuthSessionStore();
-  // const { getZPInfo_Rep113 } = useGetZPInfo_Report113();
-  // const { errorHandler } = useErrorHandler();
 
+  /**
+   * @public
+   * @reportItem
+   * @order 40
+   * raport - taca do zniszczenia:
+   * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>84</b>&stk_id=<b>%trayId%</b>'&module=<b>GRUNT</b>
+   */
   async function scanTrayToBeDestroyedRep84(
-    scannedValue: string
+    scannedValue: string,
   ): Promise<TrayToBeDestroyedInfo | null> {
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     if (whatValueWasScanned !== "tray") {
@@ -25,7 +30,7 @@ export const useScanTrayToBeDestroyedRep84 = () => {
         ERROR_MESSAGES.WRONG_PARAMETER +
           "-> " +
           whatValueWasScanned +
-          " -> scanZpOrTrayForOrderToHardenerHandler"
+          " -> scanZpOrTrayForOrderToHardenerHandler",
       );
       return null;
     }
@@ -38,7 +43,7 @@ export const useScanTrayToBeDestroyedRep84 = () => {
     foundItem = await query_getDataAsServerAction<TrayToBeDestroyedInfoDTO>(
       configPerBuild.apiAddress,
       query,
-      token!
+      token!,
     );
 
     if (
