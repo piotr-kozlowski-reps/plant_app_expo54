@@ -62,6 +62,13 @@ const ChooseFieldDetailsModal = (props: Props) => {
       return;
     }
 
+    /**
+     * @public
+     * @procedureItem
+     * @order 50
+     * wysyłka - creg:
+     * @readFile `features/shared/data-access/customRegister_GeneralWorks.ts`
+     */
     const dataToBeSent: Post_GeneralWork_DTO = {
       activityid: wateringPlantsActivity.keyval,
       donedat: new Date(Date.now()),

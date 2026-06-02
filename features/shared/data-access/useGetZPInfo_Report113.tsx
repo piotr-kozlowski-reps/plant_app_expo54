@@ -6,6 +6,7 @@ import { getRepId113 } from "./getRepId113";
 /**
  * @public
  * @reportItem
+ * @order 30
  * raport - informacje o ZP:
  * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT
  */
@@ -24,6 +25,11 @@ export const useGetZPInfo_Report113 = () => {
         token,
       );
 
+      /**
+       * @public
+       * @guard
+       * Jesli zapytanie zwróciło pustą tablicę lub -1 ->  to koniec procedury i informacja, że nie zaleziono ZP na zakładzie.
+       */
       if (
         response.data.resultMainQuery === -1 ||
         response.data.resultMainQuery.length === 0

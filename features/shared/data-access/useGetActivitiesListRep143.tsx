@@ -13,6 +13,13 @@ import {
   mapStringOrNullIntoDateOrNull,
 } from "./mapping_helpers";
 
+/**
+ * @public
+ * @reportItem
+ * @order 30
+ * raport - lista czynności technologicznych do zrealizowania i zrealizowanych:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>143</b>&ordnmb=<b>%ordnmb%</b>
+ */
 export const useGetActivitiesListRep143 = () => {
   //vars
   const { token } = useAuthSessionStore();

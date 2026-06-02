@@ -1,5 +1,5 @@
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import LoadingForecastScanner from "./LoadingForecastScanner";
 import {
   AllLoadingForecastSubmodules,
@@ -11,7 +11,6 @@ import { useCameraPermissions } from "expo-camera";
 import { useGetSubmodulePermission } from "@/features/shared/utils/useGetSubmodulePermission";
 import { useEffect } from "react";
 import { toast } from "sonner-native";
-import { router } from "expo-router";
 import { provideNoAccessToSubmoduleMessage } from "@/features/shared/utils/messages";
 
 type Props = {
@@ -47,7 +46,7 @@ const AllCropsLoadingForecastEntryPage = (props: Props) => {
       if (
         !getSubmodulePermission<GreenhouseCropsSubmodule>(
           moduleName,
-          submoduleType
+          submoduleType,
         )
       ) {
         toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));

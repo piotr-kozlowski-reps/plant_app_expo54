@@ -9,15 +9,38 @@ import { useMemo } from "react";
 import { GeneralWork } from "@/features/shared/types/interfaces-general_works";
 import edocReport_GeneralWorks from "@/features/shared/data-access/edocReport_GeneralWorks";
 
+/**
+ * @public
+ * @topic
+ * @order 10
+ * PROCEDURA:
+ */
+
+/**
+ * @public
+ * @procedureDescription
+ * 1. skan lokalizacji
+ * 2. wybór w fomularzu dla danej lokalizacji - szczegółów:
+ * - A
+ * - B
+ * - C
+ * - Całość
+ */
 const GeneralWorksWateringPlantsEntryPage = () => {
   ////vars
   const { isLoading, setIsLoading, isPermissionGranted, requestPermission } =
     useSubmoduleEntryDataAndGuard<GeneralWorksSubmodules>(
       "general_works",
       "watering_plants",
-      "Podlewanie roślin"
+      "Podlewanie roślin",
     );
 
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_GeneralWorks.tsx`
+   */
   //fetch
   const { generalWorks } = useGetEdocReports({
     setIsLoading: setIsLoading,
@@ -30,7 +53,7 @@ const GeneralWorksWateringPlantsEntryPage = () => {
 
   const wateringPlantsActivity = useMemo(() => {
     return generalWorksArray.find(
-      (work) => work.module_id === "watering_plants"
+      (work) => work.module_id === "watering_plants",
     );
   }, [generalWorksArray]);
 

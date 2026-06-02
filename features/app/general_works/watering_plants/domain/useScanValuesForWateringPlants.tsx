@@ -11,7 +11,7 @@ import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { Localization } from "@/features/shared/types/interfaces-localization";
 
 export const useScanValuesForWateringPlants = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -27,6 +27,12 @@ export const useScanValuesForWateringPlants = (
   const [scannedValue, setScannedValue] = useState<Localization | null>(null);
   const [scannedRawValue, setScannedRawValue] = useState<string | null>(null);
 
+  /**
+   * @public
+   * @procedureItem
+   * @order 30
+   * skan QR lokalizacji
+   */
   //fn
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -46,11 +52,18 @@ export const useScanValuesForWateringPlants = (
     try {
       setIsLoading(true);
 
+      /**
+       * @public
+       * @procedureItem
+       * raporty:
+       * @readFile `features/shared/data-access/useGetLocalizationInfo_Report1580.tsx`
+       */
+
       const fieldName = getPureFieldValue(scannedValue);
       const localizationInfo = await getLocalizationInfoInfo_Report1580(
         token!,
         fieldName,
-        errorHandler
+        errorHandler,
       );
 
       if (!localizationInfo) {

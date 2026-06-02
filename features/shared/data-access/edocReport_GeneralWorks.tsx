@@ -12,12 +12,19 @@ const generalWorksObjectExample: GeneralWork = {
   module_id: "ZABIEGI",
 };
 
+/**
+ * @public
+ * @reportItem
+ * @order 30
+ * raport - lista prac ogólnych:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1605</b>&module=<b>GRUNT</b>
+ */
 const edocReport_GeneralWorks = new EdocReport<GeneralWorkDTO, GeneralWork>({
   dataName: "generalWorks",
   address: `/api.php/REST/custom/korsolgetreport?module=GRUNT&rep_id=${configPerBuild.edocReport_GeneralWorks}`,
   queryKey: [QUERY_KEYS.GENERAL_WORKS],
   requiredPropertiesInResultObject: Object.keys(
-    generalWorksObjectExample
+    generalWorksObjectExample,
   ) as (keyof GeneralWork)[],
   sort: new NoSort(),
   mappers: [

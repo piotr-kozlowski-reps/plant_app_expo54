@@ -9,6 +9,8 @@ import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
+import { ZPDetailedInfo } from "@/features/shared/types/interfaces-zp";
+import { useGetActivitiesListRep143 } from "@/features/shared/data-access/useGetActivitiesListRep143";
 
 export const useScannedValuesForPotting = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -19,12 +21,13 @@ export const useScannedValuesForPotting = (
     useCheckWhatValueIsScannedHelpers();
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
+  const { getActivitiesList_Report143 } = useGetActivitiesListRep143();
   const { getZPInfo_Rep113 } = useGetZPInfo_Report113();
 
   /** state */
   //scanner
   const [qrLock, setQrLock] = useState(true);
-  const [scannedValue, setScannedValue] = useState<ZpScannedValue | null>(null);
+  const [scannedValue, setScannedValue] = useState<ZPDetailedInfo | null>(null);
 
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -47,11 +50,38 @@ export const useScannedValuesForPotting = (
      * @public
      * @procedureItem
      * raporty:
-     * @readFile `features/shared/data-access/useGetZPInfo_Report113.tsx`
+     * @readFile `features/shared/data-access/useGetActivitiesListRep143.tsx`
      */
     const zpPureValue = getPureZPValue(scannedValue);
-    const zpInfo = await getZPInfo_Rep113(token!, zpPureValue, errorHandler);
-    console.log({ zpInfo });
+    const zpRozActivities = await getActivitiesList_Report143(
+      zpPureValue,
+      errorHandler,
+    );
+
+    /**
+     * @public
+     * @guard
+     * jeżeli raport nie zwróci czynności  z atrybutem  "dscrpt": "DONICZKOWANIE RD" -> info i koniec procedury.
+     */
+    if (!zpRozActivities || !zpRozActivities.length) {
+      toast.error(
+        `Brak informacji o czynnościach na zeskanowanym ZPku (${zpPureValue}).`,
+      );
+      return;
+    }
+
+    const foundPottingActivity = zpRozActivities.find(
+      (activity) => activity.dscrpt === "DONICZKOWANIE RD",
+    );
+
+    if (!foundPottingActivity) {
+      toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_NOT_FOUND);
+      return;
+    }
+
+    console.log({ zpRozActivities });
+
+    // setScannedValue(zpInfo);
   };
 
   ////return

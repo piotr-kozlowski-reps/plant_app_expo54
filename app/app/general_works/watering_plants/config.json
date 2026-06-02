@@ -1,4 +1,5 @@
 {
   "label": "Podlewanie roślin",
-  "order": 10
+  "order": 10,
+  "docsDir": "features/app/general_works/watering_plants"
 }
