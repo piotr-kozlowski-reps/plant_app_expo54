@@ -27,6 +27,8 @@ export const ERROR_MESSAGES = {
   WHEN_HOBBY_TECH_ONLY_ZP_CAN_BE_SCANNED:
     "W pracach extra hobby technologicznych nie ma możliwości zeskanowania lokalizacji. Możliwe jest tylko zeskanowanie ZP.",
   SCANNED_ZP_IS_NOT_HOBBY_ZP: "Zeskanowany ZP nie jest zleceniem hobby.",
+  SCANNED_ZP_IS_NOT_DON_ZP:
+    "Zeskanowany ZP nie jest zleceniem z roślinami doniczkowymi.",
   SCANNED_ZP_HAS_TJ10_TRAYS: "Zeskanowany ZP ma tace TJ10.",
   SCANNED_ZP_HAS_TJ12_TRAYS: "Zeskanowany ZP ma tace TJ12.",
   SCANNED_ZP_HAS_NO_TJ_TRAYS_AND_THEY_ARE_NECESSARY:

@@ -3,18 +3,25 @@ import { configPerBuild } from "../env/env";
 import { ZPDetailedInfo, ZPDetailedInfoResponse } from "../types/interfaces-zp";
 import { getRepId113 } from "./getRepId113";
 
+/**
+ * @public
+ * @reportItem
+ * raport - informacje o ZP:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT
+ */
+
 export const useGetZPInfo_Report113 = () => {
   async function getZPInfo_Report113(
     token: string,
     ZPWithoutAdditional_ZLEC: string,
-    errorHandler: (error: Error, errorTitle?: string) => void
+    errorHandler: (error: Error, errorTitle?: string) => void,
   ): Promise<ZPDetailedInfo | null> {
     let response: ZPDetailedInfoResponse;
     try {
       response = await getRepId113<ZPDetailedInfoResponse>(
         configPerBuild.apiAddress,
         ZPWithoutAdditional_ZLEC,
-        token
+        token,
       );
 
       if (
@@ -22,7 +29,7 @@ export const useGetZPInfo_Report113 = () => {
         response.data.resultMainQuery.length === 0
       ) {
         toast.error(
-          `ZP o podanym ID (${ZPWithoutAdditional_ZLEC}) nie został odnaleziony.`
+          `ZP o podanym ID (${ZPWithoutAdditional_ZLEC}) nie został odnaleziony.`,
         );
         return null;
       }
