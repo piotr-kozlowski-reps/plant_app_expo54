@@ -1,15 +1,12 @@
-import { QUERY_KEYS } from "@/features/shared/constants/queryKeys";
-import { configPerBuild } from "@/features/shared/env/env";
+import { sendActivityConfirmationToServer } from "@/features/shared/data-access/sendActivityConfirmationToServer";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import {
-  ActivityConfirmationResponse,
   ZpRozActivity,
   ZpRozActivityConfirmation_DTO,
   ZpRozActivityDetails,
   ZpRozWithActivities,
 } from "@/features/shared/types/interfaces-activities_list";
-import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
-import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
+import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { toast } from "sonner-native";
 
@@ -49,37 +46,12 @@ export const useSendActivityConfirmation = (
 
     try {
       setIsLoading(true);
-      await sendToServer(dataToBeSent);
+      await sendActivityConfirmationToServer(dataToBeSent, token!);
     } catch (error) {
       errorHandler(error as Error);
     } finally {
       setIsLoading(false);
-      // setIsToRefresh(true);
       closeFn();
-    }
-  }
-
-  //helpers
-  async function sendToServer(dataToBeSend: ZpRozActivityConfirmation_DTO) {
-    if (!dataToBeSend) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
-      return;
-    }
-
-    //send data to server
-    let response: ActivityConfirmationResponse =
-      await query_postDataAsServerAction<
-        ActivityConfirmationResponse,
-        ZpRozActivityConfirmation_DTO[]
-      >(
-        configPerBuild.apiAddress,
-        "/api.php/REST/custom/czynnoscidone",
-        token!,
-        [dataToBeSend],
-      );
-
-    if (response && response.length) {
-      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
     }
   }
 
