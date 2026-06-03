@@ -28,6 +28,7 @@ import { ZpRozActivityConfirmation_DTO } from "@/features/shared/types/interface
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { sendActivityConfirmationToServer } from "@/features/shared/data-access/sendActivityConfirmationToServer";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
+import { useFindMaterialWithDoni } from "./useFindMaterialWithDoni";
 
 export const usePrepareDataForFormikToPotting = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -37,6 +38,7 @@ export const usePrepareDataForFormikToPotting = (
   ////vars
   const { errorHandler } = useErrorHandler();
   const { token } = useAuthSessionStore();
+  const { findMaterialWithDoni } = useFindMaterialWithDoni();
 
   //on submit
   const onSubmit = async (
@@ -52,6 +54,41 @@ export const usePrepareDataForFormikToPotting = (
       return;
     }
 
+    //send data to server
+    /**
+     * @public
+     * @transformApiItem
+     * @order 40
+     * wysyłka ilości doniczek dla wybranego ZP - custom api:
+     * <b>{{URL}}</b>/api.php/REST/custom/<b>czynnoscidone</b>
+     * dane - array obiektów:
+     * [
+     *  {
+     *   scanned_raw_value: string;
+     *   id: number;
+     *   dscrpt: string;
+     *   pcz_id: number;
+     *   materials: ZpRozActivityMaterial_DTO[];
+     *   }
+     * ]
+     * @separator
+     * ZpRozActivityMaterial_DTO:
+     * {
+     *   mat_id: number;
+     *   dscrpt: string;
+     *   pcm_zrealizowana: number;
+     * }
+     * @separator
+     */
+
+    const foundMaterialWithDoni = findMaterialWithDoni(zpInfo.materials);
+    if (!foundMaterialWithDoni) {
+      toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND);
+      return;
+    }
+    const restOfMaterials = zpInfo.materials.filter(
+      (material) => material.id !== foundMaterialWithDoni.id,
+    );
     const dataToBeSent: ZpRozActivityConfirmation_DTO = {
       scanned_raw_value: zpInfo.scannedRawValue,
       id: zpInfo.id,
@@ -59,8 +96,8 @@ export const usePrepareDataForFormikToPotting = (
       pcz_id: zpInfo.pcz_id,
       materials: [
         {
-          mat_id: zpInfo.material.id,
-          dscrpt: zpInfo.material.dscrpt,
+          mat_id: foundMaterialWithDoni.id,
+          dscrpt: foundMaterialWithDoni.dscrpt,
           pcm_zrealizowana: Number.parseInt(values.quantity.toString()),
         },
       ],

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import {

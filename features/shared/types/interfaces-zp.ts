@@ -224,7 +224,7 @@ export type ZPShortenedInfoWithPics = {
 };
 
 export type ZPInfoForPotting = ZpRozActivity & {
-  material: ZpRozActivityDetails;
+  materials: ZpRozActivityDetails[];
   ordnmb: string;
   scannedRawValue: string;
 };

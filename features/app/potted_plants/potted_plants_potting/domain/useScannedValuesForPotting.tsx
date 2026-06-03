@@ -7,12 +7,10 @@ import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-import {
-  ZPDetailedInfo,
-  ZPInfoForPotting,
-} from "@/features/shared/types/interfaces-zp";
+import { ZPInfoForPotting } from "@/features/shared/types/interfaces-zp";
 import { useGetActivitiesListRep143 } from "@/features/shared/data-access/useGetActivitiesListRep143";
 import { useGetActivityDetailsRep144 } from "@/features/shared/data-access/useGetActivityDetailsRep144";
+import { useFindMaterialWithDoni } from "./useFindMaterialWithDoni";
 
 export const useScannedValuesForPotting = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -25,6 +23,7 @@ export const useScannedValuesForPotting = (
   const { errorHandler } = useErrorHandler();
   const { getActivitiesList_Report143 } = useGetActivitiesListRep143();
   const { getActivityDetails_Report144 } = useGetActivityDetailsRep144();
+  const { findMaterialWithDoni } = useFindMaterialWithDoni();
 
   /** state */
   //scanner
@@ -44,8 +43,13 @@ export const useScannedValuesForPotting = (
 
     /**
      * @public
-     * @guard
+     * @topic
      * @order 20
+     * REALIZACJA:
+     */
+    /**
+     * @public
+     * @guard
      * zeskanowany ZP'ek musi być z ZPekiem z końcówką 'DON' -> jak nie? koniec procedury.
      */
     const isValueZpDon = checkWhatValueWasScanned(scannedValue);
@@ -112,9 +116,8 @@ export const useScannedValuesForPotting = (
       );
       return;
     }
-    const foundMaterialWithDoni = activityDetails.find((material) =>
-      material.twr_kod.startsWith("DONI."),
-    );
+
+    const foundMaterialWithDoni = findMaterialWithDoni(activityDetails);
 
     if (!foundMaterialWithDoni) {
       toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND);
@@ -123,7 +126,7 @@ export const useScannedValuesForPotting = (
 
     setScannedValue({
       ...foundPottingActivity,
-      material: foundMaterialWithDoni,
+      materials: activityDetails,
       ordnmb: zpPureValue,
       scannedRawValue: scannedValue,
     });
