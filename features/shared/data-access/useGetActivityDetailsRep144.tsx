@@ -7,13 +7,21 @@ import {
 } from "../types/interfaces-activities_list";
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
 
+/**
+ * @public
+ * @reportItem
+ * @order 50
+ * raport - czynności materiały:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>144</b>&pcz_id=<b>%pcz_id%</b>
+ */
+
 export const useGetActivityDetailsRep144 = () => {
   //vars
   const { token } = useAuthSessionStore();
 
   async function getActivityDetails_Report144(
     pcz_id: number,
-    errorHandler: (error: Error, errorTitle?: string) => void
+    errorHandler: (error: Error, errorTitle?: string) => void,
   ): Promise<ZpRozActivityDetails[] | null> {
     let response: ZpRozActivityDetailsResponse;
 
@@ -22,7 +30,7 @@ export const useGetActivityDetailsRep144 = () => {
         await query_getDataAsServerAction<ZpRozActivityDetailsResponse>(
           configPerBuild.apiAddress,
           `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ActivityDetails}&pcz_id=${pcz_id}`,
-          token!
+          token!,
         );
 
       if (!response.data.resultMainQuery) {
@@ -40,6 +48,7 @@ export const useGetActivityDetailsRep144 = () => {
         zpRozActivityDetailsDTO.map((item) => ({
           id: Number.parseInt(item.id),
           dscrpt: item.dscrpt,
+          twr_kod: item.twr_kod,
           ilebeg: Number.parseInt(item.ilebeg),
           iledne: Number.parseInt(item.iledne),
           status: Number.parseInt(item.status),

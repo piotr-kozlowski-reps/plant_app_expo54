@@ -15,6 +15,7 @@ import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelp
 export const useSendTraysToBeAddedToChosenColor = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   chosenColor: CotyledonQuilting | null,
+  resetTrays: () => void,
 ) => {
   ////vars
   const { token } = useAuthSessionStore();
@@ -56,6 +57,7 @@ export const useSendTraysToBeAddedToChosenColor = (
       console.error(error);
       toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
     } finally {
+      resetTrays();
       setIsLoading(false);
       router.push("/app/potted_plants/potted_plants_cotyledon_quilting");
     }

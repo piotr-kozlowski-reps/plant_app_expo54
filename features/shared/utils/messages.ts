@@ -23,6 +23,8 @@ export const VALIDATION_MESSAGES = {
 } as const;
 
 export const ERROR_MESSAGES = {
+  POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND:
+    "Nie znaleziono materiału do doniczkowania.",
   POTTING_ACTIVITY_NOT_FOUND: "Nie znaleziono czynności doniczkowania.",
   SCANNED_WRONG_ELEMENT: "Zeskanowany element jest niepoprawny.",
   WHEN_HOBBY_TECH_ONLY_ZP_CAN_BE_SCANNED:

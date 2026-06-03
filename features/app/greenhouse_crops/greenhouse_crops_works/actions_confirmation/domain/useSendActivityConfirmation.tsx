@@ -10,14 +10,12 @@ import {
 } from "@/features/shared/types/interfaces-activities_list";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
-import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner-native";
 
 export const useSendActivityConfirmation = (
   closeFn: () => void,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const { errorHandler } = useErrorHandler();
@@ -26,7 +24,7 @@ export const useSendActivityConfirmation = (
   async function sendActivityConfirmationHandler(
     currentActivity: ZpRozActivity | null,
     activityDetails: ZpRozActivityDetails[],
-    scannedValue: ZpRozWithActivities | null
+    scannedValue: ZpRozWithActivities | null,
   ) {
     if (!currentActivity) {
       toast.warning(ERROR_MESSAGES.LACK_OF_ACTIVITY);
@@ -77,7 +75,7 @@ export const useSendActivityConfirmation = (
         configPerBuild.apiAddress,
         "/api.php/REST/custom/czynnoscidone",
         token!,
-        [dataToBeSend]
+        [dataToBeSend],
       );
 
     if (response && response.length) {

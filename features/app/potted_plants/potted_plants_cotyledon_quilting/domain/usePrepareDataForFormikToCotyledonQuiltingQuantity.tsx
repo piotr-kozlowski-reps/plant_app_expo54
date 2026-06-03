@@ -1,7 +1,6 @@
 import { validateFormOnDemand } from "@/features/shared/utils/validation";
 import {
   CotyledonQuilting,
-  CotyledonQuiltingAddingTraysPostDTO,
   CotyledonQuiltingQuantityAndCloseColorPostDTO,
   CotyledonQuiltingResponse,
   QuantityForCotyledonQuiltingInput,
@@ -14,7 +13,6 @@ import {
 import { FormikHelpers, useFormik } from "formik";
 import { Keyboard } from "react-native";
 import * as yup from "yup";
-import { Tray, TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import { toast } from "sonner-native";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { configPerBuild } from "@/features/shared/env/env";

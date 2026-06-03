@@ -41,6 +41,7 @@ export type ZpRozActivity = {
 
 export type ZpRozActivityDetailsDTO = {
   id: string;
+  twr_kod: string;
   dscrpt: string;
   ilebeg: string;
   iledne: string;
@@ -48,6 +49,7 @@ export type ZpRozActivityDetailsDTO = {
 };
 export type ZpRozActivityDetails = {
   id: number;
+  twr_kod: string;
   dscrpt: string;
   ilebeg: number;
   iledne: number;

@@ -36,13 +36,14 @@ const PottedPlantsPotting_MainWindow = (props: Props) => {
 
     setQrLock,
     scanValueHandler,
+    resetValues,
   } = useScannedValuesForPotting(setIsLoading);
 
   const isPossibleToScan = !scannedValue;
 
   //formik
   const { formik, availableFormActions, canFormBeSubmitted } =
-    usePrepareDataForFormikToPotting(setIsLoading);
+    usePrepareDataForFormikToPotting(setIsLoading, scannedValue, resetValues);
 
   ////tsx
   return (

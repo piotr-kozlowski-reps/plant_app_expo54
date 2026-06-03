@@ -2,10 +2,9 @@ import { useAudioPlayer } from "expo-audio";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useState } from "react";
 import * as Haptics from "expo-haptics";
-import { Tray, TrayShortInfo } from "@/features/shared/types/interfaces-tray";
+import { TrayShortInfo } from "@/features/shared/types/interfaces-tray";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
-import { useGetScannedTrayInfo } from "@/features/shared/data-access/useGetScannedTrayInfo";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
 import { useGetTrayInfoForDon_Report1711 } from "@/features/shared/data-access/useGetTrayInfoForDon_Report1711";
@@ -175,6 +174,11 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     setTrays(traysLocal);
   };
 
+  function resetTrays() {
+    setCurrentTray(null);
+    setTrays([]);
+  }
+
   //helpers
   function checkIfMaxNumberOfTraysExceeded(
     chosenColor: CotyledonQuilting,
@@ -235,13 +239,6 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     return traysArray;
   }
 
-  // function resetWholeState() {
-  //   setCurrentTray(null);
-  //   setTrays([]);
-  //   setIsShowModalWithTrayComingUpCounter(false);
-  //   setIsShowDeleteTrayModal(false);
-  // }
-
   //hook return
   return {
     currentTray,
@@ -254,5 +251,6 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     setCurrentTray,
     setIsShowDeleteTrayModal,
     deleteExistingTrayHandler,
+    resetTrays,
   };
 };

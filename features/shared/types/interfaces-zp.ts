@@ -1,5 +1,9 @@
 import { CameraCapturedPicture } from "expo-camera";
 import { LocalizationInfoPerScannedField } from "./interfaces-localization";
+import {
+  ZpRozActivity,
+  ZpRozActivityDetails,
+} from "./interfaces-activities_list";
 
 export type ZPInfoDTO = {
   ordnmb: string;
@@ -216,5 +220,11 @@ export type ZPShortenedInfoWithPics = {
   tmsdat: Date | null;
   twrnzw: string;
   prc_id: number;
+  scannedRawValue: string;
+};
+
+export type ZPInfoForPotting = ZpRozActivity & {
+  material: ZpRozActivityDetails;
+  ordnmb: string;
   scannedRawValue: string;
 };

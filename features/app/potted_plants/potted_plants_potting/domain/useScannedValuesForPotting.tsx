@@ -2,15 +2,17 @@ import { useState } from "react";
 import { useAudioPlayer } from "expo-audio";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import * as Haptics from "expo-haptics";
-import { ZpScannedValue } from "@/features/shared/types/interfaces-extra_works";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
-import { useGetZPInfo_Report113 } from "@/features/shared/data-access/useGetZPInfo_Report113";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-import { ZPDetailedInfo } from "@/features/shared/types/interfaces-zp";
+import {
+  ZPDetailedInfo,
+  ZPInfoForPotting,
+} from "@/features/shared/types/interfaces-zp";
 import { useGetActivitiesListRep143 } from "@/features/shared/data-access/useGetActivitiesListRep143";
+import { useGetActivityDetailsRep144 } from "@/features/shared/data-access/useGetActivityDetailsRep144";
 
 export const useScannedValuesForPotting = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -22,12 +24,18 @@ export const useScannedValuesForPotting = (
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
   const { getActivitiesList_Report143 } = useGetActivitiesListRep143();
-  const { getZPInfo_Rep113 } = useGetZPInfo_Report113();
+  const { getActivityDetails_Report144 } = useGetActivityDetailsRep144();
 
   /** state */
   //scanner
   const [qrLock, setQrLock] = useState(true);
-  const [scannedValue, setScannedValue] = useState<ZPDetailedInfo | null>(null);
+  const [scannedValue, setScannedValue] = useState<ZPInfoForPotting | null>(
+    null,
+  );
+
+  const resetValues = () => {
+    setScannedValue(null);
+  };
 
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -71,7 +79,8 @@ export const useScannedValuesForPotting = (
     }
 
     const foundPottingActivity = zpRozActivities.find(
-      (activity) => activity.dscrpt === "DONICZKOWANIE RD",
+      (activity) =>
+        activity.dscrpt === "DONICZKOWANIE RD" && activity.type__ === "TECH",
     );
 
     if (!foundPottingActivity) {
@@ -79,9 +88,45 @@ export const useScannedValuesForPotting = (
       return;
     }
 
-    console.log({ zpRozActivities });
+    /**
+     * @public
+     * @procedureItem
+     * raporty:
+     * @readFile `features/shared/data-access/useGetActivityDetailsRep144.tsx`
+     */
 
-    // setScannedValue(zpInfo);
+    const pcz_id = foundPottingActivity.pcz_id;
+    const activityDetails = await getActivityDetails_Report144(
+      pcz_id,
+      errorHandler,
+    );
+
+    /**
+     * @public
+     * @guard
+     * jeżeli raport nie zwróci materiału z atrybutem  "twr_kod" rozpoczynającym się od "DONI." -> info i koniec procedury.
+     */
+    if (!activityDetails || !activityDetails.length) {
+      toast.error(
+        `Brak informacji o materiałach na zeskanowanym ZPku (${zpPureValue}).`,
+      );
+      return;
+    }
+    const foundMaterialWithDoni = activityDetails.find((material) =>
+      material.twr_kod.startsWith("DONI."),
+    );
+
+    if (!foundMaterialWithDoni) {
+      toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND);
+      return;
+    }
+
+    setScannedValue({
+      ...foundPottingActivity,
+      material: foundMaterialWithDoni,
+      ordnmb: zpPureValue,
+      scannedRawValue: scannedValue,
+    });
   };
 
   ////return
@@ -91,5 +136,6 @@ export const useScannedValuesForPotting = (
 
     setQrLock,
     scanValueHandler,
+    resetValues,
   };
 };

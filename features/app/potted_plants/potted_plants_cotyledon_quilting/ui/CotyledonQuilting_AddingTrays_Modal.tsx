@@ -24,7 +24,6 @@ import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import DeleteTrayFromPlantsComingUpsCounterListModal from "@/features/app/field_crops/field_crops_works/plants_coming_ups_counter/ui/DeleteTrayFromPlantsComingUpsCounterListModal";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import { CotyledonQuilting } from "@/features/shared/types/interfaces-cotyledon_quilting";
-import CotyledonQuilting_QuantityAndSend_Modal from "./CotyledonQuilting_QuantityAndSend_Modal";
 import { useSendTraysToBeAddedToChosenColor } from "../domain/useSendTraysToBeAddedToChosenColor";
 
 type Props = {
@@ -52,6 +51,7 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
     setIsShowDeleteTrayModal,
     setCurrentTray,
     deleteExistingTrayHandler,
+    resetTrays,
   } = useScanValuesForAddingTraysToPottedPlants(
     setIsLoading,
     cotyledonQuiltingArray,
@@ -64,7 +64,7 @@ export const CotyledonQuilting_AddingTrays_Modal = (props: Props) => {
   };
 
   const { sendTraysToBeAddedToChosenColor } =
-    useSendTraysToBeAddedToChosenColor(setIsLoading, chosenColor);
+    useSendTraysToBeAddedToChosenColor(setIsLoading, chosenColor, resetTrays);
 
   ////tsx
   return (
