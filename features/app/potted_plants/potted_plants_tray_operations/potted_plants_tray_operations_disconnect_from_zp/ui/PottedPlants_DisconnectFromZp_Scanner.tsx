@@ -26,22 +26,8 @@ export default function PottedPlants_DisconnectFromZp_Scanner() {
   const cameraRef = useRef<CameraView | null>(null);
 
   //scan values
-  const {
-    qrLock,
-    scannedValue,
-    // isTakingPicturesAvailable,
-    // chosenPicture,
-    // isShowDeleteModal,
-    // isShowFullPictureModal,
-    // setIsShowFullPictureModal,
-    // setIsShowDeleteModal,
-    // setChosenPicture,
-    setQrLock,
-    scanValueHandler,
-    // takePhotoHandler,
-    // deletePicture,
-    resetValues,
-  } = useScanValuesForDisconnectFromZpInPottedPlants(setIsLoading, cameraRef);
+  const { qrLock, scannedValue, setQrLock, scanValueHandler, resetValues } =
+    useScanValuesForDisconnectFromZpInPottedPlants(setIsLoading, cameraRef);
 
   /** sending orders to hardener data */
   /**
@@ -161,53 +147,59 @@ export default function PottedPlants_DisconnectFromZp_Scanner() {
               </View>
             </View>
 
-            <View className="flex items-center justify-center w-full mt-4">
-              <SeparatorHorizontal />
-            </View>
+            {scannedValue ? (
+              <>
+                <View className="flex items-center justify-center w-full mt-4">
+                  <SeparatorHorizontal />
+                </View>
 
-            <View className="w-full h-[12px] mt-2"></View>
-            <View className="flex-row items-center justify-center w-full gap-1">
-              <View>
-                <Text className="text-foreground font-default-normal">
-                  ZP:{" "}
-                </Text>
-              </View>
-              <View className="flex-row items-center justify-center">
-                <View>
-                  <Text className="font-default-semibold text-foreground">
-                    {scannedValue?.ordnmb}
-                  </Text>
+                <View className="w-full h-[12px] mt-2"></View>
+                <View className="flex-row items-center justify-center w-full gap-1">
+                  <View>
+                    <Text className="text-foreground font-default-normal">
+                      ZP:{" "}
+                    </Text>
+                  </View>
+                  <View className="flex-row items-center justify-center">
+                    <View>
+                      <Text className="font-default-semibold text-foreground">
+                        {scannedValue?.ordnmb}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <View className="flex-row items-center justify-center w-full gap-1">
-              <View>
-                <Text className="text-foreground font-default-normal">
-                  Kod towaru:{" "}
-                </Text>
-              </View>
-              <View className="flex-row items-center justify-center">
-                <View>
-                  <Text className="font-default-semibold text-foreground">
-                    {scannedValue?.twrkod}
-                  </Text>
+
+                <View className="flex-row items-center justify-center w-full gap-1">
+                  <View>
+                    <Text className="text-foreground font-default-normal">
+                      Kod towaru:{" "}
+                    </Text>
+                  </View>
+                  <View className="flex-row items-center justify-center">
+                    <View>
+                      <Text className="font-default-semibold text-foreground">
+                        {scannedValue?.twrkod}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <View className="flex-row items-center justify-center w-full gap-1">
-              <View>
-                <Text className="text-foreground font-default-normal">
-                  Nazwa towaru:{" "}
-                </Text>
-              </View>
-              <View className="flex-row items-center justify-center">
-                <View>
-                  <Text className="font-default-semibold text-foreground">
-                    {scannedValue?.twrnzw}
-                  </Text>
+
+                <View className="flex-row items-center justify-center w-full gap-1">
+                  <View>
+                    <Text className="text-foreground font-default-normal">
+                      Nazwa towaru:{" "}
+                    </Text>
+                  </View>
+                  <View className="flex-row items-center justify-center">
+                    <View>
+                      <Text className="font-default-semibold text-foreground">
+                        {scannedValue?.twrnzw}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
+              </>
+            ) : null}
           </View>
 
           <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
