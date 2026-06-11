@@ -12,6 +12,13 @@ import {
 import { Overlay } from "@/features/shared/ui/overlay/Overlay";
 import { StatusBar } from "expo-status-bar";
 import { useScanValuesForDisconnectFromZpInPottedPlants } from "../domain/useScanValuesForDisconnectFromZpInPottedPlants";
+import Scanning from "@/features/shared/ui/scanning/Scanning";
+import Button from "@/features/shared/ui/button/Button";
+import ButtonBack from "@/features/shared/ui/button/ButtonBack";
+import { router } from "expo-router";
+import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
+import SeparatorHorizontal from "@/features/shared/ui/separator/SeparatorHorizontal";
+import { useSendDisconnectFromZpData } from "@/features/app/field_crops/tray_operations/disconnect_from_zp/domain/useSendDisconnectFromZpData";
 
 export default function PottedPlants_DisconnectFromZp_Scanner() {
   ////vars
@@ -33,14 +40,22 @@ export default function PottedPlants_DisconnectFromZp_Scanner() {
     scanValueHandler,
     // takePhotoHandler,
     // deletePicture,
-    // resetValues,
+    resetValues,
   } = useScanValuesForDisconnectFromZpInPottedPlants(setIsLoading, cameraRef);
 
-  console.log({ scannedValue });
-
-  // /** sending orders to hardener data */
-  // const { sendValuesForDestroyTrayHandler, isSendingDataAvailable } =
-  //   useSendDestroyTray(scannedValue, setIsLoading, resetValues);
+  /** sending orders to hardener data */
+  /**
+   * @public
+   * @procedureItem
+   * @order 80
+   * wysyłka - custom api:
+   * @readFile `features/app/field_crops/tray_operations/disconnect_from_zp/domain/useSendDisconnectFromZpData.tsx`
+   */
+  const { sendValuesForDisconnectFromZp } = useSendDisconnectFromZpData(
+    setIsLoading,
+    [scannedValue!],
+    resetValues,
+  );
 
   ////tsx
   return (
@@ -74,25 +89,61 @@ export default function PottedPlants_DisconnectFromZp_Scanner() {
 
             <Overlay />
 
-            {/* <ButtonOnCameraViewForQrAndPictures
-              scannedValue={scannedValue}
-              isTakingPicturesAvailable={isTakingPicturesAvailable}
-              qrLock={qrLock}
-              setQrLock={setQrLock}
-              takePictureHandler={() => takePictureHandler()}
-              buttonTextForQrCodeScan={"skanuj QR kod tacy"}
-            /> */}
+            {!scannedValue ? (
+              <>
+                <Overlay />
+
+                <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
+                  {qrLock ? (
+                    <View className="flex-col items-center justify-center w-full h-full">
+                      <View className="w-full px-16">
+                        <View className="opacity-70">
+                          <Button
+                            title="skanuj QR kod tacy"
+                            handlePress={() => {
+                              setQrLock(false);
+                            }}
+                            containerStyles={`h-32`}
+                            isGrayed={!qrLock}
+                            height={128}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  ) : null}
+                  {!qrLock ? (
+                    <View className="flex-col items-center justify-end w-full h-full pb-6">
+                      <Scanning />
+                    </View>
+                  ) : null}
+                </View>
+              </>
+            ) : null}
+
+            {scannedValue ? (
+              <>
+                <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full opacity-80 bg-yellow"></View>
+                <View className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center w-full h-full px-16">
+                  <Text className="text-foreground font-default-bold">
+                    Zeskanowano tacę.
+                  </Text>
+                  <Text className="text-center text-foreground font-default-normal">
+                    Brak możliwości zeskanowania następnych tac.
+                  </Text>
+                </View>
+              </>
+            ) : null}
           </View>
         </View>
 
-        {/* <View className="flex-col items-center justify-between flex-1 w-full">
-          <View className="flex-col items-start justify-start flex-1 w-full px-6">
+        <View className="flex-col items-center justify-between flex-1 w-full">
+          <View className="flex-col items-start justify-start flex-1 w-full px-6 mt-4">
             <View className="w-full h-2"></View>
             <View className="flex-row items-center justify-center w-full gap-4">
               <View className="flex-row items-center justify-center">
                 <View>
                   <Text className="text-foreground font-default-normal">
-                    Taca do zniszczenia:{" "}
+                    Taca do odpięcia:{" "}
                   </Text>
                 </View>
                 <View>
@@ -110,96 +161,62 @@ export default function PottedPlants_DisconnectFromZp_Scanner() {
               </View>
             </View>
 
-            <View className="w-full h-[12px]"></View>
-            <View className="flex-row items-center justify-center w-full gap-4">
+            <View className="flex items-center justify-center w-full mt-4">
+              <SeparatorHorizontal />
+            </View>
+
+            <View className="w-full h-[12px] mt-2"></View>
+            <View className="flex-row items-center justify-center w-full gap-1">
+              <View>
+                <Text className="text-foreground font-default-normal">
+                  ZP:{" "}
+                </Text>
+              </View>
               <View className="flex-row items-center justify-center">
                 <View>
-                  <Text className="text-foreground font-default-normal">
-                    Zdjęcia uszkodzeń tacy:{" "}
+                  <Text className="font-default-semibold text-foreground">
+                    {scannedValue?.ordnmb}
                   </Text>
                 </View>
               </View>
             </View>
-
-            <ContainerHorizontalRoundedFrame>
-              {!scannedValue ? (
-                <View className="relative flex-1 w-full h-full">
-                  <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
-                    <View className="flex items-center justify-center w-full h-full">
-                      <Image
-                        source={images.hashed_background}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          resizeMode: "cover",
-                          borderRadius: 32,
-                        }}
-                        contentFit="cover"
-                      />
-                    </View>
-                  </View>
-                  <View className="absolute top-0 bottom-0 left-0 right-0 rounded-app">
-                    <View className="flex items-center justify-center w-full h-full ">
-                      <Text className="p-6 bg-yellow font-default-bold text-background-nuance rounded-app">
-                        {MESSAGES.LACK_OF_SCANNED_TRAY}
-                      </Text>
-                    </View>
-                  </View>
+            <View className="flex-row items-center justify-center w-full gap-1">
+              <View>
+                <Text className="text-foreground font-default-normal">
+                  Kod towaru:{" "}
+                </Text>
+              </View>
+              <View className="flex-row items-center justify-center">
+                <View>
+                  <Text className="font-default-semibold text-foreground">
+                    {scannedValue?.twrkod}
+                  </Text>
                 </View>
-              ) : null}
-
-              {scannedValue && !scannedValue.pictures.length ? (
-                <View className="relative flex-1 w-full h-full">
-                  <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
-                    <View className="flex items-center justify-center w-full h-full">
-                      <Image
-                        source={images.hashed_background}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          resizeMode: "cover",
-                          borderRadius: 32,
-                        }}
-                        contentFit="cover"
-                      />
-                    </View>
-                  </View>
-                  <View className="absolute top-0 bottom-0 left-0 right-0 rounded-app">
-                    <View className="flex items-center justify-center w-full h-full ">
-                      <Text className="p-6 bg-yellow font-default-bold text-background-nuance rounded-app">
-                        {MESSAGES.LACK_OF_TAKEN_PHOTOS}
-                      </Text>
-                    </View>
-                  </View>
+              </View>
+            </View>
+            <View className="flex-row items-center justify-center w-full gap-1">
+              <View>
+                <Text className="text-foreground font-default-normal">
+                  Nazwa towaru:{" "}
+                </Text>
+              </View>
+              <View className="flex-row items-center justify-center">
+                <View>
+                  <Text className="font-default-semibold text-foreground">
+                    {scannedValue?.twrnzw}
+                  </Text>
                 </View>
-              ) : null}
-
-              {scannedValue && scannedValue.pictures.length > 0 ? (
-                <ScrollView className="w-full">
-                  <View className="flex-row flex-wrap items-center justify-start py-4">
-                    {scannedValue.pictures.map((pic, index) => (
-                      <PictureInfoItem
-                        key={index}
-                        picture={pic}
-                        index={index}
-                        setChosenPicture={setChosenPicture}
-                        setIsShowDeleteModal={setIsShowDeleteModal}
-                        setIsShowFullPictureModal={setIsShowFullPictureModal}
-                      />
-                    ))}
-                  </View>
-                </ScrollView>
-              ) : null}
-            </ContainerHorizontalRoundedFrame>
+              </View>
+            </View>
           </View>
 
           <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
             <View className="flex-1">
               <ButtonTextAndThreeArrows
-                actionFn={sendValuesForDestroyTrayHandler}
-                text="wyślij"
+                actionFn={sendValuesForDisconnectFromZp}
+                text="Odepnij tacę"
                 isBackground
-                disabled={!isSendingDataAvailable}
+                disabled={!scannedValue}
               />
             </View>
             <View className="ml-6">
@@ -211,34 +228,8 @@ export default function PottedPlants_DisconnectFromZp_Scanner() {
               />
             </View>
           </View>
-        </View> */}
+        </View>
       </SafeAreaView>
-
-      {/* see full picture -  modal */}
-      {/* <ModalInternal
-        isOpen={isShowFullPictureModal}
-        isTransparent={false}
-        backgroundColor={yellowColor}
-      >
-        <FullPictureModal
-          closeFn={() => setIsShowFullPictureModal(false)}
-          picture={chosenPicture}
-          deletePicture={deletePicture}
-        />
-      </ModalInternal> */}
-
-      {/* delete picture modal*/}
-      {/* <ModalInternal
-        isOpen={isShowDeleteModal}
-        isTransparent={false}
-        backgroundColor={yellowColor}
-      >
-        <DeletePictureModal
-          closeFn={() => setIsShowDeleteModal(false)}
-          picture={chosenPicture}
-          deletePicture={deletePicture}
-        />
-      </ModalInternal> */}
     </View>
   );
 }

@@ -6,19 +6,26 @@ import {
 } from "../types/interface-control_sowing_changes";
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
 
+/**
+ * @public
+ * @reportItem
+ * @order 90
+ * raport - informacje o tacy (kontrola zmiany wysiewu):
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>119</b>&stkida=<b>%stkida%</b>&stkidb=<b>%stkidb%</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT
+ */
 export const useGetControlSowingChanges_Report119 = () => {
   async function getControlSowingChanges_Report119(
     token: string,
     stkida: string,
     stkidb: string,
     ordnmb: string,
-    errorHandler: (error: Error, errorTitle?: string) => void
+    errorHandler: (error: Error, errorTitle?: string) => void,
   ): Promise<ControlSowingChanges | null> {
     const response =
       await query_getDataAsServerAction<ControlSowingChangesResponse>(
         configPerBuild.apiAddress,
         `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_ControlSowingChanges}&stkida=${stkida}&stkidb=${stkidb}&ordnmb=${ordnmb}&module=GRUNT`,
-        token!
+        token!,
       );
 
     if (

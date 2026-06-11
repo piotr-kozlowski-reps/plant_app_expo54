@@ -117,6 +117,9 @@ export type ZPDetailedInfoDTO = {
   stk_id: string | null;
   stkid_: string | null;
 };
+export type ZPDetailedInfoAndScannedRowValue = ZPDetailedInfo & {
+  scanned_raw_value: string;
+};
 export type ZPDetailedInfoResponse = {
   data: {
     resultMainQuery: ZPDetailedInfoDTO[] | -1;

@@ -69,3 +69,9 @@ export type TrayForDonResponse = {
     resultMainQuery: TrayForDonDTO[] | -1;
   };
 };
+
+export type Post_DisconnectTrayFromZp_DTO = {
+  ordnmb: string;
+  stk_id: string;
+  scanned_raw_value: string;
+};

@@ -15,7 +15,7 @@ import { toast } from "sonner-native";
 export const useSendDisconnectFromZpData = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   scannedValues: TrayScannedValueForDisconnectFromZp[],
-  resetWholeState: () => void
+  resetWholeState: () => void,
 ) => {
   ////vars
   const { token } = useAuthSessionStore();
@@ -24,6 +24,36 @@ export const useSendDisconnectFromZpData = (
   const { errorHandler } = useErrorHandler();
 
   //fn
+  /**
+   * @public
+   * @transformApiItem
+   * @order 80
+   * wysyłka - custom api:
+   * <b>{{URL}}</b>/api.php/REST/custom/<b>removestktobuffer</b>
+   * dane - array obiektów:
+   * {
+   *        //zp
+   *        ordid_: number;
+   *        ordnmb: string;
+   * @separator
+   *        //scanned row value
+   *         scannedRawValue: string;
+   * @separator
+   *         //tray
+   *         stk_id: string;
+   *         stkid_: number | null;
+   *         twrkod: string;
+   *         twrnzw: string;
+   *         wsk_palet: number | null;
+   *         outid_: number | null;
+   *         isgarden: string | null;
+   *         stkid1: string;
+   *         ordid1: string | null;
+   *         ordnmb1: string;
+   *         movid1: null | number;
+   * }
+   * @separator
+   */
   const sendValuesForDisconnectFromZp = async () => {
     if (!scannedValues || !scannedValues.length) {
       toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
@@ -31,14 +61,18 @@ export const useSendDisconnectFromZpData = (
     }
 
     /** guards */
-    //check errtxt from report 119
-    const allErrors = await getErrorsFromControlSowingChangesReport(
-      scannedValues
-    );
+    /**
+     * @public
+     * @guard
+     * sprawdzam wartośc "errtxt" z raportu 119, jesli jest bład to
+     * -> info + koniec procedury
+     */
+    const allErrors =
+      await getErrorsFromControlSowingChangesReport(scannedValues);
     if (allErrors.length) {
       allErrors.forEach((item) => {
         toast.warning(
-          `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`
+          `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`,
         );
       });
       return;
@@ -64,10 +98,6 @@ export const useSendDisconnectFromZpData = (
         wsk_palet: item.wsk_palet,
         outid_: item.outid_,
         isgarden: item.isgarden,
-
-        //delete reason
-        // delete_reason_id: item.delete_reason_id!,
-        // delete_dscrpt: item.delete_dscrpt!,
       });
     });
 
@@ -97,7 +127,7 @@ export const useSendDisconnectFromZpData = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/removestktobuffer",
       token!,
-      dataToBeSend
+      dataToBeSend,
     );
 
     //check if response array has the same amount of items as sent items

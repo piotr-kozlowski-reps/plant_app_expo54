@@ -9,7 +9,9 @@ import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useScanZpOrTrayRep113 } from "@/features/shared/data-access/useScanZpOrTrayRep113";
-import { ZPDetailedInfo } from "@/features/shared/types/interfaces-zp";
+import { TrayScannedValueForDisconnectFromZp } from "@/features/shared/types/interfaces-disconnect_from_zp";
+import { useGetControlSowingChanges_Report119 } from "@/features/shared/data-access/useGetControlSowingChanges_Report119";
+import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 
 export const useScanValuesForDisconnectFromZpInPottedPlants = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -22,10 +24,14 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
   const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
   const { scanZpOrTrayRep113 } = useScanZpOrTrayRep113();
+  const { getControlSowingChanges_Report119 } =
+    useGetControlSowingChanges_Report119();
+  const { token } = useAuthSessionStore();
 
   //states
   const [qrLock, setQrLock] = useState(true);
-  const [scannedValue, setScannedValue] = useState<ZPDetailedInfo | null>(null);
+  const [scannedValue, setScannedValue] =
+    useState<TrayScannedValueForDisconnectFromZp | null>(null);
 
   //fn
   /**
@@ -68,18 +74,62 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
        * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
        */
       const foundTray = await scanZpOrTrayRep113(scannedValue, "tray");
-
       if (!foundTray || !foundTray.stk_id || !foundTray.ordnmb) {
         toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
         return;
       }
 
-      setScannedValue(foundTray);
+      /**
+       * @public
+       * @procedureItem
+       * raporty:
+       * @readFile `features/shared/data-access/useGetControlSowingChanges_Report119.tsx`
+       */
+      const foundDataForReport119 = await getControlSowingChanges_Report119(
+        token!,
+        foundTray.stk_id,
+        "",
+        foundTray.ordnmb,
+        errorHandler,
+      );
+      if (!foundDataForReport119) {
+        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+        return;
+      }
+
+      //mapping
+      const trayInfo: TrayScannedValueForDisconnectFromZp = {
+        //zp
+        ordid_: foundTray.ordid_,
+        ordnmb: foundTray.ordnmb,
+
+        //scanned row value
+        scannedRawValue: scannedValue,
+
+        //tray
+        stk_id: foundTray.stk_id,
+        stkid_: foundTray.stkid_,
+        twrkod: foundTray.twrkod,
+        twrnzw: foundTray.twrnzw,
+        wsk_palet: foundTray.wsk_palet,
+        isgarden: foundTray.isgarden,
+        outid_: foundTray.outid_,
+        stkid1: foundDataForReport119.stkid1,
+        ordid1: foundDataForReport119.ordid1,
+        ordnmb1: foundDataForReport119.ordnmb1,
+        movid1: foundDataForReport119.movid1,
+      };
+
+      setScannedValue({ ...trayInfo, scannedRawValue: scannedValue });
     } catch (error) {
       errorHandler(error as Error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const resetValues = () => {
+    setScannedValue(null);
   };
 
   //hook return
@@ -97,6 +147,6 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
     scanValueHandler,
     // takePhotoHandler,
     // deletePicture,
-    // resetValues,
+    resetValues,
   };
 };

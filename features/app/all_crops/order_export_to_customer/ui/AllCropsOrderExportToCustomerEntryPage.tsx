@@ -4,8 +4,7 @@ import {
   GreenhouseCropsSubmodule,
   ModulesPermissions,
 } from "@/features/shared/types/interfaces-auth";
-import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import OrderExportToCustomerScanner from "./OrderExportToCustomerScanner";
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
 import { useCameraPermissions } from "expo-camera";
@@ -13,7 +12,6 @@ import { useGetSubmodulePermission } from "@/features/shared/utils/useGetSubmodu
 import { useEffect } from "react";
 import { toast } from "sonner-native";
 import { provideNoAccessToSubmoduleMessage } from "@/features/shared/utils/messages";
-import { router } from "expo-router";
 
 type Props = {
   submoduleType: AllExportToCustomerSubmodules;
@@ -48,7 +46,7 @@ const AllCropsOrderExportToCustomerEntryPage = (props: Props) => {
       if (
         !getSubmodulePermission<GreenhouseCropsSubmodule>(
           moduleName,
-          submoduleType
+          submoduleType,
         )
       ) {
         toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
