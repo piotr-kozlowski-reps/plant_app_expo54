@@ -15,16 +15,23 @@ export const useScanZpOrTrayRep113 = () => {
   const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
 
+  /**
+   * @public
+   * @reportItem
+   * @order 40
+   * raport - informacje o ZP lub tacy:
+   * @readFile `features/shared/data-access/getRepId113.ts`
+   */
   async function scanZpOrTrayRep113(
     scannedValue: string,
-    whatValueWasScanned: TypeOfScannedValue
+    whatValueWasScanned: TypeOfScannedValue,
   ): Promise<ZPDetailedInfo | null> {
     if (whatValueWasScanned !== "zp_gru" && whatValueWasScanned !== "tray") {
       toast.warning(
         ERROR_MESSAGES.WRONG_PARAMETER +
           "-> " +
           whatValueWasScanned +
-          " -> scanZpOrTrayForOrderToHardenerHandler"
+          " -> scanZpOrTrayForOrderToHardenerHandler",
       );
       return null;
     }

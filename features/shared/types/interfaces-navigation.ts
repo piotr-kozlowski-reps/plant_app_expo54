@@ -19,6 +19,11 @@ export const POTTED_PLANTS: NavElement = {
   actionFn: () => router.push("/app/potted_plants"),
   name: "Rośliny doniczkowe",
 } as const;
+export const POTTED_PLANTS_TRAY_OPERATIONS: NavElement = {
+  actionFn: () =>
+    router.push("/app/potted_plants/potted_plants_tray_operations"),
+  name: "Operacje na tacach - RB",
+} as const;
 export const POTTED_PLANTS_WORKS: NavElement = {
   actionFn: () => router.push("/app/potted_plants/potted_plants_works"),
   name: "Rośliny doniczkowe - prace",

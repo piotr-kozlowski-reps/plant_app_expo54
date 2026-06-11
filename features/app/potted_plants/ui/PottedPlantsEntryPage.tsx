@@ -154,28 +154,28 @@ const PottedPlantsEntryPage = () => {
                   actionFn={
                     getModuleVisibilitiesObject<PottedPlantsSubmodules>(
                       "potted_plants",
-                    ).potted_plants_cotyledon_quilting
+                    ).potted_plants_tray_operations___overallVisibility
                       ? () => {
                           router.push(
-                            "/app/potted_plants/potted_plants_cotyledon_quilting",
+                            "/app/potted_plants/potted_plants_tray_operations",
                           );
                         }
                       : () => {}
                   }
                   icon={
-                    <GitPullRequestCreateArrow
+                    <Grid3x3
                       size={24}
                       color={lightNuanceColor}
                       strokeWidth={2.7}
                     />
                   }
-                  name={`Pikowanie${"\n"}liścieni`}
+                  name={`Operacje${"\n"}na tacach - RB`}
                   disabled={
                     !getModuleVisibilitiesObject<PottedPlantsSubmodules>(
                       "potted_plants",
-                    ).potted_plants_cotyledon_quilting
+                    ).potted_plants_tray_operations___overallVisibility
                   }
-                  visibility={false}
+                  // visibility={true}
                 />
                 <LeafNavigationButton
                   side={"right"}
