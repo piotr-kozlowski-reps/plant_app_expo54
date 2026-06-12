@@ -1,4 +1,7 @@
-import { ModulePin } from "@/features/shared/types/interfaces-tray_operations";
+import {
+  ModuleNameForPin,
+  ModulePin,
+} from "@/features/shared/types/interfaces-tray_operations";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { useEffect, useState } from "react";
 import { toast } from "sonner-native";
@@ -9,7 +12,8 @@ type PinDot = {
 
 export const usePinState = (
   modulesPinsArray: ModulePin[],
-  confirmPinFn: () => void
+  confirmPinFn: () => void,
+  moduleName: ModuleNameForPin,
 ) => {
   //state
   const [pin, setPin] = useState<string>("");
@@ -49,7 +53,7 @@ export const usePinState = (
 
   const checkPinHandler = () => {
     const foundModulePin = modulesPinsArray.find(
-      (modulePin) => modulePin.module_name === "tray_operations"
+      (modulePin) => modulePin.module_name === moduleName,
     );
 
     if (!foundModulePin) {

@@ -33,7 +33,7 @@ const TrayOperationsEntryPage = () => {
   ////can module be visible by this user
   const { getModuleVisibility } = useAuthSessionStore();
   useCheckModuleVisibilityAndRedirectIfNeeded(
-    getModuleVisibility("field_crops")
+    getModuleVisibility("field_crops"),
   );
 
   //fetch
@@ -76,6 +76,7 @@ const TrayOperationsEntryPage = () => {
         <PinConfirmationModal
           confirmPinFn={() => setIsPinConfirmed(true)}
           modulesPinsArray={modulesPinsArray}
+          moduleName="tray_operations"
         />
       </ModalInternal>
     </View>

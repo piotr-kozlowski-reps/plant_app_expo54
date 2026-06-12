@@ -1,4 +1,5 @@
 {
   "label": "Operacje na tacach - RB",
-  "order": 50
+  "order": 50,
+  "docsDir": "features/app/potted_plants/potted_plants_tray_operations/ui"
 }

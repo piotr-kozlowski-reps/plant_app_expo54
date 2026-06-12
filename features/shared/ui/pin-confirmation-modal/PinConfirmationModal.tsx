@@ -1,29 +1,32 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonBack from "../button/ButtonBack";
 import { router } from "expo-router";
-
 import { darkColor, lightColor } from "../../constants/colorThemeVars";
 import clsx from "clsx";
 import { usePinState } from "./domain/usePinState";
 import Button from "../button/Button";
-
 import { ChevronLeft } from "lucide-react-native";
-import { ModulePin } from "../../types/interfaces-tray_operations";
+import {
+  ModuleNameForPin,
+  ModulePin,
+} from "../../types/interfaces-tray_operations";
 import ButtonIcon from "../button/ButtonIcon";
 
 type Props = {
   confirmPinFn: () => void;
   modulesPinsArray: ModulePin[];
+  moduleName: ModuleNameForPin;
 };
 const PinConfirmationModal = (props: Props) => {
   ////vars
-  const { confirmPinFn, modulesPinsArray } = props;
+  const { confirmPinFn, modulesPinsArray, moduleName } = props;
 
   //pin state
   const { pin, pinDots, addDigitToPin, deleteLastDigit } = usePinState(
     modulesPinsArray,
-    confirmPinFn
+    confirmPinFn,
+    moduleName,
   );
 
   return (
@@ -53,7 +56,7 @@ const PinConfirmationModal = (props: Props) => {
                     key={index}
                     className={clsx(
                       "rounded-full bg-background-nuance",
-                      pin.isSet ? "w-4 h-4 " : "w-2 h-2 "
+                      pin.isSet ? "w-4 h-4 " : "w-2 h-2 ",
                     )}
                   ></View>
                 ))}
