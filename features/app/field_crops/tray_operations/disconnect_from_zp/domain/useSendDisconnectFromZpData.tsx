@@ -64,7 +64,7 @@ export const useSendDisconnectFromZpData = (
     /**
      * @public
      * @guard
-     * sprawdzam wartośc "errtxt" z raportu 119, jesli jest bład to
+     * przed wysyłką  - sprawdzam wartośc "errtxt" z raportu 119, jesli jest bład to
      * -> info + koniec procedury
      */
     const allErrors =
