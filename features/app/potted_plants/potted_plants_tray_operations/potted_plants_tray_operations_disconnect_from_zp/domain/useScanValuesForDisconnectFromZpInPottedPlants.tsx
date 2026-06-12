@@ -81,6 +81,16 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
 
       /**
        * @public
+       * @guard
+       * zeskanowac można tylko tacę należącą do ZP z końcówką DON, jeżeli inna -> info i koniec procedury.
+       */
+      console.log({ foundTray });
+      if (!foundTray.ordnmb.endsWith("DON")) {
+        toast.warning(ERROR_MESSAGES.TRAY_DOES_NOT_BELONG_TO_DON_ZP);
+        return;
+      }
+      /**
+       * @public
        * @procedureItem
        * raporty:
        * @readFile `features/shared/data-access/useGetControlSowingChanges_Report119.tsx`

@@ -23,6 +23,8 @@ export const VALIDATION_MESSAGES = {
 } as const;
 
 export const ERROR_MESSAGES = {
+  TRAY_DOES_NOT_BELONG_TO_DON_ZP:
+    "Taca nie należy do ZP z roślinami doniczkowymi.",
   POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND:
     "Nie znaleziono materiału do doniczkowania.",
   POTTING_ACTIVITY_NOT_FOUND: "Nie znaleziono czynności doniczkowania.",
