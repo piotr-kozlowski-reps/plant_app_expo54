@@ -48,6 +48,7 @@
     "fast-glob": "^3.3.3",
     "formik": "^2.4.9",
     "fs-extra": "^11.3.4",
+    "generate_docs": "github:piotr-kozlowski-reps/generate_docs",
     "lucide-react-native": "^0.554.0",
     "nativewind": "^4.2.1",
     "react": "19.1.0",
