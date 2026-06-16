@@ -30,6 +30,21 @@ type Props = {
   submoduleType: AllInternalTransportSubmodules;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 10
+ * PROCEDURA:
+ */
+
+/**
+ * @public
+ * @procedureDescription
+ * <b>Moduł wspólny dla wszystkich transportów wewnętrznych.</b>
+ * 1) skan QR lokalizacji docelowej
+ * 2) skan QR ZPków do przeniesienia
+ * 3) dla każdego z zeskanowanych ZPków - podawane są ilości przeniesionych tac
+ */
 const InternalTransportScanner = (props: Props) => {
   ////vars
   const { submoduleType } = props;
@@ -137,7 +152,7 @@ const InternalTransportScanner = (props: Props) => {
                   className={clsx(
                     localization
                       ? "px-6 ml-2 bg-background-nuance rounded-app"
-                      : ""
+                      : "",
                   )}
                 >
                   {localization ? (

@@ -25,12 +25,18 @@ type Props = {
   localization: Localization | null;
   changeOverallZPsWithQuantities: () => void;
   changeQuantityHandler: (
-    localizationWithNewQuantity: ZPLocalizationInfoPlusQuantityToBeMoved
+    localizationWithNewQuantity: ZPLocalizationInfoPlusQuantityToBeMoved,
   ) => void;
   clearChosenZPCombinedInfo: () => void;
   submoduleType: AllInternalTransportSubmodules;
 };
 
+/**
+ * @public
+ * @procedureItem
+ * @order 100
+ * modal z potwierdzeniem ilości tac, jakie będą przeniesione do nowej liokalizacji
+ */
 const ZpConfirmQuantitiesInternalTransportModal = (props: Props) => {
   ////vars
   const {
@@ -50,7 +56,7 @@ const ZpConfirmQuantitiesInternalTransportModal = (props: Props) => {
   const [chosenLocalization, setChosenLocalization] =
     useState<ZPLocalizationInfoPlusQuantityToBeMoved | null>(null);
   const quantityPerLocalizationHandler = (
-    loc: ZPLocalizationInfoPlusQuantityToBeMoved
+    loc: ZPLocalizationInfoPlusQuantityToBeMoved,
   ) => {
     setChosenLocalization(loc);
     setIsShowQuantityModal(true);

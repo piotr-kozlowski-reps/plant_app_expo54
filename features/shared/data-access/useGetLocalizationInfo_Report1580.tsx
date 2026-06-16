@@ -23,6 +23,11 @@ export const useGetLocalizationInfo_Report1580 = () => {
         token,
       );
 
+      /**
+       * @public
+       * @guard
+       * Jesli zapytanie zwróciło pustą tablicę lub -1 ->  to koniec procedury i informacja, że nie zaleziono lokalizacji.
+       */
       if (
         response.data.resultMainQuery === -1 ||
         response.data.resultMainQuery.length === 0

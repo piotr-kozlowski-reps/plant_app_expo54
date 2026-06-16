@@ -6,10 +6,16 @@ import {
 } from "../types/interfaces-zp";
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
 
+/**
+ * @public
+ * @reportItem
+ * raport - lokalizacje ZP:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>116</b>&ordnmb=<b>%ordnmb%</b>&module=<b>SZKLO</b>(dla ROZ) / <b>GRUNT</b>(dla reszty)
+ */
 export async function getRepId116(
   token: string,
   ZPWithoutAdditional_ZLEC: string,
-  isRoz?: boolean
+  isRoz?: boolean,
 ): Promise<ZPLocalizationInfoPlusQuantityToBeMoved[] | null> {
   const response =
     await query_getDataAsServerAction<ZPLocalizationInfoResponse>(
@@ -17,7 +23,7 @@ export async function getRepId116(
       `/api.php/REST/custom/korsolgetreport?rep_id=${
         configPerBuild.edocReport_ZPLocalizationInfo
       }&ordnmb=${ZPWithoutAdditional_ZLEC}&module=${isRoz ? "SZKLO" : "GRUNT"}`,
-      token
+      token,
     );
 
   if (
@@ -25,7 +31,7 @@ export async function getRepId116(
     response.data.resultMainQuery.length === 0
   ) {
     toast.error(
-      `ZP o podanym ID (${ZPWithoutAdditional_ZLEC}) nie posiada żadnej lokalizacji.`
+      `ZP o podanym ID (${ZPWithoutAdditional_ZLEC}) nie posiada żadnej lokalizacji.`,
     );
     return null;
   }

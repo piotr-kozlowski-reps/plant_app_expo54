@@ -52,6 +52,12 @@ export const useScanValuesForInternalTransport = (
     useState(false);
 
   //fn
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
@@ -61,9 +67,22 @@ export const useScanValuesForInternalTransport = (
 
     try {
       if (!isFieldScanned) {
+        /**
+         * @public
+         * @procedureItem
+         * @order
+         * skan QR lokalizacji:
+         */
+
         await scanField(scannedValue);
       }
       if (isFieldScanned) {
+        /**
+         * @public
+         * @procedureItem
+         * @order 40
+         * skan ZP:
+         */
         await scanZP(scannedValue, submoduleType);
       }
     } catch (error) {
@@ -172,7 +191,25 @@ export const useScanValuesForInternalTransport = (
         "useScanValuesForInternalTransport -> sendValuesForInternalTransport -> no localization or overallZPsWithQuantities",
       );
     }
-
+    /**
+     * @public
+     * @transformApiItem
+     * @order 110
+     * wysyłka - custom api - POST:
+     * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>movements</b>
+     * @separator
+     * <b>dane</b>:
+     * [
+     *     {
+     *           sordid: number;
+     *           ordnmb: string;
+     *          movfrm: number;
+     *          mov_to: number;
+     *          movqty: number;
+     *          scanned_raw_value: string;
+     *     }
+     * ]
+     */
     const valuesToBeSent: InternalTransportMovements[] = [];
     overallZPsWithQuantities.forEach((zp) => {
       zp.localization.forEach((loc) => {
@@ -261,7 +298,13 @@ export const useScanValuesForInternalTransport = (
       );
       return;
     }
-
+    /**
+     * @public
+     * @procedureItem
+     * @order 30
+     * raporty:
+     * @readFile `features/shared/data-access/useGetLocalizationInfo_Report1580.tsx`
+     */
     const fieldName = getPureFieldValue(scannedValue);
     const localizationInfo = await getLocalizationInfoInfo_Report1580(
       token!,
@@ -289,6 +332,13 @@ export const useScanValuesForInternalTransport = (
     const desiredTypOfScannedValue: TypeOfScannedValue =
       getDesiredTypOfScannedValue(submoduleType);
 
+    /**
+     * @public
+     * @guard
+     * @order 45
+     * weryfikacja typu zeskanowanej wartości i czy dane zlecenie jest GRU / ROZ lub DON dla odpowiedniego modułu w jakim jesteśmy.
+     * Jeżeli typ zeskanowanej wartości jest inny -> info + koniec procedury.
+     */
     if (checkWhatValueWasScanned(scannedValue) !== desiredTypOfScannedValue) {
       const toastMessage = getToastMessageBasedOnDesiredTypOfScannedValue(
         desiredTypOfScannedValue,
@@ -314,11 +364,24 @@ export const useScanValuesForInternalTransport = (
 
     /////////
     //fetch all desired info
+    /**
+     * @public
+     * @procedureItem
+     * @order 50
+     * raporty:
+     * @readFile `features/shared/data-access/useGetZPInfo_Report113.tsx`
+     */
     const ZPInfoPromise = getZPInfo_Rep113(
       token!,
       ZPWithoutAdditional_ZLEC_,
       errorHandler,
     );
+    /**
+     * @public
+     * @procedureItem
+     * raporty:
+     * @readFile `features/shared/data-access/getRepId116.ts`
+     */
     const ZPLocalizationInfoPromise = getZpLocalizationInfo(
       token!,
       ZPWithoutAdditional_ZLEC_,

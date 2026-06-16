@@ -1,4 +1,5 @@
 {
   "label": "Transport wewnętrzny",
-  "order": 50
+  "order": 50,
+  "docsDir": "features/app/all_crops/internal_transport"
 }
