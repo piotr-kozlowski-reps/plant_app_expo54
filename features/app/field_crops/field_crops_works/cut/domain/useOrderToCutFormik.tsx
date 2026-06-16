@@ -18,11 +18,19 @@ import { Keyboard } from "react-native";
 import { toast } from "sonner-native";
 import * as yup from "yup";
 
+/**
+ * @public
+ * @procedureDescription
+ * @order 60
+ * Formularz - dane:
+ *      - wysokość cięcia
+ *      - data cięcia
+ */
 export const useOrderToCutFormik = (
   closeFn: () => void,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   scannedValue: ZPShortenedInfo | null,
-  refreshAllData: () => void
+  refreshAllData: () => void,
 ) => {
   const { addDaysToDate, checkIsDate, getIfIsTodayOrTomorrow } =
     useDatesHelper();
@@ -31,9 +39,26 @@ export const useOrderToCutFormik = (
       customRegister: customRegister_OrderToCutGRU,
     });
 
+  /**
+   * @public
+   * @transformApiItem
+   * wysyłka - rejestr - POST:
+   * adres: <b>{{URL}}</b>/api.php/REST/v1/customRegisters/<b>166</b>/entries
+   * @separator
+   * dane:
+   *   {
+   *        sordid: number;
+   *        ordnmb: string;
+   *        plndat: Date;
+   *        height: number;
+   *        stkcnt: number;
+   *        scanned_raw_value: string;
+   *   }
+   * @separator
+   */
   async function onSubmit(
     values: CutInput,
-    formikHelpers: FormikHelpers<CutInput>
+    formikHelpers: FormikHelpers<CutInput>,
   ) {
     if (!values || !values.plannedDate || !values.height || !scannedValue) {
       toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
@@ -109,7 +134,7 @@ export const useOrderToCutFormik = (
             return isTodayOrTomorrow && !isPossibleToProcess_Before13
               ? false
               : true;
-          }
+          },
         ),
     }),
     validateOnMount: true,

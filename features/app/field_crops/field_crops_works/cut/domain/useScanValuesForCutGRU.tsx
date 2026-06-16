@@ -9,7 +9,7 @@ import { useAllowScanOnlyZpOrTray } from "@/features/shared/utils/useAllowScanOn
 
 export const useScanValuesForCutGRU = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  cutsList: ZpToCut[]
+  cutsList: ZpToCut[],
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -18,10 +18,16 @@ export const useScanValuesForCutGRU = (
   //states
   const [qrLock, setQrLock] = useState(true);
   const [scannedValue, setScannedValue] = useState<ZPShortenedInfo | null>(
-    null
+    null,
   );
 
   //fn
+  /**
+   * @public
+   * @procedureItem
+   * @order 80
+   * skan QR kod ZP'ka lub tacy
+   */
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
@@ -36,14 +42,25 @@ export const useScanValuesForCutGRU = (
 
       //allowed conditions
       if (isZP || isTray) {
+        /**
+         * @public
+         * @procedureItem
+         * raporty:
+         * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
+         */
         const foundZP = await scanZpOrTrayRep113(
           scannedValue,
-          whatValueWasScanned
+          whatValueWasScanned,
         );
         if (!foundZP) return;
 
-        /** guards */
-        //Zp not in list of ZPes ordered to cut - disabled
+        /**
+         * @public
+         * @guard
+         * weryfikacja czy zeskanowany ZPek znajduje się na liście zwróconych ZPków do cięcia (z raportu: 911)
+         * jeżeli nie -> koniec procedury
+         * <b>WYŁĄCZONE</b>
+         */
         // const ordnmb = foundZP.ordnmb;
         // if (!cutsList.find((cut) => cut.ordnmb === ordnmb)) {
         //   toast.warning(ERROR_MESSAGES.CANNOT_CONFIRM_ZP_WAS_NOT_ORDERED);
@@ -65,7 +82,7 @@ export const useScanValuesForCutGRU = (
       }
 
       throw new Error(
-        "useScanValuesForCutGRU -> scanValueHandler - condition not implemented."
+        "useScanValuesForCutGRU -> scanValueHandler - condition not implemented.",
       );
     } catch (error) {
       console.error(error);

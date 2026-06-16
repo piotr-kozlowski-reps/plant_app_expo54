@@ -27,6 +27,12 @@ type Props = {
   refreshAllData: () => void;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 30
+ * ZLECENIE CIĘCIA
+ */
 export const OrderToCutModal = (props: Props) => {
   ////vars
   const { closeFn, cutsList, setIsLoading, refreshAllData } = props;

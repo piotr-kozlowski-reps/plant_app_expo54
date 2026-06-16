@@ -15,12 +15,18 @@ const cutsListObjectExample: ZpToCut = {
   height: 234,
 };
 
+/**
+ * @public
+ * @reportItem
+ * raport - lista ZP do cięcia:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>911</b>&type__=<b>MANY</b>
+ */
 const edocReport_CutsList = new EdocReport<ZpToCutDTO, ZpToCut>({
   dataName: "zps_to_cut",
   address: `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_CutsList}&type__=MANY`,
   queryKey: [QUERY_KEYS.CUTS_LIST],
   requiredPropertiesInResultObject: Object.keys(
-    cutsListObjectExample
+    cutsListObjectExample,
   ) as (keyof ZpToCut)[],
   sort: new NoSort(),
   mappers: [

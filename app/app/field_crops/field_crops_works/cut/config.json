@@ -1,4 +1,5 @@
 {
   "label": "Cięcie GRU",
-  "order": 10
+  "order": 10,
+  "docsDir": "features/app/field_crops/field_crops_works/cut"
 }

@@ -29,7 +29,7 @@ export const useCutConfirmationFormik = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   cutsList: ZpToCut[],
   closeFn: () => void,
-  refreshAllData: () => void
+  refreshAllData: () => void,
 ) => {
   ////vars
   const { user, token } = useAuthSessionStore();
@@ -37,9 +37,28 @@ export const useCutConfirmationFormik = (
   const { errorHandler } = useErrorHandler();
 
   ////submit
+  /**
+   * @public
+   * @transformApiItem
+   * @order 90
+   * wysyłka - custom api - POST:
+   * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>cuts</b>
+   * @separator
+   * dane:
+   * [
+   *   {
+   *        cutuid: number;
+   *        cutdat: Date;
+   *        height: number;
+   *        id____: number;
+   *        scanned_raw_value: string;
+   *   }
+   * ]
+   * @separator
+   */
   async function onSubmit(
     values: CutConfirmationInput,
-    formikHelpers: FormikHelpers<CutConfirmationInput>
+    formikHelpers: FormikHelpers<CutConfirmationInput>,
   ) {
     if (!values || !values.height || !scannedValue || !cutsList) {
       toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
@@ -47,7 +66,7 @@ export const useCutConfirmationFormik = (
     }
 
     const foundZpToCutFromList = cutsList.find(
-      (zp) => zp.ordnmb === scannedValue.ordnmb
+      (zp) => zp.ordnmb === scannedValue.ordnmb,
     );
 
     try {
@@ -97,7 +116,7 @@ export const useCutConfirmationFormik = (
   async function sendToServer(
     dataToBeSend:
       | Post_CutConfirmation_DTO[]
-      | Post_CutConfirmation_WhenNotFoundOnLIstToCut_DTO[]
+      | Post_CutConfirmation_WhenNotFoundOnLIstToCut_DTO[],
   ) {
     if (!dataToBeSend) {
       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
@@ -113,7 +132,7 @@ export const useCutConfirmationFormik = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/cuts",
       token!,
-      dataToBeSend
+      dataToBeSend,
     );
 
     //check if response array has the same amount of items as sent items
@@ -186,7 +205,7 @@ export const useCutConfirmationFormik = (
     if (!scannedValue || !cutsList || !cutsList.length) return;
 
     const foundZpOnCutsList = cutsList.find(
-      (zp) => zp.ordnmb === scannedValue.ordnmb
+      (zp) => zp.ordnmb === scannedValue.ordnmb,
     );
     if (!foundZpOnCutsList) return;
 

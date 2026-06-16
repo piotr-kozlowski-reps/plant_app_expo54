@@ -29,6 +29,12 @@ type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 70
+ * POTWIERDZENIE WYKONANIA CIĘCIA
+ */
 export const CutConfirmationModal = (props: Props) => {
   ////vars
   const { closeFn, cutsList, setIsLoading } = props;

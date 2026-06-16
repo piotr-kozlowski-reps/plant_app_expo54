@@ -13,7 +13,7 @@ import { useAllowScanOnlyZpOrTray } from "@/features/shared/utils/useAllowScanOn
 
 export const useScanValuesForOrderToCut = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  cutsList: ZpToCut[]
+  cutsList: ZpToCut[],
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -25,10 +25,16 @@ export const useScanValuesForOrderToCut = (
   //states
   const [qrLock, setQrLock] = useState(true);
   const [scannedValue, setScannedValue] = useState<ZPShortenedInfo | null>(
-    null
+    null,
   );
 
   //fn
+  /**
+   * @public
+   * @procedureItem
+   * @order 40
+   * skan QR kod ZP'ka lub tacy
+   */
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
@@ -43,18 +49,29 @@ export const useScanValuesForOrderToCut = (
 
       //allowed conditions
       if (isZP || isTray) {
+        /**
+         * @public
+         * @procedureItem
+         * raporty:
+         * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
+         */
         const foundZP = await scanZpOrTrayRep113(
           scannedValue,
-          whatValueWasScanned
+          whatValueWasScanned,
         );
         if (!foundZP) return;
 
         /** guards */
+        /**
+         * @public
+         * @guard
+         * parametr: <b>plndat</b> (jeżeli jest już ustawiona data - to znaczy, że zlecenie cięcia jest już ustawione -> info + koniec procedury)
+         */
         if (foundZP.plndat) {
           toast.warning(
             `${
               ERROR_MESSAGES.ZP_WAS_ALREADY_ORDERED_TO_CUT
-            } ${renderDateInPolishWay(foundZP.plndat)}.`
+            } ${renderDateInPolishWay(foundZP.plndat)}.`,
           );
           return;
         }
@@ -74,7 +91,7 @@ export const useScanValuesForOrderToCut = (
       }
 
       throw new Error(
-        "useScanValuesForCutGRU -> scanValueHandler - condition not implemented."
+        "useScanValuesForCutGRU -> scanValueHandler - condition not implemented.",
       );
     } catch (error) {
       console.error(error);
