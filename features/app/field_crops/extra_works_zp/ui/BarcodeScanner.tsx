@@ -5,13 +5,13 @@ import { CameraView } from "expo-camera";
 import { StatusBar } from "expo-status-bar";
 import Button from "@/features/shared/ui/button/Button";
 import { Overlay } from "./Overlay";
-import { useScannedValues } from "../domain/useScannedValues";
+import { useScannedValues } from "../../../../shared/utils/useScannedValues";
 import {
   ExtraWork,
   ZpScannedValue,
 } from "@/features/shared/types/interfaces-extra_works";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
-import { useSendExtraWorkData } from "../domain/useSendExtraWorkData";
+import { useSendExtraWorkData } from "../../../../shared/utils/useSendExtraWorkData";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { Image } from "expo-image";
@@ -83,7 +83,18 @@ const BarcodeScanner = (props: TProps) => {
     extraWork.activityname.startsWith("230"),
   );
 
+  /**
+   * @public
+   * @procedureItem
+   * dla podlewania azotem: Praca Extra <b>wybrana z automatu</b>: <b>230 - Podl. Azot GRU</b>
+   */
+
   //scan values
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/shared/utils/useScannedValues.tsx`
+   */
   const {
     isFieldScanned,
     isZPScanned,
@@ -122,6 +133,11 @@ const BarcodeScanner = (props: TProps) => {
   } = useSelectConcentration();
 
   //sending data
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/shared/utils/useSendExtraWorkData.tsx`
+   */
   const { sendExtraWork } = useSendExtraWorkData(
     setIsLoading,
     clearScannedValues,
@@ -168,17 +184,6 @@ const BarcodeScanner = (props: TProps) => {
     isForceToScanField ||
     (isExtraWork230 && !selectedProtectiveTreatment) ||
     (isHobbyTech && !tjQuantity && isActivityWithTj10OrTj12);
-  // console.log("scannedValues.length === 0", scannedValues.length === 0);
-  // console.log("isForceToScanField ", isForceToScanField);
-  // console.log(
-  //   "isExtraWork230 && !selectedProtectiveTreatment",
-  //   isExtraWork230 && !selectedProtectiveTreatment,
-  // );
-  // console.log(
-  //   "isHobbyTech && !tjQuantity && isActivityWithTj10OrTj12",
-  //   isHobbyTech && !tjQuantity && isActivityWithTj10OrTj12,
-  // );
-  // console.log("isSendButtonDisabled", isSendButtonDisabled);
 
   ////tsx
   return (

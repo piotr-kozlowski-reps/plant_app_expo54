@@ -31,10 +31,7 @@ export const useSendExtraWorkData = (
   ////vars
   const { prepareDataToSendExtraWorksHandler } =
     usePrepareDataToSendExtraWorks();
-  // const { POSTasyncMutation: send_ExtraWork_PostMutation } =
-  //   useGetEdocCustomRegisterMutation({
-  //     customRegister: customRegister_ExtraWork,
-  //   });
+
   const queryClient = useQueryClient();
   const { token } = useAuthSessionStore();
 
@@ -81,6 +78,36 @@ export const useSendExtraWorkData = (
       // await send_ExtraWork_PostMutation(dataToBeSent);
 
       //// new api
+      /**
+       * @public
+       * @transformApiItem
+       * wysyłka - custom api - POST:
+       * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>czynnosciextradone</b>
+       * @separator
+       * <b>dane</b>:
+       * [
+       *     {
+       *            activityid: number;
+       *            scanned_raw_value: string;
+       *            tj12Count?: number;
+       *            tj10Count?: number;
+       *            donedat: Date;
+       *            mobile: boolean;
+       *            ordnmb_json: OrdnmbJson[]
+       *     }
+       * ]
+       * @separator
+       * type OrdnmbJson =
+       *     {
+       *            scanned_raw_value: string;
+       *            planam: string;
+       *            ordnmb: string;
+       *            prev_percentage: number;
+       *            act_percentage: number;
+       *            stkcnt_loc: number;
+       *            stkcnt_ordnmb: number;
+       *     }
+       */
       let response: ConfirmationForExtraWorkResponse =
         await query_postDataAsServerAction<any, Post_ExtraWork_ZP_DTO[]>(
           configPerBuild.apiAddress,

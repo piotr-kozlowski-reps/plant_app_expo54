@@ -6,11 +6,16 @@ import {
 } from "../types/interfaces-zp";
 import { getRepId123 } from "./getRepId123";
 
+/**
+ * @public
+ * @procedureItem
+ * @readFile `features/shared/data-access/getRepId123.ts`
+ */
 export const useGetZPsPerLocalization_Report123 = () => {
   async function getZPsPerLocalization_Report123(
     token: string,
     field: string,
-    errorHandler: (error: Error, errorTitle?: string) => void
+    errorHandler: (error: Error, errorTitle?: string) => void,
   ): Promise<ZPInLocalizationInfo[] | null> {
     let response: ZPsInLocalizationInfoResponse;
     try {
@@ -21,7 +26,7 @@ export const useGetZPsPerLocalization_Report123 = () => {
         response.data.resultMainQuery.length === 0
       ) {
         toast.error(
-          `Brak informacji o ZPkach na zeskanowanej lokalizacji (${field}).`
+          `Brak informacji o ZPkach na zeskanowanej lokalizacji (${field}).`,
         );
         return null;
       }

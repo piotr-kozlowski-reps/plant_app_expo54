@@ -9,11 +9,53 @@ import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protecti
 import { useNitrogenProtectiveTreatmentsHelpers } from "../domain/useNitrogenProtectiveTreatmentsHelpers";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import NitrogenIrrigationMainWindow from "./NitrogenIrrigationMainWindow";
-import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
 import edocReport_NitrogenIrrigationList from "@/features/shared/data-access/edocReport_NitrogenIrrigation";
 import edocReport_ExtraWorksNitrogenOnly from "@/features/shared/data-access/edocReport_ExtraWorksNitrogenOnly";
 
+/**
+ * @public
+ * @topic
+ * @order 0
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * @order 1
+ * <b>a)</b> zlecenie podlewania azotem:
+ *      1. scan QR  lokalizacji/ ZPka / tacy
+ *      2. formularz:
+ *            - wybór stężenia
+ *            - data zlecenia
+ * <b>b)</b> potwierdzenie podlewania azotem:
+ *      1. scan QR  lokalizacji/ ZPka / tacy
+ *      2. formularz:
+ *            - wybór stężenia
+ */
+
+/**
+ * @public
+ * @topic
+ * @order 3
+ * KORNELLAND:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * @order 4
+ * <b>zlecenie:</b>
+ *      - Budżet GRU / Prace Extra ZP (filtr: Prace Extra ZP: 230 Podl. Azot GRU)
+ *      - Rejestry: TRaceON Mobile / Zlecenie podlewania azotem
+ */
+/**
+ * @public
+ * @procedureDescription
+ * @order 5
+ * <b>potwierdzenie::</b>
+ *      - ?? Budżet GRU / Prace Extra ZP (filtr: Prace Extra ZP: 230 Podl. Azot GRU)
+ *      - Rejestry: PPLUS / Prace Extra - plan + wykonanie
+ */
 const FieldCropsNitrogenIrrigationEntryPage = () => {
   ////vars
   const { isLoading, setIsLoading, isPermissionGranted, requestPermission } =
@@ -26,6 +68,31 @@ const FieldCropsNitrogenIrrigationEntryPage = () => {
     useNitrogenProtectiveTreatmentsHelpers();
 
   //fetch
+  /**
+   * @public
+   * @topic
+   * @order 6
+   * REALIZACJA:
+   */
+
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ProtectiveTreatments.ts`
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_NitrogenIrrigation.tsx`
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ExtraWorksNitrogenOnly.ts`
+   */
   const {
     protectiveTreatments,
     zps_to_nitrogen_irrigation,

@@ -24,7 +24,7 @@ type OrderNitrogenIrrigationDataToSent = {
 
 export const useSendOrderNitrogenIrrigation = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  resetValues: () => void
+  resetValues: () => void,
 ) => {
   ////vars
   const { addDaysToDate } = useDatesHelper();
@@ -34,7 +34,7 @@ export const useSendOrderNitrogenIrrigation = (
 
   /////fn
   async function sendValuesForOrderNitrogenIrrigationHandler(
-    valuesToSendOrderToHardener: OrderNitrogenIrrigationDataToSent
+    valuesToSendOrderToHardener: OrderNitrogenIrrigationDataToSent,
   ) {
     const { scannedValues, inHowManyDays, protectiveTreatment } =
       valuesToSendOrderToHardener;
@@ -50,13 +50,20 @@ export const useSendOrderNitrogenIrrigation = (
         toast.error(ERROR_MESSAGES.LACK_OF_NITROGEN_CONCENTRATION);
       if (!inHowManyDays)
         toast.error(
-          ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_IRRIGATE_WITH_NITROGEN
+          ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_IRRIGATE_WITH_NITROGEN,
         );
 
       return;
     }
 
     /**  guard: cannot order to todays and tomorrows date when is after 13:00*/
+    /**
+     * @public
+     * @guard
+     * @order 180
+     * zabezpieczenie:: nie można zlecić podlewania na <b>dzis lub jutro</b>  -> po <b>godzinie 13stej</b>
+     */
+
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (inHowManyDays < 2 && !isPossibleToProcess_Before13) {
       toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
@@ -64,6 +71,12 @@ export const useSendOrderNitrogenIrrigation = (
     }
 
     /** prepare data */
+    /**
+     * @public
+     * @procedureItem
+     * Formularz z wprowadzeniem: ( stężenia, daty zlecenia zabiegu)
+     */
+
     const nitrogenIrrigationOrderDataToBeSent: NitrogenIrrigationOrderSendDataDTO[] =
       [];
     scannedValues.forEach((zp) => {
@@ -75,7 +88,7 @@ export const useSendOrderNitrogenIrrigation = (
         //date
         irrigation_date: addDaysToDate(
           new Date(Date.now()),
-          inHowManyDays ? inHowManyDays : 0
+          inHowManyDays ? inHowManyDays : 0,
         ),
 
         //protective treatment
@@ -108,7 +121,7 @@ export const useSendOrderNitrogenIrrigation = (
 
   //helpers
   async function sendToServer(
-    dataToBeSend: NitrogenIrrigationOrderSendDataDTO[]
+    dataToBeSend: NitrogenIrrigationOrderSendDataDTO[],
   ) {
     if (!dataToBeSend) {
       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
@@ -116,6 +129,27 @@ export const useSendOrderNitrogenIrrigation = (
     }
 
     //send data to server
+    /**
+     * @public
+     * @transformApiItem
+     * wysyłka - custom api - POST:
+     * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>nitrogenirrigationplan</b>
+     * @separator
+     * <b>dane</b>:
+     * [
+     *     {
+     *          sordid: number | null;
+     *          ordnmb: string;
+     * @separator
+     *          irrigation_date: Date;
+     * @separator
+     *          id____: number;
+     *          dscrpt: string;
+     * @separator
+     *          scanned_raw_value: string;
+     *     }
+     * ]
+     */
     let response: NitrogenIrrigationOrderResponse =
       await query_postDataAsServerAction<
         NitrogenIrrigationOrderResponse,
@@ -124,7 +158,7 @@ export const useSendOrderNitrogenIrrigation = (
         configPerBuild.apiAddress,
         "/api.php/REST/custom/nitrogenirrigationplan",
         token!,
-        dataToBeSend
+        dataToBeSend,
       );
 
     //check if response array has the same amount of items as sent items

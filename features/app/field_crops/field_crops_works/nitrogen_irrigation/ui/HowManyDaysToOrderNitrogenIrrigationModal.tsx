@@ -15,14 +15,16 @@ type Props = {
   changeInHowManyDaysHandler: (inHowManyDaysInput: number) => void;
 };
 
+/**
+ * @public
+ * @procedureItem
+ * @order 120
+ * Wybór: za ile dni
+ */
 const HowManyDaysToOrderNitrogenIrrigationModal = (props: Props) => {
   ////vars
   const { closeFn, changeInHowManyDaysHandler } = props;
-  const {
-    addDaysToDate,
-    getDayNameInPolish,
-    getIsDayAvailableToOrderExportToClient,
-  } = useDatesHelper();
+  const { addDaysToDate, getDayNameInPolish } = useDatesHelper();
 
   const inHowManyDaysKeyValue: InHowManyDaysKeyValue[] = [
     { name: "+ 1 dzień", value: 1 },
@@ -62,7 +64,7 @@ const HowManyDaysToOrderNitrogenIrrigationModal = (props: Props) => {
                   {inHowManyDaysKeyValue.map((item) => {
                     const valueDate = addDaysToDate(
                       new Date(Date.now()),
-                      item.value
+                      item.value,
                     );
 
                     return (
@@ -78,9 +80,9 @@ const HowManyDaysToOrderNitrogenIrrigationModal = (props: Props) => {
                           }}
                           text={`${item.name} ${" "}${" "}(${addDaysToDate(
                             new Date(Date.now()),
-                            item.value
+                            item.value,
                           ).toLocaleDateString("pl-PL")} - ${getDayNameInPolish(
-                            addDaysToDate(new Date(Date.now()), item.value)
+                            addDaysToDate(new Date(Date.now()), item.value),
                           )} )`}
                           isBackground
                           color={darkColor}

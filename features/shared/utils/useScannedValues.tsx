@@ -8,10 +8,10 @@ import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
-import { useScanValueForExtraWorkHandler } from "./useScanValueForExtraWorkHandler";
+import { useScanValueForExtraWorkHandler } from "../../app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
-import { useScanZpOrTrayHandler } from "./useScanZpOrTrayHandler";
+import { useScanZpOrTrayHandler } from "../../app/field_crops/extra_works_zp/domain/useScanZpOrTrayHandler";
 
 export const useScannedValues = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -21,8 +21,7 @@ export const useScannedValues = (
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
-  const { checkWhatValueWasScanned, getPureFieldValue } =
-    useCheckWhatValueIsScannedHelpers();
+  const { checkWhatValueWasScanned } = useCheckWhatValueIsScannedHelpers();
   const { errorHandler } = useErrorHandler();
   const { scanFieldWhenIsForcedToScanFieldForZP, scanField } =
     useScanValueForExtraWorkHandler();
@@ -55,6 +54,14 @@ export const useScannedValues = (
     player.play();
 
     //check allowed scanned values
+    /**
+     * @public
+     * @guard
+     * Dostępne mozliwości:
+     * gdy <b>isHobbyTech</b>: <b>ROZ</b>, <b>GRU</b>
+     * gdy <b>isRoz</b> ale nie <b>isHobbyTech</b>: <b>ROZ</b>, <b>Lokalizacja</b>
+     * gdy nie <b>isRoz</b> i nie <b>isHobbyTech</b>: <b>GRU</b>, <b>Lokalizacja</b>
+     */
     const allowedValues: TypeOfScannedValue[] = [];
     if (isHobbyTech) allowedValues.push("zp_roz", "zp_gru");
     if (isRoz && !isHobbyTech) allowedValues.push("zp_roz", "field");
@@ -79,6 +86,12 @@ export const useScannedValues = (
 
       //allowed paths/conditions
       if (!isField && (isZP || isRoz || whatValueWasScanned === "zp_roz")) {
+        /**
+         * @public
+         * @reportItem
+         * raport - gdy zeskanowany ZP:
+         * @readFile `features/app/field_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx`
+         */
         await scanZpOrTrayHandler(
           {
             scannedValue,
@@ -98,6 +111,12 @@ export const useScannedValues = (
       }
 
       if (isField && isForceToScanField) {
+        /**
+         * @public
+         * @reportItem
+         * raport - gdy zeskanowana lokalizacja:
+         * @readFile `features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
+         */
         await scanFieldWhenIsForcedToScanFieldForZP(
           {
             scannedValue,

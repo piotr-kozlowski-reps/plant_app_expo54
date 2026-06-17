@@ -19,6 +19,12 @@ const nitrogenIrrigationListObjectExample: ZpToNitrogenIrrigation = {
   tredscrpt: "sdfvsdfv",
 };
 
+/**
+ * @public
+ * @reportItem
+ * raport - lista zleconych ZPeków do podlewania azotem::
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1619</b>
+ */
 const edocReport_NitrogenIrrigationList = new EdocReport<
   ZpToNitrogenIrrigationDTO,
   ZpToNitrogenIrrigation
@@ -27,7 +33,7 @@ const edocReport_NitrogenIrrigationList = new EdocReport<
   address: `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_NitrogenIrrigationList}`,
   queryKey: [QUERY_KEYS.NITROGEN_IRRIGATION_LIST],
   requiredPropertiesInResultObject: Object.keys(
-    nitrogenIrrigationListObjectExample
+    nitrogenIrrigationListObjectExample,
   ) as (keyof ZpToNitrogenIrrigation)[],
   sort: new NoSort(),
   mappers: [

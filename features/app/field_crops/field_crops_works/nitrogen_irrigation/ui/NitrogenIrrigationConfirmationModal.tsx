@@ -25,6 +25,12 @@ type Props = {
   refreshAllData: () => void;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 400
+ * Potwierdzenie podlewania azotem:
+ */
 const NitrogenIrrigationConfirmationModal = (props: Props) => {
   ////vars
   const {
@@ -40,8 +46,12 @@ const NitrogenIrrigationConfirmationModal = (props: Props) => {
     refreshAllData,
   } = props;
 
-  // console.log({ extraWork });
-
+  /**
+   * @public
+   * @procedureItem
+   * procedura jak - Prace Extra:
+   * @readFile `features/app/field_crops/extra_works_zp/ui/BarcodeScanner.tsx`
+   */
   ////vars
   return (
     <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">

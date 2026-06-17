@@ -21,7 +21,7 @@ export const useScanHelpers = () => {
   ////fn
   function checkIfValueIsAlreadyScanned<T extends { ordnmb: string }>(
     scannedOrdnmb: string,
-    scannedValues: T[]
+    scannedValues: T[],
   ) {
     if (!scannedOrdnmb) return false;
 
@@ -30,10 +30,10 @@ export const useScanHelpers = () => {
   }
 
   type GuardCallbackFn = (
-    foundZPsPerLocalization: ZPInLocalizationInfo[]
+    foundZPsPerLocalization: ZPInLocalizationInfo[],
   ) => boolean;
   type FilterCallbackFn = (
-    foundZPsPerLocalization: ZPInLocalizationInfo[]
+    foundZPsPerLocalization: ZPInLocalizationInfo[],
   ) => ZPInLocalizationInfo[];
   type ScanField = {
     scannedValue: string;
@@ -48,6 +48,11 @@ export const useScanHelpers = () => {
     callbacksFilters: FilterCallbackFn[];
   };
 
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/shared/data-access/useGetZPsPerLocalization_Report123.tsx`
+   */
   async function scanField(scanFieldObject: ScanField) {
     {
       const {
@@ -72,7 +77,7 @@ export const useScanHelpers = () => {
       const foundZPsPerLocalization = await getZPsPerLocalization_Report123(
         token!,
         scannedField,
-        errorHandler
+        errorHandler,
       );
 
       if (!foundZPsPerLocalization) {

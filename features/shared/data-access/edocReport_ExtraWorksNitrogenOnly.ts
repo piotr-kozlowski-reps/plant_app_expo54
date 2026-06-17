@@ -17,6 +17,12 @@ const navigationObjectExample: ExtraWork = {
   istech: null,
 };
 
+/**
+ * @public
+ * @reportItem
+ * raport - prace extra - tylko azot:
+ * <b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1701</b>/data
+ */
 const edocReport_ExtraWorksNitrogenOnly = new EdocReport<
   ExtraWorkDTO,
   ExtraWork

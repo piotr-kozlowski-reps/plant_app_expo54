@@ -96,13 +96,19 @@ export const useScanValuesForOrderNitrogenIrrigation = (
   }, [inHowManyDays]);
 
   //fn
+  /**
+   * @public
+   * @procedureItem
+   * @order 130
+   * skan QR kod: lokalizacja lub ZP lub taca
+   */
+
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
     player.play();
 
     /** guards */
-
     //check allowed scanned values
     const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
       "zp_gru",
@@ -121,6 +127,12 @@ export const useScanValuesForOrderNitrogenIrrigation = (
       //allowed conditions
       if (isField) {
         /** guards callbacks */
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie:: jeżeli w lokalizacji znajduje się <b>ZPek, który był zlecony</b> do podlewania azotem już <b>wcześniej</b>
+         * , to <b>zlecane są wszystkie pozostałe ZPeki</b>, poza tym/tymi zleconymi wcześniej. (Porównywane są ZPeki z lokalizacji do tych zwróconych raportem 1619)
+         */
 
         /**
          * guard passes when no ZPs from field is in list of already ordered ZPs, but even if there are some, it's ok, it returns true
@@ -167,6 +179,13 @@ export const useScanValuesForOrderNitrogenIrrigation = (
 
             return filteredElements;
           };
+
+        /**
+         * @public
+         * @procedureItem
+         * raporty:
+         * @readFile `features/shared/utils/useScanHelpers.tsx`
+         */
 
         await scanField({
           scannedValue,
@@ -286,6 +305,11 @@ export const useScanValuesForOrderNitrogenIrrigation = (
       return;
     }
 
+    /**
+     * @public
+     * @guard
+     * zabezpieczenie: jeżeli zeskanowany <b>ZPek znajduje się na liście zwróconej raportem 1619</b> -> info + koniec procedury
+     */
     //check if scanned ZP was on nitrogen irrigation list
     const foundZPOnNitrogenList = nitrogenIrrigationList.find(
       (zp) => zp.ordnmb === scannedOrdnmb,
@@ -306,6 +330,12 @@ export const useScanValuesForOrderNitrogenIrrigation = (
       setIsZPScanned(true);
 
     /** fetch ZP */
+    /**
+     * @public
+     * @procedureItem
+     * raporty - zapytanie o ZP:
+     * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
+     */
     const foundZP = await getZPInfo_Rep113(token!, scannedOrdnmb, errorHandler);
     if (!foundZP) {
       toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);

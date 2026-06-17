@@ -61,6 +61,12 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
   } = props;
 
   //scan values
+  /**
+   * @public
+   * @topic
+   * @order 50
+   * Zlecenie podlewania azotem:
+   */
   const {
     qrLock,
     isFieldScanned,
@@ -85,7 +91,7 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
   } = useScanValuesForOrderNitrogenIrrigation(
     setIsLoading,
     resetValuesForProtectiveTreatments,
-    nitrogenIrrigationList
+    nitrogenIrrigationList,
   );
 
   /** delete item from list handler */
