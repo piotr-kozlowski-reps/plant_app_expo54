@@ -1,0 +1,81 @@
+
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+          <meta charset="UTF-8" />
+          <title>Dokumentacja: features/app/greenhouse_crops/extra_works_quantity</title>
+          <style>
+          :root {
+            --color-dark: #002539;
+            --color-background_nuance: #FFFDF9;
+            --color-gray: #ddd;
+            --color-procedure-description: #9d89b3;
+            --color-report: #f2ebca;
+            --color-gray-darker: #B0B0B0;
+            --color-procedure-item: #D1EDD1;
+            --color-api-item: #cadbf2;
+            --color-guard: #FDAFAF;
+            --border-radius: 32px
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
+            font-weight: bold;
+            font-style: bold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
+            font-weight: semibold;
+            font-style: semibold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
+            font-weight: light;
+            font-style: light;
+            }
+            body {
+            font-family: "euclid", sans-serif; max-width: 80%; margin: 40px auto; line-height: 1.4;
+            }
+            h1 {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
+            }
+            h2 {
+            font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
+            h4 {
+            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px; opacity: 0.3;
+            }
+            p {
+            padding-top: -4px; padding-bottom: -4px;
+            }
+            code { background: #f5f5f5; padding: 2px 4px; }
+            pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+
+            .back-button {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-background_nuance); color: var(--color-dark); padding-top: 4px; padding-bottom: 6px; padding-left: 16px; padding-right: 16px; border: 2px solid var(--color-dark); border-radius: var(--border-radius); text-decoration: none; 
+            }
+            .back-button:hover {
+            background-color: var(--color-dark); color: var(--color-background_nuance);
+            }
+
+          </style>
+        </head>
+        <body>
+        <h1>Dokumentacja dla: <b>Uprawy szklarniowe -> Prace Extra ROZ - Ilości</b></h1><a href="./index.html" class="back-button">powrót</a><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/greenhouse_crops/extra_works_quantity/ui/ExtraWorksQuantity_GreenhouseCrops_EntryPage.tsx</h4>
+      <div style="font-size: 10px;">(1 - 26)</div>
+    </div><div style="margin-left: 32px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);"><p style="color: var(--color-background_nuance);">PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p null>1.&nbsp;wybór&nbsp;Pracy&nbsp;Extra&nbsp;z&nbsp;listy</p><p null>2.&nbsp;formularz:</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;ilość</p></div><div style="margin-left: 32px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);"><p style="color: var(--color-background_nuance);">REALIZACJA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raporty:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/edocReport_ExtraWorksRoz.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raport&nbsp;-&nbsp;prace&nbsp;extra&nbsp;-&nbsp;ROZ:</p><p null><b>{{URL}}</b>/api.php/REST/v1/system/reports/<b>1680</b>/data</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>parametr:&nbsp;<b>is_ordnmb</b>&nbsp;===&nbsp;<b>false</b>&nbsp;&nbsp;-&nbsp;praca&nbsp;extra,&nbsp;w&nbsp;której&nbsp;podawane&nbsp;są&nbsp;ilości</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>Wybór&nbsp;Pracy&nbsp;Extra&nbsp;z&nbsp;listy</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raporty:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/app/field_crops/extra_works_quantity/domain/useCheckIfExtraWorkWasDoneToday.tsx</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raporty&nbsp;-&nbsp;weryfikacja&nbsp;czy&nbsp;praca&nbsp;była&nbsp;już&nbsp;dziś&nbsp;wykonana::</p><p null>adres:&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1573</b>&activityid=<b>%activityid%</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/app/field_crops/extra_works_quantity/ui/ExtraWorksQuantityModal.tsx</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>jeżeli&nbsp;w&nbsp;raporcie&nbsp;parametr:&nbsp;<b>qntity_day&nbsp;>&nbsp;0</b>&nbsp;->&nbsp;informacja&nbsp;dla&nbsp;użytkownika</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>fomularz:&nbsp;podanie&nbsp;ilości</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/app/field_crops/extra_works_quantity/domain/usePrepareDataForFormikToExtraWorkQuantity.tsx</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>wysyłka&nbsp;-&nbsp;creg&nbsp;-&nbsp;POST:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 160px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/customRegister_ExtraWork.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>wysyłka&nbsp;-&nbsp;Prace&nbsp;Extra:</p><p null>adres:&nbsp;<b>{{URL}}</b>/api.php/REST/v1/customRegisters/<b>238</b>/entries</p><br /><p null><b>dane</b>:</p><p null>[</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;{</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activityid:&nbsp;number;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;begindat:&nbsp;Date;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;donedat:&nbsp;Date;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mobile:&nbsp;boolean;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qntity:&nbsp;number;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;}</p><p null>]</p></div><a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót</a>
+        </body>
+        </html>
+        

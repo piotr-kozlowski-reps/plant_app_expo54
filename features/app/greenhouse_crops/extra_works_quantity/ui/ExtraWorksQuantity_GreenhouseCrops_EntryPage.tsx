@@ -19,6 +19,18 @@ import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import ExtraWorksQuantityModal from "@/features/app/field_crops/extra_works_quantity/ui/ExtraWorksQuantityModal";
 import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * 1. wybór Pracy Extra z listy
+ * 2. formularz:
+ *      - ilość
+ */
 const ExtraWorksQuantity_GreenhouseCrops_EntryPage = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +50,18 @@ const ExtraWorksQuantity_GreenhouseCrops_EntryPage = () => {
   let refreshAllData: () => void = () => {};
 
   try {
+    /**
+     * @public
+     * @topic
+     * @order 20
+     * REALIZACJA:
+     */
+    /**
+     * @public
+     * @procedureItem
+     * raporty:
+     * @readFile `features/shared/data-access/edocReport_ExtraWorksRoz.tsx`
+     */
     const { extra_works_roz, refreshAllData: refreshAllDataGotFromHook } =
       useGetEdocReports({
         setIsLoading: setIsLoading,
@@ -45,19 +69,47 @@ const ExtraWorksQuantity_GreenhouseCrops_EntryPage = () => {
       });
     refreshAllData = refreshAllDataGotFromHook as () => void;
     extraWorksArray = extra_works_roz as unknown as ExtraWork[];
+
+    /**
+     * @public
+     * @guard
+     * parametr: <b>is_ordnmb</b> === <b>false</b>  - praca extra, w której podawane są ilości
+     */
     filteredExtraWorks = useMemo(() => {
       const foundFilteredExtraWorks = extraWorksArray.filter(
         (work) => work.is_ordnmb === false,
       );
-      //     .filter((work) => {
-      //       return work.ishobby === isHobby ? true : false;
-      //     });
 
       return foundFilteredExtraWorks || [];
     }, [extraWorksArray]);
   } catch (error) {
     chooseWhichErrorToThrow(error as Error);
   }
+
+  /**
+   * @public
+   * @procedureItem
+   * Wybór Pracy Extra z listy
+   */
+
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/app/field_crops/extra_works_quantity/domain/useCheckIfExtraWorkWasDoneToday.tsx`
+   */
+
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/app/field_crops/extra_works_quantity/ui/ExtraWorksQuantityModal.tsx`
+   */
+
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/app/field_crops/extra_works_quantity/domain/usePrepareDataForFormikToExtraWorkQuantity.tsx`
+   */
 
   //open scanner handler
   const openModalHandler = (id: number) => {
