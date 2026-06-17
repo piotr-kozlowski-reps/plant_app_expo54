@@ -33,16 +33,27 @@ const ExtraWorksQuantityModal = (props: TProps) => {
   ////vars
   const { closeFn, extraWork, setIsLoading, isRoz = false } = props;
 
+  /**
+   * @public
+   * @procedureItem
+   * @order 50
+   * jeżeli w raporcie parametr: <b>qntity_day > 0</b> -> informacja dla użytkownika
+   */
   const { todaysQuantity } = useCheckIfExtraWorkWasDoneToday(
     setIsLoading,
-    extraWork
+    extraWork,
   );
 
+  /**
+   * @public
+   * @procedureItem
+   * fomularz: podanie ilości
+   */
   const { formik, availableFormActions, canFormBeSubmitted } =
     usePrepareDataForFormikToExtraWorkQuantity(
       setIsLoading,
       extraWork,
-      closeFn
+      closeFn,
     );
 
   ////tsx

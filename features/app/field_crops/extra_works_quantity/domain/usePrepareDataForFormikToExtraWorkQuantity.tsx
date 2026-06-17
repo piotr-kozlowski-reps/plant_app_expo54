@@ -19,7 +19,7 @@ import { customRegister_ExtraWork } from "@/features/shared/data-access/customRe
 export const usePrepareDataForFormikToExtraWorkQuantity = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   extraWork: ExtraWork | undefined,
-  closeFn: () => void
+  closeFn: () => void,
 ) => {
   ////vars
   const { POSTasyncMutation: send_ExtraWork_PostMutation } =
@@ -28,9 +28,16 @@ export const usePrepareDataForFormikToExtraWorkQuantity = (
     });
 
   //on submit
+  /**
+   * @public
+   * @transformApiItem
+   * @order 60
+   * wysyłka - creg - POST:
+   * @readFile `features/shared/data-access/customRegister_ExtraWork.tsx`
+   */
   const onSubmit = async (
     values: ExtraWorkQuantityInput,
-    formikHelpers: FormikHelpers<ExtraWorkQuantityInput>
+    formikHelpers: FormikHelpers<ExtraWorkQuantityInput>,
   ) => {
     if (!extraWork) {
       toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK);

@@ -25,6 +25,19 @@ type Props = {
   isHobby: boolean;
 };
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * <b>Moduł wspólny dla: GRU, HOBBY</b>
+ * 1. wybór Pracy Extra z listy
+ * 2. formularz:
+ *      - ilość
+ */
 const ExtraWorksQuantityEntryPage = (props: Props) => {
   ////vars
   const { isHobby } = props;
@@ -33,6 +46,13 @@ const ExtraWorksQuantityEntryPage = (props: Props) => {
   const [extraWork, setExtraWork] = useState<ExtraWork>();
 
   //data fetch and filter
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
+
   const [isLoading, setIsLoading] = useState(false);
   let extraWorksArray: ExtraWork[] = [];
   let filteredExtraWorks: ExtraWork[] = [];
@@ -53,6 +73,12 @@ const ExtraWorksQuantityEntryPage = (props: Props) => {
         { name: pathNameForAppPathComponent, actionFn: () => {} },
       ];
 
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ExtraWorks.ts`
+   */
   const { extra_works, refreshAllData: refreshAllDataGotFromHook } =
     useGetEdocReports({
       setIsLoading: setIsLoading,
@@ -60,6 +86,21 @@ const ExtraWorksQuantityEntryPage = (props: Props) => {
     });
   refreshAllData = refreshAllDataGotFromHook as () => void;
   extraWorksArray = extra_works as unknown as ExtraWork[];
+  /**
+   * @public
+   * @guard
+   * dla <b>GRU</b>
+   * parametr: <b>is_ordnmb</b> === <b>false</b>  - praca extra, w której podawane są ilości
+   * parametr: <b>ishobby</b> === <b>false</b>
+   */
+  /**
+   * @public
+   * @guard
+   * dla <b>HOBBY</b>
+   * parametr: <b>is_ordnmb</b> === <b>false</b>  - praca extra, w której podawane są ilości
+   * parametr: <b>ishobby</b> === <b>true</b>
+   */
+
   filteredExtraWorks = useMemo(() => {
     const foundFilteredExtraWorks = extraWorksArray
       .filter((work) => work.is_ordnmb === false)
@@ -69,6 +110,12 @@ const ExtraWorksQuantityEntryPage = (props: Props) => {
 
     return foundFilteredExtraWorks || [];
   }, [extraWorksArray]);
+
+  /**
+   * @public
+   * @procedureItem
+   * Wybór Pracy Extra z listy
+   */
 
   //open scanner handler
   const openModalHandler = (id: number) => {

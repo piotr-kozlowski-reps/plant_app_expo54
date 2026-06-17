@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export const useCheckIfExtraWorkWasDoneToday = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  extraWork: ExtraWork | undefined
+  extraWork: ExtraWork | undefined,
 ) => {
   const { token } = useAuthSessionStore();
   const [todaysQuantity, setTodaysQuantity] = useState(0);
@@ -17,6 +17,13 @@ export const useCheckIfExtraWorkWasDoneToday = (
     getExtraWorkTodaysQuantity();
   }, [extraWork]);
 
+  /**
+   * @public
+   * @procedureItem
+   * @order 40
+   * raporty - weryfikacja czy praca była już dziś wykonana::
+   * adres: <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1573</b>&activityid=<b>%activityid%</b>
+   */
   async function getExtraWorkTodaysQuantity() {
     setIsLoading(true);
 
@@ -29,7 +36,7 @@ export const useCheckIfExtraWorkWasDoneToday = (
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       response = (await res.json()) as ActivityTodaysQuantityResponse;
@@ -39,7 +46,7 @@ export const useCheckIfExtraWorkWasDoneToday = (
       }
       if (response.data.resultMainQuery.length > 0) {
         setTodaysQuantity(
-          Number.parseInt(response.data.resultMainQuery[0].qntity_day)
+          Number.parseInt(response.data.resultMainQuery[0].qntity_day),
         );
       }
     } catch (error) {
