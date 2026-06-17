@@ -2,7 +2,6 @@ import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import edocReport_modulesPins from "@/features/shared/data-access/edocReport_modulesPins";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import {
-  FIELD_CROPS,
   INDEX,
   POTTED_PLANTS,
   SubNavigationElement,

@@ -21,6 +21,18 @@ import { useMemo, useState } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+/**
+ * @public
+ * @topic
+ * @order 10
+ * PROCEDURA:
+ */
+
+/**
+ * @public
+ * @procedureDescription
+ * By dostać się do wnętrza modułu, należy podać PIN.
+ */
 const TrayOperationsEntryPage = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +49,24 @@ const TrayOperationsEntryPage = () => {
   );
 
   //fetch
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
+
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_modulesPins.ts`
+   */
+  /**
+   * @public
+   * @procedureItem
+   * Po wprowadzeniu PINu, który zgadza się z ustawionym w systemie PINem dla danego modułu -> przejście dalej.
+   */
   const { modulesPins, refreshAllData } = useGetEdocReports({
     setIsLoading: setIsLoading,
     reports: [edocReport_modulesPins],
