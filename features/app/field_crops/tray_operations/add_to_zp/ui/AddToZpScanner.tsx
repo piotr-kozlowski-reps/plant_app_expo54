@@ -21,17 +21,36 @@ import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndT
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { router } from "expo-router";
 import { useSendAddToZpData } from "../domain/useSendAddToZpData";
-import TrayInfoForMovingToGarden from "../../move_to_garden/ui/TrayInfoForMovingToGarden";
 import TrayInfoForAddToZp from "./TrayInfoForAddToZp";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import DeleteTrayFromListModal from "../../move_to_garden/ui/DeleteTrayFromListModal";
 
+/**
+ * @public
+ * @topic
+ * @order 0
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * @order 1
+ * 1. Skan QR ZPka
+ * 2. Skan QR tac
+ */
 const AddToZpScanner = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
 
   //scan values
+  /**
+   * @public
+   * @topic
+   * @order 2
+   * REALIZACJA:
+   */
+
   const {
     qrLock,
     zp,

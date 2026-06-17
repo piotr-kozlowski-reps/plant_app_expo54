@@ -63,6 +63,13 @@ export const useScanValuesForAddToZP = (
 
       try {
         setIsLoading(true);
+        /**
+         * @public
+         * @procedureItem
+         * @order 20
+         * Skan QR ZPka
+         * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
+         */
         const foundZp = await scanZpOrTrayRep113(scannedValue, "zp_gru");
         if (!foundZp || !foundZp.ordnmb || !foundZp.twrkod) {
           toast.warning(ERROR_MESSAGES.LACK_OF_CHOSEN_ZP);
@@ -94,7 +101,12 @@ export const useScanValuesForAddToZP = (
       }
 
       /** guards */
-      //check if there is already the same tray
+      /**
+       * @public
+       * @guard
+       * @order 40
+       * zabezpieczenie: weryfikacja czy taca nie została już zeskanowana wcześniej i nie jest na liście -> info
+       */
       if (
         scannedTrays.some(
           (tray) => tray.stk_id === getPureTrayValue(scannedValue),
@@ -106,6 +118,13 @@ export const useScanValuesForAddToZP = (
 
       try {
         setIsLoading(true);
+        /**
+         * @public
+         * @procedureItem
+         * @order 30
+         * Skan QR tacy:
+         * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
+         */
         const foundTray = await scanZpOrTrayRep113(scannedValue, "tray");
 
         if (
@@ -119,7 +138,13 @@ export const useScanValuesForAddToZP = (
         }
 
         /** guards */
-        //check if plant is the same or same enough to add to ZP
+        /**
+         * @public
+         * @guard
+         * @order 50
+         * zabezpieczenie: <b>weryfikacja czy roślina na tacy może być dopięta do ZP</b>
+         * (jeżeli pierwsze 3 człony <b>twrkod</b> nie są takie same - to znaczy, że taca nie może być dopięta do ZPka -> odrzucenie tacy)
+         */
         if (!checkIfPlantOnTrayCanBeAddedToChosenZp(zp, foundTray)) {
           toast.warning(
             `Taca z towarem o kodzie: "${foundTray.twrkod}" nie może być dodana do ZP z towarem o kodzie: "${zp.twrkod}".`,
@@ -127,13 +152,24 @@ export const useScanValuesForAddToZP = (
           return;
         }
 
-        //compare zp from scanned zp and from tray - they cannot be the same
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: weryfikacja taca nie jest już w tym ZP
+         * (porównanie ordnmb ZPka i tacy - jeżeli takie same -> odrzucenie tacy)
+         */
         if (foundTray.ordnmb === zp.ordnmb) {
           toast.warning(`Zeskanowana taca należy już do wybranego ZP'ka.`);
           return;
         }
 
         //fetch data from 119 report
+        /**
+         * @public
+         * @procedureItem
+         * raporty:
+         * @readFile `features/shared/data-access/useGetControlSowingChanges_Report119.tsx`
+         */
         const foundDataForReport119 = await getControlSowingChanges_Report119(
           token!,
           foundTray.stk_id,

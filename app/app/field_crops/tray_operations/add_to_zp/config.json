@@ -1,4 +1,5 @@
 {
   "label": "Przypnij do ZP",
-  "order": 60
+  "order": 60,
+  "docsDir": "features/app/field_crops/tray_operations/add_to_zp"
 }

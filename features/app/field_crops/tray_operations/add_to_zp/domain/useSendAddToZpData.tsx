@@ -14,7 +14,7 @@ import { toast } from "sonner-native";
 
 export const useSendAddToZpData = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  resetWholeState: () => void
+  resetWholeState: () => void,
 ) => {
   ////vars
   const { getErrorsFromControlSowingChangesReport } =
@@ -25,7 +25,7 @@ export const useSendAddToZpData = (
   ////fn
   async function sendValuesForAddToZp(
     zp: ZpScannedValueForAddToZp | null,
-    scannedTrays: TrayScannedValueForAddToZp[]
+    scannedTrays: TrayScannedValueForAddToZp[],
   ) {
     if (!zp || !scannedTrays || !scannedTrays.length) {
       toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
@@ -34,19 +34,50 @@ export const useSendAddToZpData = (
 
     try {
       /** guards */
-      //check errtxt from report 119
-      const allErrors = await getErrorsFromControlSowingChangesReport(
-        scannedTrays
-      );
+      /**
+       * @public
+       * @guard
+       * @order 200
+       * sprawdzenie czy jest jakiś błąd w zeskanowanych tacach - raport 119,  właściwość: errtxt -> info + koniec procedury
+       */
+      const allErrors =
+        await getErrorsFromControlSowingChangesReport(scannedTrays);
       if (allErrors.length) {
         allErrors.forEach((item) => {
           toast.warning(
-            `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`
+            `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`,
           );
         });
         return;
       }
 
+      /**
+       * @public
+       * @transformApiItem
+       * wysyłka - custom api - POST:
+       * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>addstktoorder</b>
+       * @separator
+       * <b>dane</b>:
+       * [
+       *     {
+       *          ordnmb: string;
+       *          sordid: number;
+       *          ordid_: number;
+       * @separator
+       *          scanned_raw_value: string;
+       * @separator
+       *          stk_id: string;
+       *          stkid1: string;
+       *          ordid1: string | null;
+       *          ordnmb1: string;
+       *          movid1: null | number;
+       *          stkid_: number | null;
+       *          wsk_palet: number | null;
+       *          outid_: number | null;
+       *          isgarden: string | null;
+       *     }
+       * ]
+       */
       const dataToSent: Post_AddToZp_DTO[] = [];
       scannedTrays.forEach((item) => {
         dataToSent.push({
@@ -97,7 +128,7 @@ export const useSendAddToZpData = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/addstktoorder",
       token!,
-      dataToBeSend
+      dataToBeSend,
     );
 
     //check if response array has the same amount of items as sent items
