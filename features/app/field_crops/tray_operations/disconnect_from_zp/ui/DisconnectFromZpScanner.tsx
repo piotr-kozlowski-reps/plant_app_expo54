@@ -37,11 +37,35 @@ type Props = {
   // refreshAllData: () => void;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 0
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * @order 1
+ * Skan QR tacy
+ */
 const DisconnectFromZpScanner = (props: Props) => {
   ////vars
   const { isLoading, setIsLoading } = props;
 
   //scan values
+  /**
+   * @public
+   * @topic
+   * @order 2
+   * REALIZACJA:
+   */
+  /**
+   * @public
+   * @procedureItem
+   * @order 3
+   * Skan QR tacy
+   */
   const {
     qrLock,
     scannedValues,
@@ -63,7 +87,7 @@ const DisconnectFromZpScanner = (props: Props) => {
   const { sendValuesForDisconnectFromZp } = useSendDisconnectFromZpData(
     setIsLoading,
     scannedValues,
-    resetWholeState
+    resetWholeState,
   );
 
   return (

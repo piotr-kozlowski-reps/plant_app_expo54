@@ -5,7 +5,6 @@ import {
   Post_DisconnectFromZp_DTO,
   TrayScannedValueForDisconnectFromZp,
 } from "@/features/shared/types/interfaces-disconnect_from_zp";
-import { TrayScannedValueForMovingToGarden } from "@/features/shared/types/interfaces-move_to_garden";
 import { query_postDataAsServerAction } from "@/features/shared/utils/commonHelpers/queryPostOnServer";
 import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";

@@ -16,7 +16,7 @@ const TrayOperationsDisconnectFromZpEntryPage = () => {
     useSubmoduleEntryDataAndGuard<FieldCropsSubmodules>(
       "field_crops",
       "tray_operations_disconnect_from_zp",
-      "Odepnij do bufora"
+      "Odepnij do bufora",
     );
 
   return (
@@ -33,8 +33,6 @@ const TrayOperationsDisconnectFromZpEntryPage = () => {
           <DisconnectFromZpScanner
             isLoading={isLoading}
             setIsLoading={setIsLoading}
-            // deleteReasons={deleteReasonsArray}
-            // refreshAllData={refreshAllDataTypedAsFunction}
           />
         </PermissionsOrGoFurther>
       </>

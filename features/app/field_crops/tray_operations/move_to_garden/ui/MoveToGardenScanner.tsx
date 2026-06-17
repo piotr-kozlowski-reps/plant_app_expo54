@@ -4,16 +4,7 @@ import {
   TRAY_OPERATIONS,
 } from "@/features/shared/types/interfaces-navigation";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
-import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
-import { useState } from "react";
-import {
-  View,
-  Text,
-  Platform,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Platform, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useScanValuesForMoveToGarden } from "../domain/useScanValuesForMoveToGarden";
 import { StatusBar } from "expo-status-bar";
@@ -30,14 +21,8 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { router } from "expo-router";
 import TrayInfoForMovingToGarden from "./TrayInfoForMovingToGarden";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
-import {
-  darkColor,
-  primaryColor,
-  yellowColor,
-} from "@/features/shared/constants/colorThemeVars";
+import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import DeleteTrayFromListModal from "./DeleteTrayFromListModal";
-import clsx from "clsx";
-import CheckBoxWithText from "@/features/shared/ui/checkbox/CheckBoxWithText";
 import { useSendMoveToGardenData } from "../domain/useSendMoveToGardenData";
 
 type Props = {

@@ -16,7 +16,7 @@ import { useGetControlSowingChanges_Report119 } from "@/features/shared/data-acc
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 
 export const useScanValuesForDisconnectFromZP = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -58,10 +58,15 @@ export const useScanValuesForDisconnectFromZP = (
     }
 
     /** guards */
-    //check if there is already the same tray
+    /**
+     * @public
+     * @guard
+     * @order 40
+     * zabezpieczenie: weryfikacja czy taca nie została już zeskanowana wcześniej i nie jest na liście -> info
+     */
     if (
       scannedValues.some(
-        (tray) => tray.stk_id === getPureTrayValue(scannedValue)
+        (tray) => tray.stk_id === getPureTrayValue(scannedValue),
       )
     ) {
       toast.warning(ERROR_MESSAGES.TRAY_ALREADY_IN_LIST);
@@ -70,6 +75,12 @@ export const useScanValuesForDisconnectFromZP = (
 
     try {
       setIsLoading(true);
+      /**
+       * @public
+       * @procedureItem
+       * raporty - zapytanie o tacę:
+       * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
+       */
       const foundTray = await scanZpOrTrayRep113(scannedValue, "tray");
 
       if (!foundTray || !foundTray.stk_id || !foundTray.ordnmb) {
@@ -78,12 +89,18 @@ export const useScanValuesForDisconnectFromZP = (
       }
 
       //fetch data from 119 report
+      /**
+       * @public
+       * @procedureItem
+       * raporty:
+       * @readFile `features/shared/data-access/useGetControlSowingChanges_Report119.tsx`
+       */
       const foundDataForReport119 = await getControlSowingChanges_Report119(
         token!,
         foundTray.stk_id,
         "",
         foundTray.ordnmb,
-        errorHandler
+        errorHandler,
       );
 
       if (!foundDataForReport119) {
@@ -143,7 +160,7 @@ export const useScanValuesForDisconnectFromZP = (
 
   const addOrChangeDeleteReason = (
     tray: TrayScannedValueForDisconnectFromZp,
-    reason: DeleteReason
+    reason: DeleteReason,
   ) => {
     const foundTray = scannedValues.find((item) => item.stk_id === tray.stk_id);
     if (!foundTray) {
