@@ -27,10 +27,26 @@ import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import ZpDeleteZpFromListModal from "./ZpDeleteZpFromListModal";
 import { useSendLoadingData } from "../domain/useSendLoadingData";
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * scan QR  ZPków / tac
+ */
 const LoadingScanner = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
   //scan values
   const {
     qrLock,
@@ -48,7 +64,7 @@ const LoadingScanner = () => {
   const { sendValuesForLoading } = useSendLoadingData(
     setIsLoading,
     scannedValues,
-    resetWholeState
+    resetWholeState,
   );
 
   ////tsx

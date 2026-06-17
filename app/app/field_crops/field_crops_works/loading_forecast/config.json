@@ -1,4 +1,5 @@
 {
   "label": "Prognoza załadunku",
-  "order": 30
+  "order": 30,
+  "docsDir": "features/app/all_crops/loading_forecast"
 }

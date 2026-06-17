@@ -18,16 +18,30 @@ import { useScanValuesForReplaceTray } from "../domain/useScanValuesForReplaceTr
 import Button from "@/features/shared/ui/button/Button";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import { ArrowDown } from "lucide-react-native";
-import {
-  darkColor,
-  lightColor,
-} from "@/features/shared/constants/colorThemeVars";
+import { darkColor } from "@/features/shared/constants/colorThemeVars";
 import clsx from "clsx";
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * 1. scan QR starej tacy
+ * 2. scan QR nowej tacy
+ */
 const ReplaceTrayScanner = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
   //scan values
   const {
     qrLock,
@@ -134,7 +148,7 @@ const ReplaceTrayScanner = () => {
                   <Text
                     className={clsx(
                       "text-center font-nav ",
-                      newTray ? "text-destructive" : "text-foreground"
+                      newTray ? "text-destructive" : "text-foreground",
                     )}
                   >
                     {oldTray.stk_id}

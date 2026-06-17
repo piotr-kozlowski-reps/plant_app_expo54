@@ -55,13 +55,6 @@ const AllCropsLoadingForecastEntryPage = (props: Props) => {
     }
   }, []);
 
-  // const { isLoading, setIsLoading, isPermissionGranted, requestPermission } =
-  //   useSubmoduleEntryDataAndGuard<FieldCropsSubmodules>(
-  //     "field_crops",
-  //     "field_crops_works_loading_forecast",
-  //     "Prognoza załadunku"
-  //   );
-
   ////tsx
   return (
     <>

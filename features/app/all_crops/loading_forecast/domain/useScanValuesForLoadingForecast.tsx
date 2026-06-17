@@ -17,6 +17,17 @@ import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 
+/**
+ * @public
+ * @topic
+ * @order 20
+ * REALIZACJA:
+ */
+/**
+ * @public
+ * @procedureItem
+ * Skan QR ZP lub tacy
+ */
 export const useScanValuesForLoadingForecast = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   formik: FormikProps<LoadingForecastInput>,
@@ -43,6 +54,18 @@ export const useScanValuesForLoadingForecast = (
     player.seekTo(0);
     player.play();
 
+    /**
+     * @public
+     * @guard
+     * dla <b>GRU</b>
+     * dopuszczone są tylko ZP z końcówka '/GRU' lub tace
+     */
+    /**
+     * @public
+     * @guard
+     * dla <b>ROZ</b>
+     * dopuszczone są tylko ZP z końcówka '/ROZ'
+     */
     const arrayOfAllowedScannedValues: TypeOfScannedValue[] =
       submoduleType === "greenhouse_crops_works_loading_forecast"
         ? ["zp_roz"]
@@ -67,6 +90,12 @@ export const useScanValuesForLoadingForecast = (
       const scannedOrdnmb = getPureZPValue(scannedValue);
 
       //allowed conditions
+      /**
+       * @public
+       * @procedureItem
+       * raporty:
+       * @readFile `features/shared/data-access/useGetZPInfo_Report113.tsx`
+       */
       if (isScannedDataCorrect) {
         const foundZP = await getZPInfo_Rep113(
           token!,
@@ -76,13 +105,23 @@ export const useScanValuesForLoadingForecast = (
         if (!foundZP) return;
 
         /** guards */
-        //ZP not prepared to export to client
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: parametr: <b>outmvplan === false</b> && <b>outid_ === false</b>
+         * (to znaczy, że zlecenie nie jest jeszcze przygotowane do transportu -> koniec procedury )
+         */
         if (!foundZP.outmvplan && !foundZP.outid_) {
           toast.warning(ERROR_MESSAGES.ZP_NOT_PREPARED_TO_EXPORT);
           return;
         }
 
-        //there is already forecast set
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: parametry: <b>outid_ && outmvplan && outcnt</b>
+         * (to znaczy, że wprowadzono już prognozę załadunku dla tego zlecenia -> info + koniec procedury )
+         */
         if (foundZP.outid_ && foundZP.outmvplan && foundZP.outcnt) {
           toast.warning(
             `Wprowadzono już prognozę załadunku dla tego zlecenia (${
@@ -92,7 +131,12 @@ export const useScanValuesForLoadingForecast = (
           return;
         }
 
-        //there was no plants coming ups counted - turned off - it may come back
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: parametry: <b>risecnt === null</b>
+         * (to znaczy, że nie przeliczono wschodów -> info + koniec procedury )
+         */
         if (!foundZP.risecnt) {
           toast.warning(
             `Nie przeliczono wschodów dla tego zlecenia (${foundZP.ordnmb}).`,
@@ -101,6 +145,12 @@ export const useScanValuesForLoadingForecast = (
         }
 
         //order cannot be filled - not enough trays to fulfill order
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: parametry: <b>risecnt && stkcnt && stkcnt < risecnt</b>
+         * (nie ma wystarczającej ilości roślin po przeliczeniu wschodów. -> <b>tylko info</b>  )
+         */
         if (
           foundZP.risecnt &&
           foundZP.stkcnt &&
@@ -127,6 +177,12 @@ export const useScanValuesForLoadingForecast = (
         };
 
         //set quantity according to stkcnt in formik
+        /**
+         * @public
+         * @procedureItem
+         * @order 50
+         * Podpowiadana wartość dla "traysQuantity" to foundZP.risecnt + 2%
+         */
         formik.setFieldValue(
           "traysQuantity",
           foundZP.risecnt + Math.ceil(foundZP.risecnt * 0.02),

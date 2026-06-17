@@ -6,13 +6,19 @@ import {
 } from "../types/interfaces-replace_tray";
 import { query_getDataAsServerAction } from "../utils/commonHelpers/queryGetOnServer";
 
+/**
+ * @public
+ * @reportItem
+ * raport - informacje o podmianie tac:
+ * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>88</b>&stkold=<b>%stkold%</b>&stknew=<b>%stknew%</b>&module=<b>GRUNT</b>
+ */
 export const useGetTrayReplacementInfo_Report88 = () => {
   ////vars
   const { token } = useAuthSessionStore();
 
   async function getTrayReplacementInfo_Report88(
     stkold: string,
-    stknew: string
+    stknew: string,
   ): Promise<TrayReplaceInfoRep88 | null> {
     const query = `/api.php/REST/custom/korsolgetreport?rep_id=${configPerBuild.edocReport_TrayReplacementInfo}&stkold='${stkold}'&stknew='${stknew}'&module=GRUNT`;
 
@@ -20,7 +26,7 @@ export const useGetTrayReplacementInfo_Report88 = () => {
       await query_getDataAsServerAction<TrayReplaceInfoRep88Response>(
         configPerBuild.apiAddress,
         query,
-        token!
+        token!,
       );
 
     if (

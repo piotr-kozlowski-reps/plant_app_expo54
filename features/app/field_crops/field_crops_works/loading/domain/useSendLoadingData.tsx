@@ -13,20 +13,38 @@ import { toast } from "sonner-native";
 export const useSendLoadingData = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   scannedValues: ZpScannedValueForLoading[],
-  resetWholeState: () => void
+  resetWholeState: () => void,
 ) => {
   ////vars
   const { errorHandler } = useErrorHandler();
   const { token } = useAuthSessionStore();
 
   ////fn
+
   async function sendValuesForLoading() {
     if (!scannedValues || !scannedValues.length) {
       throw new Error(
-        "useSendLoadingData -> sendValuesForLoading -> no scannedValues"
+        "useSendLoadingData -> sendValuesForLoading -> no scannedValues",
       );
     }
-
+    /**
+     * @public
+     * @transformApiItem
+     * @order 200
+     * wysyłka - custom api - POST:
+     * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>departures</b>
+     * @separator
+     * <b>dane</b>:
+     * [
+     *     {
+     *           sordid: number;
+     *           ordnmb: string;
+     *           qtrsnd: number | null;
+     *           qtrsty: number | null;
+     *           scanned_raw_value: string;
+     *     }
+     * ]
+     */
     const valuesToBeSent: Post_LoadingDTO[] = [];
     scannedValues.forEach((zp) => {
       const loadingDTO: Post_LoadingDTO = {
@@ -51,7 +69,7 @@ export const useSendLoadingData = (
         configPerBuild.apiAddress,
         "/api.php/REST/custom/departures",
         token!,
-        valuesToBeSent
+        valuesToBeSent,
       );
 
       //check if response array has the same amount of items as sent items
@@ -77,7 +95,7 @@ export const useSendLoadingData = (
 
 function getValueOfTraysToBeMovedToGarden(
   outcnt: number | null,
-  stkcnt: number
+  stkcnt: number,
 ): number | null {
   if (!outcnt) return null;
   return stkcnt - outcnt;

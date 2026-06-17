@@ -45,11 +45,35 @@ type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 0
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * @order 1
+ * Skan QR tacy
+ */
 const MoveToGardenScanner = (props: Props) => {
   ////vars
   const { isLoading, setIsLoading } = props;
 
   //scan values
+  /**
+   * @public
+   * @topic
+   * @order 2
+   * REALIZACJA:
+   */
+  /**
+   * @public
+   * @procedureItem
+   * @order 3
+   * Skan QR tacy
+   */
   const {
     qrLock,
     scannedValues,
@@ -70,7 +94,7 @@ const MoveToGardenScanner = (props: Props) => {
     setIsLoading,
     scannedValues,
     isDefective,
-    resetWholeState
+    resetWholeState,
   );
 
   return (

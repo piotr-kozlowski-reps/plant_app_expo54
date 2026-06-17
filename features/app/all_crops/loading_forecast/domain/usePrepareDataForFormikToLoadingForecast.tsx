@@ -16,9 +16,15 @@ import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useGetEdocCustomRegisterMutation } from "@/features/shared/utils/getEdocCustomRegister/useGetEdocCustomRegisterMutation";
 import { customRegister_LoadingForecast } from "@/features/shared/data-access/customRegister_LoadingForecast";
 
+/**
+ * @public
+ * @procedureItem
+ * @order 100
+ * Formularz z wprowadzeniem: ilości tac do załadunku
+ */
 export const usePrepareDataForFormikToLoadingForecast = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  resetValues: () => void
+  resetValues: () => void,
 ) => {
   ////vars
   const { PATCHasyncMutation: send_LoadingForecast_PatchMutation } =
@@ -28,9 +34,15 @@ export const usePrepareDataForFormikToLoadingForecast = (
   const { errorHandler } = useErrorHandler();
 
   //onSubmit
+  /**
+   * @public
+   * @transformApiItem
+   * wysyłka - creg - POST:
+   * @readFile `features/shared/data-access/customRegister_LoadingForecast.tsx`
+   */
   const onSubmit = async (
     values: LoadingForecastInput,
-    formikHelpers: FormikHelpers<LoadingForecastInput>
+    formikHelpers: FormikHelpers<LoadingForecastInput>,
   ) => {
     const traysQuantity = Number.parseInt(values.traysQuantity.toString());
     const currentZpOutId = values.zpInfo?.outid_;

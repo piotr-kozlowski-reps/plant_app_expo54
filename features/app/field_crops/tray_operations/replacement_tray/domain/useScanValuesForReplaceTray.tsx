@@ -55,6 +55,12 @@ export const useScanValuesForReplaceTray = (
       return;
     }
 
+    /**
+     * @public
+     * @procedureItem
+     * @order 30
+     * Skan starej tacy
+     */
     try {
       setIsLoading(true);
 
@@ -66,6 +72,17 @@ export const useScanValuesForReplaceTray = (
       if (oldTray) {
         const newTrayId = getPureTrayValue(scannedValue);
 
+        /**
+         * @public
+         * @procedureItem
+         * Skan nowej tacy
+         */
+        /**
+         * @public
+         * @procedureItem
+         * raporty:
+         * @readFile `features/shared/data-access/useGetTrayReplacementInfo_Report88.tsx`
+         */
         const trayReplacementResponse = await getTrayReplacementInfo_Report88(
           oldTray.stk_id,
           newTrayId,
@@ -77,7 +94,12 @@ export const useScanValuesForReplaceTray = (
         }
 
         /** guards */
-        //check if that tray was not scanned already
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: porównanie czy obie tace nie mają takiego samego id -> info + koniec procedury)
+         */
+
         if (newTrayId === oldTray.stk_id) {
           toast.warning(
             ERROR_MESSAGES.NEW_TRAY_MUST_BE_DIFFERENT_FROM_OLD_TRAY,
@@ -85,14 +107,23 @@ export const useScanValuesForReplaceTray = (
           return;
         }
 
-        //check if ostkid === null - wtedy stara taca nie jest wysiana
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: parametr: <b>ostkid</b> (jeżeli jest równe null - to znaczy, że taca nie jest wysiana -> info +  koniec procedury)
+         */
         if (trayReplacementResponse.ostkid === null) {
           toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_SOWN);
           resetAllValues();
           return;
         }
 
-        //check if nstkid === 0 - wtedy nowa taca zostala nie umyta lub jest przeznaczona do zniszczenia
+        /**
+         * @public
+         * @guard
+         * zabezpieczenie: parametr: <b>nstkid</b>
+         * (jeżeli jest równe 0 - to znaczy, że taca nie jest umyta lub jest przeznaczona do zniszczenia -> info +  koniec procedury)
+         */
         if (trayReplacementResponse.nstkid === 0) {
           toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_CLEANED_OR_IS_DESTROYED);
           resetAllValues();
@@ -149,7 +180,22 @@ export const useScanValuesForReplaceTray = (
       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
       return;
     }
-
+    /**
+     * @public
+     * @transformApiItem
+     * @order 200
+     * wysyłka - custom api - POST:
+     * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>replacestickers</b>
+     * @separator
+     * <b>dane</b>:
+     * [
+     *     {
+     *          stkold: string;
+     *          stknew: string;
+     *          scanned_raw_value: string;
+     *     }
+     * ]
+     */
     //send data to server
     let response: TrayReplaceResponse = await query_postDataAsServerAction<
       TrayReplaceResponse,

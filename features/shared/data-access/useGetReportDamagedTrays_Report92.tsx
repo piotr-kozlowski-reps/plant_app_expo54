@@ -11,14 +11,20 @@ export const useGetReportDamagedTrays_Report92 = () => {
   ////vars
   const { token } = useAuthSessionStore();
 
+  /**
+   * @public
+   * @reportItem
+   * raport - informacje o zniszczonych tacach:
+   * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>92</b>&filter_string=date(dstdat)='<b>%date%</b>'
+   */
   async function getReportDamagedTrays_Report92(
-    dateAsString: string
+    dateAsString: string,
   ): Promise<ReportDamagedTrays[] | null> {
     const response =
       await query_getDataAsServerAction<ReportDamagedTraysResponse>(
         configPerBuild.apiAddress,
         `/api.php/REST/custom/korsolgetreport?rep_id=92&filter_string=date(dstdat)='${dateAsString}'`,
-        token!
+        token!,
       );
 
     if (

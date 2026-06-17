@@ -12,7 +12,7 @@ import { useCheckIfZpIsAlreadyScanned } from "@/features/shared/utils/useCheckIf
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 
 export const useScanValuesForLoading = (
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -26,13 +26,19 @@ export const useScanValuesForLoading = (
     ZpScannedValueForLoading[]
   >([]);
   const [chosenZp, setChosenZp] = useState<ZpScannedValueForLoading | null>(
-    null
+    null,
   );
 
   //modals
   const [isShowDeleteModal, setIsShowDeleteModal] = useShowModal();
 
   //fn
+  /**
+   * @public
+   * @procedureItem
+   * @order 30
+   * skan QR kod: taca lub ZP
+   */
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
@@ -52,14 +58,18 @@ export const useScanValuesForLoading = (
     try {
       setIsLoading(true);
 
+      /**
+       * @public
+       * @reportItem
+       * @order 40
+       * raporty - tylko <b>GRU</b>:
+       * @readFile `features/shared/data-access/useScanZpOrTrayRep113.tsx`
+       */
       const foundZP = await scanZpOrTrayRep113(
         scannedValue,
-        whatValueWasScanned
+        whatValueWasScanned,
       );
       if (!foundZP) return;
-
-      /** guards */
-      // alert("czy zeskanowana juz taca jest taka");
 
       //mapping
       const ZPInfo: ZpScannedValueForLoading = {

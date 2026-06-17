@@ -17,7 +17,7 @@ export const useSendMoveToGardenData = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   scannedValues: TrayScannedValueForMovingToGarden[],
   isDefective: boolean,
-  resetWholeState: () => void
+  resetWholeState: () => void,
 ) => {
   ////vars
   const { errorHandler } = useErrorHandler();
@@ -33,19 +33,50 @@ export const useSendMoveToGardenData = (
     }
 
     /** guards */
-    //check errtxt from report 119
-    const allErrors = await getErrorsFromControlSowingChangesReport(
-      scannedValues
-    );
+    /**
+     * @public
+     * @guard
+     * @order 200
+     * sprawdzenie czy jest jakiś błąd w zeskanowanych tacach - raport 119,  właściwość: errtxt -> info + koniec procedury
+     */
+
+    const allErrors =
+      await getErrorsFromControlSowingChangesReport(scannedValues);
     if (allErrors.length) {
       allErrors.forEach((item) => {
         toast.warning(
-          `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`
+          `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`,
         );
       });
       return;
     }
 
+    /**
+     * @public
+     * @transformApiItem
+     * wysyłka - custom api - POST:
+     * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>removestktogarden</b>
+     * @separator
+     * <b>dane</b>:
+     * [
+     *     {
+     *         stk_id: string;
+     *         ordnmb: string;
+     *         scanned_raw_value: string;
+     * @separator
+     *         stkid1: string;
+     *         ordid1: string | null;
+     *         ordnmb1: string;
+     *         ordid_: number;
+     *         movid1: null | number;
+     * @separator
+     *         stkid_: number | null;
+     *         wsk_palet: number | null;
+     *         outid_: number | null;
+     *         isgarden: string | null;
+     *     }
+     * ]
+     */
     const dataToSent: Post_MoveToGarden_DTO[] = [];
     scannedValues.forEach((item) => {
       dataToSent.push({
@@ -96,7 +127,7 @@ export const useSendMoveToGardenData = (
       configPerBuild.apiAddress,
       "/api.php/REST/custom/removestktogarden",
       token!,
-      dataToBeSend
+      dataToBeSend,
     );
 
     //check if response array has the same amount of items as sent items

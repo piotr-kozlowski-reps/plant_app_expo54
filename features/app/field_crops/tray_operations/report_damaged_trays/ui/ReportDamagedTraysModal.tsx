@@ -30,10 +30,17 @@ const ReportDamagedTraysModal = (props: Props) => {
   const { closeFn, selectedDate, isMine, isAll } = props;
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   * @public
+   * @procedureItem
+   * @order 30
+   * raporty:
+   * @readFile `features/shared/data-access/useGetReportDamagedTrays_Report92.tsx`
+   */
   const { reportDamagedTrays, refreshAllData } = useGetReportDamagedTraysData(
     selectedDate,
     setIsLoading,
-    isMine
+    isMine,
   );
 
   ////tsx

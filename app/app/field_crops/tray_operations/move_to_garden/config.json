@@ -1,4 +1,5 @@
 {
   "label": "Odepnij na ogródek",
-  "order": 40
+  "order": 40,
+  "docsDir": "features/app/field_crops/tray_operations/move_to_garden"
 }

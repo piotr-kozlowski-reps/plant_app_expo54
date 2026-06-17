@@ -1,4 +1,5 @@
 {
   "label": "Załadunek",
-  "order": 70
+  "order": 70,
+  "docsDir": "features/app/field_crops/field_crops_works/loading"
 }

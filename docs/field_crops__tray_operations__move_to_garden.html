@@ -1,0 +1,91 @@
+
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+          <meta charset="UTF-8" />
+          <title>Dokumentacja: features/app/field_crops/tray_operations/move_to_garden</title>
+          <style>
+          :root {
+            --color-dark: #002539;
+            --color-background_nuance: #FFFDF9;
+            --color-gray: #ddd;
+            --color-procedure-description: #9d89b3;
+            --color-report: #f2ebca;
+            --color-gray-darker: #B0B0B0;
+            --color-procedure-item: #D1EDD1;
+            --color-api-item: #cadbf2;
+            --color-guard: #FDAFAF;
+            --border-radius: 32px
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
+            font-weight: bold;
+            font-style: bold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
+            font-weight: semibold;
+            font-style: semibold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
+            font-weight: light;
+            font-style: light;
+            }
+            body {
+            font-family: "euclid", sans-serif; max-width: 80%; margin: 40px auto; line-height: 1.4;
+            }
+            h1 {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
+            }
+            h2 {
+            font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
+            h4 {
+            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px; opacity: 0.3;
+            }
+            p {
+            padding-top: -4px; padding-bottom: -4px;
+            }
+            code { background: #f5f5f5; padding: 2px 4px; }
+            pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+
+            .back-button {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-background_nuance); color: var(--color-dark); padding-top: 4px; padding-bottom: 6px; padding-left: 16px; padding-right: 16px; border: 2px solid var(--color-dark); border-radius: var(--border-radius); text-decoration: none; 
+            }
+            .back-button:hover {
+            background-color: var(--color-dark); color: var(--color-background_nuance);
+            }
+
+          </style>
+        </head>
+        <body>
+        <h1>Dokumentacja dla: <b>Rozsady gruntowe -> Operacje na tacach - PIN -> Odepnij na ogródek</b></h1><a href="./index.html" class="back-button">powrót</a><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/field_crops/tray_operations/move_to_garden/ui/MoveToGardenScanner.tsx</h4>
+      <div style="font-size: 10px;">(1 - 3)</div>
+    </div><div style="margin-left: 32px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);"><p style="color: var(--color-background_nuance);">PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p null>Skan&nbsp;QR&nbsp;tacy</p></div><div style="margin-left: 32px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);"><p style="color: var(--color-background_nuance);">REALIZACJA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>Skan&nbsp;QR&nbsp;tacy</p></div><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/field_crops/tray_operations/move_to_garden/domain/useScanValuesForMoveToGarden.tsx</h4>
+      <div style="font-size: 10px;">(40 - 43)</div>
+    </div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zabezpieczenie:&nbsp;weryfikacja&nbsp;czy&nbsp;taca&nbsp;nie&nbsp;została&nbsp;już&nbsp;zeskanowana&nbsp;wcześniej&nbsp;i&nbsp;nie&nbsp;jest&nbsp;na&nbsp;liście&nbsp;->&nbsp;info</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raporty&nbsp;-&nbsp;zapytanie&nbsp;o&nbsp;tacę:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/useScanZpOrTrayRep113.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raport&nbsp;-&nbsp;informacje&nbsp;o&nbsp;ZP&nbsp;lub&nbsp;tacy:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 160px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/getRepId113.ts</h3><div style="margin-left: 192px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raport&nbsp;-&nbsp;informacje&nbsp;o&nbsp;ZP&nbsp;lub&nbsp;o&nbsp;tacy:</p><br /><p null>1.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"ordnmb"&nbsp;i&nbsp;GRU:</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=<b>GRUNT</b></p><p null>2.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"ordnmb"&nbsp;i&nbsp;ROZ:</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=<b>SZKLO</b></p><p null>3.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"ordnmb"&nbsp;i&nbsp;DON:</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=<b>GRUNT</b></p><p null>4.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"stk_id":</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&stk_id=<b>%stk_id%</b>&module=<b>GRUNT</b></p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zabezpieczenie:&nbsp;parametr:&nbsp;<b>isgarden</b></p><p null>(jeżeli&nbsp;nie&nbsp;jest&nbsp;równe&nbsp;null&nbsp;-&nbsp;to&nbsp;znaczy,&nbsp;że&nbsp;taca&nbsp;jest&nbsp;już&nbsp;na&nbsp;ogrodzie&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury)</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raporty:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/useGetControlSowingChanges_Report119.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raport&nbsp;-&nbsp;informacje&nbsp;o&nbsp;tacy&nbsp;(kontrola&nbsp;zmiany&nbsp;wysiewu):</p><p null><b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>119</b>&stkida=<b>%stkida%</b>&stkidb=<b>%stkidb%</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT</p></div><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/field_crops/tray_operations/move_to_garden/domain/useSendMoveToGardenData.tsx</h4>
+      <div style="font-size: 10px;">(200 - 201)</div>
+    </div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>sprawdzenie&nbsp;czy&nbsp;jest&nbsp;jakiś&nbsp;błąd&nbsp;w&nbsp;zeskanowanych&nbsp;tacach&nbsp;-&nbsp;raport&nbsp;119,&nbsp;&nbsp;właściwość:&nbsp;errtxt&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>wysyłka&nbsp;-&nbsp;custom&nbsp;api&nbsp;-&nbsp;POST:</p><p null>adres:&nbsp;<b>{{URL}}</b>/api.php/REST/custom/<b>removestktogarden</b></p><br /><p null><b>dane</b>:</p><p null>[</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;{</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stk_id:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ordnmb:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanned_raw_value:&nbsp;string;</p><br /><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stkid1:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ordid1:&nbsp;string&nbsp;|&nbsp;null;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ordnmb1:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ordid_:&nbsp;number;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;movid1:&nbsp;null&nbsp;|&nbsp;number;</p><br /><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stkid_:&nbsp;number&nbsp;|&nbsp;null;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wsk_palet:&nbsp;number&nbsp;|&nbsp;null;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outid_:&nbsp;number&nbsp;|&nbsp;null;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isgarden:&nbsp;string&nbsp;|&nbsp;null;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;}</p><p null>]</p></div><a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót</a>
+        </body>
+        </html>
+        

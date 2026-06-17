@@ -1,0 +1,99 @@
+
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+          <meta charset="UTF-8" />
+          <title>Dokumentacja: features/app/all_crops/loading_forecast</title>
+          <style>
+          :root {
+            --color-dark: #002539;
+            --color-background_nuance: #FFFDF9;
+            --color-gray: #ddd;
+            --color-procedure-description: #9d89b3;
+            --color-report: #f2ebca;
+            --color-gray-darker: #B0B0B0;
+            --color-procedure-item: #D1EDD1;
+            --color-api-item: #cadbf2;
+            --color-guard: #FDAFAF;
+            --border-radius: 32px
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBBold.ttf") format("truetype");
+            font-weight: bold;
+            font-style: bold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBSemiBold.ttf") format("truetype");
+            font-weight: semibold;
+            font-style: semibold;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBRegular.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            }
+            @font-face {
+            font-family: "euclid";
+            src: url("./fonts/EuclidCircularBLight.ttf") format("truetype");
+            font-weight: light;
+            font-style: light;
+            }
+            body {
+            font-family: "euclid", sans-serif; max-width: 80%; margin: 40px auto; line-height: 1.4;
+            }
+            h1 {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-dark); color: var(--color-background_nuance); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius);
+            }
+            h2 {
+            font-weight: 600; font-size: 20px; background-color: var(--color-gray-darker); color: var(--color-dark); padding-top: 8px; padding-bottom: 8px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px;
+            }
+            h4 {
+            font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: 48px; opacity: 0.3;
+            }
+            p {
+            padding-top: -4px; padding-bottom: -4px;
+            }
+            code { background: #f5f5f5; padding: 2px 4px; }
+            pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+
+            .back-button {
+            font-family: "euclid"; font-weight: normal; background-color: var(--color-background_nuance); color: var(--color-dark); padding-top: 4px; padding-bottom: 6px; padding-left: 16px; padding-right: 16px; border: 2px solid var(--color-dark); border-radius: var(--border-radius); text-decoration: none; 
+            }
+            .back-button:hover {
+            background-color: var(--color-dark); color: var(--color-background_nuance);
+            }
+
+          </style>
+        </head>
+        <body>
+        <h1>Dokumentacja dla: <b>Uprawy szklarniowe -> Uprawy szklarniowe - Prace -> Prognoza załadunku</b></h1><a href="./index.html" class="back-button">powrót</a><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/all_crops/loading_forecast/ui/LoadingForecastScanner.tsx</h4>
+      <div style="font-size: 10px;">(1 - 2)</div>
+    </div><div style="margin-left: 32px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);"><p style="color: var(--color-background_nuance);">PROCEDURA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-description); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px">
+    <p null><b>Moduł&nbsp;współny&nbsp;dla:&nbsp;GRU,&nbsp;ROZ.</b></p><p null>1.&nbsp;scan&nbsp;QR&nbsp;&nbsp;ZPka&nbsp;/&nbsp;tacy</p><p null>2.&nbsp;formularz:</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;ilość&nbsp;tacy&nbsp;do&nbsp;załadunku</p></div><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/all_crops/loading_forecast/domain/useScanValuesForLoadingForecast.tsx</h4>
+      <div style="font-size: 10px;">(20 - 50)</div>
+    </div><div style="margin-left: 32px; font-weight: 600; background-color: var(--color-dark); line-height: 1.4; padding: 0 32px; border-radius: var(--border-radius);"><p style="color: var(--color-background_nuance);">REALIZACJA:</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>Skan&nbsp;QR&nbsp;ZP&nbsp;lub&nbsp;tacy</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>dla&nbsp;<b>GRU</b></p><p null>dopuszczone&nbsp;są&nbsp;tylko&nbsp;ZP&nbsp;z&nbsp;końcówka&nbsp;'/GRU'&nbsp;lub&nbsp;tace</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>dla&nbsp;<b>ROZ</b></p><p null>dopuszczone&nbsp;są&nbsp;tylko&nbsp;ZP&nbsp;z&nbsp;końcówka&nbsp;'/ROZ'</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raporty:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/useGetZPInfo_Report113.tsx</h3><div style="margin-left: 128px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raport&nbsp;-&nbsp;informacje&nbsp;o&nbsp;ZP:</p><p null><b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=GRUNT</p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 160px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/getRepId113.ts</h3><div style="margin-left: 192px; font-weight: 500; font-size: 16px; background-color: var(--color-report); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>raport&nbsp;-&nbsp;informacje&nbsp;o&nbsp;ZP&nbsp;lub&nbsp;o&nbsp;tacy:</p><br /><p null>1.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"ordnmb"&nbsp;i&nbsp;GRU:</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=<b>GRUNT</b></p><p null>2.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"ordnmb"&nbsp;i&nbsp;ROZ:</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=<b>SZKLO</b></p><p null>3.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"ordnmb"&nbsp;i&nbsp;DON:</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&ordnmb=<b>%ordnmb%</b>&module=<b>GRUNT</b></p><p null>4.&nbsp;jeżeli&nbsp;parametr&nbsp;to&nbsp;"stk_id":</p><p null>&nbsp;&nbsp;&nbsp;-&nbsp;<b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>113</b>&stk_id=<b>%stk_id%</b>&module=<b>GRUNT</b></p></div><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 96px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>Jesli&nbsp;zapytanie&nbsp;zwróciło&nbsp;pustą&nbsp;tablicę&nbsp;lub&nbsp;-1&nbsp;->&nbsp;&nbsp;to&nbsp;koniec&nbsp;procedury&nbsp;i&nbsp;informacja,&nbsp;że&nbsp;nie&nbsp;zaleziono&nbsp;ZP&nbsp;na&nbsp;zakładzie.</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zabezpieczenie:&nbsp;parametr:&nbsp;<b>outmvplan&nbsp;===&nbsp;false</b>&nbsp;&&&nbsp;<b>outid_&nbsp;===&nbsp;false</b></p><p null>(to&nbsp;znaczy,&nbsp;że&nbsp;zlecenie&nbsp;nie&nbsp;jest&nbsp;jeszcze&nbsp;przygotowane&nbsp;do&nbsp;transportu&nbsp;->&nbsp;koniec&nbsp;procedury&nbsp;)</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zabezpieczenie:&nbsp;parametry:&nbsp;<b>outid_&nbsp;&&&nbsp;outmvplan&nbsp;&&&nbsp;outcnt</b></p><p null>(to&nbsp;znaczy,&nbsp;że&nbsp;wprowadzono&nbsp;już&nbsp;prognozę&nbsp;załadunku&nbsp;dla&nbsp;tego&nbsp;zlecenia&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury&nbsp;)</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zabezpieczenie:&nbsp;parametry:&nbsp;<b>risecnt&nbsp;===&nbsp;null</b></p><p null>(to&nbsp;znaczy,&nbsp;że&nbsp;nie&nbsp;przeliczono&nbsp;wschodów&nbsp;->&nbsp;info&nbsp;+&nbsp;koniec&nbsp;procedury&nbsp;)</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-guard); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px; white-space: normal; box-sizing: border-box; max-width: calc(100% - 64px); width: fit-content;">
+    <p style="margin-bottom:-8px;"><b>zabezpieczenie:</b></p>
+    <p null>zabezpieczenie:&nbsp;parametry:&nbsp;<b>risecnt&nbsp;&&&nbsp;stkcnt&nbsp;&&&nbsp;stkcnt&nbsp;<&nbsp;risecnt</b></p><p null>(nie&nbsp;ma&nbsp;wystarczającej&nbsp;ilości&nbsp;roślin&nbsp;po&nbsp;przeliczeniu&nbsp;wschodów.&nbsp;->&nbsp;<b>tylko&nbsp;info</b>&nbsp;&nbsp;)</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>Podpowiadana&nbsp;wartość&nbsp;dla&nbsp;"traysQuantity"&nbsp;to&nbsp;foundZP.risecnt&nbsp;+&nbsp;2%</p></div><div style="display: flex; justify-content: start; align-items: center; margin-bottom: 4px;">
+      <h4>features/app/all_crops/loading_forecast/domain/usePrepareDataForFormikToLoadingForecast.tsx</h4>
+      <div style="font-size: 10px;">(100 - 101)</div>
+    </div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-procedure-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>Formularz&nbsp;z&nbsp;wprowadzeniem:&nbsp;ilości&nbsp;tac&nbsp;do&nbsp;załadunku</p></div><div style="margin-left: 64px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>wysyłka&nbsp;-&nbsp;creg&nbsp;-&nbsp;POST:</p></div><h3 style="font-weight: 600; font-size: 12px; background-color: var(--color-gray); color: var(--color-dark); padding-top: 4px; padding-bottom: 4px; padding-left: 32px; padding-right: 32px; border-radius: var(--border-radius); width: fit-content; margin-top: -16px; margin-left: 96px; opacity: 1; margin-bottom: 8px; opacity: 0.5">pobrano z pliku: features/shared/data-access/customRegister_LoadingForecast.tsx</h3><div style="margin-left: 96px; font-weight: 500; font-size: 16px; background-color: var(--color-api-item); padding: 8px; padding-left: 32px; border-radius: var(--border-radius); line-height: 1.4; margin-bottom: 8px"><p null>wysyłka&nbsp;-&nbsp;Pronoza&nbsp;załadunkou:</p><p null>adres:&nbsp;<b>{{URL}}</b>/api.php/REST/v1/customRegisters/<b>25</b>/entries</p><br /><p null><b>dane</b>:</p><p null>[</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;{</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idOfPatchedItem:&nbsp;number;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stkcnt:&nbsp;number;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scanned_raw_value:&nbsp;string;</p><p null>&nbsp;&nbsp;&nbsp;&nbsp;}</p><p null>]</p></div><a href="./index.html" class="back-button" style="display: inline-block; margin-top: 32px;">powrót</a>
+        </body>
+        </html>
+        

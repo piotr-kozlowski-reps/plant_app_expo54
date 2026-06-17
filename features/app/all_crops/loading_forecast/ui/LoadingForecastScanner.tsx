@@ -27,12 +27,28 @@ type Props = {
   submoduleType: AllLoadingForecastSubmodules;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 1
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * @order 2
+ * <b>Moduł współny dla: GRU, ROZ.</b>
+ * 1. scan QR  ZPka / tacy
+ * 2. formularz:
+ *      - ilość tacy do załadunku
+ */
 const LoadingForecastScanner = (props: Props) => {
   ////vars
   const { submoduleType } = props;
   const [isLoading, setIsLoading] = useState(false);
 
   //formik
+
   const { formik, availableFormActions, canFormBeSubmitted } =
     usePrepareDataForFormikToLoadingForecast(setIsLoading, resetValues);
 

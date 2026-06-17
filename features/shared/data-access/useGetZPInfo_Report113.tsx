@@ -19,6 +19,11 @@ export const useGetZPInfo_Report113 = () => {
   ): Promise<ZPDetailedInfo | null> {
     let response: ZPDetailedInfoResponse;
     try {
+      /**
+       * @public
+       * @procedureItem
+       * @readFile `features/shared/data-access/getRepId113.ts`
+       */
       response = await getRepId113<ZPDetailedInfoResponse>(
         configPerBuild.apiAddress,
         ZPWithoutAdditional_ZLEC,

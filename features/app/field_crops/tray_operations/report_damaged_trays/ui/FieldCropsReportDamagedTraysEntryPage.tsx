@@ -14,13 +14,11 @@ import AppPath from "@/features/shared/ui/app-path/AppPath";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import Label from "@/features/shared/ui/label/Label";
-
 import { router, Stack } from "expo-router";
 import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Calendar, DateData, LocaleConfig } from "react-native-calendars";
-
 import { Direction } from "react-native-calendars/src/types";
 import { useDestroyStateState } from "../domain/useDestroyStateState";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
@@ -30,6 +28,19 @@ import ButtonTextAndConfirmationIcon from "@/features/shared/ui/button/ButtonTex
 import { useSubmoduleEntryDataAndGuard } from "@/features/shared/utils/useSubmoduleEntryDataAndGuard";
 import { useDatesHelper } from "@/features/shared/utils/useDatesHelper";
 
+/**
+ * @public
+ * @topic
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * 1. formularz do wprowadzenia danych:
+ *        - zakres
+ *        - data
+ * 2. wyświetlenie danych
+ */
 const FieldCropsReportDamagedTraysEntryPage = () => {
   ////vars
   const { addDaysToDate, createYearMonthDayString } = useDatesHelper();
@@ -83,6 +94,19 @@ const FieldCropsReportDamagedTraysEntryPage = () => {
   };
   LocaleConfig.defaultLocale = "pl";
 
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
+  /**
+   * @public
+   * @procedureItem
+   * formularz do wprowadzenia danych:
+   *        - zakres
+   *        - data
+   */
   //state
   const {
     selectedDate,
