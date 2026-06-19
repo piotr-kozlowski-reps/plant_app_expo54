@@ -21,6 +21,19 @@ import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import ScanCameraModal from "@/features/app/all_crops/extra_works_zp/ui/ScanCameraModal";
 
+/**
+ * @public
+ * @topic
+ * @order 10
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * 1. wybór Pracy Extra z listy
+ * 2. jeżeli PracaExtra == 230 - Podl_Azot -> formularz (wybór stężenia)
+ * 3. Skanowanie ZPków lub całych lokalizacji
+ */
 const ExtraWorksZp_GreenhouseCrops_EntryPage = () => {
   ////vars
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +51,31 @@ const ExtraWorksZp_GreenhouseCrops_EntryPage = () => {
   ];
 
   //data fetch and filter
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ExtraWorks.ts`
+   */
+  /**
+   * @public
+   * @guard
+   * parametr: <b>is_ordnmb === true</b>
+   * jeżeli PracaHobby: <b>ishobby === true</b> gdy nie to: <b>false</b>
+   * jeżeli praca technologiczna: <b>istech === true</b> gdy nie to: <b>false</b>
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ProtectiveTreatments.ts`
+   */
   const { extra_works_roz, protectiveTreatments, refreshAllData } =
     useGetEdocReports({
       setIsLoading: setIsLoading,
@@ -70,6 +108,12 @@ const ExtraWorksZp_GreenhouseCrops_EntryPage = () => {
     setExtraWork(foundExtraWork);
     setIsShowScanner(true);
   };
+
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/app/all_crops/extra_works_zp/ui/BarcodeScanner.tsx`
+   */
 
   ////tsx
   return (

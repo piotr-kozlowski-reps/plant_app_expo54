@@ -86,7 +86,8 @@ const BarcodeScanner = (props: TProps) => {
   /**
    * @public
    * @procedureItem
-   * dla podlewania azotem: Praca Extra <b>wybrana z automatu</b>: <b>230 - Podl. Azot GRU</b>
+   * - dla podlewania azotem: Praca Extra <b>wybrana z automatu</b>: <b>230 - Podl. Azot GRU</b>
+   * - inaczej: wybór z listy
    */
 
   //scan values
@@ -124,6 +125,12 @@ const BarcodeScanner = (props: TProps) => {
   } = useInputTjQuantity();
 
   //select concentration
+  /**
+   * @public
+   * @procedureItem
+   * jeżeli wybrana Praca Extra: == 230- PodlAzot -> <b>formularz: Wybór stężenia</b>
+   * jeżeli wybrana Praca Extra inna niż: 230- PodlAzot -> <b>brak formularza</b>
+   */
   const {
     isShowModalWithSelectConcentration,
     selectedProtectiveTreatment,

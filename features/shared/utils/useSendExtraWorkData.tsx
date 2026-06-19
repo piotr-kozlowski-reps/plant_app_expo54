@@ -106,6 +106,9 @@ export const useSendExtraWorkData = (
        *            act_percentage: number;
        *            stkcnt_loc: number;
        *            stkcnt_ordnmb: number;
+       *            treatid: number | null. // tylko dla podlewania azotem
+       *            dscrpt: string | null;  // tylko dla podlewania azotem
+       *            plan_id: number | null; // gdy wysyłane jest potwierdzenie pracy dla podlewania azotem i ono było zlecone wcześniej, to to jest ID tego zlecenia
        *     }
        */
       let response: ConfirmationForExtraWorkResponse =

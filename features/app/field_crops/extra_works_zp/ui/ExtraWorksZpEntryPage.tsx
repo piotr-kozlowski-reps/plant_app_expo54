@@ -78,6 +78,13 @@ const ExtraWorksZpEntryPage = (props: Props) => {
    */
   /**
    * @public
+   * @guard
+   * parametr: <b>is_ordnmb === true</b>
+   * jeżeli PracaHobby: <b>ishobby === true</b> gdy nie to: <b>false</b>
+   * jeżeli praca technologiczna: <b>istech === true</b> gdy nie to: <b>false</b>
+   */
+  /**
+   * @public
    * @procedureItem
    * raporty:
    * @readFile `features/shared/data-access/edocReport_ProtectiveTreatments.ts`
@@ -123,6 +130,11 @@ const ExtraWorksZpEntryPage = (props: Props) => {
     setIsShowScanner(true);
   };
 
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/app/all_crops/extra_works_zp/ui/BarcodeScanner.tsx`
+   */
   ////tsx
   return (
     <>

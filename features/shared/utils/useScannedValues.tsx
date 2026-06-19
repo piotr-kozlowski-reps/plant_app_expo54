@@ -58,9 +58,9 @@ export const useScannedValues = (
      * @public
      * @guard
      * Dostępne mozliwości:
-     * gdy <b>isHobbyTech</b>: <b>ROZ</b>, <b>GRU</b>
-     * gdy <b>isRoz</b> ale nie <b>isHobbyTech</b>: <b>ROZ</b>, <b>Lokalizacja</b>
-     * gdy nie <b>isRoz</b> i nie <b>isHobbyTech</b>: <b>GRU</b>, <b>Lokalizacja</b>
+     * gdy <b>isHobbyTech</b> dostepne: <b>ROZ</b>, <b>GRU</b>
+     * gdy <b>isRoz</b> ale nie <b>isHobbyTech</b> dostepne: <b>ROZ</b>, <b>Lokalizacja</b>
+     * gdy nie <b>isRoz</b> i nie <b>isHobbyTech</b> dostepne: <b>GRU</b>, <b>Lokalizacja</b>
      */
     const allowedValues: TypeOfScannedValue[] = [];
     if (isHobbyTech) allowedValues.push("zp_roz", "zp_gru");
@@ -115,7 +115,7 @@ export const useScannedValues = (
          * @public
          * @reportItem
          * raport - gdy zeskanowana lokalizacja:
-         * @readFile `features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
+         * @readFile `features/app/all_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
          */
         await scanFieldWhenIsForcedToScanFieldForZP(
           {
