@@ -1,4 +1,4 @@
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import images from "@/features/shared/constants/images";
 import { ZpToCut } from "@/features/shared/types/interfaces-cut";
 import {

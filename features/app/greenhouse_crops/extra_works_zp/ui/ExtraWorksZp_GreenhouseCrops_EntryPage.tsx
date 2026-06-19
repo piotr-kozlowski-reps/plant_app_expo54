@@ -17,9 +17,9 @@ import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import { useNitrogenProtectiveTreatmentsHelpers } from "@/features/app/field_crops/field_crops_works/nitrogen_irrigation/domain/useNitrogenProtectiveTreatmentsHelpers";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
-import ScanCameraModal from "@/features/app/field_crops/extra_works_zp/ui/ScanCameraModal";
 import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
+import ScanCameraModal from "@/features/app/all_crops/extra_works_zp/ui/ScanCameraModal";
 
 const ExtraWorksZp_GreenhouseCrops_EntryPage = () => {
   ////vars
@@ -46,7 +46,7 @@ const ExtraWorksZp_GreenhouseCrops_EntryPage = () => {
   const extraWorksArray = extra_works_roz as unknown as ExtraWork[];
   const filteredExtraWorks: ExtraWork[] = useMemo(() => {
     const foundFilteredExtraWorks = extraWorksArray.filter(
-      (work) => work.is_ordnmb === true
+      (work) => work.is_ordnmb === true,
     );
     return foundFilteredExtraWorks || [];
   }, [extraWorksArray]);
@@ -54,7 +54,7 @@ const ExtraWorksZp_GreenhouseCrops_EntryPage = () => {
   //protective treatment data
   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
     filterOnlyNitrogenProtectiveTreatments(
-      protectiveTreatments as ProtectiveTreatment[]
+      protectiveTreatments as ProtectiveTreatment[],
     );
 
   const refreshAllDataFn = refreshAllData as () => void;

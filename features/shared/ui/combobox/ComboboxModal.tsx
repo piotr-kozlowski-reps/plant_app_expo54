@@ -6,7 +6,7 @@ import { Portal } from "@gorhom/portal";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Combobox } from "../../types/interfaces-general";
 import { useShowScrollViewFlash } from "../../utils/useShowScrollViewFlash";
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import ButtonBack from "../button/ButtonBack";
 
 type Props<T> = {

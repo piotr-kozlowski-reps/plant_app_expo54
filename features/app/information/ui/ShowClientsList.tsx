@@ -1,7 +1,7 @@
 import { ZpInProduction } from "@/features/shared/types/interfaces-zps_in_production";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 
 type Props = {
   zpsWithUniqueClients: ZpInProduction[];

@@ -5,7 +5,7 @@ import { View, Platform, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { CameraView } from "expo-camera";
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import { useScanValuesForLoadingForecast } from "../domain/useScanValuesForLoadingForecast";
 import Button from "@/features/shared/ui/button/Button";

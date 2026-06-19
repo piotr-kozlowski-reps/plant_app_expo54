@@ -5,7 +5,7 @@ import {
   NavElement,
   SubNavigationElement,
 } from "@/features/shared/types/interfaces-navigation";
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import { router } from "expo-router";
 import { useShowScrollViewFlash } from "@/features/shared/utils/useShowScrollViewFlash";
 

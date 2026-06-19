@@ -32,17 +32,17 @@ import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/Cont
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import ButtonTextAndIcon from "@/features/shared/ui/button/ButtonTextAndIcon";
-import { useSelectConcentration } from "../domain/useSelectConcentration";
 import { ChevronDown, ChevronRight } from "lucide-react-native";
-import SelectConcentrationOfNitrogenModal from "../../field_crops_works/nitrogen_irrigation/ui/SelectConcentrationOfNitrogenModal";
+import SelectConcentrationOfNitrogenModal from "../../../field_crops/field_crops_works/nitrogen_irrigation/ui/SelectConcentrationOfNitrogenModal";
 import clsx from "clsx";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
-import { useInputTjQuantity } from "../domain/useInputTjQuantity";
-import TjQuantityModal from "../../field_crops_works/nitrogen_irrigation/ui/TjQuantityModal";
+import TjQuantityModal from "../../../field_crops/field_crops_works/nitrogen_irrigation/ui/TjQuantityModal";
 import {
   getIsHobbyExtraWorkWithTj10,
   getIsHobbyExtraWorkWithTj12,
 } from "@/features/shared/utils/hobbyExtraWorksHelpers";
+import { useInputTjQuantity } from "../domain/useInputTjQuantity";
+import { useSelectConcentration } from "../domain/useSelectConcentration";
 
 type TProps = {
   closeFn: () => void;

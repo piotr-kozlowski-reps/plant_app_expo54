@@ -13,13 +13,13 @@ import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-import { useScanValueForExtraWorkHandler } from "@/features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
 import { MESSAGES } from "@/features/shared/utils/messages";
 import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/interfaces-localization";
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
 import { useRestOfLocalizationsHelpers } from "@/features/shared/utils/useRestOfLocalizationsHelpers";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
-import { useScanZpOrTrayHandler } from "../../../extra_works_zp/domain/useScanZpOrTrayHandler";
+import { useScanValueForExtraWorkHandler } from "@/features/app/all_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
+import { useScanZpOrTrayHandler } from "@/features/app/all_crops/extra_works_zp/domain/useScanZpOrTrayHandler";
 
 export const useScanValuesForProtectiveTreatment = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -111,7 +111,7 @@ export const useScanValuesForProtectiveTreatment = (
        * @public
        * @procedureItem
        * jeżeli skan ZP lub tacy:
-       * @readFile `features/app/field_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx`
+       * @readFile `features/app/all_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx`
        */
       if (isZP) {
         await scanZpOrTrayHandler(
@@ -151,7 +151,7 @@ export const useScanValuesForProtectiveTreatment = (
        * @public
        * @procedureItem
        * jeżeli skan lokalizacji:
-       * @readFile `features/app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
+       * @readFile `features/app/all_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler.tsx`
        */
       if (isField && isForceToScanField) {
         await scanFieldWhenIsForcedToScanFieldForZP(

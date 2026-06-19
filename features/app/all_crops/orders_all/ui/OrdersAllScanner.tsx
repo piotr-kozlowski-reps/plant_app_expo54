@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { CameraView } from "expo-camera";
 import Button from "@/features/shared/ui/button/Button";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import {

@@ -8,7 +8,7 @@ import { View, Text, Platform, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useScanValuesForMoveToGarden } from "../domain/useScanValuesForMoveToGarden";
 import { StatusBar } from "expo-status-bar";
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import { CameraView } from "expo-camera";
 import Button from "@/features/shared/ui/button/Button";
 import Scanning from "@/features/shared/ui/scanning/Scanning";

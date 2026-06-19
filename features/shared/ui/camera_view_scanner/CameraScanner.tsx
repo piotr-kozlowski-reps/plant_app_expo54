@@ -1,11 +1,17 @@
-import { View, Platform, StyleSheet, Text, DimensionValue } from "react-native";
+import {
+  View,
+  Platform,
+  StyleSheet,
+  Text,
+  DimensionValue,
+  Dimensions,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { CameraView } from "expo-camera";
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import Scanning from "../scanning/Scanning";
 import { useState } from "react";
 import Button from "../button/Button";
-import { Dimensions } from "react-native";
 
 type Props = {
   scanButtonText: string;

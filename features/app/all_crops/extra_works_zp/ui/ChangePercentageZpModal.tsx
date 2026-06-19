@@ -6,13 +6,13 @@ import {
 import Button from "@/features/shared/ui/button/Button";
 
 import { View, Text } from "react-native";
-import { usePrepareDataForFormikToChangePercentage } from "../domain/usePrepareDataForFormikToChangePercentage";
 import InputFormik from "@/features/shared/ui/input/InputFormik";
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
 import ButtonZPBadge from "@/features/shared/ui/button/ButtonZPBadge";
+import { usePrepareDataForFormikToChangePercentage } from "../domain/usePrepareDataForFormikToChangePercentage";
 
 type Props = {
   closeFn: () => void;

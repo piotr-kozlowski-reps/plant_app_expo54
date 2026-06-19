@@ -10,7 +10,7 @@ import { View, Platform, StyleSheet, ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CameraView } from "expo-camera";
 import { useScanValuesForAddToZP } from "../domain/useScanValuesForAddToZP";
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import Button from "@/features/shared/ui/button/Button";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";

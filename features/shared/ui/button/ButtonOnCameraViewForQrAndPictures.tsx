@@ -1,4 +1,4 @@
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import { View, Text } from "react-native";
 import { ZPShortenedInfoWithPics } from "../../types/interfaces-zp";
 import Button from "./Button";

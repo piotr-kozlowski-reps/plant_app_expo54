@@ -9,7 +9,7 @@ import { View, Platform, StyleSheet, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { CameraView } from "expo-camera";
-import { Overlay } from "../../../extra_works_zp/ui/Overlay";
+import { Overlay } from "../../../../all_crops/extra_works_zp/ui/Overlay";
 import Button from "@/features/shared/ui/button/Button";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import { useScanValuesForOrderNitrogenIrrigation } from "../domain/useScanValuesForOrderNitrogenIrrigation";

@@ -1,4 +1,5 @@
 {
   "label": "Prace Extra GRU - ZP",
-  "order": 30
+  "order": 30,
+  "docsDir": "features/app/field_crops/extra_works_zp"
 }

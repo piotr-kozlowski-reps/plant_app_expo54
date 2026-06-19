@@ -13,7 +13,7 @@ import {
   WorkType,
 } from "@/features/shared/types/interfaces-works_planning";
 
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { FlatList } from "react-native-gesture-handler";
 import { toast } from "sonner-native";

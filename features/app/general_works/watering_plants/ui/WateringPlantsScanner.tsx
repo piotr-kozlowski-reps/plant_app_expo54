@@ -7,7 +7,7 @@ import {
   INDEX,
 } from "@/features/shared/types/interfaces-navigation";
 import { CameraView } from "expo-camera";
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import Button from "@/features/shared/ui/button/Button";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
 import { useScanValuesForWateringPlants } from "../domain/useScanValuesForWateringPlants";

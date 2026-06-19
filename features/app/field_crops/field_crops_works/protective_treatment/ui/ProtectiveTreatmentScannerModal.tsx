@@ -11,7 +11,7 @@ import { StatusBar } from "expo-status-bar";
 import { View, Platform, StyleSheet, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CameraView } from "expo-camera";
-import { Overlay } from "@/features/app/field_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
@@ -20,12 +20,12 @@ import Scanning from "@/features/shared/ui/scanning/Scanning";
 import { MESSAGES } from "@/features/shared/utils/messages";
 import { Image } from "expo-image";
 import images from "@/features/shared/constants/images";
-import ZpItem from "@/features/app/field_crops/extra_works_zp/ui/ZpItem";
+import ZpItem from "@/features/app/all_crops/extra_works_zp/ui/ZpItem";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import { useState } from "react";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { yellowColor } from "@/features/shared/constants/colorThemeVars";
-import DeleteZpModal from "@/features/app/field_crops/extra_works_zp/ui/DeleteZpModal";
+import DeleteZpModal from "@/features/app/all_crops/extra_works_zp/ui/DeleteZpModal";
 import { useSendProtectiveTreatmentHandler } from "../domain/useSendProtectiveTreatmentHandler";
 import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/interfaces-localization";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
@@ -99,13 +99,13 @@ const ProtectiveTreatmentScannerModal = (props: Props) => {
   /** sending protective treatment data */
   //date value - starting of whole process - state set on beginnig of component start
   const [startOfProcessDate, setStartOfProcessDate] = useState(
-    new Date(Date.now())
+    new Date(Date.now()),
   );
   const sendProtectiveTreatmentDataHandler = useSendProtectiveTreatmentHandler(
     setIsLoading,
     clearScannedValues,
     closeFn,
-    clearForm
+    clearForm,
   );
 
   if (!extraWork || !treatment || !who || !quantity) {
@@ -328,7 +328,7 @@ const ProtectiveTreatmentScannerModal = (props: Props) => {
                         </Text>{" "}
                         (
                         {Math.round(
-                          (item.stkcnt_loc / item.stkcnt_ordnmb) * 100
+                          (item.stkcnt_loc / item.stkcnt_ordnmb) * 100,
                         )}{" "}
                         %)
                       </Text>

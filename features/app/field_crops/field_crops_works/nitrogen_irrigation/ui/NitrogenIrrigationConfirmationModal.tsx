@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
-import BarcodeScanner from "../../../extra_works_zp/ui/BarcodeScanner";
+import BarcodeScanner from "../../../../all_crops/extra_works_zp/ui/BarcodeScanner";
 import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import {
@@ -46,12 +46,12 @@ const NitrogenIrrigationConfirmationModal = (props: Props) => {
     refreshAllData,
   } = props;
 
-  /**
-   * @public
-   * @procedureItem
-   * procedura jak - Prace Extra:
-   * @readFile `features/app/field_crops/extra_works_zp/ui/BarcodeScanner.tsx`
-   */
+  // /**
+  //  * @public
+  //  * @procedureItem
+  //  * procedura jak - Prace Extra:
+  //  * @readFile `features/app/field_crops/extra_works_zp/ui/BarcodeScanner.tsx`
+  //  */
   ////vars
   return (
     <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">

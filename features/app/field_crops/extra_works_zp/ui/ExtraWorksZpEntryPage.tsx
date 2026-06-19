@@ -1,13 +1,12 @@
 import { View } from "react-native";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
-import ScanCameraModal from "./ScanCameraModal";
+import ScanCameraModal from "../../../all_crops/extra_works_zp/ui/ScanCameraModal";
 import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
 import LoaderWholeScreen from "@/features/shared/ui/loader/LoaderWholeScreen";
 import { useMemo, useState } from "react";
 import edocReport_ExtraWorks from "@/features/shared/data-access/edocReport_ExtraWorks";
 import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
 import {
-  EXTRA_WORKS_HOBBY,
   FIELD_CROPS,
   HOBBY_CROPS,
   INDEX,
@@ -27,6 +26,19 @@ type Props = {
   isHobby: boolean;
 };
 
+/**
+ * @public
+ * @topic
+ * @order 10
+ * PROCEDURA:
+ */
+/**
+ * @public
+ * @procedureDescription
+ * 1. wybór Pracy Extra z listy
+ * 2. jeżeli PracaExtra == 230 - Podl_Azot -> formularz (wybór stężenia)
+ * 3. Skanowanie ZPków lub całych lokalizacji
+ */
 const ExtraWorksZpEntryPage = (props: Props) => {
   ////vars
   const { isHobby } = props;
@@ -52,6 +64,24 @@ const ExtraWorksZpEntryPage = (props: Props) => {
       ];
 
   //data fetch and filter
+  /**
+   * @public
+   * @topic
+   * @order 20
+   * REALIZACJA:
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ExtraWorks.ts`
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ProtectiveTreatments.ts`
+   */
   const [isLoading, setIsLoading] = useState(false);
   const { extra_works, protectiveTreatments, refreshAllData } =
     useGetEdocReports({
@@ -72,9 +102,6 @@ const ExtraWorksZpEntryPage = (props: Props) => {
       );
     return foundFilteredExtraWorks || [];
   }, [extraWorksArray, isHobby]);
-
-  // console.log({ isHobby });
-  // console.log({ filteredExtraWorks });
 
   //protective treatment data
   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =

@@ -17,9 +17,9 @@ import ItemsList from "@/features/shared/ui/list/ItemsList";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { primaryColor } from "@/features/shared/constants/colorThemeVars";
 import edocReport_ProtectiveTreatments from "@/features/shared/data-access/edocReport_ProtectiveTreatments";
-import ScanCameraModal from "@/features/app/field_crops/extra_works_zp/ui/ScanCameraModal";
 import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
 import { useNitrogenProtectiveTreatmentsHelpers } from "@/features/app/field_crops/field_crops_works/nitrogen_irrigation/domain/useNitrogenProtectiveTreatmentsHelpers";
+import ScanCameraModal from "@/features/app/all_crops/extra_works_zp/ui/ScanCameraModal";
 
 const ExtraWorksHobbyTechnologyEntryPage = () => {
   ////vars

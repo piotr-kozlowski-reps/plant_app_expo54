@@ -6,7 +6,6 @@ import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protecti
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import {
   EXTRA_WORKS_HOBBY,
-  EXTRA_WORKS_HOBBY_TECHNOLOGY,
   FIELD_CROPS,
   GREENHOUSE_CROPS,
   HOBBY_CROPS,

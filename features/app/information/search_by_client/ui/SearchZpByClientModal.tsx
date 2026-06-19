@@ -18,7 +18,7 @@ import InputText from "@/features/shared/ui/input/InputText";
 import ShowClientsList from "../../ui/ShowClientsList";
 import { useDebounce } from "@/features/shared/data-access/useDebounce";
 import { FlatList } from "react-native-gesture-handler";
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import Button from "@/features/shared/ui/button/Button";
 import { useQuery } from "@tanstack/react-query";
 import { useGetZPsInProduction } from "@/features/shared/data-access/useGetZPsInProduction";

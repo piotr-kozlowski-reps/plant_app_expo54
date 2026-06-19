@@ -4,7 +4,7 @@ import AppPath from "@/features/shared/ui/app-path/AppPath";
 import { NavElement } from "../../types/interfaces-navigation";
 import { useShowScrollViewFlash } from "../../utils/useShowScrollViewFlash";
 import { ExtraWork } from "../../types/interfaces-extra_works";
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import { Image } from "expo-image";
 import images from "../../constants/images";
 import { MESSAGES } from "../../utils/messages";

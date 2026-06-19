@@ -8,10 +8,10 @@ import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
-import { useScanValueForExtraWorkHandler } from "../../app/field_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 import { TypeOfScannedValue } from "@/features/shared/types/interfaces-general";
-import { useScanZpOrTrayHandler } from "../../app/field_crops/extra_works_zp/domain/useScanZpOrTrayHandler";
+import { useScanValueForExtraWorkHandler } from "@/features/app/all_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
+import { useScanZpOrTrayHandler } from "@/features/app/all_crops/extra_works_zp/domain/useScanZpOrTrayHandler";
 
 export const useScannedValues = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -90,7 +90,7 @@ export const useScannedValues = (
          * @public
          * @reportItem
          * raport - gdy zeskanowany ZP:
-         * @readFile `features/app/field_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx`
+         * @readFile `features/app/all_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx`
          */
         await scanZpOrTrayHandler(
           {

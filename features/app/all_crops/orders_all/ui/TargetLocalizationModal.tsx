@@ -2,7 +2,7 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Localization } from "@/features/shared/types/interfaces-localization";
-import ListItemName from "@/features/app/field_crops/extra_works_zp/ui/ListItemName";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
 import { AllCropsOrdersSubmodules } from "@/features/shared/types/interfaces-auth";

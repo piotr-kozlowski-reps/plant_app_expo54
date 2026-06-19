@@ -8,7 +8,7 @@ import {
   INDEX,
 } from "@/features/shared/types/interfaces-navigation";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
-import ListItemName from "../../../extra_works_zp/ui/ListItemName";
+import ListItemName from "../../../../all_crops/extra_works_zp/ui/ListItemName";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { router } from "expo-router";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
