@@ -6,7 +6,6 @@ import {
 import { useState } from "react";
 import { toast } from "sonner-native";
 import { ERROR_MESSAGES, MESSAGES } from "./messages";
-import * as FileSystem from "expo-file-system";
 import * as FileSystemLegacy from "expo-file-system/legacy";
 import { useIsTakingPicturesAvailable } from "@/features/app/all_crops/order_export_to_customer/domain/useIsTakingPicturesAvailable";
 
@@ -31,39 +30,50 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
 
   //fn
   const takePhotoHandler = async () => {
-    if (cameraRef.current) {
-      const options: CameraPictureOptions = {
-        quality: 0.1,
-        base64: true,
-        exif: false,
-        imageType: "png",
-      };
-      const takenPhoto = await cameraRef.current.takePictureAsync(options);
+    try {
+      if (cameraRef.current) {
+        const options: CameraPictureOptions = {
+          quality: 0.1,
+          base64: true,
+          exif: false,
+          imageType: "png",
+        };
+        const takenPhoto = await cameraRef.current.takePictureAsync(options);
 
-      if (!takenPhoto) {
-        toast.warning(ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO);
-        return;
+        if (!takenPhoto) {
+          toast.warning(ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO);
+          return;
+        }
+
+        addPhoto(takenPhoto);
+        await deleteAllCachedPhotos();
       }
-
-      addPhoto(takenPhoto);
-      await deleteAllCachedPhotos();
+    } catch (error) {
+      toast.warning(ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO);
+      console.error(error);
     }
   };
 
   async function deleteAllCachedPhotos() {
-    const appCachePath = FileSystemLegacy.cacheDirectory;
-    if (!appCachePath) {
-      toast.warning(
-        "Błąd podczas usuwania zdjęć, brak informacji o katalogu z cache'em aplikacji.",
-      );
-      return;
-    }
+    try {
+      const appCachePath = FileSystemLegacy.cacheDirectory;
+      if (!appCachePath) {
+        toast.warning(ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES_NO_DIRECTORY);
+        return;
+      }
 
-    const path = appCachePath + "/Camera/";
-    const filesNames: string[] = await FileSystem.readDirectoryAsync(path);
+      const path = appCachePath + "/Camera/";
+      const filesNames: string[] =
+        await FileSystemLegacy.readDirectoryAsync(path);
 
-    for (const fileName of filesNames) {
-      await FileSystem.deleteAsync(path + fileName, { idempotent: true });
+      for (const fileName of filesNames) {
+        await FileSystemLegacy.deleteAsync(path + fileName, {
+          idempotent: true,
+        });
+      }
+    } catch (error) {
+      toast.warning(ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES);
+      console.error(error);
     }
   }
 

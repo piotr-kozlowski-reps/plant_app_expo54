@@ -11,15 +11,17 @@ import { ZPInfoForPotting } from "@/features/shared/types/interfaces-zp";
 import { useGetActivitiesListRep143 } from "@/features/shared/data-access/useGetActivitiesListRep143";
 import { useGetActivityDetailsRep144 } from "@/features/shared/data-access/useGetActivityDetailsRep144";
 import { useFindMaterialWithDoni } from "./useFindMaterialWithDoni";
+import { useHandleTakingPictures } from "@/features/shared/utils/useHandleTakingPictures";
+import { CameraView } from "expo-camera";
 
 export const useScannedValuesForPotting = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  cameraRef: React.MutableRefObject<CameraView | null>,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
   const { checkWhatValueWasScanned, getPureZPValue } =
     useCheckWhatValueIsScannedHelpers();
-  const { token } = useAuthSessionStore();
   const { errorHandler } = useErrorHandler();
   const { getActivitiesList_Report143 } = useGetActivitiesListRep143();
   const { getActivityDetails_Report144 } = useGetActivityDetailsRep144();
@@ -30,6 +32,26 @@ export const useScannedValuesForPotting = (
   const [qrLock, setQrLock] = useState(true);
   const [scannedValue, setScannedValue] = useState<ZPInfoForPotting | null>(
     null,
+  );
+
+  /** modals */
+  const [isShowQuantityModal, setIsShowQuantityModal] = useState(false);
+
+  /** pictures */
+  const {
+    chosenPicture,
+    isTakingPicturesAvailable,
+    isShowDeleteModal,
+    isShowFullPictureModal,
+    setIsShowFullPictureModal,
+    setIsShowDeleteModal,
+    setChosenPicture,
+    takePhotoHandler,
+    deletePicture,
+  } = useHandleTakingPictures<ZPInfoForPotting>(
+    scannedValue,
+    cameraRef,
+    setScannedValue,
   );
 
   const resetValues = () => {
@@ -118,8 +140,10 @@ export const useScannedValuesForPotting = (
     }
 
     const foundMaterialWithDoni = findMaterialWithDoni(activityDetails);
-
     if (!foundMaterialWithDoni) {
+      // alert(
+      //   "foundMaterialWithDoni -> wróc do poprzedniego guarda, chwilowo puszczone",
+      // );
       toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND);
       return;
     }
@@ -129,6 +153,7 @@ export const useScannedValuesForPotting = (
       materials: activityDetails,
       ordnmb: zpPureValue,
       scannedRawValue: scannedValue,
+      pictures: [],
     });
   };
 
@@ -136,9 +161,20 @@ export const useScannedValuesForPotting = (
   return {
     qrLock,
     scannedValue,
+    isTakingPicturesAvailable,
+    isShowFullPictureModal,
+    chosenPicture,
+    isShowDeleteModal,
+    isShowQuantityModal,
 
+    deletePicture,
     setQrLock,
     scanValueHandler,
     resetValues,
+    takePhotoHandler,
+    setChosenPicture,
+    setIsShowDeleteModal,
+    setIsShowFullPictureModal,
+    setIsShowQuantityModal,
   };
 };

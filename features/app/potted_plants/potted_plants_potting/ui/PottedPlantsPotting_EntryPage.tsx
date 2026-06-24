@@ -17,7 +17,8 @@ import PottedPlantsPotting_MainWindow from "./PottedPlantsPotting_MainWindow";
  * @procedureDescription
  * 1. Skan ZPka (dostępne tylko ZPki z końcówka '/DON')
  * 2. Podanie liczby doniczek
- * 3. Wysyłka do serwera
+ * 3. Wykonanie zdjęć: min 1 max 20
+ * 4. Wysyłka na serwer
  */
 
 const PottedPlantsPotting_EntryPage = () => {

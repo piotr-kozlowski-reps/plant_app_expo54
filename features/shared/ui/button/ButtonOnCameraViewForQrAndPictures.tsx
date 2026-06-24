@@ -1,9 +1,9 @@
-import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import { View, Text } from "react-native";
 import { ZPShortenedInfoWithPics } from "../../types/interfaces-zp";
 import Button from "./Button";
 import Scanning from "../scanning/Scanning";
 import { TrayInfoWithPics } from "../../types/interfaces-destroy_tray";
+import { Overlay } from "../overlay/Overlay";
 
 type Props = {
   qrLock: boolean;

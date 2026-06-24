@@ -187,6 +187,9 @@ export const ERROR_MESSAGES = {
   MAX_NUMBER_OF_TRAYS_EXCEEDED_FOR_THAT_COLOR:
     "Maksymalna ilość tac dla wybranego koloru została przekroczona.",
   TRAY_ALREADY_ON_THE_LIST: "Taca już znajduje się na liście.",
+  ERROR_WHEN_DELETING_PICTURES: "Błąd podczas usuwania zdjęć",
+  ERROR_WHEN_DELETING_PICTURES_NO_DIRECTORY:
+    "Błąd podczas usuwania zdjęć, brak informacji o katalogu z cache'em aplikacji.",
 } as const;
 
 export const MESSAGES = {

@@ -1,21 +1,7 @@
-// import {
-//   ExtraWork,
-//   ExtraWorkQuantityInput,
-//   Post_ExtraWork_QUANTITY_DTO,
-// } from "@/features/shared/types/interfaces-extra_works";
-// import { useGetEdocCustomRegisterMutation } from "@/features/shared/utils/getEdocCustomRegister/useGetEdocCustomRegisterMutation";
-// import {
-//   ERROR_MESSAGES,
-//   MESSAGES,
-//   VALIDATION_MESSAGES,
-// } from "@/features/shared/utils/messages";
-// import { validateFormOnDemand } from "@/features/shared/utils/validation";
 import { FormikHelpers, useFormik } from "formik";
 import { Keyboard } from "react-native";
 import * as yup from "yup";
 import { toast } from "sonner-native";
-// import { customRegister_ExtraWork } from "@/features/shared/data-access/customRegister_ExtraWork";
-
 import { PottingInput } from "@/features/shared/types/interfaces-potting";
 import {
   ERROR_MESSAGES,
@@ -23,12 +9,11 @@ import {
 } from "@/features/shared/utils/messages";
 import { validateFormOnDemand } from "@/features/shared/utils/validation";
 import { ZPInfoForPotting } from "@/features/shared/types/interfaces-zp";
-import { useSendActivityConfirmation } from "@/features/app/greenhouse_crops/greenhouse_crops_works/actions_confirmation/domain/useSendActivityConfirmation";
-import { ZpRozActivityConfirmation_DTO } from "@/features/shared/types/interfaces-activities_list";
+import { ZpPotActivityConfirmationWithPics_DTO } from "@/features/shared/types/interfaces-activities_list";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-import { sendActivityConfirmationToServer } from "@/features/shared/data-access/sendActivityConfirmationToServer";
 import useAuthSessionStore from "@/features/shared/stores/useAuthSessionStore";
 import { useFindMaterialWithDoni } from "./useFindMaterialWithDoni";
+import { sendPotsPottingConfirmationWithPicturesToServer } from "@/features/shared/data-access/sendPotsPottingConfirmationWithPicturesToServer";
 
 export const usePrepareDataForFormikToPotting = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -69,6 +54,7 @@ export const usePrepareDataForFormikToPotting = (
      *   dscrpt: string;
      *   pcz_id: number;
      *   materials: ZpRozActivityMaterial_DTO[];
+     *   pictures: CameraCapturedPicture[]
      *   }
      * ]
      * @separator
@@ -79,6 +65,15 @@ export const usePrepareDataForFormikToPotting = (
      *   pcm_zrealizowana: number;
      * }
      * @separator
+     * CameraCapturedPicture:
+     * {
+     *    width: number;
+     *    height: number;
+     *    format: 'jpg' | 'png';
+     *    uri: string;
+     *    base64?: string;
+     *    exif?: Partial<MediaTrackSettings> | any;
+     * }
      */
 
     const foundMaterialWithDoni = findMaterialWithDoni(zpInfo.materials);
@@ -86,10 +81,10 @@ export const usePrepareDataForFormikToPotting = (
       toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND);
       return;
     }
-    const restOfMaterials = zpInfo.materials.filter(
-      (material) => material.id !== foundMaterialWithDoni.id,
-    );
-    const dataToBeSent: ZpRozActivityConfirmation_DTO = {
+    // const restOfMaterials = zpInfo.materials.filter(
+    //   (material) => material.id !== foundMaterialWithDoni.id,
+    // );
+    const dataToBeSent: ZpPotActivityConfirmationWithPics_DTO = {
       scanned_raw_value: zpInfo.scannedRawValue,
       id: zpInfo.id,
       dscrpt: zpInfo.dscrpt,
@@ -101,11 +96,18 @@ export const usePrepareDataForFormikToPotting = (
           pcm_zrealizowana: Number.parseInt(values.quantity.toString()),
         },
       ],
+      pictures: [...zpInfo.pictures],
     };
+
+    // console.log({ dataToBeSent });
+    // console.log({ zpInfo });
 
     try {
       setIsLoading(true);
-      await sendActivityConfirmationToServer(dataToBeSent, token!);
+      await sendPotsPottingConfirmationWithPicturesToServer(
+        dataToBeSent,
+        token!,
+      );
     } catch (error) {
       errorHandler(error as Error);
     } finally {

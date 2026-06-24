@@ -67,6 +67,8 @@ const OrderExportToCustomerScanner = (props: Props) => {
     chosenPicture,
     isShowFullPictureModal,
     isTakingPicturesAvailable,
+    isShowQuantityModal,
+
     setIsShowFullPictureModal,
     setChosenPicture,
     setIsShowDeleteModal,

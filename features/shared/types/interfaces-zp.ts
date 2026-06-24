@@ -230,4 +230,5 @@ export type ZPInfoForPotting = ZpRozActivity & {
   materials: ZpRozActivityDetails[];
   ordnmb: string;
   scannedRawValue: string;
+  pictures: CameraCapturedPicture[];
 };

@@ -2,9 +2,9 @@ import { ZpRozActivityDetails } from "@/features/shared/types/interfaces-activit
 
 export const useFindMaterialWithDoni = () => {
   const findMaterialWithDoni = (activityDetails: ZpRozActivityDetails[]) => {
-    const foundMaterialWithDoni = activityDetails.find((material) =>
-      material.twr_kod.startsWith("DONI."),
-    );
+    const foundMaterialWithDoni = activityDetails.find((material) => {
+      return material.twr_kod.startsWith("DONI.");
+    });
     return foundMaterialWithDoni;
   };
 

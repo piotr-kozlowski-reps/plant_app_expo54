@@ -206,6 +206,7 @@ export const useScanValuesForOrderExportToCustomer = (
     chosenPicture,
     isShowFullPictureModal,
     isTakingPicturesAvailable,
+
     setIsShowFullPictureModal,
     setChosenPicture,
     setIsShowDeleteModal,

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform } from "react-native";
+import { View, Platform, StyleSheet, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import {
@@ -22,6 +22,17 @@ import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
+import { useRef } from "react";
+import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
+import { Image } from "expo-image";
+import images from "@/features/shared/constants/images";
+import { MESSAGES } from "@/features/shared/utils/messages";
+import PictureInfoItem from "@/features/app/all_crops/order_export_to_customer/ui/PictureInfoItem";
+import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
+import { yellowColor } from "@/features/shared/constants/colorThemeVars";
+import FullPictureModal from "@/features/app/all_crops/order_export_to_customer/ui/FullPictureModal";
+import DeletePictureModal from "@/features/app/all_crops/order_export_to_customer/ui/DeletePictureModal";
+import PotsQuantityModal from "./PotsQuantityModal";
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,20 +41,36 @@ type Props = {
 const PottedPlantsPotting_MainWindow = (props: Props) => {
   ////vars
   const { setIsLoading } = props;
+  const cameraRef = useRef<CameraView | null>(null);
+
+  //scan values
   const {
     qrLock,
     scannedValue,
+    isShowFullPictureModal,
+    chosenPicture,
+    isShowDeleteModal,
+    isShowQuantityModal,
 
     setQrLock,
     scanValueHandler,
     resetValues,
-  } = useScannedValuesForPotting(setIsLoading);
+    takePhotoHandler,
+    setChosenPicture,
+    setIsShowDeleteModal,
+    setIsShowFullPictureModal,
+    deletePicture,
+    setIsShowQuantityModal,
+  } = useScannedValuesForPotting(setIsLoading, cameraRef);
 
-  const isPossibleToScan = !scannedValue;
+  const isScannedValue = !!scannedValue;
+  const pictures = scannedValue?.pictures || [];
+  const isAnyPictureShot = !!pictures.length;
+  const isMaxPicturesShot = pictures.length >= 10;
 
-  //formik
-  const { formik, availableFormActions, canFormBeSubmitted } =
-    usePrepareDataForFormikToPotting(setIsLoading, scannedValue, resetValues);
+  const takePictureHandler = async () => {
+    await takePhotoHandler();
+  };
 
   ////tsx
   return (
@@ -65,9 +92,10 @@ const PottedPlantsPotting_MainWindow = (props: Props) => {
           </View>
 
           <View className="flex-col items-center justify-between w-[94vw] pl-6 mt-6 ">
-            <View className="h-[44vh] w-full relative">
+            <View className="h-[37vh] w-full relative">
               {Platform.OS === "android" ? <StatusBar hidden /> : null}
               <CameraView
+                ref={cameraRef}
                 facing="back"
                 style={StyleSheet.absoluteFillObject}
                 onBarcodeScanned={({ data }) => {
@@ -79,40 +107,61 @@ const PottedPlantsPotting_MainWindow = (props: Props) => {
               />
 
               <Overlay />
-              {isPossibleToScan ? (
-                <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
-                  {qrLock ? (
+              {!isScannedValue ? (
+                <>
+                  <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
+                    {qrLock ? (
+                      <View className="flex-col items-center justify-center w-full h-full">
+                        <View className="w-full px-16">
+                          <View className="opacity-70">
+                            <Button
+                              title={"skanuj ZP"}
+                              handlePress={() => setQrLock(false)}
+                              containerStyles={`h-32`}
+                              isGrayed={!qrLock}
+                              height={128}
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    ) : null}
+                    {!qrLock ? (
+                      <View className="flex-col items-center justify-end w-full h-full pb-6">
+                        <Scanning />
+                      </View>
+                    ) : null}
+                  </View>
+                </>
+              ) : null}
+              {isScannedValue && !isMaxPicturesShot ? (
+                <>
+                  <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
                     <View className="flex-col items-center justify-center w-full h-full">
                       <View className="w-full px-16">
                         <View className="opacity-70">
                           <Button
-                            title={"skanuj ZP"}
-                            handlePress={() => setQrLock(false)}
+                            title={"zrób zdjęcie"}
+                            handlePress={() => takePictureHandler()}
                             containerStyles={`h-32`}
-                            isGrayed={!qrLock}
                             height={128}
                           />
                         </View>
                       </View>
                     </View>
-                  ) : null}
-                  {!qrLock ? (
-                    <View className="flex-col items-center justify-end w-full h-full pb-6">
-                      <Scanning />
-                    </View>
-                  ) : null}
-                </View>
+                  </View>
+                </>
               ) : null}
-              {!isPossibleToScan ? (
+
+              {isMaxPicturesShot ? (
                 <>
                   <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full opacity-80 bg-yellow"></View>
                   <View className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center w-full h-full px-16">
                     <Text className="text-foreground font-default-bold">
-                      Zeskanowano ZP.
+                      Zeskanowano ZP i zrobiono 20 zdjęć.
                     </Text>
                     <Text className="text-center text-foreground font-default-normal">
                       Brak możliwości zeskanowania następnego zlecenia
-                      produkcyjnego.
+                      produkcyjnego i zrobienia większej ilości zdjęć.
                     </Text>
                   </View>
                 </>
@@ -123,8 +172,8 @@ const PottedPlantsPotting_MainWindow = (props: Props) => {
           <View className="flex-col items-center justify-between flex-1 w-full">
             <View className={clsx("w-full h-2")}></View>
 
-            <View className="flex-col items-center justify-start flex-1 w-full px-6 mt-2">
-              <View className="flex-row items-center justify-center">
+            <View className="flex-col items-center justify-start flex-1 w-full px-6">
+              <View className="flex-row items-center justify-center mb-1">
                 <View>
                   <Text className="text-foreground font-default-normal">
                     Zeskanowano:{" "}
@@ -144,30 +193,85 @@ const PottedPlantsPotting_MainWindow = (props: Props) => {
                 </View>
               </View>
 
-              {scannedValue ? (
-                <View className="flex items-center justify-center flex-1 w-full h-full">
-                  <View className="w-full">
-                    <InputFormik<PottingInput>
-                      label={`Podaj ilość doniczek:`}
-                      placeholder="podaj ilość"
-                      isSignedAsRequired={true}
-                      formik={formik}
-                      formikField="quantity"
-                      keyboardType="numeric"
-                      isVerifiedAtOnce={true}
-                    />
+              <ContainerHorizontalRoundedFrame>
+                {!scannedValue ? (
+                  <View className="relative flex-1 w-full h-full">
+                    <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
+                      <View className="flex items-center justify-center w-full h-full">
+                        <Image
+                          source={images.hashed_background}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            resizeMode: "cover",
+                            borderRadius: 32,
+                          }}
+                          contentFit="cover"
+                        />
+                      </View>
+                    </View>
+                    <View className="absolute top-0 bottom-0 left-0 right-0 rounded-app">
+                      <View className="flex items-center justify-center w-full h-full ">
+                        <Text className="p-6 bg-yellow font-default-bold text-background-nuance rounded-app">
+                          {MESSAGES.LACK_OF_SCANNED_ZP}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
-                </View>
-              ) : null}
+                ) : null}
+
+                {scannedValue && !scannedValue.pictures.length ? (
+                  <View className="relative flex-1 w-full h-full">
+                    <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
+                      <View className="flex items-center justify-center w-full h-full">
+                        <Image
+                          source={images.hashed_background}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            resizeMode: "cover",
+                            borderRadius: 32,
+                          }}
+                          contentFit="cover"
+                        />
+                      </View>
+                    </View>
+                    <View className="absolute top-0 bottom-0 left-0 right-0 rounded-app">
+                      <View className="flex items-center justify-center w-full h-full ">
+                        <Text className="p-6 bg-yellow font-default-bold text-background-nuance rounded-app">
+                          {MESSAGES.LACK_OF_TAKEN_PHOTOS}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                ) : null}
+
+                {scannedValue && scannedValue.pictures.length > 0 ? (
+                  <ScrollView className="w-full">
+                    <View className="flex-row flex-wrap items-center justify-start py-4">
+                      {scannedValue.pictures.map((pic, index) => (
+                        <PictureInfoItem
+                          key={index}
+                          picture={pic}
+                          index={index}
+                          setChosenPicture={setChosenPicture}
+                          setIsShowDeleteModal={setIsShowDeleteModal}
+                          setIsShowFullPictureModal={setIsShowFullPictureModal}
+                        />
+                      ))}
+                    </View>
+                  </ScrollView>
+                ) : null}
+              </ContainerHorizontalRoundedFrame>
             </View>
 
             <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
               <View className="flex-1">
                 <ButtonTextAndThreeArrows
-                  actionFn={availableFormActions}
-                  text="wyślij"
+                  actionFn={() => setIsShowQuantityModal(true)}
+                  text="podaj ilość doniczek"
                   isBackground
-                  disabled={!canFormBeSubmitted}
+                  disabled={!scannedValue || !isAnyPictureShot}
                 />
               </View>
               <View className="ml-6">
@@ -178,6 +282,46 @@ const PottedPlantsPotting_MainWindow = (props: Props) => {
         </KeyboardAwareScrollView>
         <KeyboardToolbar doneText={"gotowe"} />
       </SafeAreaView>
+
+      {/* see full picture -  modal */}
+      <ModalInternal
+        isOpen={isShowFullPictureModal}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <FullPictureModal
+          closeFn={() => setIsShowFullPictureModal(false)}
+          picture={chosenPicture}
+          deletePicture={deletePicture}
+        />
+      </ModalInternal>
+
+      {/* delete picture modal*/}
+      <ModalInternal
+        isOpen={isShowDeleteModal}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <DeletePictureModal
+          closeFn={() => setIsShowDeleteModal(false)}
+          picture={chosenPicture}
+          deletePicture={deletePicture}
+        />
+      </ModalInternal>
+
+      {/* quantity modal*/}
+      <ModalInternal
+        isOpen={isShowQuantityModal}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <PotsQuantityModal
+          closeFn={() => setIsShowQuantityModal(false)}
+          scannedValue={scannedValue}
+          resetValues={resetValues}
+          setIsLoading={setIsLoading}
+        />
+      </ModalInternal>
     </View>
   );
 };

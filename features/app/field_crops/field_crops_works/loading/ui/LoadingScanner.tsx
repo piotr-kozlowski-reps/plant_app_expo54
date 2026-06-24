@@ -1,4 +1,3 @@
-import { Overlay } from "@/features/app/all_crops/extra_works_zp/ui/Overlay";
 import {
   FIELD_CROPS,
   FIELD_CROPS_WORKS,
@@ -26,6 +25,7 @@ import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import ZpDeleteZpFromListModal from "./ZpDeleteZpFromListModal";
 import { useSendLoadingData } from "../domain/useSendLoadingData";
+import { Overlay } from "@/features/shared/ui/overlay/Overlay";
 
 /**
  * @public

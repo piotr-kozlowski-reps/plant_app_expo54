@@ -1,3 +1,4 @@
+import { CameraCapturedPicture } from "expo-camera";
 import { WorkType } from "./interfaces-works_planning";
 
 export type ZpRozActivityDTO = {
@@ -85,6 +86,10 @@ export type ZpRozActivityConfirmation_DTO = {
   pcz_id: number;
   materials: ZpRozActivityMaterial_DTO[];
 };
+export type ZpPotActivityConfirmationWithPics_DTO =
+  ZpRozActivityConfirmation_DTO & {
+    pictures: CameraCapturedPicture[];
+  };
 
 export type ZpRozActivityMaterial_DTO = {
   mat_id: number;
