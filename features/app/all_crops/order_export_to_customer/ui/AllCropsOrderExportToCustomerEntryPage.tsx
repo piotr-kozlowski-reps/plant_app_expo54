@@ -9,9 +9,15 @@ import OrderExportToCustomerScanner from "./OrderExportToCustomerScanner";
 import PermissionsOrGoFurther from "@/features/shared/ui/permision_or_go_further/PermissionsOrGoFurther";
 import { useCameraPermissions } from "expo-camera";
 import { useGetSubmodulePermission } from "@/features/shared/utils/useGetSubmodulePermission";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner-native";
 import { provideNoAccessToSubmoduleMessage } from "@/features/shared/utils/messages";
+import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
+import edocReport_modulesPins from "@/features/shared/data-access/edocReport_modulesPins";
+import { ModulePin } from "@/features/shared/types/interfaces-tray_operations";
+import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
+import { yellowColor } from "@/features/shared/constants/colorThemeVars";
+import PinConfirmationModal from "@/features/shared/ui/pin-confirmation-modal/PinConfirmationModal";
 
 type Props = {
   submoduleType: AllExportToCustomerSubmodules;
@@ -20,6 +26,7 @@ type Props = {
 const AllCropsOrderExportToCustomerEntryPage = (props: Props) => {
   ////vars
   const { submoduleType } = props;
+  const [isLoading, setIsLoading] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
   const isPermissionGranted = Boolean(permission?.granted);
 
@@ -55,6 +62,23 @@ const AllCropsOrderExportToCustomerEntryPage = (props: Props) => {
     }
   }, []);
 
+  //pin to module in GRU
+  const [isPinConfirmed, setIsPinConfirmed] = useState(() =>
+    submoduleType === "field_crops_works_order_export_to_customer"
+      ? false
+      : true,
+  );
+  const { modulesPins, refreshAllData } = useGetEdocReports({
+    setIsLoading: setIsLoading,
+    reports: [edocReport_modulesPins],
+  });
+  const modulesPinsArray = useMemo(() => {
+    return modulesPins as ModulePin[];
+  }, [modulesPins]);
+
+  console.log({ isPinConfirmed });
+  console.log({ modulesPins });
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
@@ -63,8 +87,24 @@ const AllCropsOrderExportToCustomerEntryPage = (props: Props) => {
         isPermissionGranted={isPermissionGranted}
         requestPermission={requestPermission}
       >
-        <OrderExportToCustomerScanner submoduleType={submoduleType} />
+        <OrderExportToCustomerScanner
+          submoduleType={submoduleType}
+          setIsLoading={setIsLoading}
+          isLoading={isLoading}
+        />
       </PermissionsOrGoFurther>
+
+      <ModalInternal
+        isOpen={!isPinConfirmed}
+        isTransparent={false}
+        backgroundColor={yellowColor}
+      >
+        <PinConfirmationModal
+          confirmPinFn={() => setIsPinConfirmed(true)}
+          modulesPinsArray={modulesPinsArray}
+          moduleName="gru_order_export_to_customer"
+        />
+      </ModalInternal>
     </>
   );
 };

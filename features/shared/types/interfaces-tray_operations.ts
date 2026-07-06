@@ -10,4 +10,5 @@ export type ModulePin = {
 
 export type ModuleNameForPin =
   | "tray_operations"
-  | "potted_plants_tray_operations_disconnect_from_zp";
+  | "potted_plants_tray_operations_disconnect_from_zp"
+  | "gru_order_export_to_customer";

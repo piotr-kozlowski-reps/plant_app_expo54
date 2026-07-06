@@ -34,12 +34,14 @@ import { useGetAppPathForOrderExportToCustomer } from "../domain/useGetAppPathFo
 
 type Props = {
   submoduleType: AllExportToCustomerSubmodules;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading: boolean;
 };
 
 const OrderExportToCustomerScanner = (props: Props) => {
   ////vars
-  const { submoduleType } = props;
-  const [isLoading, setIsLoading] = useState(false);
+  const { submoduleType, setIsLoading, isLoading } = props;
+
   const {
     renderDateInPolishWay,
     getDayNameInPolish,
@@ -67,7 +69,7 @@ const OrderExportToCustomerScanner = (props: Props) => {
     chosenPicture,
     isShowFullPictureModal,
     isTakingPicturesAvailable,
-    isShowQuantityModal,
+    // isShowQuantityModal,
 
     setIsShowFullPictureModal,
     setChosenPicture,
