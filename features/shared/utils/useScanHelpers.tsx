@@ -80,6 +80,8 @@ export const useScanHelpers = () => {
         errorHandler,
       );
 
+      console.log({ foundZPsPerLocalization });
+
       if (!foundZPsPerLocalization) {
         return;
       }

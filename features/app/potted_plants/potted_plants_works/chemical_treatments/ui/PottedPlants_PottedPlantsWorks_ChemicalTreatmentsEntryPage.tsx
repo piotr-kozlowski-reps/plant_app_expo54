@@ -4,6 +4,13 @@ import { PottedPlantsSubmodules } from "@/features/shared/types/interfaces-auth"
 import { useSubmoduleEntryDataAndGuard } from "@/features/shared/utils/useSubmoduleEntryDataAndGuard";
 import { Stack } from "expo-router";
 import PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow from "./PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow";
+import { useGetEdocReports } from "@/features/shared/utils/getEdocReports/useGetEdocReports";
+import edocReport_ChemicalTreatmentsDon from "@/features/shared/data-access/edocReport_ChemicalTreatmentsDon";
+import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+import edocReport_ChemicalTreatmentsDonList from "@/features/shared/data-access/edocReport_ChemicalTreatmentsDonList";
+import { ZpToChemicalTreatments } from "@/features/shared/types/interfaces-chemical_treatments_don";
+import edocReport_ExtraWorksChemicalTreatmentsDon from "@/features/shared/data-access/edocReport_ExtraWorksChemicalTreatmentsDon";
+import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
 
 /**
  * @public
@@ -47,47 +54,44 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatmentsEntryPage = () => {
    * REALIZACJA:
    */
 
-  //   /**
-  //    * @public
-  //    * @procedureItem
-  //    * raporty:
-  //    * @readFile `features/shared/data-access/edocReport_ProtectiveTreatments.ts`
-  //    */
-  //   /**
-  //    * @public
-  //    * @procedureItem
-  //    * raporty:
-  //    * @readFile `features/shared/data-access/edocReport_NitrogenIrrigation.tsx`
-  //    */
-  //   /**
-  //    * @public
-  //    * @procedureItem
-  //    * raporty:
-  //    * @readFile `features/shared/data-access/edocReport_ExtraWorksNitrogenOnly.ts`
-  //    */
-  //   const {
-  //     protectiveTreatments,
-  //     zps_to_nitrogen_irrigation,
-  //     extra_works,
-  //     refreshAllData,
-  //   } = useGetEdocReports({
-  //     setIsLoading: setIsLoading,
-  //     reports: [
-  //       edocReport_ProtectiveTreatments,
-  //       edocReport_NitrogenIrrigationList,
-  //       edocReport_ExtraWorksNitrogenOnly,
-  //     ],
-  //   });
-  //   const filteredOnlyNitrogenProtectiveTreatments: ProtectiveTreatment[] =
-  //     filterOnlyNitrogenProtectiveTreatments(
-  //       protectiveTreatments as ProtectiveTreatment[],
-  //     );
-  //   const extraWorksArray = extra_works as unknown as ExtraWork[];
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ChemicalTreatmentsDon.tsx`
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ChemicalTreatmentsDonList.tsx`
+   */
+  /**
+   * @public
+   * @procedureItem
+   * raporty:
+   * @readFile `features/shared/data-access/edocReport_ExtraWorksChemicalTreatmentsDon.tsx`
+   */
+  const {
+    chemicalTreatmentsDon,
+    zps_to_chemical_treatments_don,
+    extra_works,
+    refreshAllData,
+  } = useGetEdocReports({
+    setIsLoading: setIsLoading,
+    reports: [
+      edocReport_ChemicalTreatmentsDon,
+      edocReport_ChemicalTreatmentsDonList,
+      edocReport_ExtraWorksChemicalTreatmentsDon,
+    ],
+  });
 
-  //   const refreshAllDataFn = refreshAllData as () => void;
-
-  //   const nitrogenIrrigationList: ZpToNitrogenIrrigation[] =
-  //     zps_to_nitrogen_irrigation as ZpToNitrogenIrrigation[];
+  const chemicalTreatmentsDonArray =
+    chemicalTreatmentsDon as unknown as ProtectiveTreatment[];
+  const chemicalTreatmentsDonList: ZpToChemicalTreatments[] =
+    zps_to_chemical_treatments_don as ZpToChemicalTreatments[];
+  const extraWorksArray = extra_works as unknown as ExtraWork[];
+  const refreshAllDataFn = refreshAllData as () => void;
 
   return (
     <>
@@ -101,16 +105,11 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatmentsEntryPage = () => {
         <PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow
           isLoading={isLoading}
           setIsLoading={setIsLoading}
-        />
-
-        {/* <NitrogenIrrigationMainWindow
-          setIsLoading={setIsLoading}
-          isLoading={isLoading}
-          protectiveTreatments={filteredOnlyNitrogenProtectiveTreatments}
+          chemicalTreatmentsDon={chemicalTreatmentsDonArray}
+          chemicalTreatmentsDonList={chemicalTreatmentsDonList}
           refreshAllData={refreshAllDataFn}
-          nitrogenIrrigationList={nitrogenIrrigationList}
           extraWorks={extraWorksArray}
-        /> */}
+        />
       </PermissionsOrGoFurther>
     </>
   );

@@ -94,6 +94,7 @@ export const ERROR_MESSAGES = {
   NO_TRAY_POSSIBLE: "W tym module nie możesz zeskanować kodu tacy.",
   ONLY_TRAY_POSSIBLE: "Możesz zeskanować tylko QR kod tacy.",
   ONLY_ZP_POSSIBLE: "Możesz zeskanować tylko QR kod ZP'ka.",
+  ONLY_ZP_DON_POSSIBLE: "Możesz zeskanować tylko QR kod ZP'ka DON.",
   WORK_TO_PLAN_IS_ALREADY_DONE:
     "Nie możesz zaplanować tej pracy, jej wykonanie zostało już potwierdzone.",
   WORK_TO_PLAN_IS_ALREADY_PLANNED:
@@ -197,6 +198,8 @@ export const MESSAGES = {
     "Informacja o błędzie została wysłana do firmy Korsol.",
   GOOD_PIN: "PIN poprawny.",
   LACK_OF_ZPS_TO_CUT: "Brak ZPków zaplanowanych do cięcia.",
+  LACK_OF_ZPS_TO_CHEMICAL_TREATMENTS:
+    "Brak ZPków zaplanowanych do zabiegów chemicznych DON.",
   FORCE_CHANGE_WHO_DID_PROTECTIVE_TREATMENT_TO_ROBOT: `Ponieważ zeskanowano całą nawę, pole "Wykonał" zostało automatycznie zmienione na wartość "Robot".`,
   SEND_DATA_WITH_SUCCESS: "Pomyślnie przesłano dane.",
   LACK_OF_SCANNED_ZPS: "Brak zeskanowanych ZP'ków.",

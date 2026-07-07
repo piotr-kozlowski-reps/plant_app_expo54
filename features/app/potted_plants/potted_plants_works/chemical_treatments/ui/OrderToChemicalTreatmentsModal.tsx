@@ -1,4 +1,6 @@
 import AppPath from "@/features/shared/ui/app-path/AppPath";
+import images from "@/features/shared/constants/images";
+import { Image } from "expo-image";
 import { View, Platform, StyleSheet, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -18,27 +20,42 @@ import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import ButtonTextAndIcon from "@/features/shared/ui/button/ButtonTextAndIcon";
 import { ChevronDown } from "lucide-react-native";
-import { lightColor } from "@/features/shared/constants/colorThemeVars";
+import {
+  darkColor,
+  destructiveColor,
+  lightColor,
+  yellowColor,
+} from "@/features/shared/constants/colorThemeVars";
+import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
+import ModalInfoToConfirm from "@/features/shared/ui/modal/ModalInfoToConfirm";
+import { MESSAGES } from "@/features/shared/utils/messages";
+import ZPItemInOrdersAllInfo from "@/features/app/all_crops/orders_all/ui/ZPItemInOrdersAllInfo";
+import HowManyDaysToOrderNitrogenIrrigationModal from "@/features/app/field_crops/field_crops_works/nitrogen_irrigation/ui/HowManyDaysToOrderNitrogenIrrigationModal";
+import { ZpToChemicalTreatments } from "@/features/shared/types/interfaces-chemical_treatments_don";
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   closeFn: () => void;
-  // nitrogenIrrigationList: ZpToNitrogenIrrigation[];
-  // refreshAllData: () => void;
-  // protectiveTreatments: ProtectiveTreatment[];
-  // extraWorks: ExtraWork[];
+  resetValuesForChemicalTreatments: () => void;
+  chemicalTreatmentsDon: ProtectiveTreatment[] | null;
+  chemicalTreatmentsDonList: ZpToChemicalTreatments[];
+  setIsShowModalWithSelectChemicalTreatmentDon: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
+  chemicalTreatmentDon: ProtectiveTreatment | null;
 };
 
 const OrderToChemicalTreatmentsModal = (props: Props) => {
   ////vars
   const {
-    //   protectiveTreatment,
-    //   nitrogenIrrigationList,
+    chemicalTreatmentDon,
+    chemicalTreatmentsDonList,
 
     setIsLoading,
     closeFn,
-    //   setIsShowModalWithSelectConcentration,
-    //   resetValuesForProtectiveTreatments,
+    setIsShowModalWithSelectChemicalTreatmentDon,
+    resetValuesForChemicalTreatments,
   } = props;
 
   //scan values
@@ -51,28 +68,28 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
   const {
     qrLock,
     isFieldScanned,
-    //   scannedValues,
-    //   isShowModalWithInHowManyDays,
-    //   inHowManyDays,
+    scannedValues,
+    isShowModalWithInHowManyDays,
+    inHowManyDays,
     //   isShowDeleteModal,
     //   ZPSelected,
-    //   infoModalDetails,
-    //   isShowInfoConfirmationModal,
+    infoModalDetails,
+    isShowInfoConfirmationModal,
 
-    //   setZPSelected,
-    //   setIsShowDeleteModal,
-    //   setIsShowModalWithInHowManyDays,
+    setZPSelected,
+    setIsShowDeleteModal,
+    setIsShowModalWithInHowManyDays,
     setQrLock,
     scanValueHandler,
-    //   changeInHowManyDaysHandler,
+    changeInHowManyDaysHandler,
     //   deleteValueFromList,
     //   resetValues,
-    //   hideInfoConfirmationModal,
+    hideInfoConfirmationModal,
     //   // resetScannedValue,
   } = useScanValuesForOrderChemicalTreatments(
     setIsLoading,
-    // resetValuesForProtectiveTreatments,
-    // nitrogenIrrigationList,
+    resetValuesForChemicalTreatments,
+    chemicalTreatmentsDonList,
   );
 
   // /** delete item from list handler */
@@ -172,16 +189,14 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
                 <View className="flex-row items-center justify-between w-full">
                   <View className="flex-1">
                     <ButtonTextAndIcon
-                      // actionFn={() => {
-                      //   setIsShowModalWithSelectConcentration(true);
-                      // }}
-                      // text={`${
-                      //   protectiveTreatment
-                      //     ? protectiveTreatment.dscrpt
-                      //     : "wybierz stężenie"
-                      // }`}
-                      text={""}
-                      actionFn={() => {}}
+                      actionFn={() => {
+                        setIsShowModalWithSelectChemicalTreatmentDon(true);
+                      }}
+                      text={`${
+                        chemicalTreatmentDon
+                          ? chemicalTreatmentDon.dscrpt
+                          : "wybierz zabieg"
+                      }`}
                       icon={
                         <View className="ml-2">
                           <ChevronDown
@@ -193,22 +208,20 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
                       }
                       isBackground
                       isFull={false}
-                      // customColor={
-                      //   protectiveTreatment ? darkColor : destructiveColor
-                      // }
+                      customColor={
+                        chemicalTreatmentDon ? darkColor : destructiveColor
+                      }
                     />
                   </View>
 
                   <View className="w-[40%] ml-4">
                     <ButtonTextAndIcon
-                      // actionFn={() => {
-                      //   setIsShowModalWithInHowManyDays(true);
-                      // }}
-                      // text={`+ ${inHowManyDays} ${
-                      //   inHowManyDays === 1 ? "dzień" : "dni"
-                      // }`}
-                      actionFn={() => {}}
-                      text={""}
+                      actionFn={() => {
+                        setIsShowModalWithInHowManyDays(true);
+                      }}
+                      text={`+ ${inHowManyDays} ${
+                        inHowManyDays === 1 ? "dzień" : "dni"
+                      }`}
                       icon={
                         <View className="ml-2">
                           <ChevronDown
@@ -226,8 +239,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
               </View>
 
               <ContainerHorizontalRoundedFrame>
-                <></>
-                {/* {scannedValues.length === 0 ? (
+                {scannedValues.length === 0 ? (
                   <View className="relative flex-1 w-full h-full">
                     <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
                       <View className="flex items-center justify-center w-full h-full">
@@ -251,9 +263,9 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
                       </View>
                     </View>
                   </View>
-                ) : null} */}
+                ) : null}
 
-                {/* {scannedValues.length > 0 ? (
+                {scannedValues.length > 0 ? (
                   <ScrollView className="w-full">
                     <View className="flex-row flex-wrap items-center justify-start py-4">
                       {scannedValues.map((zpInfo) => (
@@ -268,7 +280,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
                       ))}
                     </View>
                   </ScrollView>
-                ) : null} */}
+                ) : null}
               </ContainerHorizontalRoundedFrame>
             </View>
 
@@ -302,7 +314,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
         </SafeAreaView>
 
         {/* modals */}
-        {/* <ModalInternal
+        <ModalInternal
           isOpen={isShowModalWithInHowManyDays}
           isTransparent={false}
           backgroundColor={yellowColor}
@@ -312,7 +324,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
             changeInHowManyDaysHandler={changeInHowManyDaysHandler}
             // whatOrderType={whatOrderType}
           />
-        </ModalInternal> */}
+        </ModalInternal>
 
         {/* <ModalInternal
           isOpen={isShowDeleteModal}
@@ -327,7 +339,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
         </ModalInternal> */}
 
         {/* modal with info to confirm */}
-        {/* <ModalInternal
+        <ModalInternal
           isOpen={isShowInfoConfirmationModal}
           isTransparent={false}
           backgroundColor={yellowColor}
@@ -336,7 +348,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
             hideInfoConfirmationModal={hideInfoConfirmationModal}
             infoModalDetails={infoModalDetails}
           />
-        </ModalInternal> */}
+        </ModalInternal>
       </View>
     </View>
   );

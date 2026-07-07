@@ -26,9 +26,12 @@ export type Config = {
   edocReport_ActivitiesList: number;
   edocReport_ActivityDetails: number;
   edocReport_NitrogenIrrigationList: number;
+  edocReport_ChemicalTreatmentsDon: number;
   edocReport_ZpNameData: number;
   edocReport_zpToCotyledonQuilting: number;
   edocReport_TrayForDonInfo: number;
+  edocReport_ChemicalTreatmentsDonList: number;
+  edocReport_ExtraWorksChemicalTreatmentsDon: number;
 
   customRegister_PhoneInfo: number;
   customRegister_AllLocalizations: number;

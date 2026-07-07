@@ -27,7 +27,7 @@ export const useScanValuesForOrderNitrogenIrrigation = (
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
-  const { checkWhatValueWasScanned, getPureZPValue, getPureFieldValue } =
+  const { checkWhatValueWasScanned, getPureZPValue } =
     useCheckWhatValueIsScannedHelpers();
   const { scanField, checkIfValueIsAlreadyScanned } = useScanHelpers();
   const { errorHandler } = useErrorHandler();

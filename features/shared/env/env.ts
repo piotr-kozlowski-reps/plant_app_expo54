@@ -57,9 +57,12 @@ export let configPerBuild: Config = {
   edocReport_ActivitiesList: 143,
   edocReport_ActivityDetails: 144,
   edocReport_NitrogenIrrigationList: 1619,
+  edocReport_ChemicalTreatmentsDon: 1736,
   edocReport_ZpNameData: 1703,
   edocReport_zpToCotyledonQuilting: 1709,
   edocReport_TrayForDonInfo: 1711,
+  edocReport_ChemicalTreatmentsDonList: 1738,
+  edocReport_ExtraWorksChemicalTreatmentsDon: 1739,
 
   customRegister_ExtraWork: 238,
   customRegister_PhoneInfo: 240,

@@ -1,0 +1,115 @@
+import {
+  darkColor,
+  lightNuanceColor,
+} from "@/features/shared/constants/colorThemeVars";
+import { NitrogenConcentrationKeyValue } from "@/features/shared/types/interfaces-general";
+import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+import ButtonBack from "@/features/shared/ui/button/ButtonBack";
+import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
+// import {
+//   darkColor,
+//   lightNuanceColor,
+// } from "@/features/shared/constants/colorThemeVars";
+import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
+import { View, Text } from "react-native";
+// import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+// import { NitrogenConcentrationKeyValue } from "@/features/shared/types/interfaces-general";
+// import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
+import { FlatList, RefreshControl } from "react-native-gesture-handler";
+
+type Props = {
+  closeFn: () => void;
+  chemicalTreatments: ProtectiveTreatment[];
+  isLoading: boolean;
+  refreshAllData: () => void;
+  changeChemicalTreatment: (chemicalTreatment: ProtectiveTreatment) => void;
+};
+
+const SelectChemicalTreatmentModal = (props: Props) => {
+  ////vars
+  const {
+    chemicalTreatments,
+    isLoading,
+    closeFn,
+    changeChemicalTreatment,
+    refreshAllData,
+  } = props;
+
+  const nitrogenConcentrationKeyValue: NitrogenConcentrationKeyValue[] =
+    chemicalTreatments.map((chemicalTreatment) => ({
+      name: chemicalTreatment.dscrpt,
+      value: chemicalTreatment,
+    }));
+  //   //   const inHowManyDaysText = "Wybierz za ile dni";
+
+  //fn
+  const changeChemicalTreatmentLocalHandler = (
+    chemicalTreatment: ProtectiveTreatment,
+  ) => {
+    changeChemicalTreatment(chemicalTreatment);
+    closeFn();
+  };
+
+  ////tsx
+  return (
+    <View className="absolute left-0 right-0 w-full bottom-8 top-8">
+      <View className="relative flex-col items-center justify-center flex-1">
+        <View className="w-full flex-1 pt-8 pb-[4px] border-t-2 border-b-2 border-gray-600 rounded-app ">
+          <View className="flex items-center justify-center w-full px-8">
+            <Text className="text-center text-foreground font-nav">
+              Wybierz stężenie
+            </Text>
+          </View>
+
+          <ContainerHorizontalRoundedFrame color={lightNuanceColor}>
+            <View className="mt-2">
+              <FlatList<NitrogenConcentrationKeyValue>
+                data={nitrogenConcentrationKeyValue}
+                renderItem={({
+                  item,
+                }: {
+                  item: NitrogenConcentrationKeyValue;
+                }) => (
+                  <View className="flex-col items-center justify-center px-6 mt-2">
+                    <View
+                      className={
+                        "flex-row items-center justify-between w-full focus:border-secondary rounded-tr-xl rounded-bl-xl rounded-br-app rounded-tl-app"
+                      }
+                      key={item.name}
+                    >
+                      <ButtonTextAndThreeArrows
+                        actionFn={() => {
+                          changeChemicalTreatmentLocalHandler(item.value);
+                        }}
+                        text={`${item.name}`}
+                        isBackground
+                        color={darkColor}
+                        // disabled={disabled}
+                      />
+                    </View>
+                  </View>
+                )}
+                initialNumToRender={20}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={refreshAllData}
+                  />
+                }
+                style={{ marginBottom: 12 }}
+              />
+            </View>
+          </ContainerHorizontalRoundedFrame>
+
+          <View className="flex-row items-center justify-between w-full pl-6 mt-6 mb-[16px]">
+            <View className="flex-1"></View>
+            <View className="ml-6">
+              <ButtonBack actionFn={closeFn} isOutline={false} />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+export default SelectChemicalTreatmentModal;

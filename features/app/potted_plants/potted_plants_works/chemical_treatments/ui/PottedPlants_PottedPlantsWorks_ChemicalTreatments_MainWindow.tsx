@@ -2,8 +2,6 @@ import AppPath from "@/features/shared/ui/app-path/AppPath";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
-  FIELD_CROPS,
-  FIELD_CROPS_WORKS,
   INDEX,
   POTTED_PLANTS,
   POTTED_PLANTS_WORKS,
@@ -16,21 +14,39 @@ import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import OrderToChemicalTreatmentsModal from "./OrderToChemicalTreatmentsModal";
 import ChemicalTreatmentsConfirmationModal from "./ChemicalTreatmentsConfirmationModal";
+import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
+import { ZpToChemicalTreatments } from "@/features/shared/types/interfaces-chemical_treatments_don";
+import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
+import { Image } from "expo-image";
+import images from "@/features/shared/constants/images";
+import { MESSAGES } from "@/features/shared/utils/messages";
+import { FlatList, RefreshControl } from "react-native-gesture-handler";
+import ZpToListInfoItem from "@/features/app/field_crops/field_crops_works/cut/ui/ZpToListInfoItem";
+import ZpToListInfoForChemicalTreatmentsDonItem from "./ZpToListInfoForChemicalTreatmentsDonItem";
+import { useChosenChemicalTreatment } from "../domain/useChosenChemicalTreatment";
+import SelectChemicalTreatmentModal from "./SelectChemicalTreatmentModal";
 
 type Props = {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  // nitrogenIrrigationList: ZpToNitrogenIrrigation[];
-  // refreshAllData: () => void;
-  // protectiveTreatments: ProtectiveTreatment[];
-  // extraWorks: ExtraWork[];
+  chemicalTreatmentsDonList: ZpToChemicalTreatments[];
+  refreshAllData: () => void;
+  chemicalTreatmentsDon: ProtectiveTreatment[];
+  extraWorks: ExtraWork[];
 };
 
 const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
   props: Props,
 ) => {
   ////vars
-  const { isLoading, setIsLoading } = props;
+  const {
+    isLoading,
+    setIsLoading,
+    chemicalTreatmentsDonList,
+    chemicalTreatmentsDon,
+    refreshAllData,
+  } = props;
 
   //state
   const [
@@ -41,6 +57,16 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
     isShowOrderToChemicalTreatmentsModal,
     setIsShowOrderToChemicalTreatmentsModal,
   ] = useShowModal();
+
+  const {
+    chemicalTreatmentDon,
+    isShowModalWithSelectChemicalTreatmentDon,
+
+    setIsShowModalWithSelectChemicalTreatmentDon,
+    resetValuesForChemicalTreatments,
+    changeChemicalTreatment,
+  } = useChosenChemicalTreatment();
+
   ////tsx
   return (
     <View className="relative w-full h-full">
@@ -93,8 +119,9 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
                 lista ZPków zleconych do zabiegów chemicznych:
               </Text>
             </View>
-            {/* <ContainerHorizontalRoundedFrame>
-              {!nitrogenIrrigationList || !nitrogenIrrigationList.length ? (
+            <ContainerHorizontalRoundedFrame>
+              {!chemicalTreatmentsDonList ||
+              !chemicalTreatmentsDonList.length ? (
                 <View className="relative flex-1 w-full h-full">
                   <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
                     <View className="flex items-center justify-center w-full h-full">
@@ -113,22 +140,26 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
                   <View className="absolute top-0 bottom-0 left-0 right-0 rounded-app">
                     <View className="flex items-center justify-center w-full h-full ">
                       <Text className="p-6 bg-yellow font-default-bold text-background-nuance rounded-app">
-                        {MESSAGES.LACK_OF_ZPS_TO_CUT}
+                        {MESSAGES.LACK_OF_ZPS_TO_CHEMICAL_TREATMENTS}
                       </Text>
                     </View>
                   </View>
                 </View>
               ) : null}
 
-              {nitrogenIrrigationList && nitrogenIrrigationList.length ? (
+              {chemicalTreatmentsDonList && chemicalTreatmentsDonList.length ? (
                 <View className="w-full h-full mt-2">
-                  <FlatList<ZpToNitrogenIrrigation>
-                    data={nitrogenIrrigationList}
+                  <FlatList<ZpToChemicalTreatments>
+                    data={chemicalTreatmentsDonList}
                     renderItem={({
                       item,
                     }: {
-                      item: ZpToNitrogenIrrigation;
-                    }) => <ZpToListInfoItem zpToShow={item} />}
+                      item: ZpToChemicalTreatments;
+                    }) => (
+                      <ZpToListInfoForChemicalTreatmentsDonItem
+                        zpToShow={item}
+                      />
+                    )}
                     initialNumToRender={20}
                     refreshControl={
                       <RefreshControl
@@ -140,7 +171,7 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
                   />
                 </View>
               ) : null}
-            </ContainerHorizontalRoundedFrame> */}
+            </ContainerHorizontalRoundedFrame>
           </View>
 
           <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
@@ -160,14 +191,13 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
         <OrderToChemicalTreatmentsModal
           closeFn={() => setIsShowOrderToChemicalTreatmentsModal(false)}
           setIsLoading={setIsLoading}
-          // protectiveTreatment={protectiveTreatment}
-          // setIsShowModalWithSelectConcentration={
-          //   setIsShowModalWithSelectConcentration
-          // }
-          // resetValuesForProtectiveTreatments={
-          //   resetValuesForProtectiveTreatments
-          // }
-          // nitrogenIrrigationList={nitrogenIrrigationList}
+          chemicalTreatmentsDon={chemicalTreatmentsDon}
+          setIsShowModalWithSelectChemicalTreatmentDon={
+            setIsShowModalWithSelectChemicalTreatmentDon
+          }
+          resetValuesForChemicalTreatments={resetValuesForChemicalTreatments}
+          chemicalTreatmentsDonList={chemicalTreatmentsDonList}
+          chemicalTreatmentDon={chemicalTreatmentDon}
         />
       </ModalInternal>
 
@@ -193,19 +223,19 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
         />
       </ModalInternal>
 
-      {/* <ModalInternal
-        isOpen={isShowModalWithSelectConcentration}
+      <ModalInternal
+        isOpen={isShowModalWithSelectChemicalTreatmentDon}
         isTransparent={false}
         backgroundColor={yellowColor}
       >
-        <SelectConcentrationOfNitrogenModal
-          closeFn={() => setIsShowModalWithSelectConcentration(false)}
-          protectiveTreatments={protectiveTreatments}
-          refreshAllData={refreshAllData}
-          changeProtectiveTreatment={changeProtectiveTreatment}
+        <SelectChemicalTreatmentModal
+          closeFn={() => setIsShowModalWithSelectChemicalTreatmentDon(false)}
           isLoading={isLoading}
+          chemicalTreatments={chemicalTreatmentsDon}
+          refreshAllData={refreshAllData}
+          changeChemicalTreatment={changeChemicalTreatment}
         />
-      </ModalInternal> */}
+      </ModalInternal>
     </View>
   );
 };
