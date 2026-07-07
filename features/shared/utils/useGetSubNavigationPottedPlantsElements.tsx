@@ -37,6 +37,15 @@ export const useGetSubNavigationPottedPlantsElements = () => {
         },
         subModuleName: "potted_plants_works_order_to_internal_transport",
       },
+      {
+        title: "Zabiegi chemiczne",
+        actionFn: () => {
+          router.push(
+            "/app/potted_plants/potted_plants_works/chemical_treatments",
+          );
+        },
+        subModuleName: "potted_plants_works_chemical_treatments",
+      },
     ];
 
     pottedPlantsSubNavigationAllElements.forEach((navItem) => {

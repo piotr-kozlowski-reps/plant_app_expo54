@@ -1,63 +1,44 @@
-import {
-  FIELD_CROPS,
-  FIELD_CROPS_WORKS,
-  INDEX,
-  NITROGEN_IRRIGATION,
-} from "@/features/shared/types/interfaces-navigation";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
 import { View, Platform, StyleSheet, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  INDEX,
+  POTTED_PLANTS,
+  POTTED_PLANTS_WORKS,
+  POTTED_PLANTS_WORKS_CHEMICAL_TREATMENTS,
+} from "@/features/shared/types/interfaces-navigation";
 import { StatusBar } from "expo-status-bar";
 import { CameraView } from "expo-camera";
-import { Overlay } from "../../../../all_crops/extra_works_zp/ui/Overlay";
+import { Overlay } from "@/features/shared/ui/overlay/Overlay";
+import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
+import { useScanValuesForOrderChemicalTreatments } from "../domain/useScanValuesForOrderChemicalTreatments";
 import Button from "@/features/shared/ui/button/Button";
 import Scanning from "@/features/shared/ui/scanning/Scanning";
-import { useScanValuesForOrderNitrogenIrrigation } from "../domain/useScanValuesForOrderNitrogenIrrigation";
-import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
-import images from "@/features/shared/constants/images";
-import { Image } from "expo-image";
-import { MESSAGES } from "@/features/shared/utils/messages";
+import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
 import ButtonTextAndIcon from "@/features/shared/ui/button/ButtonTextAndIcon";
 import { ChevronDown } from "lucide-react-native";
-import {
-  darkColor,
-  destructiveColor,
-  lightColor,
-  yellowColor,
-} from "@/features/shared/constants/colorThemeVars";
-import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
-import HowManyDaysToOrderNitrogenIrrigationModal from "./HowManyDaysToOrderNitrogenIrrigationModal";
-import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
-import ZPItemInOrdersAllInfo from "../../../../all_crops/orders_all/ui/ZPItemInOrdersAllInfo";
-import DeleteZpForOrdersAllModal from "../../../../all_crops/orders_all/ui/DeleteZpForOrdersAllModal";
-import { useSendOrderNitrogenIrrigation } from "../domain/useSendOrderNitrogenIrrigation";
-import { useEffect } from "react";
-import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
-import ModalInfoToConfirm from "@/features/shared/ui/modal/ModalInfoToConfirm";
+import { lightColor } from "@/features/shared/constants/colorThemeVars";
 
 type Props = {
-  closeFn: () => void;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  protectiveTreatment: ProtectiveTreatment | null;
-  setIsShowModalWithSelectConcentration: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
-  resetValuesForProtectiveTreatments: () => void;
-  nitrogenIrrigationList: ZpToNitrogenIrrigation[];
+  closeFn: () => void;
+  // nitrogenIrrigationList: ZpToNitrogenIrrigation[];
+  // refreshAllData: () => void;
+  // protectiveTreatments: ProtectiveTreatment[];
+  // extraWorks: ExtraWork[];
 };
 
-const OrderToNitrogenIrrigationModal = (props: Props) => {
+const OrderToChemicalTreatmentsModal = (props: Props) => {
   ////vars
   const {
-    protectiveTreatment,
-    nitrogenIrrigationList,
+    //   protectiveTreatment,
+    //   nitrogenIrrigationList,
 
     setIsLoading,
     closeFn,
-    setIsShowModalWithSelectConcentration,
-    resetValuesForProtectiveTreatments,
+    //   setIsShowModalWithSelectConcentration,
+    //   resetValuesForProtectiveTreatments,
   } = props;
 
   //scan values
@@ -65,48 +46,48 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
    * @public
    * @topic
    * @order 50
-   * Zlecenie podlewania azotem:
+   * Zlecenie zabiegu chemicznego:
    */
   const {
     qrLock,
     isFieldScanned,
-    scannedValues,
-    isShowModalWithInHowManyDays,
-    inHowManyDays,
-    isShowDeleteModal,
-    ZPSelected,
-    infoModalDetails,
-    isShowInfoConfirmationModal,
+    //   scannedValues,
+    //   isShowModalWithInHowManyDays,
+    //   inHowManyDays,
+    //   isShowDeleteModal,
+    //   ZPSelected,
+    //   infoModalDetails,
+    //   isShowInfoConfirmationModal,
 
-    setZPSelected,
-    setIsShowDeleteModal,
-    setIsShowModalWithInHowManyDays,
+    //   setZPSelected,
+    //   setIsShowDeleteModal,
+    //   setIsShowModalWithInHowManyDays,
     setQrLock,
     scanValueHandler,
-    changeInHowManyDaysHandler,
-    deleteValueFromList,
-    resetValues,
-    hideInfoConfirmationModal,
-    // resetScannedValue,
-  } = useScanValuesForOrderNitrogenIrrigation(
+    //   changeInHowManyDaysHandler,
+    //   deleteValueFromList,
+    //   resetValues,
+    //   hideInfoConfirmationModal,
+    //   // resetScannedValue,
+  } = useScanValuesForOrderChemicalTreatments(
     setIsLoading,
-    resetValuesForProtectiveTreatments,
-    nitrogenIrrigationList,
+    // resetValuesForProtectiveTreatments,
+    // nitrogenIrrigationList,
   );
 
-  /** delete item from list handler */
-  const deleteItemFromListHandler = () => {
-    deleteValueFromList(ZPSelected);
-  };
+  // /** delete item from list handler */
+  // const deleteItemFromListHandler = () => {
+  //   deleteValueFromList(ZPSelected);
+  // };
 
-  /** send nitrogen irrigation orders  */
-  const sendValuesForOrderNitrogenIrrigationHandler =
-    useSendOrderNitrogenIrrigation(setIsLoading, resetValues);
+  // /** send nitrogen irrigation orders  */
+  // const sendValuesForOrderNitrogenIrrigationHandler =
+  //   useSendOrderNitrogenIrrigation(setIsLoading, resetValues);
 
-  /** set treatment to null when opened component*/
-  useEffect(() => {
-    resetValuesForProtectiveTreatments();
-  }, []);
+  // /** set treatment to null when opened component*/
+  // useEffect(() => {
+  //   resetValuesForProtectiveTreatments();
+  // }, []);
 
   ////tsx
   return (
@@ -117,10 +98,10 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
             <AppPath
               paths={[
                 INDEX,
-                FIELD_CROPS,
-                FIELD_CROPS_WORKS,
-                NITROGEN_IRRIGATION,
-                { actionFn: () => {}, name: "Zlecenie podlewania azotem" },
+                POTTED_PLANTS,
+                POTTED_PLANTS_WORKS,
+                POTTED_PLANTS_WORKS_CHEMICAL_TREATMENTS,
+                { actionFn: () => {}, name: "Zlecenie zabiegu chemicznego" },
               ]}
             />
           </View>
@@ -191,14 +172,16 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
                 <View className="flex-row items-center justify-between w-full">
                   <View className="flex-1">
                     <ButtonTextAndIcon
-                      actionFn={() => {
-                        setIsShowModalWithSelectConcentration(true);
-                      }}
-                      text={`${
-                        protectiveTreatment
-                          ? protectiveTreatment.dscrpt
-                          : "wybierz stężenie"
-                      }`}
+                      // actionFn={() => {
+                      //   setIsShowModalWithSelectConcentration(true);
+                      // }}
+                      // text={`${
+                      //   protectiveTreatment
+                      //     ? protectiveTreatment.dscrpt
+                      //     : "wybierz stężenie"
+                      // }`}
+                      text={""}
+                      actionFn={() => {}}
                       icon={
                         <View className="ml-2">
                           <ChevronDown
@@ -210,21 +193,22 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
                       }
                       isBackground
                       isFull={false}
-                      customColor={
-                        protectiveTreatment ? darkColor : destructiveColor
-                      }
-                      // customTextColor={destructiveColor}
+                      // customColor={
+                      //   protectiveTreatment ? darkColor : destructiveColor
+                      // }
                     />
                   </View>
 
                   <View className="w-[40%] ml-4">
                     <ButtonTextAndIcon
-                      actionFn={() => {
-                        setIsShowModalWithInHowManyDays(true);
-                      }}
-                      text={`+ ${inHowManyDays} ${
-                        inHowManyDays === 1 ? "dzień" : "dni"
-                      }`}
+                      // actionFn={() => {
+                      //   setIsShowModalWithInHowManyDays(true);
+                      // }}
+                      // text={`+ ${inHowManyDays} ${
+                      //   inHowManyDays === 1 ? "dzień" : "dni"
+                      // }`}
+                      actionFn={() => {}}
+                      text={""}
                       icon={
                         <View className="ml-2">
                           <ChevronDown
@@ -242,7 +226,8 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
               </View>
 
               <ContainerHorizontalRoundedFrame>
-                {scannedValues.length === 0 ? (
+                <></>
+                {/* {scannedValues.length === 0 ? (
                   <View className="relative flex-1 w-full h-full">
                     <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
                       <View className="flex items-center justify-center w-full h-full">
@@ -266,9 +251,9 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
                       </View>
                     </View>
                   </View>
-                ) : null}
+                ) : null} */}
 
-                {scannedValues.length > 0 ? (
+                {/* {scannedValues.length > 0 ? (
                   <ScrollView className="w-full">
                     <View className="flex-row flex-wrap items-center justify-start py-4">
                       {scannedValues.map((zpInfo) => (
@@ -283,23 +268,25 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
                       ))}
                     </View>
                   </ScrollView>
-                ) : null}
+                ) : null} */}
               </ContainerHorizontalRoundedFrame>
             </View>
 
             <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
               <View className="flex-1">
                 <ButtonTextAndThreeArrows
-                  actionFn={() =>
-                    sendValuesForOrderNitrogenIrrigationHandler({
-                      scannedValues,
-                      inHowManyDays,
-                      protectiveTreatment,
-                    })
-                  }
+                  // actionFn={() =>
+                  //   sendValuesForOrderNitrogenIrrigationHandler({
+                  //     scannedValues,
+                  //     inHowManyDays,
+                  //     protectiveTreatment,
+                  //   })
+                  // }
+                  actionFn={() => {}}
                   text="wyślij"
                   isBackground
-                  disabled={scannedValues.length === 0 || !protectiveTreatment}
+                  // disabled={scannedValues.length === 0 || !protectiveTreatment}
+                  disabled={true}
                 />
               </View>
               <View className="ml-6">
@@ -315,7 +302,7 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
         </SafeAreaView>
 
         {/* modals */}
-        <ModalInternal
+        {/* <ModalInternal
           isOpen={isShowModalWithInHowManyDays}
           isTransparent={false}
           backgroundColor={yellowColor}
@@ -325,9 +312,9 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
             changeInHowManyDaysHandler={changeInHowManyDaysHandler}
             // whatOrderType={whatOrderType}
           />
-        </ModalInternal>
+        </ModalInternal> */}
 
-        <ModalInternal
+        {/* <ModalInternal
           isOpen={isShowDeleteModal}
           isTransparent={false}
           backgroundColor={yellowColor}
@@ -337,10 +324,10 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
             zpInfo={ZPSelected}
             actionFn={deleteItemFromListHandler}
           />
-        </ModalInternal>
+        </ModalInternal> */}
 
         {/* modal with info to confirm */}
-        <ModalInternal
+        {/* <ModalInternal
           isOpen={isShowInfoConfirmationModal}
           isTransparent={false}
           backgroundColor={yellowColor}
@@ -349,10 +336,10 @@ const OrderToNitrogenIrrigationModal = (props: Props) => {
             hideInfoConfirmationModal={hideInfoConfirmationModal}
             infoModalDetails={infoModalDetails}
           />
-        </ModalInternal>
+        </ModalInternal> */}
       </View>
     </View>
   );
 };
 
-export default OrderToNitrogenIrrigationModal;
+export default OrderToChemicalTreatmentsModal;

@@ -1,74 +1,46 @@
-import { ZpToNitrogenIrrigation } from "@/features/shared/types/interfaces-nitrogen_irrigation";
-import { ProtectiveTreatment } from "@/features/shared/types/interfaces-protective_treatment";
+import AppPath from "@/features/shared/ui/app-path/AppPath";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   FIELD_CROPS,
   FIELD_CROPS_WORKS,
   INDEX,
+  POTTED_PLANTS,
+  POTTED_PLANTS_WORKS,
 } from "@/features/shared/types/interfaces-navigation";
-import AppPath from "@/features/shared/ui/app-path/AppPath";
-import ListItemName from "../../../../all_crops/extra_works_zp/ui/ListItemName";
 import ButtonBack from "@/features/shared/ui/button/ButtonBack";
 import { router } from "expo-router";
+import ListItemName from "@/features/app/all_crops/extra_works_zp/ui/ListItemName";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
-import ContainerHorizontalRoundedFrame from "@/features/shared/ui/container/ContainerHorizontalRoundedFrame";
-import { Image } from "expo-image";
-import images from "@/features/shared/constants/images";
-import { MESSAGES } from "@/features/shared/utils/messages";
-import { FlatList, RefreshControl } from "react-native-gesture-handler";
-import ZpToListInfoItem from "../../cut/ui/ZpToListInfoItem";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
 import { yellowColor } from "@/features/shared/constants/colorThemeVars";
-
-import NitrogenIrrigationConfirmationModal from "./NitrogenIrrigationConfirmationModal";
-import OrderToNitrogenIrrigationModal from "./OrderToNitrogenIrrigationModal";
-import { useChosenProtectiveTreatment } from "../domain/useChosenProtectiveTreatment";
-import SelectConcentrationOfNitrogenModal from "./SelectConcentrationOfNitrogenModal";
-import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
+import OrderToChemicalTreatmentsModal from "./OrderToChemicalTreatmentsModal";
+import ChemicalTreatmentsConfirmationModal from "./ChemicalTreatmentsConfirmationModal";
 
 type Props = {
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  nitrogenIrrigationList: ZpToNitrogenIrrigation[];
   isLoading: boolean;
-  refreshAllData: () => void;
-  protectiveTreatments: ProtectiveTreatment[];
-  extraWorks: ExtraWork[];
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  // nitrogenIrrigationList: ZpToNitrogenIrrigation[];
+  // refreshAllData: () => void;
+  // protectiveTreatments: ProtectiveTreatment[];
+  // extraWorks: ExtraWork[];
 };
 
-const NitrogenIrrigationMainWindow = (props: Props) => {
+const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
+  props: Props,
+) => {
   ////vars
-  const {
-    setIsLoading,
-    nitrogenIrrigationList,
-    isLoading,
-    refreshAllData,
-    protectiveTreatments,
-    extraWorks,
-  } = props;
-
-  const extraWorkForNitrogenIrrigation = extraWorks.find((extraWork) =>
-    extraWork.activityname.startsWith("230"),
-  );
+  const { isLoading, setIsLoading } = props;
 
   //state
   const [
-    isShowNitrogenIrrigationConfirmationModal,
-    setIsShowNitrogenIrrigationConfirmationModal,
+    isShowChemicalTreatmentsConfirmationModal,
+    setIsShowChemicalTreatmentsConfirmationModal,
   ] = useShowModal();
   const [
-    isShowOrderToNitrogenIrrigationModal,
-    setIsShowOrderToNitrogenIrrigationModal,
+    isShowOrderToChemicalTreatmentsModal,
+    setIsShowOrderToChemicalTreatmentsModal,
   ] = useShowModal();
-  const {
-    protectiveTreatment,
-    isShowModalWithSelectConcentration,
-
-    setIsShowModalWithSelectConcentration,
-    resetValuesForProtectiveTreatments,
-    changeProtectiveTreatment,
-  } = useChosenProtectiveTreatment();
-
   ////tsx
   return (
     <View className="relative w-full h-full">
@@ -77,9 +49,9 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
           <AppPath
             paths={[
               INDEX,
-              FIELD_CROPS,
-              FIELD_CROPS_WORKS,
-              { actionFn: () => {}, name: "Podlewanie azotem" },
+              POTTED_PLANTS,
+              POTTED_PLANTS_WORKS,
+              { actionFn: () => {}, name: "Zabiegi chemiczne" },
             ]}
           />
         </View>
@@ -96,20 +68,20 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
 
                 <View className="w-full">
                   <ListItemName
-                    title="zlecenie podlewania azotem"
+                    title="zlecenie zabiegu chemicznego"
                     id={0}
                     actionFn={() =>
-                      setIsShowOrderToNitrogenIrrigationModal(true)
+                      setIsShowOrderToChemicalTreatmentsModal(true)
                     }
                   />
                 </View>
 
                 <View className="w-full">
                   <ListItemName
-                    title="potwierdzenie podlewania azotem"
+                    title="potwierdzenie zabiegu chemicznego"
                     id={0}
                     actionFn={() =>
-                      setIsShowNitrogenIrrigationConfirmationModal(true)
+                      setIsShowChemicalTreatmentsConfirmationModal(true)
                     }
                   />
                 </View>
@@ -118,10 +90,10 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
 
             <View className="flex-col items-center w-full mt-8">
               <Text className="text-foreground font-default-normal">
-                lista ZPków zleconych do podlania azotem:
+                lista ZPków zleconych do zabiegów chemicznych:
               </Text>
             </View>
-            <ContainerHorizontalRoundedFrame>
+            {/* <ContainerHorizontalRoundedFrame>
               {!nitrogenIrrigationList || !nitrogenIrrigationList.length ? (
                 <View className="relative flex-1 w-full h-full">
                   <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
@@ -168,7 +140,7 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
                   />
                 </View>
               ) : null}
-            </ContainerHorizontalRoundedFrame>
+            </ContainerHorizontalRoundedFrame> */}
           </View>
 
           <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
@@ -181,47 +153,47 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
       </SafeAreaView>
 
       <ModalInternal
-        isOpen={isShowNitrogenIrrigationConfirmationModal}
+        isOpen={isShowOrderToChemicalTreatmentsModal}
         isTransparent={false}
         backgroundColor={yellowColor}
       >
-        <NitrogenIrrigationConfirmationModal
-          closeFn={() => setIsShowNitrogenIrrigationConfirmationModal(false)}
+        <OrderToChemicalTreatmentsModal
+          closeFn={() => setIsShowOrderToChemicalTreatmentsModal(false)}
           setIsLoading={setIsLoading}
-          setIsShowModalWithSelectConcentration={
-            setIsShowModalWithSelectConcentration
-          }
-          protectiveTreatment={protectiveTreatment}
-          resetValuesForProtectiveTreatments={
-            resetValuesForProtectiveTreatments
-          }
-          extraWork={extraWorkForNitrogenIrrigation!}
-          protectiveTreatments={protectiveTreatments}
-          refreshAllData={refreshAllData}
-          nitrogenIrrigationList={nitrogenIrrigationList}
+          // protectiveTreatment={protectiveTreatment}
+          // setIsShowModalWithSelectConcentration={
+          //   setIsShowModalWithSelectConcentration
+          // }
+          // resetValuesForProtectiveTreatments={
+          //   resetValuesForProtectiveTreatments
+          // }
+          // nitrogenIrrigationList={nitrogenIrrigationList}
         />
       </ModalInternal>
 
       <ModalInternal
-        isOpen={isShowOrderToNitrogenIrrigationModal}
+        isOpen={isShowChemicalTreatmentsConfirmationModal}
         isTransparent={false}
         backgroundColor={yellowColor}
       >
-        <OrderToNitrogenIrrigationModal
-          closeFn={() => setIsShowOrderToNitrogenIrrigationModal(false)}
+        <ChemicalTreatmentsConfirmationModal
+          closeFn={() => setIsShowChemicalTreatmentsConfirmationModal(false)}
           setIsLoading={setIsLoading}
-          protectiveTreatment={protectiveTreatment}
-          setIsShowModalWithSelectConcentration={
-            setIsShowModalWithSelectConcentration
-          }
-          resetValuesForProtectiveTreatments={
-            resetValuesForProtectiveTreatments
-          }
-          nitrogenIrrigationList={nitrogenIrrigationList}
+          // setIsShowModalWithSelectConcentration={
+          //   setIsShowModalWithSelectConcentration
+          // }
+          // protectiveTreatment={protectiveTreatment}
+          // resetValuesForProtectiveTreatments={
+          //   resetValuesForProtectiveTreatments
+          // }
+          // extraWork={extraWorkForNitrogenIrrigation!}
+          // protectiveTreatments={protectiveTreatments}
+          // refreshAllData={refreshAllData}
+          // nitrogenIrrigationList={nitrogenIrrigationList}
         />
       </ModalInternal>
 
-      <ModalInternal
+      {/* <ModalInternal
         isOpen={isShowModalWithSelectConcentration}
         isTransparent={false}
         backgroundColor={yellowColor}
@@ -233,8 +205,9 @@ const NitrogenIrrigationMainWindow = (props: Props) => {
           changeProtectiveTreatment={changeProtectiveTreatment}
           isLoading={isLoading}
         />
-      </ModalInternal>
+      </ModalInternal> */}
     </View>
   );
 };
-export default NitrogenIrrigationMainWindow;
+
+export default PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow;

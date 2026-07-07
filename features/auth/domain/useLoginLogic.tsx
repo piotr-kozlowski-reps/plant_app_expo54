@@ -266,6 +266,7 @@ export const useLoginLogic = () => {
             //potted_plants_works
             potted_plants_works_internal_transport: true,
             potted_plants_works_order_to_internal_transport: true,
+            potted_plants_works_chemical_treatments: true,
 
             //potted_plants_tray_operations
             potted_plants_tray_operations_disconnect_from_zp: true,
