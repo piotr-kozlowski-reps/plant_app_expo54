@@ -10,7 +10,7 @@ import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
 import { useScanHelpers } from "@/features/shared/utils/useScanHelpers";
-import { ERROR_MESSAGES } from "@/features/shared/utils/messages";
+import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { useScannedValuesForZP } from "@/features/app/all_crops/orders_all/domain/useScannedValuesForZP";
 import { InfoModal } from "@/features/shared/types/interfaces-general";
 import { getIsPossibleToProcess_After13_guard } from "@/features/shared/utils/guards/cannotOrderAfter13_guard";
@@ -90,6 +90,30 @@ export const useScanValuesForOrderChemicalTreatments = (
     }
 
     setInHowManyDays(inHowManyDaysInput);
+  };
+
+  const deleteValueFromList = (
+    zpInfo: ZPShortenedInfoWithoutTwrnzw | null,
+  ): void => {
+    if (zpInfo === null) {
+      toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO);
+      return;
+    }
+
+    toast.success(MESSAGES.ZP_DELETED_SUCCESS);
+    const updatedValues = scannedValues.filter(
+      (zp) => zp.ordnmb !== zpInfo.ordnmb,
+    );
+    setScannedValues(updatedValues);
+  };
+
+  const resetValues = () => {
+    setInHowManyDays(1);
+    resetValuesForChemicalTreatments();
+    setIsFieldScanned(false);
+    setIsZPScanned(false);
+    setZPSelected(null);
+    setScannedValues([]);
   };
 
   //fn
@@ -196,6 +220,8 @@ export const useScanValuesForOrderChemicalTreatments = (
     scannedValues,
     inHowManyDays,
     isShowModalWithInHowManyDays,
+    isShowDeleteModal,
+    ZPSelected,
 
     setQrLock,
     scanValueHandler,
@@ -204,6 +230,8 @@ export const useScanValuesForOrderChemicalTreatments = (
     setZPSelected,
     setIsShowModalWithInHowManyDays,
     changeInHowManyDaysHandler,
+    resetValues,
+    deleteValueFromList,
   };
 
   /** helpers */
@@ -251,6 +279,14 @@ export const useScanValuesForOrderChemicalTreatments = (
       stkcnt: foundZP.stkcnt,
       scanned_raw_value: scannedValue,
     };
-    setScannedValues((prev) => [...prev, ZPInfo]);
+
+    setScannedValues((prev) => {
+      const foundZPInList = prev.find((zp) => zp.ordnmb === ZPInfo.ordnmb);
+      if (foundZPInList) {
+        return prev;
+      }
+
+      return [...prev, ZPInfo];
+    });
   }
 };

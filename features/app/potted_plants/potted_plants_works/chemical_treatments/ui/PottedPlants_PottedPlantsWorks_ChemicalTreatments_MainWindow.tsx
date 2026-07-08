@@ -22,7 +22,6 @@ import { Image } from "expo-image";
 import images from "@/features/shared/constants/images";
 import { MESSAGES } from "@/features/shared/utils/messages";
 import { FlatList, RefreshControl } from "react-native-gesture-handler";
-import ZpToListInfoItem from "@/features/app/field_crops/field_crops_works/cut/ui/ZpToListInfoItem";
 import ZpToListInfoForChemicalTreatmentsDonItem from "./ZpToListInfoForChemicalTreatmentsDonItem";
 import { useChosenChemicalTreatment } from "../domain/useChosenChemicalTreatment";
 import SelectChemicalTreatmentModal from "./SelectChemicalTreatmentModal";

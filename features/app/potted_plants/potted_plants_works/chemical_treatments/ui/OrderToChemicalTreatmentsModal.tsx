@@ -33,6 +33,9 @@ import { MESSAGES } from "@/features/shared/utils/messages";
 import ZPItemInOrdersAllInfo from "@/features/app/all_crops/orders_all/ui/ZPItemInOrdersAllInfo";
 import HowManyDaysToOrderNitrogenIrrigationModal from "@/features/app/field_crops/field_crops_works/nitrogen_irrigation/ui/HowManyDaysToOrderNitrogenIrrigationModal";
 import { ZpToChemicalTreatments } from "@/features/shared/types/interfaces-chemical_treatments_don";
+import { useEffect } from "react";
+import { useSendOrderNitrogenIrrigation } from "@/features/app/field_crops/field_crops_works/nitrogen_irrigation/domain/useSendOrderNitrogenIrrigation";
+import DeleteZpForOrdersAllModal from "@/features/app/all_crops/orders_all/ui/DeleteZpForOrdersAllModal";
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,8 +74,8 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
     scannedValues,
     isShowModalWithInHowManyDays,
     inHowManyDays,
-    //   isShowDeleteModal,
-    //   ZPSelected,
+    isShowDeleteModal,
+    ZPSelected,
     infoModalDetails,
     isShowInfoConfirmationModal,
 
@@ -82,29 +85,33 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
     setQrLock,
     scanValueHandler,
     changeInHowManyDaysHandler,
-    //   deleteValueFromList,
-    //   resetValues,
+    deleteValueFromList,
+    resetValues,
     hideInfoConfirmationModal,
-    //   // resetScannedValue,
   } = useScanValuesForOrderChemicalTreatments(
     setIsLoading,
     resetValuesForChemicalTreatments,
     chemicalTreatmentsDonList,
   );
 
-  // /** delete item from list handler */
-  // const deleteItemFromListHandler = () => {
-  //   deleteValueFromList(ZPSelected);
-  // };
+  /** delete item from list handler */
+  const deleteItemFromListHandler = () => {
+    deleteValueFromList(ZPSelected);
+  };
 
-  // /** send nitrogen irrigation orders  */
-  // const sendValuesForOrderNitrogenIrrigationHandler =
-  //   useSendOrderNitrogenIrrigation(setIsLoading, resetValues);
+  /** send nitrogen irrigation orders  */
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/app/field_crops/field_crops_works/nitrogen_irrigation/domain/useSendOrderNitrogenIrrigation.tsx`
+   */
+  const sendValuesForOrderNitrogenIrrigationHandler =
+    useSendOrderNitrogenIrrigation(setIsLoading, resetValues);
 
-  // /** set treatment to null when opened component*/
-  // useEffect(() => {
-  //   resetValuesForProtectiveTreatments();
-  // }, []);
+  /** set treatment to null when opened component*/
+  useEffect(() => {
+    resetValuesForChemicalTreatments();
+  }, []);
 
   ////tsx
   return (
@@ -287,18 +294,16 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
             <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
               <View className="flex-1">
                 <ButtonTextAndThreeArrows
-                  // actionFn={() =>
-                  //   sendValuesForOrderNitrogenIrrigationHandler({
-                  //     scannedValues,
-                  //     inHowManyDays,
-                  //     protectiveTreatment,
-                  //   })
-                  // }
-                  actionFn={() => {}}
+                  actionFn={() =>
+                    sendValuesForOrderNitrogenIrrigationHandler({
+                      scannedValues,
+                      inHowManyDays,
+                      protectiveTreatment: chemicalTreatmentDon,
+                    })
+                  }
                   text="wyślij"
                   isBackground
-                  // disabled={scannedValues.length === 0 || !protectiveTreatment}
-                  disabled={true}
+                  disabled={scannedValues.length === 0 || !chemicalTreatmentDon}
                 />
               </View>
               <View className="ml-6">
@@ -326,7 +331,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
           />
         </ModalInternal>
 
-        {/* <ModalInternal
+        <ModalInternal
           isOpen={isShowDeleteModal}
           isTransparent={false}
           backgroundColor={yellowColor}
@@ -336,7 +341,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
             zpInfo={ZPSelected}
             actionFn={deleteItemFromListHandler}
           />
-        </ModalInternal> */}
+        </ModalInternal>
 
         {/* modal with info to confirm */}
         <ModalInternal
