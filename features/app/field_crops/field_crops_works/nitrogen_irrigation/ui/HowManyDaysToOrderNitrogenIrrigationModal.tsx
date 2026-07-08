@@ -13,6 +13,7 @@ import { View, Text, ScrollView } from "react-native";
 type Props = {
   closeFn: () => void;
   changeInHowManyDaysHandler: (inHowManyDaysInput: number) => void;
+  is7Days?: boolean;
 };
 
 /**
@@ -23,7 +24,7 @@ type Props = {
  */
 const HowManyDaysToOrderNitrogenIrrigationModal = (props: Props) => {
   ////vars
-  const { closeFn, changeInHowManyDaysHandler } = props;
+  const { closeFn, changeInHowManyDaysHandler, is7Days } = props;
   const { addDaysToDate, getDayNameInPolish } = useDatesHelper();
 
   const inHowManyDaysKeyValue: InHowManyDaysKeyValue[] = [
@@ -33,6 +34,13 @@ const HowManyDaysToOrderNitrogenIrrigationModal = (props: Props) => {
     { name: "+ 4 dni", value: 4 },
     { name: "+ 5 dni", value: 5 },
   ];
+  if (is7Days) {
+    inHowManyDaysKeyValue.push(
+      { name: "+ 6 dni", value: 6 },
+      { name: "+ 7 dni", value: 7 },
+    );
+  }
+
   const inHowManyDaysText = "Wybierz za ile dni";
 
   //fn

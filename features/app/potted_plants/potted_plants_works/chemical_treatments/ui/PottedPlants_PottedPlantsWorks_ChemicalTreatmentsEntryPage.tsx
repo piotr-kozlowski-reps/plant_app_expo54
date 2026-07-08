@@ -24,10 +24,10 @@ import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
  * @public
  * @procedureDescription
  * @order 1
- * <b>a)</b> zlecenie zabiegu chemicznego: ????????????TODO
- *      1. scan QR  lokalizacji/ ZPka
+ * <b>a)</b> zlecenie zabiegu chemicznego:
+ *      1. scan QR lokalizacji/ ZPka
  *      2. formularz:
- *            - wybór stężenia
+ *            - wybór środka chemicznego
  *            - data zlecenia
  * <b>b)</b> potwierdzenie zabiegu chemicznego: ????????????TODO
  *      1. scan QR  lokalizacji/ ZPka

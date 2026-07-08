@@ -15,19 +15,67 @@ import { FormikHelpers, useFormik } from "formik";
 import { toast } from "sonner-native";
 import * as yup from "yup";
 import { Keyboard } from "react-native";
+import { parseStringToFloatAndReplaceCommaWithDigit } from "@/features/shared/utils/utils_number";
 
+//common elements
+export const initialValuesProtectiveTreatment = {
+  quantity: 0,
+  treatment: null,
+  who: null,
+  treatment_type: null,
+};
+let patternTwoDigitsAfterComma = /^\d+(\.\d{0,2})?$/;
+export const validationSchemaProtectiveTreatment = yup.object({
+  quantity: yup
+    .string()
+    .required(VALIDATION_MESSAGES.FIELD_REQUIRED)
+    .test("positive", VALIDATION_MESSAGES.POSITIVE, (value: any) => {
+      const valueAsNumber = parseStringToFloatAndReplaceCommaWithDigit(value);
+      return valueAsNumber > 0;
+    })
+    .test(
+      "is_decimal_with_two_digits",
+      VALIDATION_MESSAGES.IS_DECIMAL_WITH_MAX_TWO_DIGITS,
+      (value: any) => {
+        if (value != undefined) {
+          const valueAsNumber =
+            parseStringToFloatAndReplaceCommaWithDigit(value);
+          return patternTwoDigitsAfterComma.test(valueAsNumber.toString());
+        }
+        return false;
+      },
+    ),
+  treatment: yup
+    .object<ProtectiveTreatmentInput>()
+    .required(VALIDATION_MESSAGES.FIELD_REQUIRED),
+  who: yup
+    .string()
+    .test(
+      "is value of WhoDidProtectiveTreatment",
+      VALIDATION_MESSAGES.NO_GOOD,
+      (value: any) => {
+        return value in WhoDidProtectiveTreatmentValues;
+      },
+    )
+    .required(VALIDATION_MESSAGES.FIELD_REQUIRED),
+  treatment_type: yup
+    .object<Combobox<ExtraWork>>()
+    .required(VALIDATION_MESSAGES.FIELD_REQUIRED),
+});
+
+////hook
 export const useProtectiveTreatmentFormik = (
   setDataForProtectiveTreatment: (
     quantity: number,
     treatment: ProtectiveTreatment,
     treatmentType: ExtraWork,
-    who: WhoDidProtectiveTreatment
+    who: WhoDidProtectiveTreatment,
   ) => void,
-  setIsShowScanner: React.Dispatch<React.SetStateAction<boolean>>
+  setIsShowScanner: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const onSubmit = async (
     value: ProtectiveTreatmentInput,
-    formikHelpers: FormikHelpers<ProtectiveTreatmentInput>
+    formikHelpers: FormikHelpers<ProtectiveTreatmentInput>,
   ) => {
     if (
       !value ||
@@ -41,7 +89,7 @@ export const useProtectiveTreatmentFormik = (
     }
 
     const quantity: number = parseStringToFloatAndReplaceCommaWithDigit(
-      value.quantity
+      value.quantity,
     );
     const treatment: ProtectiveTreatment = value.treatment;
     const treatmentType: ExtraWork = value.treatment_type;
@@ -53,56 +101,10 @@ export const useProtectiveTreatmentFormik = (
     Keyboard.dismiss();
   };
 
-  let patternTwoDigitsAfterComma = /^\d+(\.\d{0,2})?$/;
-  function parseStringToFloatAndReplaceCommaWithDigit(value: any) {
-    return Number.parseFloat(value.toString().replace(",", "."));
-  }
   const formikProtectiveTreatment = useFormik<ProtectiveTreatmentInput>({
-    initialValues: {
-      quantity: 0,
-      treatment: null,
-      who: null,
-      treatment_type: null,
-    },
+    initialValues: initialValuesProtectiveTreatment,
     onSubmit: onSubmit,
-    validationSchema: yup.object({
-      quantity: yup
-        .string()
-        .required(VALIDATION_MESSAGES.FIELD_REQUIRED)
-        .test("positive", VALIDATION_MESSAGES.POSITIVE, (value: any) => {
-          const valueAsNumber =
-            parseStringToFloatAndReplaceCommaWithDigit(value);
-          return valueAsNumber > 0;
-        })
-        .test(
-          "is_decimal_with_two_digits",
-          VALIDATION_MESSAGES.IS_DECIMAL_WITH_MAX_TWO_DIGITS,
-          (value: any) => {
-            if (value != undefined) {
-              const valueAsNumber =
-                parseStringToFloatAndReplaceCommaWithDigit(value);
-              return patternTwoDigitsAfterComma.test(valueAsNumber.toString());
-            }
-            return false;
-          }
-        ),
-      treatment: yup
-        .object<ProtectiveTreatmentInput>()
-        .required(VALIDATION_MESSAGES.FIELD_REQUIRED),
-      who: yup
-        .string()
-        .test(
-          "is value of WhoDidProtectiveTreatment",
-          VALIDATION_MESSAGES.NO_GOOD,
-          (value: any) => {
-            return value in WhoDidProtectiveTreatmentValues;
-          }
-        )
-        .required(VALIDATION_MESSAGES.FIELD_REQUIRED),
-      treatment_type: yup
-        .object<Combobox<ExtraWork>>()
-        .required(VALIDATION_MESSAGES.FIELD_REQUIRED),
-    }),
+    validationSchema: validationSchemaProtectiveTreatment,
   });
 
   //form helpers

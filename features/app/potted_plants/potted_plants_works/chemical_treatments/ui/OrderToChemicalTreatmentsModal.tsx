@@ -36,6 +36,7 @@ import { ZpToChemicalTreatments } from "@/features/shared/types/interfaces-chemi
 import { useEffect } from "react";
 import { useSendOrderNitrogenIrrigation } from "@/features/app/field_crops/field_crops_works/nitrogen_irrigation/domain/useSendOrderNitrogenIrrigation";
 import DeleteZpForOrdersAllModal from "@/features/app/all_crops/orders_all/ui/DeleteZpForOrdersAllModal";
+import { useSendOrderChemicalTreatment } from "../domain/useSendOrderChemicalTreatment";
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -99,14 +100,9 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
     deleteValueFromList(ZPSelected);
   };
 
-  /** send nitrogen irrigation orders  */
-  /**
-   * @public
-   * @procedureItem
-   * @readFile `features/app/field_crops/field_crops_works/nitrogen_irrigation/domain/useSendOrderNitrogenIrrigation.tsx`
-   */
-  const sendValuesForOrderNitrogenIrrigationHandler =
-    useSendOrderNitrogenIrrigation(setIsLoading, resetValues);
+  /** send chemical treatment orders  */
+  const sendValuesForOrderChemicalTreatmentHandler =
+    useSendOrderChemicalTreatment(setIsLoading, resetValues);
 
   /** set treatment to null when opened component*/
   useEffect(() => {
@@ -202,7 +198,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
                       text={`${
                         chemicalTreatmentDon
                           ? chemicalTreatmentDon.dscrpt
-                          : "wybierz zabieg"
+                          : "środek chemiczny"
                       }`}
                       icon={
                         <View className="ml-2">
@@ -295,7 +291,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
               <View className="flex-1">
                 <ButtonTextAndThreeArrows
                   actionFn={() =>
-                    sendValuesForOrderNitrogenIrrigationHandler({
+                    sendValuesForOrderChemicalTreatmentHandler({
                       scannedValues,
                       inHowManyDays,
                       protectiveTreatment: chemicalTreatmentDon,
@@ -327,6 +323,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
           <HowManyDaysToOrderNitrogenIrrigationModal
             closeFn={() => setIsShowModalWithInHowManyDays(false)}
             changeInHowManyDaysHandler={changeInHowManyDaysHandler}
+            is7Days
             // whatOrderType={whatOrderType}
           />
         </ModalInternal>

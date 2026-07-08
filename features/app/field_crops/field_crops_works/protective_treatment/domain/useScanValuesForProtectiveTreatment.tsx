@@ -13,7 +13,7 @@ import { audioScanSoundSource } from "@/features/shared/constants/sounds";
 import { useCheckWhatValueIsScannedHelpers } from "@/features/shared/utils/useCheckWhatValueIsScannedHelpers";
 import { toast } from "sonner-native";
 import { useErrorHandler } from "@/features/shared/utils/useErrorHandler";
-import { MESSAGES } from "@/features/shared/utils/messages";
+import { ERROR_MESSAGES, MESSAGES } from "@/features/shared/utils/messages";
 import { RestOfLocalizationsDespiteOfOneChosen } from "@/features/shared/types/interfaces-localization";
 import { useScannedValuesForExtraWorks } from "@/features/shared/utils/useScannedValuesForExtraWorks";
 import { useRestOfLocalizationsHelpers } from "@/features/shared/utils/useRestOfLocalizationsHelpers";
@@ -23,6 +23,7 @@ import { useScanZpOrTrayHandler } from "@/features/app/all_crops/extra_works_zp/
 
 export const useScanValuesForProtectiveTreatment = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  isDon?: boolean,
 ) => {
   ////vars
   const player = useAudioPlayer(audioScanSoundSource);
@@ -95,13 +96,18 @@ export const useScanValuesForProtectiveTreatment = (
       "tray",
       "field",
       "zp_gru",
+      "zp_don",
     ]);
-    if (!isScannedDataCorrect) return;
+    if (!isScannedDataCorrect) {
+      toast.warning(ERROR_MESSAGES.SCANNED_WRONG_ELEMENT);
+      return;
+    }
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
-    const isZP = whatValueWasScanned === "zp_gru";
+    const isZPGru = whatValueWasScanned === "zp_gru";
     const isField = whatValueWasScanned === "field";
     const isTray = whatValueWasScanned === "tray";
+    const isZpDon = whatValueWasScanned === "zp_don";
 
     try {
       setIsLoading(true);
@@ -113,7 +119,7 @@ export const useScanValuesForProtectiveTreatment = (
        * jeżeli skan ZP lub tacy:
        * @readFile `features/app/all_crops/extra_works_zp/domain/useScanZpOrTrayHandler.tsx`
        */
-      if (isZP) {
+      if (isZPGru && !isDon) {
         await scanZpOrTrayHandler(
           {
             scannedValue,
@@ -128,6 +134,10 @@ export const useScanValuesForProtectiveTreatment = (
           "zp_gru",
         );
         return;
+      }
+
+      if (!isZPGru && isDon) {
+        alert("zeskanowano DON.");
       }
 
       if (isTray) {

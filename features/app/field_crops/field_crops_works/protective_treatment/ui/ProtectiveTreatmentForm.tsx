@@ -23,16 +23,26 @@ import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndT
 import { useScanValuesForProtectiveTreatment } from "../domain/useScanValuesForProtectiveTreatment";
 import { useShowModal } from "@/features/shared/utils/useShowModal";
 import ModalInternal from "@/features/shared/ui/modal/ModalInternal";
-import {
-  primaryColor,
-  yellowColor,
-} from "@/features/shared/constants/colorThemeVars";
+import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import ProtectiveTreatmentScannerModal from "./ProtectiveTreatmentScannerModal";
 import {
   KeyboardAwareScrollView,
   KeyboardToolbar,
 } from "react-native-keyboard-controller";
 import AnotherLocalizationsToBeTreatedModal from "./AnotherLocalizationsToBeTreatedModal";
+
+export const comboboxItems_WhoDidProtectiveTreatment: Combobox<
+  "ROBOT" | "ZESPOL"
+>[] = [
+  {
+    value: "ROBOT",
+    visibleText: "Robot",
+  },
+  {
+    value: "ZESPOL",
+    visibleText: "Zespół",
+  },
+];
 
 type Props = {
   isLoading: boolean;
@@ -49,7 +59,6 @@ const ProtectiveTreatmentForm = (props: Props) => {
     isLoading,
     setIsLoading,
     protectiveTreatments,
-    extraWorks,
     typeOfTreatment,
     refreshAllData,
   } = props;
@@ -167,16 +176,7 @@ const ProtectiveTreatmentForm = (props: Props) => {
                     formik={formik}
                     formikField="who"
                     isVerifiedAtOnce={true}
-                    comboboxItems={[
-                      {
-                        value: "ROBOT",
-                        visibleText: "Robot",
-                      },
-                      {
-                        value: "ZESPOL",
-                        visibleText: "Zespół",
-                      },
-                    ]}
+                    comboboxItems={comboboxItems_WhoDidProtectiveTreatment}
                     refreshAllData={() => {}}
                   />
                 </View>

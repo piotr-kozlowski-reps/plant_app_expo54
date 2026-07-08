@@ -45,6 +45,7 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
     chemicalTreatmentsDonList,
     chemicalTreatmentsDon,
     refreshAllData,
+    extraWorks,
   } = props;
 
   //state
@@ -208,6 +209,9 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
         <ChemicalTreatmentsConfirmationModal
           closeFn={() => setIsShowChemicalTreatmentsConfirmationModal(false)}
           setIsLoading={setIsLoading}
+          chemicalTreatmentsDon={chemicalTreatmentsDon}
+          extraWorks={extraWorks}
+          isLoading={isLoading}
           // setIsShowModalWithSelectConcentration={
           //   setIsShowModalWithSelectConcentration
           // }
@@ -216,8 +220,7 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
           //   resetValuesForProtectiveTreatments
           // }
           // extraWork={extraWorkForNitrogenIrrigation!}
-          // protectiveTreatments={protectiveTreatments}
-          // refreshAllData={refreshAllData}
+          refreshAllData={refreshAllData}
           // nitrogenIrrigationList={nitrogenIrrigationList}
         />
       </ModalInternal>

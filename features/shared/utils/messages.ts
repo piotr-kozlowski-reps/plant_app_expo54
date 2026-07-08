@@ -161,6 +161,7 @@ export const ERROR_MESSAGES = {
   PRODUCTION_ORDER_BAD_VALUE: "Zeskanowa wartość jest niepoprawna.",
   LACK_OF_EXTRA_WORK: "Brak informacji o wykonanej pracy extra.",
   LACK_OF_NITROGEN_CONCENTRATION: "Brak informacji o stężeniu azotu.",
+  LACK_OF_CHEMICAL_TREATMENT: "Brak informacji o zabiegu chemicznym.",
   LACK_OF_ZP: "Brak informacji o zeskanowanych ZP-kach.",
   LACK_OF_CHOSEN_ZP: "Brak informacji o wybranym ZP-ku.",
   LACK_OF_DATE: "Brak informacji o dacie wykonania pracy extra.",
@@ -172,6 +173,8 @@ export const ERROR_MESSAGES = {
     "Brak informacji za ile dni praca ma być wykonana.",
   LACK_OF_IN_HOW_MANY_DAYS_TO_IRRIGATE_WITH_NITROGEN:
     "Brak informacji za ile dni ma być podlane azotem.",
+  LACK_OF_IN_HOW_MANY_DAYS_TO_CHEMICAL_TREATMENT:
+    "Brak informacji za ile dni ma być wykonany zabieg chemiczny.",
   LACK_OF_ACTIVITY:
     "Nie mogę przesłać danych. Brak informacji o wybranej aktywności.",
   LACK_OF_SCANNED_VALUE:

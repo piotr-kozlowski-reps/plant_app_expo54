@@ -15,3 +15,21 @@ export type ZpToChemicalTreatments = {
   treatid: number;
   tredscrpt: string;
 };
+
+export type ChemicalTreatmentOrderSendDataDTO = {
+  //zp
+  sordid: number | null;
+  ordnmb: string;
+
+  //date
+  chemical_treatment_date: Date;
+
+  //protective treatment
+  treatid: number;
+  tredscrpt: string;
+
+  //scanned raw value
+  scanned_raw_value: string;
+};
+
+export type ChemicalTreatmentOrderResponse = string[];
