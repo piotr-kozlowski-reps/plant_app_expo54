@@ -126,7 +126,9 @@ export const useScanZpOrTrayHandler = () => {
      * jeżeli: activityid=value && is_repeated = false - NIE MOŻE wykonać pracy raz jeszcze
      */
     if (!checkIfExtraWorkCanBeRepeated(ZPFoundForThisActivityId)) {
-      toast.warning(ERROR_MESSAGES.THIS_EXTRA_WORK_CANNOT_BE_REPEATED);
+      toast.warning(ERROR_MESSAGES.THIS_EXTRA_WORK_CANNOT_BE_REPEATED, {
+        id: ERROR_MESSAGES.THIS_EXTRA_WORK_CANNOT_BE_REPEATED,
+      });
       return;
     }
 

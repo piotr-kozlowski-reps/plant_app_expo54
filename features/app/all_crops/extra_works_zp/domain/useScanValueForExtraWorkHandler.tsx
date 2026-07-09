@@ -33,6 +33,7 @@ type DataForScanField = {
   isFieldScanned: boolean;
   setScannedValues: React.Dispatch<React.SetStateAction<ZpScannedValue[]>>;
   setIsFieldScanned: React.Dispatch<React.SetStateAction<boolean>>;
+  isShouldScanDonZps?: boolean;
 };
 
 export const useScanValueForExtraWorkHandler = () => {
@@ -114,10 +115,13 @@ export const useScanValueForExtraWorkHandler = () => {
       isFieldScanned,
       setScannedValues,
       setIsFieldScanned,
+      isShouldScanDonZps,
     } = dataForScanField;
 
     if (isZPScanned) {
-      toast.warning(ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ZP_SCANNED_EARLIER);
+      toast.warning(ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ZP_SCANNED_EARLIER, {
+        id: ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ZP_SCANNED_EARLIER,
+      });
       return;
     }
 
@@ -134,13 +138,25 @@ export const useScanValueForExtraWorkHandler = () => {
       activityId,
     );
 
-    console.log({ listOfZPs });
-
-    //check if any of ZPs have "/ROZ" in name - if so (rozsada szklarniowa) - user cannnt do anything
+    //check if any of ZPs have "/ROZ" in name - if so (rozsada szklarniowa) - user cannot do anything
     const isRoz = listOfZPs.some((zp) => zp.ordnmb.endsWith("/ROZ"));
     if (isRoz) {
       toast.warning(ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ROZ);
       return;
+    }
+
+    //check if any ZPs have not "/DON" in name - if so - info for user he's doing also GRU or ROZ ZPs in place that only DON should be doneText
+    const isAnyGruZPInArray = listOfZPs.some((zp) =>
+      zp.ordnmb.endsWith("/GRU"),
+    );
+    const isAnyRozZPInArray = listOfZPs.some((zp) =>
+      zp.ordnmb.endsWith("/ROZ"),
+    );
+
+    if (isShouldScanDonZps && (isAnyGruZPInArray || isAnyRozZPInArray)) {
+      toast.warning(ERROR_MESSAGES.FIELD_HAS_OTHER_ZPS_THAN_DON, {
+        id: ERROR_MESSAGES.FIELD_HAS_OTHER_ZPS_THAN_DON,
+      });
     }
 
     const listOfZPsThatHasNotBeenScannedYet: ZpScannedValue[] = [];
@@ -150,7 +166,9 @@ export const useScanValueForExtraWorkHandler = () => {
         scannedValues,
       );
       if (isValueAlreadyScanned) {
-        toast.warning(`ZPk: "${zp.ordnmb}" został już wcześniej zeskanowany.`);
+        toast.warning(`ZPk: "${zp.ordnmb}" został już wcześniej zeskanowany.`, {
+          id: `ZPk: "${zp.ordnmb}" został już wcześniej zeskanowany.`,
+        });
       }
       if (!isValueAlreadyScanned) {
         listOfZPsThatHasNotBeenScannedYet.push(zp);
@@ -158,8 +176,6 @@ export const useScanValueForExtraWorkHandler = () => {
     });
 
     setScannedValues((prevValue) => {
-      console.log({ prevValue });
-      console.log({ listOfZPsThatHasNotBeenScannedYet });
       const listOfZpThatAreForSureNotOnScannedList: ZpScannedValue[] = [];
       listOfZPsThatHasNotBeenScannedYet.forEach((zp) => {
         const foundZpInList = prevValue.find(

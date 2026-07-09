@@ -194,6 +194,8 @@ export const ERROR_MESSAGES = {
   ERROR_WHEN_DELETING_PICTURES: "Błąd podczas usuwania zdjęć",
   ERROR_WHEN_DELETING_PICTURES_NO_DIRECTORY:
     "Błąd podczas usuwania zdjęć, brak informacji o katalogu z cache'em aplikacji.",
+  FIELD_HAS_OTHER_ZPS_THAN_DON:
+    "Lokalizacja zawiera ZP'eki inne niż rozsady doniczkowe.",
 } as const;
 
 export const MESSAGES = {

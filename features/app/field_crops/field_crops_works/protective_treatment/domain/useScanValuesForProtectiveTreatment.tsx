@@ -201,6 +201,7 @@ export const useScanValuesForProtectiveTreatment = (
           isFieldScanned,
           setScannedValues,
           setIsFieldScanned,
+          isShouldScanDonZps: isDon ? true : false,
         });
 
         forceChangeWhoDidProtectiveTreatmentToRobotWhenScannedField();
@@ -271,6 +272,7 @@ export const useScanValuesForProtectiveTreatment = (
       setWho("ROBOT");
       toast.warning(
         MESSAGES.FORCE_CHANGE_WHO_DID_PROTECTIVE_TREATMENT_TO_ROBOT,
+        { id: MESSAGES.FORCE_CHANGE_WHO_DID_PROTECTIVE_TREATMENT_TO_ROBOT },
       );
     }
   }
