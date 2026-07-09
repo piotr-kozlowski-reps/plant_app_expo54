@@ -61,7 +61,9 @@ export const useCutConfirmationFormik = (
     formikHelpers: FormikHelpers<CutConfirmationInput>,
   ) {
     if (!values || !values.height || !scannedValue || !cutsList) {
-      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {
+        id: ERROR_MESSAGES.NO_INFO_TO_SEND,
+      });
       return;
     }
 
@@ -119,7 +121,9 @@ export const useCutConfirmationFormik = (
       | Post_CutConfirmation_WhenNotFoundOnLIstToCut_DTO[],
   ) {
     if (!dataToBeSend) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

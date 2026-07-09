@@ -89,9 +89,13 @@ const ChooseFieldDetailsModal = (props: Props) => {
     try {
       setIsLoading(true);
       await send_GeneralWorks_PostMutation(dataToBeSent);
-      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS, {
+        id: MESSAGES.SEND_DATA_WITH_SUCCESS,
+      });
     } catch (error) {
-      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     } finally {
       setIsLoading(false);
       closeFn();

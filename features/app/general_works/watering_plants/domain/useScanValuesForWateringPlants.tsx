@@ -41,7 +41,8 @@ export const useScanValuesForWateringPlants = (
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     if (whatValueWasScanned === "unknown") {
-      toast.warning(`Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`);
+      const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`;
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
     if (whatValueWasScanned !== "field") {

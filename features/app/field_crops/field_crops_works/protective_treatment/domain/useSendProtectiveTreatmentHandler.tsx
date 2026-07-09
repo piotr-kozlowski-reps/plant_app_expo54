@@ -89,8 +89,14 @@ export const useSendProtectiveTreatmentHandler = (
     } = valuesToSendProtectiveTreatments;
 
     if (!extraWork || !scannedValues.length || !begin_date) {
-      if (!extraWork) toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK);
-      if (!scannedValues.length) toast.error(ERROR_MESSAGES.LACK_OF_ZP);
+      if (!extraWork)
+        toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK, {
+          id: ERROR_MESSAGES.LACK_OF_EXTRA_WORK,
+        });
+      if (!scannedValues.length)
+        toast.error(ERROR_MESSAGES.LACK_OF_ZP, {
+          id: ERROR_MESSAGES.LACK_OF_ZP,
+        });
       if (!begin_date) toast.error(ERROR_MESSAGES.LACK_OF_DATE);
       return;
     }
@@ -144,7 +150,9 @@ export const useSendProtectiveTreatmentHandler = (
   //helpers
   async function sendToServer(dataToBeSend: ProtectiveTreatmentSendDataDTO[]) {
     if (!dataToBeSend) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 
@@ -224,7 +232,7 @@ export const useSendProtectiveTreatmentHandler = (
 //   who: WhoDidProtectiveTreatment
 // ): Promise<void> {
 //   if (!quantity || !treatment || !treatmentType || !who) {
-//     toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+//     toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT});
 //   }
 
 //   const isScannedLocalization =
@@ -412,7 +420,7 @@ export const useSendProtectiveTreatmentHandler = (
 
 // async function sendToServer(dataToBeSend: ProtectiveTreatmentSendDataDTO[]) {
 //   if (!dataToBeSend) {
-//     toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+//     toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT});
 //     return;
 //   }
 

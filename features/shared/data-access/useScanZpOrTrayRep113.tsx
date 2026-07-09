@@ -27,12 +27,12 @@ export const useScanZpOrTrayRep113 = () => {
     whatValueWasScanned: TypeOfScannedValue,
   ): Promise<ZPDetailedInfo | null> {
     if (whatValueWasScanned !== "zp_gru" && whatValueWasScanned !== "tray") {
-      toast.warning(
+      const warningMessage =
         ERROR_MESSAGES.WRONG_PARAMETER +
-          "-> " +
-          whatValueWasScanned +
-          " -> scanZpOrTrayForOrderToHardenerHandler",
-      );
+        "-> " +
+        whatValueWasScanned +
+        " -> scanZpOrTrayForOrderToHardenerHandler";
+      toast.warning(warningMessage, { id: warningMessage });
       return null;
     }
 
@@ -51,7 +51,9 @@ export const useScanZpOrTrayRep113 = () => {
     }
 
     if (!foundItem) {
-      toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
+      toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC, {
+        id: ERROR_MESSAGES.NOT_FOUND_IN_LOC,
+      });
       return null;
     }
 

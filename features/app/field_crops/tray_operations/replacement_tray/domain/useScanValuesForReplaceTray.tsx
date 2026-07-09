@@ -51,7 +51,9 @@ export const useScanValuesForReplaceTray = (
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     const isTray = whatValueWasScanned === "tray";
     if (!isTray) {
-      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE);
+      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE, {
+        id: ERROR_MESSAGES.ONLY_TRAY_POSSIBLE,
+      });
       return;
     }
 
@@ -89,7 +91,9 @@ export const useScanValuesForReplaceTray = (
         );
 
         if (!trayReplacementResponse) {
-          toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+          toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+            id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+          });
           return;
         }
 
@@ -103,6 +107,9 @@ export const useScanValuesForReplaceTray = (
         if (newTrayId === oldTray.stk_id) {
           toast.warning(
             ERROR_MESSAGES.NEW_TRAY_MUST_BE_DIFFERENT_FROM_OLD_TRAY,
+            {
+              id: ERROR_MESSAGES.NEW_TRAY_MUST_BE_DIFFERENT_FROM_OLD_TRAY,
+            },
           );
           return;
         }
@@ -113,7 +120,9 @@ export const useScanValuesForReplaceTray = (
          * zabezpieczenie: parametr: <b>ostkid</b> (jeżeli jest równe null - to znaczy, że taca nie jest wysiana -> info +  koniec procedury)
          */
         if (trayReplacementResponse.ostkid === null) {
-          toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_SOWN);
+          toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_SOWN, {
+            id: ERROR_MESSAGES.TRAY_IS_NOT_SOWN,
+          });
           resetAllValues();
           return;
         }
@@ -125,7 +134,9 @@ export const useScanValuesForReplaceTray = (
          * (jeżeli jest równe 0 - to znaczy, że taca nie jest umyta lub jest przeznaczona do zniszczenia -> info +  koniec procedury)
          */
         if (trayReplacementResponse.nstkid === 0) {
-          toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_CLEANED_OR_IS_DESTROYED);
+          toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_CLEANED_OR_IS_DESTROYED, {
+            id: ERROR_MESSAGES.TRAY_IS_NOT_CLEANED_OR_IS_DESTROYED,
+          });
           resetAllValues();
           return;
         }
@@ -149,7 +160,9 @@ export const useScanValuesForReplaceTray = (
     newTray: TrayReplaceInfo | null,
   ) => {
     if (!oldTray || !newTray) {
-      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_TRAYS);
+      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_TRAYS, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_TRAYS,
+      });
       return;
     }
 
@@ -177,7 +190,9 @@ export const useScanValuesForReplaceTray = (
       !dataToBeSend.stknew ||
       !dataToBeSend.scanned_raw_value
     ) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
     /**

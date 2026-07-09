@@ -165,7 +165,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     const foundTray = traysLocal.find((item) => item.stk_id === tray.stk_id);
 
     if (!foundTray) {
-      toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST);
+      toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST, {
+        id: ERROR_MESSAGES.NO_TRAY_ON_THE_LIST,
+      });
       return;
     }
 

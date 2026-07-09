@@ -39,7 +39,10 @@ export const useSendWorkToPlanInGreenhouseCrops = (
       !workToPlan ||
       inHowManyDays === null
     ) {
-      if (!scannedValues.length) toast.error(ERROR_MESSAGES.LACK_OF_ZP);
+      if (!scannedValues.length)
+        toast.error(ERROR_MESSAGES.LACK_OF_ZP, {
+          id: ERROR_MESSAGES.LACK_OF_ZP,
+        });
       if (!workToPlan) toast.error(ERROR_MESSAGES.LACK_OF_WORK_TO_PLAN);
       if (!inHowManyDays)
         toast.error(ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_WORK_PLAN);
@@ -135,7 +138,9 @@ export const useSendWorkToPlanInGreenhouseCrops = (
     )[],
   ) {
     if (!dataToBeSend) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

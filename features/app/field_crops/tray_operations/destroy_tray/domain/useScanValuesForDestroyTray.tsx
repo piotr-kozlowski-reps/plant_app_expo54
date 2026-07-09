@@ -72,7 +72,9 @@ export const useScanValuesForDestroyTray = (
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     const isTray = whatValueWasScanned === "tray";
     if (!isTray) {
-      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE);
+      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE, {
+        id: ERROR_MESSAGES.ONLY_TRAY_POSSIBLE,
+      });
       return;
     }
 
@@ -88,7 +90,9 @@ export const useScanValuesForDestroyTray = (
       const foundTray = await scanTrayToBeDestroyedRep84(scannedValue);
 
       if (!foundTray || !foundTray.stk_id || !foundTray.ordnmb) {
-        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+          id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+        });
         return;
       }
 
@@ -99,7 +103,9 @@ export const useScanValuesForDestroyTray = (
        * zabezpieczenie: parametr: doc_id (jeżeli jest doc_id/nie jest nullem - to znaczy, że taca już zniszczona -> info + koniec procedury)
        */
       if (foundTray.doc_id) {
-        toast.warning(ERROR_MESSAGES.TRAY_ALREADY_DESTROYED);
+        toast.warning(ERROR_MESSAGES.TRAY_ALREADY_DESTROYED, {
+          id: ERROR_MESSAGES.TRAY_ALREADY_DESTROYED,
+        });
         return;
       }
 

@@ -143,7 +143,9 @@ export const useScanValuesForPlantsComingUpsCounter = (
     const foundTray = traysLocal.find((item) => item.stk_id === tray.stk_id);
 
     if (!foundTray) {
-      toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST);
+      toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST, {
+        id: ERROR_MESSAGES.NO_TRAY_ON_THE_LIST,
+      });
       return;
     }
 
@@ -233,7 +235,9 @@ export const useScanValuesForPlantsComingUpsCounter = (
 
     //check if tray is already scanned
     if (checkIfTrayIsAlreadyScanned(scannedStk_id, trays)) {
-      toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED);
+      toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED, {
+        id: ERROR_MESSAGES.VALUE_ALREADY_SCANNED,
+      });
       return;
     }
 

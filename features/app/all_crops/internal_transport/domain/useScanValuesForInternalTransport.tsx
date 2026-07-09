@@ -171,9 +171,8 @@ export const useScanValuesForInternalTransport = (
       }
     }
 
-    toast.success(
-      `Dodano do listy ${currentZPWithQuantities.ordnmb} (wraz z informacją o zabieranych ilościach).`,
-    );
+    const successMessage = `Dodano do listy ${currentZPWithQuantities.ordnmb} (wraz z informacją o zabieranych ilościach).`;
+    toast.success(successMessage, { id: successMessage });
   };
 
   const clearChosenZPCombinedInfo = () => {
@@ -299,9 +298,8 @@ export const useScanValuesForInternalTransport = (
   }
   async function scanField(scannedValue: string) {
     if (checkWhatValueWasScanned(scannedValue) !== "field") {
-      toast.warning(
-        `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Lokalizacja musi mieć format: POLE_<numer>`,
-      );
+      const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. Lokalizacja musi mieć format: POLE_<numer>`;
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
     /**
@@ -331,7 +329,8 @@ export const useScanValuesForInternalTransport = (
       checkWhatValueWasScanned(scannedValue) === "tray" ||
       checkWhatValueWasScanned(scannedValue) === "unknown"
     ) {
-      toast.warning(`Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`);
+      const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`;
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
 
@@ -351,7 +350,7 @@ export const useScanValuesForInternalTransport = (
         scannedValue,
       );
 
-      toast.warning(toastMessage);
+      toast.warning(toastMessage, { id: toastMessage });
       return;
     }
 
@@ -364,7 +363,9 @@ export const useScanValuesForInternalTransport = (
         overallZPsWithQuantities,
       )
     ) {
-      toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED);
+      toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED, {
+        id: ERROR_MESSAGES.VALUE_ALREADY_SCANNED,
+      });
       return;
     }
 

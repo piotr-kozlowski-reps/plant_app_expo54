@@ -45,7 +45,10 @@ export const useSendOrderNitrogenIrrigation = (
       !protectiveTreatment ||
       inHowManyDays === null
     ) {
-      if (!scannedValues.length) toast.error(ERROR_MESSAGES.LACK_OF_ZP);
+      if (!scannedValues.length)
+        toast.error(ERROR_MESSAGES.LACK_OF_ZP, {
+          id: ERROR_MESSAGES.LACK_OF_ZP,
+        });
       if (!protectiveTreatment)
         toast.error(ERROR_MESSAGES.LACK_OF_NITROGEN_CONCENTRATION);
       if (!inHowManyDays)
@@ -66,7 +69,9 @@ export const useSendOrderNitrogenIrrigation = (
 
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (inHowManyDays < 2 && !isPossibleToProcess_Before13) {
-      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
+      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13, {
+        id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13,
+      });
       return;
     }
 
@@ -124,7 +129,9 @@ export const useSendOrderNitrogenIrrigation = (
     dataToBeSend: NitrogenIrrigationOrderSendDataDTO[],
   ) {
     if (!dataToBeSend) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

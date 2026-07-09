@@ -79,7 +79,9 @@ export const useScanValuesForWorksPlanning = (
           scannedValues,
         )
       ) {
-        toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
+        toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST, {
+          id: ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST,
+        });
         return;
       }
 
@@ -188,7 +190,9 @@ export const useScanValuesForWorksPlanning = (
 
       const foundZP = await getZPInfo_Rep113(token!, ordnmbValue, errorHandler);
       if (!foundZP) {
-        toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
+        toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC, {
+          id: ERROR_MESSAGES.NOT_FOUND_IN_LOC,
+        });
         return;
       }
 
@@ -239,7 +243,9 @@ export const useScanValuesForWorksPlanning = (
   };
   const deleteValueFromList = (zpInfo: ZPInfoForWorkPlanning | null): void => {
     if (zpInfo === null) {
-      toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO);
+      toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO, {
+        id: ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO,
+      });
       return;
     }
 

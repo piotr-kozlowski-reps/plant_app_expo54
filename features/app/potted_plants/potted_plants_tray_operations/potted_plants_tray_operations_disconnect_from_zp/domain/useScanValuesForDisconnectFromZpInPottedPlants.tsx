@@ -60,7 +60,9 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     const isTray = whatValueWasScanned === "tray";
     if (!isTray) {
-      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE);
+      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE, {
+        id: ERROR_MESSAGES.ONLY_TRAY_POSSIBLE,
+      });
       return;
     }
 
@@ -75,7 +77,9 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
        */
       const foundTray = await scanZpOrTrayRep113(scannedValue, "tray");
       if (!foundTray || !foundTray.stk_id || !foundTray.ordnmb) {
-        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+          id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+        });
         return;
       }
 
@@ -102,7 +106,9 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
         errorHandler,
       );
       if (!foundDataForReport119) {
-        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+          id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+        });
         return;
       }
 

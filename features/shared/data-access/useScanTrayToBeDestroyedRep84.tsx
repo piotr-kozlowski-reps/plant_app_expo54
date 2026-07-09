@@ -26,12 +26,12 @@ export const useScanTrayToBeDestroyedRep84 = () => {
   ): Promise<TrayToBeDestroyedInfo | null> {
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     if (whatValueWasScanned !== "tray") {
-      toast.warning(
+      const warningMessage =
         ERROR_MESSAGES.WRONG_PARAMETER +
-          "-> " +
-          whatValueWasScanned +
-          " -> scanZpOrTrayForOrderToHardenerHandler",
-      );
+        "-> " +
+        whatValueWasScanned +
+        " -> scanZpOrTrayForOrderToHardenerHandler";
+      toast.warning(warningMessage, { id: warningMessage });
       return null;
     }
 

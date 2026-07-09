@@ -22,7 +22,9 @@ export const useChooseColorForCotyledonQuiltingFormik = () =>
       formikHelpers: FormikHelpers<ColorForCotyledonQuiltingInput>,
     ) => {
       if (!value || !value.colorTray) {
-        toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+        toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {
+          id: ERROR_MESSAGES.NO_INFO_TO_SEND,
+        });
         return;
       }
 

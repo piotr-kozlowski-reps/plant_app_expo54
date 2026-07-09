@@ -50,14 +50,17 @@ export const useScanValuesForAddToZP = (
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
 
     if (whatValueWasScanned === "unknown") {
-      toast.warning(`Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`);
+      const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`;
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
 
     if (!zp) {
       const isZp = whatValueWasScanned === "zp_gru";
       if (!isZp) {
-        toast.warning(ERROR_MESSAGES.ONLY_ZP_POSSIBLE);
+        toast.warning(ERROR_MESSAGES.ONLY_ZP_POSSIBLE, {
+          id: ERROR_MESSAGES.ONLY_ZP_POSSIBLE,
+        });
         return;
       }
 
@@ -72,7 +75,9 @@ export const useScanValuesForAddToZP = (
          */
         const foundZp = await scanZpOrTrayRep113(scannedValue, "zp_gru");
         if (!foundZp || !foundZp.ordnmb || !foundZp.twrkod) {
-          toast.warning(ERROR_MESSAGES.LACK_OF_CHOSEN_ZP);
+          toast.warning(ERROR_MESSAGES.LACK_OF_CHOSEN_ZP, {
+            id: ERROR_MESSAGES.LACK_OF_CHOSEN_ZP,
+          });
           return;
         }
 
@@ -96,7 +101,9 @@ export const useScanValuesForAddToZP = (
     if (zp) {
       const isTray = whatValueWasScanned === "tray";
       if (!isTray) {
-        toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE);
+        toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE, {
+          id: ERROR_MESSAGES.ONLY_TRAY_POSSIBLE,
+        });
         return;
       }
 
@@ -112,7 +119,9 @@ export const useScanValuesForAddToZP = (
           (tray) => tray.stk_id === getPureTrayValue(scannedValue),
         )
       ) {
-        toast.warning(ERROR_MESSAGES.TRAY_ALREADY_IN_LIST);
+        toast.warning(ERROR_MESSAGES.TRAY_ALREADY_IN_LIST, {
+          id: ERROR_MESSAGES.TRAY_ALREADY_IN_LIST,
+        });
         return;
       }
 
@@ -133,7 +142,9 @@ export const useScanValuesForAddToZP = (
           !foundTray.ordnmb ||
           !foundTray.twrkod
         ) {
-          toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+          toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+            id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+          });
           return;
         }
 
@@ -146,9 +157,8 @@ export const useScanValuesForAddToZP = (
          * (jeżeli pierwsze 3 człony <b>twrkod</b> nie są takie same - to znaczy, że taca nie może być dopięta do ZPka -> odrzucenie tacy)
          */
         if (!checkIfPlantOnTrayCanBeAddedToChosenZp(zp, foundTray)) {
-          toast.warning(
-            `Taca z towarem o kodzie: "${foundTray.twrkod}" nie może być dodana do ZP z towarem o kodzie: "${zp.twrkod}".`,
-          );
+          const warningMessage = `Taca z towarem o kodzie: "${foundTray.twrkod}" nie może być dodana do ZP z towarem o kodzie: "${zp.twrkod}".`;
+          toast.warning(warningMessage, { id: warningMessage });
           return;
         }
 
@@ -159,7 +169,8 @@ export const useScanValuesForAddToZP = (
          * (porównanie ordnmb ZPka i tacy - jeżeli takie same -> odrzucenie tacy)
          */
         if (foundTray.ordnmb === zp.ordnmb) {
-          toast.warning(`Zeskanowana taca należy już do wybranego ZP'ka.`);
+          const warningMessage = `Zeskanowana taca należy już do wybranego ZP'ka.`;
+          toast.warning(warningMessage, { id: warningMessage });
           return;
         }
 
@@ -179,7 +190,9 @@ export const useScanValuesForAddToZP = (
         );
 
         if (!foundDataForReport119) {
-          toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+          toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+            id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+          });
           return;
         }
 

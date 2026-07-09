@@ -40,7 +40,9 @@ export const usePrepareDataForFormikToExtraWorkQuantity = (
     formikHelpers: FormikHelpers<ExtraWorkQuantityInput>,
   ) => {
     if (!extraWork) {
-      toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK);
+      toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK, {
+        id: ERROR_MESSAGES.LACK_OF_EXTRA_WORK,
+      });
       return;
     }
 
@@ -57,9 +59,13 @@ export const usePrepareDataForFormikToExtraWorkQuantity = (
       };
 
       await send_ExtraWork_PostMutation(dataToBeSent);
-      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS, {
+        id: MESSAGES.SEND_DATA_WITH_SUCCESS,
+      });
     } catch (error) {
-      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     } finally {
       formikHelpers.resetForm();
       setIsLoading(false);

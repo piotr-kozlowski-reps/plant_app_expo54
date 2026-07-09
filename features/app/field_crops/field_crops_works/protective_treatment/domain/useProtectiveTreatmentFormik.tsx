@@ -84,7 +84,9 @@ export const useProtectiveTreatmentFormik = (
       !value.who ||
       !value.treatment_type
     ) {
-      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {
+        id: ERROR_MESSAGES.NO_INFO_TO_SEND,
+      });
       return;
     }
 

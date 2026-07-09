@@ -48,12 +48,15 @@ export const useScanValuesForDisconnectFromZP = (
 
     const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
     if (whatValueWasScanned === "unknown") {
-      toast.warning(`Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`);
+      const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`;
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
     const isTray = whatValueWasScanned === "tray";
     if (!isTray) {
-      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE);
+      toast.warning(ERROR_MESSAGES.ONLY_TRAY_POSSIBLE, {
+        id: ERROR_MESSAGES.ONLY_TRAY_POSSIBLE,
+      });
       return;
     }
 
@@ -69,7 +72,9 @@ export const useScanValuesForDisconnectFromZP = (
         (tray) => tray.stk_id === getPureTrayValue(scannedValue),
       )
     ) {
-      toast.warning(ERROR_MESSAGES.TRAY_ALREADY_IN_LIST);
+      toast.warning(ERROR_MESSAGES.TRAY_ALREADY_IN_LIST, {
+        id: ERROR_MESSAGES.TRAY_ALREADY_IN_LIST,
+      });
       return;
     }
 
@@ -84,7 +89,9 @@ export const useScanValuesForDisconnectFromZP = (
       const foundTray = await scanZpOrTrayRep113(scannedValue, "tray");
 
       if (!foundTray || !foundTray.stk_id || !foundTray.ordnmb) {
-        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+          id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+        });
         return;
       }
 
@@ -104,7 +111,9 @@ export const useScanValuesForDisconnectFromZP = (
       );
 
       if (!foundDataForReport119) {
-        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA);
+        toast.warning(ERROR_MESSAGES.TRAY_LACKS_DATA, {
+          id: ERROR_MESSAGES.TRAY_LACKS_DATA,
+        });
         return;
       }
 
@@ -164,7 +173,9 @@ export const useScanValuesForDisconnectFromZP = (
   ) => {
     const foundTray = scannedValues.find((item) => item.stk_id === tray.stk_id);
     if (!foundTray) {
-      toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST);
+      toast.error(ERROR_MESSAGES.NO_TRAY_ON_THE_LIST, {
+        id: ERROR_MESSAGES.NO_TRAY_ON_THE_LIST,
+      });
       return;
     }
 

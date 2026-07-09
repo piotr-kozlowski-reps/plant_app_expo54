@@ -13,13 +13,13 @@ export const useGiveReasonFormik = (
   chosenTray: TrayScannedValueForDisconnectFromZp | null,
   addOrChangeDeleteReason: (
     tray: TrayScannedValueForDisconnectFromZp,
-    reason: DeleteReason
+    reason: DeleteReason,
   ) => void,
-  closeFn: () => void
+  closeFn: () => void,
 ) => {
   const onSubmit = async (
     value: GiveReasonInput,
-    formikHelpers: FormikHelpers<GiveReasonInput>
+    formikHelpers: FormikHelpers<GiveReasonInput>,
   ) => {
     if (
       !value ||
@@ -28,7 +28,9 @@ export const useGiveReasonFormik = (
       !value.reason.delete_reason_id ||
       !chosenTray
     ) {
-      toast.error(ERROR_MESSAGES.NO_REASON_PROVIDED);
+      toast.error(ERROR_MESSAGES.NO_REASON_PROVIDED, {
+        id: ERROR_MESSAGES.NO_REASON_PROVIDED,
+      });
       return;
     }
 

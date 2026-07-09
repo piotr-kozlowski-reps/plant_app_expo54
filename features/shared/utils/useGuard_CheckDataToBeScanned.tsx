@@ -18,7 +18,8 @@ export const useGuard_CheckDataToBeScanned = (
 
   //info for user
   if (whatValueWasScanned === "unknown") {
-    toast.warning(`Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`);
+    const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`;
+    toast.warning(warningMessage, { id: warningMessage });
   }
   if (whatValueWasScanned === "field") {
     toast.warning(ERROR_MESSAGES.NO_FIELD_POSSIBLE);

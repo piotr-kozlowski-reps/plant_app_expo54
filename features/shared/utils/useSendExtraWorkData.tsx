@@ -46,8 +46,14 @@ export const useSendExtraWorkData = (
     tjCount?: number | null,
   ) => {
     if (!extraWork || !scannedValues.length || !begin_date) {
-      if (!extraWork) toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK);
-      if (!scannedValues.length) toast.error(ERROR_MESSAGES.LACK_OF_ZP);
+      if (!extraWork)
+        toast.error(ERROR_MESSAGES.LACK_OF_EXTRA_WORK, {
+          id: ERROR_MESSAGES.LACK_OF_EXTRA_WORK,
+        });
+      if (!scannedValues.length)
+        toast.error(ERROR_MESSAGES.LACK_OF_ZP, {
+          id: ERROR_MESSAGES.LACK_OF_ZP,
+        });
       if (!begin_date) toast.error(ERROR_MESSAGES.LACK_OF_DATE);
 
       return;
@@ -58,7 +64,9 @@ export const useSendExtraWorkData = (
     const isActivityWithTj10OrTj12 =
       isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj12;
     if (isHobbyTech && !tjCount && isActivityWithTj10OrTj12) {
-      toast.error(ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY);
+      toast.error(ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY, {
+        id: ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY,
+      });
       return;
     }
 
@@ -122,15 +130,21 @@ export const useSendExtraWorkData = (
       if (response && response.length === 0) {
         clearScannedValues();
         closeFn();
-        toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+        toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS, {
+          id: MESSAGES.SEND_DATA_WITH_SUCCESS,
+        });
         queryClient.invalidateQueries({
           queryKey: [QUERY_KEYS.NITROGEN_IRRIGATION_LIST],
         });
       } else {
-        toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+        toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+          id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+        });
       }
     } catch (error) {
-      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     } finally {
       setIsLoading(false);
       clearScannedValues();

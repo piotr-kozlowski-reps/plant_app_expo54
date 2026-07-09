@@ -46,7 +46,10 @@ export const useSendOrderToHardener = (
       !targetLocalization ||
       inHowManyDays === null
     ) {
-      if (!scannedValues.length) toast.error(ERROR_MESSAGES.LACK_OF_ZP);
+      if (!scannedValues.length)
+        toast.error(ERROR_MESSAGES.LACK_OF_ZP, {
+          id: ERROR_MESSAGES.LACK_OF_ZP,
+        });
       if (!targetLocalization)
         toast.error(ERROR_MESSAGES.LACK_OF_TARGET_LOCALIZATION);
       if (!inHowManyDays) toast.error(ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS);
@@ -57,7 +60,9 @@ export const useSendOrderToHardener = (
     /** guard: cannot order to todays and tomorrows date when is after 13:00 */
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (inHowManyDays < 2 && !isPossibleToProcess_Before13) {
-      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
+      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13, {
+        id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13,
+      });
       return;
     }
 
@@ -95,7 +100,9 @@ export const useSendOrderToHardener = (
   //helpers
   async function sendToServer(dataToBeSend: OrderToHardenerSendDataDTO[]) {
     if (!dataToBeSend) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

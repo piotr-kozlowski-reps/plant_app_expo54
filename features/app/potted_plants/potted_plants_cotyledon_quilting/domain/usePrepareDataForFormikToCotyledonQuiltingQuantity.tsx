@@ -62,10 +62,14 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
       ];
 
       await sendToServer(dataToSent);
-      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS, {
+        id: MESSAGES.SEND_DATA_WITH_SUCCESS,
+      });
     } catch (error) {
       console.error(error);
-      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     } finally {
       Keyboard.dismiss();
       formikHelpers.resetForm();
@@ -79,7 +83,9 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
     dataToBeSend: CotyledonQuiltingQuantityAndCloseColorPostDTO[],
   ) {
     if (!dataToBeSend) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

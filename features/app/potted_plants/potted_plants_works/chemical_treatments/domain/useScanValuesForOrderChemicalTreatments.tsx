@@ -85,7 +85,9 @@ export const useScanValuesForOrderChemicalTreatments = (
     /** guard: cannot order to todays and tomorrows date when is after 13:00 */
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (inHowManyDaysInput < 2 && !isPossibleToProcess_Before13) {
-      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
+      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13, {
+        id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13,
+      });
       return;
     }
 
@@ -96,11 +98,15 @@ export const useScanValuesForOrderChemicalTreatments = (
     zpInfo: ZPShortenedInfoWithoutTwrnzw | null,
   ): void => {
     if (zpInfo === null) {
-      toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO);
+      toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO, {
+        id: ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO,
+      });
       return;
     }
 
-    toast.success(MESSAGES.ZP_DELETED_SUCCESS);
+    toast.success(MESSAGES.ZP_DELETED_SUCCESS, {
+      id: MESSAGES.ZP_DELETED_SUCCESS,
+    });
     const updatedValues = scannedValues.filter(
       (zp) => zp.ordnmb !== zpInfo.ordnmb,
     );
@@ -253,7 +259,9 @@ export const useScanValuesForOrderChemicalTreatments = (
         scannedValues,
       )
     ) {
-      toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
+      toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST, {
+        id: ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST,
+      });
       return;
     }
 
@@ -268,7 +276,9 @@ export const useScanValuesForOrderChemicalTreatments = (
      */
     const foundZP = await getZPInfo_Rep113(token!, scannedOrdnmb, errorHandler);
     if (!foundZP) {
-      toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
+      toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC, {
+        id: ERROR_MESSAGES.NOT_FOUND_IN_LOC,
+      });
       return;
     }
 

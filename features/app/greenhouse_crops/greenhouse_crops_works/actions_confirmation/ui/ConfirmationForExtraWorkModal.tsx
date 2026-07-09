@@ -113,16 +113,22 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
       if (response && response.length === 0) {
         clearScannedValues();
         closeFn();
-        toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+        toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS, {
+          id: MESSAGES.SEND_DATA_WITH_SUCCESS,
+        });
         queryClient.invalidateQueries({
           queryKey: [QUERY_KEYS.EXTRA_WORK_IN_ACTIVITIES],
         });
       } else {
-        toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+        toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+          id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+        });
       }
     } catch (error) {
       console.error(error);
-      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     } finally {
       setIsLoading(false);
     }

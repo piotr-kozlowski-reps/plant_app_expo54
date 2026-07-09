@@ -23,7 +23,7 @@
 
 //   async function sendCutConfirmation() {
 //     if (!scannedValue || !cutsList || !user) {
-//       toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+//       toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {id: ERROR_MESSAGES.NO_INFO_TO_SEND});
 //       return;
 //     }
 
@@ -51,7 +51,7 @@
 //   //helpers
 //   async function sendToServer(dataToBeSend: Post_CutConfirmation_DTO[]) {
 //     if (!dataToBeSend) {
-//       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+//       toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT});
 //       return;
 //     }
 

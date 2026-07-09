@@ -51,7 +51,9 @@ export const useScanValuesForLoading = (
     //check if ZP is already scanned
     const zpOrdnmb = getPureZPValue(scannedValue);
     if (checkIfZpIsAlreadyScanned(zpOrdnmb, scannedValues)) {
-      toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED);
+      toast.warning(ERROR_MESSAGES.VALUE_ALREADY_SCANNED, {
+        id: ERROR_MESSAGES.VALUE_ALREADY_SCANNED,
+      });
       return;
     }
 

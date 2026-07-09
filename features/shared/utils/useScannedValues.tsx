@@ -159,7 +159,9 @@ export const useScannedValues = (
   };
 
   const deleteScannedValue = (value: string) => {
-    toast.success(MESSAGES.ZP_DELETED_SUCCESS);
+    toast.success(MESSAGES.ZP_DELETED_SUCCESS, {
+      id: MESSAGES.ZP_DELETED_SUCCESS,
+    });
     setScannedValues((prevValues) =>
       prevValues.filter((v) => v.ordnmb !== value),
     );

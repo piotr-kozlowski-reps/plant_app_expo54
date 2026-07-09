@@ -112,7 +112,9 @@ export const useScanValuesForLoadingForecast = (
          * (to znaczy, że zlecenie nie jest jeszcze przygotowane do transportu -> koniec procedury )
          */
         if (!foundZP.outmvplan && !foundZP.outid_) {
-          toast.warning(ERROR_MESSAGES.ZP_NOT_PREPARED_TO_EXPORT);
+          toast.warning(ERROR_MESSAGES.ZP_NOT_PREPARED_TO_EXPORT, {
+            id: ERROR_MESSAGES.ZP_NOT_PREPARED_TO_EXPORT,
+          });
           return;
         }
 
@@ -123,11 +125,10 @@ export const useScanValuesForLoadingForecast = (
          * (to znaczy, że wprowadzono już prognozę załadunku dla tego zlecenia -> info + koniec procedury )
          */
         if (foundZP.outid_ && foundZP.outmvplan && foundZP.outcnt) {
-          toast.warning(
-            `Wprowadzono już prognozę załadunku dla tego zlecenia (${
-              foundZP.outcnt
-            } ${isRoz ? "kostek" : "tac"}).`,
-          );
+          const warningMessage = `Wprowadzono już prognozę załadunku dla tego zlecenia (${
+            foundZP.outcnt
+          } ${isRoz ? "kostek" : "tac"}).`;
+          toast.warning(warningMessage, { id: warningMessage });
           return;
         }
 
@@ -138,9 +139,8 @@ export const useScanValuesForLoadingForecast = (
          * (to znaczy, że nie przeliczono wschodów -> info + koniec procedury )
          */
         if (!foundZP.risecnt) {
-          toast.warning(
-            `Nie przeliczono wschodów dla tego zlecenia (${foundZP.ordnmb}).`,
-          );
+          const warningMessage = `Nie przeliczono wschodów dla tego zlecenia (${foundZP.ordnmb}).`;
+          toast.warning(warningMessage, { id: warningMessage });
           return;
         }
 
@@ -158,6 +158,7 @@ export const useScanValuesForLoadingForecast = (
         ) {
           toast.warning(
             ERROR_MESSAGES.ORDER_HAS_NOT_ENOUGH_TRAYS_TO_FULFILL_ORDER,
+            { id: ERROR_MESSAGES.ORDER_HAS_NOT_ENOUGH_TRAYS_TO_FULFILL_ORDER },
           );
         }
 

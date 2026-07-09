@@ -61,7 +61,9 @@ export const useOrderToCutFormik = (
     formikHelpers: FormikHelpers<CutInput>,
   ) {
     if (!values || !values.plannedDate || !values.height || !scannedValue) {
-      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {
+        id: ERROR_MESSAGES.NO_INFO_TO_SEND,
+      });
       return;
     }
 
@@ -69,7 +71,9 @@ export const useOrderToCutFormik = (
     const isTodayOrTomorrow = getIfIsTodayOrTomorrow(values.plannedDate);
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (isTodayOrTomorrow && !isPossibleToProcess_Before13) {
-      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
+      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13, {
+        id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13,
+      });
       return;
     }
 
@@ -85,9 +89,13 @@ export const useOrderToCutFormik = (
     try {
       setIsLoading(true);
       await send_OrderToCut_PostMutation(dataToBeSent);
-      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS, {
+        id: MESSAGES.SEND_DATA_WITH_SUCCESS,
+      });
     } catch (error) {
-      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.error(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     } finally {
       refreshAllData();
       setIsLoading(false);

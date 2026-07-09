@@ -24,7 +24,9 @@ export const useSendDestroyTray = (
 
   async function sendValuesForDestroyTrayHandler() {
     if (!scannedValue || scannedValue.pictures.length < 2) {
-      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {
+        id: ERROR_MESSAGES.NO_INFO_TO_SEND,
+      });
       return;
     }
 
@@ -74,7 +76,9 @@ export const useSendDestroyTray = (
   //helpers
   async function sendToServer(dataToBeSend: Post_DestroyTray_DTO[]) {
     if (!dataToBeSend || dataToBeSend.length < 1) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
     //send data to server

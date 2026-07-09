@@ -28,7 +28,9 @@ export const useSendAddToZpData = (
     scannedTrays: TrayScannedValueForAddToZp[],
   ) {
     if (!zp || !scannedTrays || !scannedTrays.length) {
-      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {
+        id: ERROR_MESSAGES.NO_INFO_TO_SEND,
+      });
       return;
     }
 
@@ -44,9 +46,8 @@ export const useSendAddToZpData = (
         await getErrorsFromControlSowingChangesReport(scannedTrays);
       if (allErrors.length) {
         allErrors.forEach((item) => {
-          toast.warning(
-            `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`,
-          );
+          const warningMessage = `Znaleziono błąd w tacy (${item.scannedValue.stk_id}): ${item.errorText}`;
+          toast.warning(warningMessage, { id: warningMessage });
         });
         return;
       }
@@ -116,7 +117,9 @@ export const useSendAddToZpData = (
   //helpers
   async function sendToServer(dataToBeSend: Post_AddToZp_DTO[]) {
     if (!dataToBeSend || dataToBeSend.length < 1) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

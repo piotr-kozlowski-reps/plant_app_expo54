@@ -99,7 +99,9 @@ export const useScanValuesForProtectiveTreatment = (
       "zp_don",
     ]);
     if (!isScannedDataCorrect) {
-      toast.warning(ERROR_MESSAGES.SCANNED_WRONG_ELEMENT);
+      toast.warning(ERROR_MESSAGES.SCANNED_WRONG_ELEMENT, {
+        id: ERROR_MESSAGES.SCANNED_WRONG_ELEMENT,
+      });
       return;
     }
 
@@ -222,7 +224,9 @@ export const useScanValuesForProtectiveTreatment = (
   };
 
   const deleteScannedValue = (value: string) => {
-    toast.success(MESSAGES.ZP_DELETED_SUCCESS);
+    toast.success(MESSAGES.ZP_DELETED_SUCCESS, {
+      id: MESSAGES.ZP_DELETED_SUCCESS,
+    });
     setScannedValues((prevValues) =>
       prevValues.filter((v) => v.ordnmb !== value),
     );

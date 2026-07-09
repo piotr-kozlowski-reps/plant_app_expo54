@@ -64,7 +64,9 @@ export const usePrepareDataForFormikToLoadingForecast = (
       };
 
       await send_LoadingForecast_PatchMutation(dataToBeSent);
-      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS);
+      toast.success(MESSAGES.SEND_DATA_WITH_SUCCESS, {
+        id: MESSAGES.SEND_DATA_WITH_SUCCESS,
+      });
     } catch (error) {
       errorHandler(error as Error);
     } finally {

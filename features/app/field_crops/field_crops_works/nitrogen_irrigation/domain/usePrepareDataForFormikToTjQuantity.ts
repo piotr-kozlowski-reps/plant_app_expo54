@@ -22,7 +22,9 @@ export const usePrepareDataForFormikToTjQuantity = (
     formikHelpers: FormikHelpers<Input>,
   ) => {
     if (!values.quantity) {
-      toast.error(ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY);
+      toast.error(ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY, {
+        id: ERROR_MESSAGES.LACK_OF_TJ12_QUANTITY,
+      });
       return;
     }
     Keyboard.dismiss();

@@ -12,7 +12,9 @@ export async function sendPotsPottingConfirmationWithPicturesToServer(
   token: string,
 ) {
   if (!dataToBeSend) {
-    toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+    toast.warning(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+      id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+    });
     return;
   }
 

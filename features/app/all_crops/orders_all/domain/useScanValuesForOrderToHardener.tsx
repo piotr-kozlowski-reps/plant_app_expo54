@@ -71,7 +71,9 @@ export const useScanValuesForOrderToHardener = (
       "zp_don",
     ]);
     if (!isScannedDataCorrect) {
-      toast.warning(ERROR_MESSAGES.SCANNED_WRONG_ELEMENT);
+      toast.warning(ERROR_MESSAGES.SCANNED_WRONG_ELEMENT, {
+        id: ERROR_MESSAGES.SCANNED_WRONG_ELEMENT,
+      });
       return;
     }
 
@@ -135,11 +137,15 @@ export const useScanValuesForOrderToHardener = (
     zpInfo: ZPShortenedInfoWithoutTwrnzw | null,
   ): void => {
     if (zpInfo === null) {
-      toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO);
+      toast.warning(ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO, {
+        id: ERROR_MESSAGES.ZP_CANNOT_BE_DELETED_NO_INFO,
+      });
       return;
     }
 
-    toast.success(MESSAGES.ZP_DELETED_SUCCESS);
+    toast.success(MESSAGES.ZP_DELETED_SUCCESS, {
+      id: MESSAGES.ZP_DELETED_SUCCESS,
+    });
     const updatedValues = scannedValues.filter(
       (zp) => zp.ordnmb !== zpInfo.ordnmb,
     );
@@ -158,6 +164,9 @@ export const useScanValuesForOrderToHardener = (
       if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
         toast.warning(
           ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+          {
+            id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+          },
         );
         return;
       }
@@ -166,7 +175,9 @@ export const useScanValuesForOrderToHardener = (
     /** guard: cannot order to todays and tomorrows date when is after 13:00 - for field crops*/
     const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
     if (inHowManyDaysInput < 2 && !isPossibleToProcess_Before13) {
-      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
+      toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13, {
+        id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13,
+      });
       return;
     }
 
@@ -207,12 +218,12 @@ export const useScanValuesForOrderToHardener = (
       whatValueWasScanned !== "zp_gru" &&
       whatValueWasScanned !== "zp_don"
     ) {
-      toast.warning(
+      const warningMessage =
         ERROR_MESSAGES.WRONG_PARAMETER +
-          "-> " +
-          whatValueWasScanned +
-          " -> scanZpOrTrayForOrderToHardenerHandler",
-      );
+        "-> " +
+        whatValueWasScanned +
+        " -> scanZpOrTrayForOrderToHardenerHandler";
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
     /////////////////////
@@ -226,7 +237,9 @@ export const useScanValuesForOrderToHardener = (
           scannedValues,
         )
       ) {
-        toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
+        toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST, {
+          id: ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST,
+        });
         return;
       }
       if (!isZPScanned) setIsZPScanned(true);
@@ -238,7 +251,9 @@ export const useScanValuesForOrderToHardener = (
         errorHandler,
       );
       if (!foundZP) {
-        toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
+        toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC, {
+          id: ERROR_MESSAGES.NOT_FOUND_IN_LOC,
+        });
         return;
       }
 
@@ -274,7 +289,9 @@ export const useScanValuesForOrderToHardener = (
         errorHandler,
       );
       if (!foundTray) {
-        toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
+        toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC, {
+          id: ERROR_MESSAGES.NOT_FOUND_IN_LOC,
+        });
         return;
       }
       /** guard - allowmvplan has to be true -> turned off */

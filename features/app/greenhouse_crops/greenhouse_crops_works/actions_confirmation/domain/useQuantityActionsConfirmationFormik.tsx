@@ -15,14 +15,16 @@ import { Keyboard } from "react-native";
 export const useQuantityActionsConfirmationFormik = (
   activityDetails: ZpRozActivityDetails | null,
   updateQuantity: (id: number, newQuantity: number) => void,
-  closeFn: () => void
+  closeFn: () => void,
 ) => {
   async function onSubmit(
     values: QuantityActionsConfirmation,
-    formikHelpers: FormikHelpers<QuantityActionsConfirmation>
+    formikHelpers: FormikHelpers<QuantityActionsConfirmation>,
   ) {
     if (!values || !values.height || !activityDetails) {
-      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND);
+      toast.error(ERROR_MESSAGES.NO_INFO_TO_SEND, {
+        id: ERROR_MESSAGES.NO_INFO_TO_SEND,
+      });
       return;
     }
 
@@ -35,8 +37,8 @@ export const useQuantityActionsConfirmationFormik = (
   const initialValue = activityDetails?.iledne
     ? activityDetails.iledne
     : activityDetails?.ilebeg
-    ? activityDetails.ilebeg
-    : 0;
+      ? activityDetails.ilebeg
+      : 0;
   const formikQuantityActionsConfirmation =
     useFormik<QuantityActionsConfirmation>({
       initialValues: {
@@ -60,7 +62,7 @@ export const useQuantityActionsConfirmationFormik = (
                 return valueAsNumber <= Number.MAX_SAFE_INTEGER;
               }
               return false;
-            }
+            },
           ),
       }),
       // validateOnMount: true,
@@ -69,7 +71,7 @@ export const useQuantityActionsConfirmationFormik = (
   //form helpers
   const validateForm = () => {
     validateFormOnDemand<QuantityActionsConfirmation>(
-      formikQuantityActionsConfirmation
+      formikQuantityActionsConfirmation,
     );
   };
   const canFormBeSubmitted =

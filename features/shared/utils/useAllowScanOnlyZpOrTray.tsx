@@ -7,7 +7,8 @@ export const useAllowScanOnlyZpOrTray = (scannedValue: string) => {
 
   const whatValueWasScanned = checkWhatValueWasScanned(scannedValue);
   if (whatValueWasScanned === "unknown") {
-    toast.warning(`Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`);
+    const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna.`;
+    toast.warning(warningMessage, { id: warningMessage });
   }
   if (whatValueWasScanned === "field") {
     toast.warning(ERROR_MESSAGES.NO_FIELD_POSSIBLE);

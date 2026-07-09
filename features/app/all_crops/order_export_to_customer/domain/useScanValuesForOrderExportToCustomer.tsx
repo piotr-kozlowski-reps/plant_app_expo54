@@ -157,6 +157,9 @@ export const useScanValuesForOrderExportToCustomer = (
       if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
         toast.warning(
           ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+          {
+            id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+          },
         );
         return;
       }
@@ -181,7 +184,7 @@ export const useScanValuesForOrderExportToCustomer = (
   //   /** guard: cannot order to todays and tomorrows date when is after 13:00 - for field crops*/
   //   const isPossibleToProcess_Before13 = getIsPossibleToProcess_After13_guard();
   //   if (inHowManyDaysInput < 2 && !isPossibleToProcess_Before13) {
-  //     toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13);
+  //     toast.warning(ERROR_MESSAGES.CANNOT_ORDER_AFTER_13, {id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13});
   //     return;
   //   }
 
