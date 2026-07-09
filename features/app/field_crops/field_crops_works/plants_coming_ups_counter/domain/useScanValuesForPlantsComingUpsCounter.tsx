@@ -46,9 +46,8 @@ export const useScanValuesForPlantsComingUpsCounter = (
     player.play();
 
     if (checkWhatValueWasScanned(scannedValue) !== "tray") {
-      toast.warning(
-        `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. QRkod tacy ma inny format.`,
-      );
+      const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. QRkod tacy ma inny format.`;
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
 
@@ -150,7 +149,9 @@ export const useScanValuesForPlantsComingUpsCounter = (
     }
 
     traysLocal.splice(traysLocal.indexOf(foundTray), 1);
-    toast.success(MESSAGES.TRAY_REMOVED_WITH_SUCCESS);
+    toast.success(MESSAGES.TRAY_REMOVED_WITH_SUCCESS, {
+      id: MESSAGES.TRAY_REMOVED_WITH_SUCCESS,
+    });
     setTrays(traysLocal);
   };
 
@@ -185,9 +186,8 @@ export const useScanValuesForPlantsComingUpsCounter = (
       }
     }
 
-    toast.success(
-      `Dodano do listy/Zmieniono ${passedTray.stk_id} (wraz z informacją o brakach).`,
-    );
+    const successMessage = `Dodano do listy/Zmieniono ${passedTray.stk_id} (wraz z informacją o brakach).`;
+    toast.success(successMessage, { id: successMessage });
   };
 
   const addQuantityToExistingTrayHandler = (tray: Tray, quantity: number) => {
@@ -218,6 +218,9 @@ export const useScanValuesForPlantsComingUpsCounter = (
         if (resultValue < 0) {
           toast.warning(
             ERROR_MESSAGES.NUMBER_OF_TRAY_BAD_PLANTS_CANNOT_BE_LESS_THAN_0,
+            {
+              id: ERROR_MESSAGES.NUMBER_OF_TRAY_BAD_PLANTS_CANNOT_BE_LESS_THAN_0,
+            },
           );
         } else {
           item.lckcnt = resultValue;
@@ -268,9 +271,8 @@ export const useScanValuesForPlantsComingUpsCounter = (
     const isPossibleToPressTray =
       trayInfo.lckcnt === null || trayInfo.lckcnt === -1;
     if (!isPossibleToPressTray) {
-      toast.error(
-        `Dla tej tacy (${scannedStk_id}) wprowadzono już ilość braków (${trayInfo.lckcnt}).`,
-      );
+      const errorMessage = `Dla tej tacy (${scannedStk_id}) wprowadzono już ilość braków (${trayInfo.lckcnt}).`;
+      toast.error(errorMessage, { id: errorMessage });
       return;
     }
 

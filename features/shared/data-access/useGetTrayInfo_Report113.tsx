@@ -34,9 +34,8 @@ export const useGetTrayInfo_Report113 = () => {
         response.data.resultMainQuery === -1 ||
         response.data.resultMainQuery.length === 0
       ) {
-        toast.error(
-          `Taca o podanym ID (${scannedStk_id}) nie została odnaleziona.`,
-        );
+        const errorMessage = `Taca o podanym ID (${scannedStk_id}) nie została odnaleziona.`;
+        toast.error(errorMessage, { id: errorMessage });
         return null;
       }
 

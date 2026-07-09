@@ -9,11 +9,13 @@ export const useHandleDayUnavailableWhenSuperDataIsOff = (
   setIsShowModalWithInHowManyDays: React.Dispatch<
     React.SetStateAction<boolean>
   >,
-  scannedValue: ZPShortenedInfoWithPics | null
+  scannedValue: ZPShortenedInfoWithPics | null,
 ) => {
   useEffect(() => {
     if (!isDayAvailable && !isSuperData && scannedValue) {
-      toast.warning(ERROR_MESSAGES.DAY_UNAVAILABLE_WITHOUT_SUPERDATA);
+      toast.warning(ERROR_MESSAGES.DAY_UNAVAILABLE_WITHOUT_SUPERDATA, {
+        id: ERROR_MESSAGES.DAY_UNAVAILABLE_WITHOUT_SUPERDATA,
+      });
       setIsShowModalWithInHowManyDays(true);
     }
   }, [isDayAvailable, isSuperData, scannedValue]);

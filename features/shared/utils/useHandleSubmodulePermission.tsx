@@ -8,13 +8,15 @@ import { provideNoAccessToSubmoduleMessage } from "./messages";
 export const useHandleSubmodulePermission = <T,>(
   moduleName: keyof ModulesPermissions,
   submoduleValue: keyof T,
-  submoduleName: string
+  submoduleName: string,
 ) => {
   const { getSubmodulePermission } = useGetSubmodulePermission();
 
   useEffect(() => {
     if (!getSubmodulePermission<T>(moduleName, submoduleValue)) {
-      toast.warning(provideNoAccessToSubmoduleMessage(submoduleName));
+      toast.warning(provideNoAccessToSubmoduleMessage(submoduleName), {
+        id: provideNoAccessToSubmoduleMessage(submoduleName),
+      });
       router.back();
     }
   }, []);

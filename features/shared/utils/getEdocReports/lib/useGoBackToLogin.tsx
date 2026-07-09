@@ -8,7 +8,9 @@ export const useGoBackToLogin = () => {
 
   const goBackToLogin = () => {
     removeAuthSession();
-    toast.error(ERROR_MESSAGES.SESSION_EXPIRED);
+    toast.error(ERROR_MESSAGES.SESSION_EXPIRED, {
+      id: ERROR_MESSAGES.SESSION_EXPIRED,
+    });
     router.replace("/login");
   };
 

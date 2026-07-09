@@ -41,7 +41,9 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
         const takenPhoto = await cameraRef.current.takePictureAsync(options);
 
         if (!takenPhoto) {
-          toast.warning(ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO);
+          toast.warning(ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO, {
+            id: ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO,
+          });
           return;
         }
 
@@ -49,7 +51,9 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
         await deleteAllCachedPhotos();
       }
     } catch (error) {
-      toast.warning(ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO);
+      toast.warning(ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO, {
+        id: ERROR_MESSAGES.COULD_NOT_TAKE_PHOTO,
+      });
       console.error(error);
     }
   };
@@ -58,7 +62,12 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
     try {
       const appCachePath = FileSystemLegacy.cacheDirectory;
       if (!appCachePath) {
-        toast.warning(ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES_NO_DIRECTORY);
+        toast.warning(
+          ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES_NO_DIRECTORY,
+          {
+            id: ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES_NO_DIRECTORY,
+          },
+        );
         return;
       }
 
@@ -72,7 +81,9 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
         });
       }
     } catch (error) {
-      toast.warning(ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES);
+      toast.warning(ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES, {
+        id: ERROR_MESSAGES.ERROR_WHEN_DELETING_PICTURES,
+      });
       console.error(error);
     }
   }
@@ -95,7 +106,9 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
 
   const deletePicture = (): void => {
     if (!chosenPicture || !scannedValue) {
-      toast.warning(ERROR_MESSAGES.PICTURE_CANNOT_BE_DELETED);
+      toast.warning(ERROR_MESSAGES.PICTURE_CANNOT_BE_DELETED, {
+        id: ERROR_MESSAGES.PICTURE_CANNOT_BE_DELETED,
+      });
       return;
     }
 
@@ -103,7 +116,9 @@ export const useHandleTakingPictures = <T extends AnyObjectWithPictures>(
     const updatedPictures = currentPicturesCopy.filter(
       (picture) => picture.uri !== chosenPicture.uri,
     );
-    toast.success(MESSAGES.PICTURE_DELETED_SUCCESS);
+    toast.success(MESSAGES.PICTURE_DELETED_SUCCESS, {
+      id: MESSAGES.PICTURE_DELETED_SUCCESS,
+    });
     setScannedValue({ ...scannedValue, pictures: updatedPictures });
   };
 

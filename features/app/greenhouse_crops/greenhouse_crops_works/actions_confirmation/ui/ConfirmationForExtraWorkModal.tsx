@@ -76,7 +76,9 @@ export default function ConfirmationForExtraWorkModal(props: Props) {
 
   const sendDataHandler = async () => {
     if (!currentActivity || !zp || !data || !data.length) {
-      toast.error(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.error(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

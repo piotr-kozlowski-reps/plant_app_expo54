@@ -25,9 +25,8 @@ export const useGetZPsPerLocalization_Report123 = () => {
         response.data.resultMainQuery === -1 ||
         response.data.resultMainQuery.length === 0
       ) {
-        toast.error(
-          `Brak informacji o ZPkach na zeskanowanej lokalizacji (${field}).`,
-        );
+        const errorMessage = `Brak informacji o ZPkach na zeskanowanej lokalizacji (${field}).`;
+        toast.error(errorMessage, { id: errorMessage });
         return null;
       }
 

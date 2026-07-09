@@ -51,8 +51,13 @@ export const useSendOrderToHardener = (
           id: ERROR_MESSAGES.LACK_OF_ZP,
         });
       if (!targetLocalization)
-        toast.error(ERROR_MESSAGES.LACK_OF_TARGET_LOCALIZATION);
-      if (!inHowManyDays) toast.error(ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS);
+        toast.error(ERROR_MESSAGES.LACK_OF_TARGET_LOCALIZATION, {
+          id: ERROR_MESSAGES.LACK_OF_TARGET_LOCALIZATION,
+        });
+      if (!inHowManyDays)
+        toast.error(ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS, {
+          id: ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS,
+        });
 
       return;
     }

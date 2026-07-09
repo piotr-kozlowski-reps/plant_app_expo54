@@ -69,25 +69,22 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
       /** guards */
       //any activities returned in list?
       if (!zpRozActivities) {
-        toast.error(
-          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`,
-        );
+        const errorMessage = `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`;
+        toast.error(errorMessage, { id: errorMessage });
         return;
       }
 
       //check if scanned ZP is tomato or cucumber and if that suits chosen earlier variant
       if (!checkIfVariantIsCorrect(variant, zpRozActivities)) {
         if (variant === "greenhouse_crops_works_activity_confirmation_tomato") {
-          toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz potwierdzić pracę dla pomidora.`,
-          );
+          const errorMessage = `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz potwierdzić pracę dla pomidora.`;
+          toast.error(errorMessage, { id: errorMessage });
         }
         if (
           variant === "greenhouse_crops_works_activity_confirmation_cucumber"
         ) {
-          toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz potwierdzić pracę dla ogórka.`,
-          );
+          const errorMessage = `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz potwierdzić pracę dla ogórka.`;
+          toast.error(errorMessage, { id: errorMessage });
         }
         return;
       }
@@ -143,7 +140,7 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     // console.log({ scannedValue });
 
     // if (!scannedValue || !currentActivity) {
-    //   toast.error(ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE);
+    //   toast.error(ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE, {id: ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE});
     //   return;
     // }
 
@@ -153,7 +150,7 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     // );
 
     // if (!newZpRozActivities) {
-    //   toast.error(ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE);
+    //   toast.error(ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE, {id: ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE});
     //   return;
     // }
 
@@ -166,7 +163,7 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     // );
 
     // if (!newCurrentActivity) {
-    //   toast.error(ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE);
+    //   toast.error(ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE, {id: ERROR_MESSAGES.CANNOT_AUTOMATICALLY_UPDATE});
     //   return;
     // }
 
@@ -189,8 +186,9 @@ export const useScanValuesForGreenhouseCropsActionsConfirmation = (
     //   });
 
     //   if (!newZpRozActivities) {
+    //.    const errorMessage = `Brak możliwości uaktualnienia danych automatycznie, wyjdź z tego modułu i zeskanuj ZP raz jeszcze.`
     //     toast.error(
-    //       `Brak możliwości uaktualnienia danych automatycznie, wyjdź z tego modułu i zeskanuj ZP raz jeszcze.`
+    //       errorMessage, {id: errorMessage}
     //     );
     //     return;
     //   }

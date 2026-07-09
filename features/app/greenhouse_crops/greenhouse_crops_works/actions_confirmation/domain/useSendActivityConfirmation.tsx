@@ -24,11 +24,15 @@ export const useSendActivityConfirmation = (
     scannedValue: ZpRozWithActivities | null,
   ) {
     if (!currentActivity) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_ACTIVITY);
+      toast.warning(ERROR_MESSAGES.LACK_OF_ACTIVITY, {
+        id: ERROR_MESSAGES.LACK_OF_ACTIVITY,
+      });
       return;
     }
     if (!scannedValue) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_SCANNED_VALUE);
+      toast.warning(ERROR_MESSAGES.LACK_OF_SCANNED_VALUE, {
+        id: ERROR_MESSAGES.LACK_OF_SCANNED_VALUE,
+      });
       return;
     }
 

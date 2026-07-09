@@ -39,7 +39,8 @@ export const useGetListOfZPInDesiredField = () => {
     const response: ZPFieldListDTO = (await res.json()) as ZPFieldListDTO;
 
     if (response.data.resultMainQuery === -1) {
-      toast.error(`Brak ZPków w lokalizacji: "${value}".`);
+      const errorMessage = `Brak ZPków w lokalizacji: "${value}".`;
+      toast.error(errorMessage, { id: errorMessage });
       return listOfZPsOnField;
     }
 

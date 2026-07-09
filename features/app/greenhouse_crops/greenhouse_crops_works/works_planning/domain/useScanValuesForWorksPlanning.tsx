@@ -87,7 +87,9 @@ export const useScanValuesForWorksPlanning = (
 
       /** guard: no info about work to plan */
       if (!workToPlan) {
-        toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN);
+        toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN, {
+          id: ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN,
+        });
         return;
       }
 
@@ -103,9 +105,8 @@ export const useScanValuesForWorksPlanning = (
           : zpRozActivities?.filter((item) => item.dscrpt.endsWith("OGÓ"));
 
       if (!zpRozActivitiesFiltered) {
-        toast.error(
-          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`,
-        );
+        const errorMessage = `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmbValue}).`;
+        toast.error(errorMessage, { id: errorMessage });
         return;
       }
 
@@ -114,9 +115,8 @@ export const useScanValuesForWorksPlanning = (
         (act) => act.dscrpt === workToPlan.ptc_kod,
       );
       if (!foundWorkToPlan) {
-        toast.error(
-          `Nie możesz zaplanować tej pracy. Nie ma jej na liście czynności do wykonania dla tego ZP (${ordnmbValue}).`,
-        );
+        const errorMessage = `Nie możesz zaplanować tej pracy. Nie ma jej na liście czynności do wykonania dla tego ZP (${ordnmbValue}).`;
+        toast.error(errorMessage, { id: errorMessage });
         return;
       }
 
@@ -125,15 +125,13 @@ export const useScanValuesForWorksPlanning = (
         checkIfWorkCanBePlannedForThisVariety(zpRozActivities, foundWorkToPlan);
       if (!canWorkBePlannedForThisVariety.canBePlanned) {
         if (canWorkBePlannedForThisVariety.isCucumber) {
-          toast.error(
-            `Nie możesz zaplanować tej pracy. ZP, który zeskanowałeś (${ordnmbValue}) to ogórek, a chcesz zaplanować pracę dla pomidora.`,
-          );
+          const errorMessage = `Nie możesz zaplanować tej pracy. ZP, który zeskanowałeś (${ordnmbValue}) to ogórek, a chcesz zaplanować pracę dla pomidora.`;
+          toast.error(errorMessage, { id: errorMessage });
           return;
         }
         if (canWorkBePlannedForThisVariety.isTomato) {
-          toast.error(
-            `Nie możesz zaplanować tej pracy. ZP, który zeskanowałeś (${ordnmbValue}) to pomidor, a chcesz zaplanować pracę dla ogórka.`,
-          );
+          const errorMessage = `Nie możesz zaplanować tej pracy. ZP, który zeskanowałeś (${ordnmbValue}) to pomidor, a chcesz zaplanować pracę dla ogórka.`;
+          toast.error(errorMessage, { id: errorMessage });
           return;
         }
 
@@ -145,14 +143,12 @@ export const useScanValuesForWorksPlanning = (
       /** guard: check is variant of plant correct according to chosen work planning plant - tomato or cucumber */
       if (!checkIfVariantIsCorrect(variant, zpRozActivitiesFiltered)) {
         if (variant === "greenhouse_crops_works_works_planning_tomato") {
-          toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz zaplanować pracę dla pomidora.`,
-          );
+          const errorMessage = `Wybrałeś zły ZP (${ordnmbValue}), to rozsada ogórka, a chcesz zaplanować pracę dla pomidora.`;
+          toast.error(errorMessage, { id: errorMessage });
         }
         if (variant === "greenhouse_crops_works_works_planning_cucumber") {
-          toast.error(
-            `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz zaplanować pracę dla ogórka.`,
-          );
+          const errorMessage = `Wybrałeś zły ZP (${ordnmbValue}), to rozsada pomidora, a chcesz zaplanować pracę dla ogórka.`;
+          toast.error(errorMessage, { id: errorMessage });
         }
 
         return;
@@ -163,7 +159,9 @@ export const useScanValuesForWorksPlanning = (
         foundWorkToPlan.type__ === "TECH" &&
         foundWorkToPlan.status !== null
       ) {
-        toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_DONE);
+        toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_DONE, {
+          id: ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_DONE,
+        });
         return;
       }
 
@@ -171,20 +169,26 @@ export const useScanValuesForWorksPlanning = (
         foundWorkToPlan.type__ === "EXTRA" &&
         foundWorkToPlan.status !== null
       ) {
-        toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED);
+        toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED, {
+          id: ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED,
+        });
         return;
       }
 
       /** guard: check is work already planned and plan is approved */
       if (foundWorkToPlan.start_plan && foundWorkToPlan.stop_plan) {
-        toast.error(ERROR_MESSAGES.PLAN_WAS_ALREADY_APPROVED);
+        toast.error(ERROR_MESSAGES.PLAN_WAS_ALREADY_APPROVED, {
+          id: ERROR_MESSAGES.PLAN_WAS_ALREADY_APPROVED,
+        });
         return;
       }
 
       /** guard: check is work already planned and plan is not approved - but still cannot plan again */
       /** turned off */
       // if (foundWorkToPlan.plndat) {
-      //   toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED);
+      //           toast.error(ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED, {
+      //    id: ERROR_MESSAGES.WORK_TO_PLAN_IS_ALREADY_PLANNED,
+      //  });
       //   return;
       // }
 
@@ -230,6 +234,9 @@ export const useScanValuesForWorksPlanning = (
     if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
       toast.warning(
         ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+        {
+          id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+        },
       );
       return;
     }
@@ -249,7 +256,9 @@ export const useScanValuesForWorksPlanning = (
       return;
     }
 
-    toast.success(MESSAGES.ZP_DELETED_SUCCESS_FROM_LIST);
+    toast.success(MESSAGES.ZP_DELETED_SUCCESS_FROM_LIST, {
+      id: MESSAGES.ZP_DELETED_SUCCESS_FROM_LIST,
+    });
     const updatedValues = scannedValues.filter(
       (zp) => zp.ordnmb !== zpInfo.ordnmb,
     );

@@ -41,9 +41,8 @@ export const useGetActivitiesListRep143 = () => {
         response.data.resultMainQuery === -1 ||
         response.data.resultMainQuery.length === 0
       ) {
-        toast.error(
-          `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmb}).`,
-        );
+        const errorMessage = `Brak informacji o czynnościach na zeskanowanym ZPku (${ordnmb}).`;
+        toast.error(errorMessage, { id: errorMessage });
         return null;
       }
 

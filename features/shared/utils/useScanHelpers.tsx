@@ -67,7 +67,10 @@ export const useScanHelpers = () => {
       } = scanFieldObject;
 
       if (isZPScanned) {
-        toast.warning(ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ZP_SCANNED_EARLIER);
+        toast.warning(
+          ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ZP_SCANNED_EARLIER,
+          { id: ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ZP_SCANNED_EARLIER },
+        );
         return;
       }
 
@@ -125,7 +128,7 @@ export const useScanHelpers = () => {
         return;
       }
 
-      toast.warning(warning_message);
+      toast.warning(warning_message, { id: warning_message });
     }
   }
 

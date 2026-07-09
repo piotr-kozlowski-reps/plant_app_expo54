@@ -4,11 +4,13 @@ import { toast } from "sonner-native";
 import { ERROR_MESSAGES } from "./messages";
 
 export const useCheckModuleVisibilityAndRedirectIfNeeded = (
-  isModuleVisible: boolean
+  isModuleVisible: boolean,
 ) => {
   useEffect(() => {
     if (!isModuleVisible) {
-      toast.warning(ERROR_MESSAGES.MODULE_NOT_AVAILABLE_FOR_THIS_USER);
+      toast.warning(ERROR_MESSAGES.MODULE_NOT_AVAILABLE_FOR_THIS_USER, {
+        id: ERROR_MESSAGES.MODULE_NOT_AVAILABLE_FOR_THIS_USER,
+      });
       router.replace("/");
     }
   }, [isModuleVisible]);

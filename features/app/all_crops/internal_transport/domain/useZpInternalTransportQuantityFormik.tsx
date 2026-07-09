@@ -16,15 +16,17 @@ export const useZpInternalTransportQuantityFormik = (
   passedQuantity: number,
   localization: ZPLocalizationInfoPlusQuantityToBeMoved | null,
   changeQuantityHandler: (
-    localizationWithNewQuantity: ZPLocalizationInfoPlusQuantityToBeMoved
-  ) => void
+    localizationWithNewQuantity: ZPLocalizationInfoPlusQuantityToBeMoved,
+  ) => void,
 ) => {
   const onSubmit = async (
     values: QuantityPerLocalizationInput,
-    formikHelpers: FormikHelpers<QuantityPerLocalizationInput>
+    formikHelpers: FormikHelpers<QuantityPerLocalizationInput>,
   ) => {
     if (!values || !localization) {
-      toast.success(ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION);
+      toast.success(ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION,
+      });
       return;
     }
 
@@ -33,7 +35,9 @@ export const useZpInternalTransportQuantityFormik = (
       quantity_to_be_moved: Number.parseInt(values.qntity as unknown as string),
     });
 
-    toast.success(MESSAGES.VALUE_CHANGED_WITH_SUCCESS);
+    toast.success(MESSAGES.VALUE_CHANGED_WITH_SUCCESS, {
+      id: MESSAGES.VALUE_CHANGED_WITH_SUCCESS,
+    });
     Keyboard.dismiss();
     closeFn();
   };
@@ -55,7 +59,7 @@ export const useZpInternalTransportQuantityFormik = (
 
   const validateForm = () => {
     validateFormOnDemand<QuantityPerLocalizationInput>(
-      formikInternalTransportQuantity
+      formikInternalTransportQuantity,
     );
   };
   const canFormBeSubmitted = formikInternalTransportQuantity.isValid;

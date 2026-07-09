@@ -11,7 +11,9 @@ export const useAllowScanOnlyZpOrTray = (scannedValue: string) => {
     toast.warning(warningMessage, { id: warningMessage });
   }
   if (whatValueWasScanned === "field") {
-    toast.warning(ERROR_MESSAGES.NO_FIELD_POSSIBLE);
+    toast.warning(ERROR_MESSAGES.NO_FIELD_POSSIBLE, {
+      id: ERROR_MESSAGES.NO_FIELD_POSSIBLE,
+    });
   }
   const isZP = whatValueWasScanned === "zp_gru";
   const isTray = whatValueWasScanned === "tray";

@@ -49,7 +49,9 @@ export const usePrepareDataForFormikToLoadingForecast = (
     const rawValue = values.zpInfo?.scanned_raw_value;
 
     if (!traysQuantity || !currentZpOutId || !rawValue) {
-      toast.error(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT);
+      toast.error(ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT, {
+        id: ERROR_MESSAGES.LACK_OF_DATA_FOR_PROTECTIVE_TREATMENT,
+      });
       return;
     }
 

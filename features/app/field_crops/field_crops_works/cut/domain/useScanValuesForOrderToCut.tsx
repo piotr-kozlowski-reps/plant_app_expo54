@@ -68,11 +68,10 @@ export const useScanValuesForOrderToCut = (
          * parametr: <b>plndat</b> (jeżeli jest już ustawiona data - to znaczy, że zlecenie cięcia jest już ustawione -> info + koniec procedury)
          */
         if (foundZP.plndat) {
-          toast.warning(
-            `${
-              ERROR_MESSAGES.ZP_WAS_ALREADY_ORDERED_TO_CUT
-            } ${renderDateInPolishWay(foundZP.plndat)}.`,
-          );
+          const warningMessage = `${
+            ERROR_MESSAGES.ZP_WAS_ALREADY_ORDERED_TO_CUT
+          } ${renderDateInPolishWay(foundZP.plndat)}.`;
+          toast.warning(warningMessage, { id: warningMessage });
           return;
         }
 

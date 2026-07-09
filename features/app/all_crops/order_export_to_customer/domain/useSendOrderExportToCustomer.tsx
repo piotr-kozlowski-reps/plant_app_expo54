@@ -71,7 +71,9 @@ export const useSendOrderExportToCustomer = (
     const inHowManyDays = valuesToSendOrderToHardener.inHowManyDays;
 
     if (!isScannedValue || !arePicturesInAppropriateAmount || !inHowManyDays) {
-      toast.warning(ERROR_MESSAGES.CANNOT_SEND_PICTURES);
+      toast.warning(ERROR_MESSAGES.CANNOT_SEND_PICTURES, {
+        id: ERROR_MESSAGES.CANNOT_SEND_PICTURES,
+      });
       return;
     }
 
@@ -94,7 +96,9 @@ export const useSendOrderExportToCustomer = (
       );
 
       if (!docIdResponse) {
-        toast.error(ERROR_MESSAGES.PROBLEM_WITH_CREATING_DOCID);
+        toast.error(ERROR_MESSAGES.PROBLEM_WITH_CREATING_DOCID, {
+          id: ERROR_MESSAGES.PROBLEM_WITH_CREATING_DOCID,
+        });
         return;
       }
 

@@ -31,11 +31,15 @@ export const usePrepareDataForFormikToPotting = (
     formikHelpers: FormikHelpers<PottingInput>,
   ) => {
     if (!values || !values.quantity) {
-      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_QUANTITY);
+      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_QUANTITY, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_QUANTITY,
+      });
       return;
     }
     if (!zpInfo) {
-      toast.error(ERROR_MESSAGES.LACK_OF_CHOSEN_ZP);
+      toast.error(ERROR_MESSAGES.LACK_OF_CHOSEN_ZP, {
+        id: ERROR_MESSAGES.LACK_OF_CHOSEN_ZP,
+      });
       return;
     }
 

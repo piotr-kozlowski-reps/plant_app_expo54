@@ -248,7 +248,9 @@ export const useScanValuesForOrderChemicalTreatments = (
     /** guards */
     //check if scanned ZP
     if (checkWhatValueWasScanned(scannedValue) !== "zp_don") {
-      toast.warning(ERROR_MESSAGES.ONLY_ZP_DON_POSSIBLE);
+      toast.warning(ERROR_MESSAGES.ONLY_ZP_DON_POSSIBLE, {
+        id: ERROR_MESSAGES.ONLY_ZP_DON_POSSIBLE,
+      });
     }
 
     //check if ZP is already on list

@@ -10,7 +10,7 @@ export const useCreateDocId = () => {
   async function createDocId(
     token: string,
     dataToBeSent: DocIdRequestDTO,
-    errorHandler: (error: Error, errorTitle?: string) => void
+    errorHandler: (error: Error, errorTitle?: string) => void,
   ): Promise<DocId | null> {
     let response: DocId;
     try {
@@ -18,11 +18,13 @@ export const useCreateDocId = () => {
         baseURL,
         "/api.php/REST/v1/documents",
         token,
-        dataToBeSent
+        dataToBeSent,
       );
 
       if (!response.doc_id || response.doc_id === "-1") {
-        toast.error(ERROR_MESSAGES.PROBLEM_WITH_CREATING_DOCID);
+        toast.error(ERROR_MESSAGES.PROBLEM_WITH_CREATING_DOCID, {
+          id: ERROR_MESSAGES.PROBLEM_WITH_CREATING_DOCID,
+        });
         return null;
       }
 

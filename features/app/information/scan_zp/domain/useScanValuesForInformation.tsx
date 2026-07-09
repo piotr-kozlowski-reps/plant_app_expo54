@@ -134,7 +134,9 @@ export const useScanValuesForInformation = (
       response.data.resultMainQuery === -1 ||
       response.data.resultMainQuery.length === 0
     ) {
-      toast.error(getDesiredErrorMessage(whatHasBeenScanned, param.value));
+      toast.error(getDesiredErrorMessage(whatHasBeenScanned, param.value), {
+        id: getDesiredErrorMessage(whatHasBeenScanned, param.value),
+      });
       return;
     }
 
@@ -176,7 +178,8 @@ export const useScanValuesForInformation = (
   }
 
   function scannedUnknownValueHandler(scannedValue: string) {
-    toast.warning(`Zeskanowany kod QR (${scannedValue}) jest niepoprawny.`);
+    const warningMessage = `Zeskanowany kod QR (${scannedValue}) jest niepoprawny.`;
+    toast.warning(warningMessage, { id: warningMessage });
   }
 
   function getDesiredParams(

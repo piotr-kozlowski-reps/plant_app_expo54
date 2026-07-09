@@ -32,9 +32,8 @@ export const useGetLocalizationInfo_Report1580 = () => {
         response.data.resultMainQuery === -1 ||
         response.data.resultMainQuery.length === 0
       ) {
-        toast.error(
-          `Lokalizacja (${planam}) nie została odnaleziona w systemie.`,
-        );
+        const errorMessage = `Lokalizacja (${planam}) nie została odnaleziona w systemie.`;
+        toast.error(errorMessage, { id: errorMessage });
         return null;
       }
 

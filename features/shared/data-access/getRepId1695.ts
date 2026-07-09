@@ -28,7 +28,8 @@ export async function getRepId1695(
     response.data.resultMainQuery === -1 ||
     response.data.resultMainQuery.length === 0
   ) {
-    toast.error(`ZP: ${ordnmb} został odnaleziony w systemie.`);
+    const errorMessage = `ZP: ${ordnmb} został odnaleziony w systemie.`;
+    toast.error(errorMessage, { id: errorMessage });
     return [];
   }
 

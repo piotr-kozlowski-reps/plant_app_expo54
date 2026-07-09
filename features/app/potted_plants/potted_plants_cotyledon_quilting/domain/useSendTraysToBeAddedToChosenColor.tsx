@@ -23,12 +23,16 @@ export const useSendTraysToBeAddedToChosenColor = (
   ////fn
   const sendTraysToBeAddedToChosenColor = async (trays: TrayShortInfo[]) => {
     if (!trays || trays.length === 0) {
-      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_TRAYS);
+      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_TRAYS, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_TRAYS,
+      });
       return;
     }
 
     if (!chosenColor) {
-      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_COLOR);
+      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_COLOR, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_COLOR,
+      });
       return;
     }
 

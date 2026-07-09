@@ -36,7 +36,9 @@ const TargetLocalizationModal = (props: Props) => {
   const setTargetLocalization = (id: number) => {
     const foundLocalization = localizations.find((loc) => loc.id____ === id);
     if (!foundLocalization) {
-      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION);
+      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION,
+      });
       return;
     }
 

@@ -13,7 +13,7 @@ export const useGetAllZPsInLocalizationWithAllLocalizationsInfo_Report1587 =
     async function getAllZPsInLocalizationWithAllLocalizationsInfo_Report1587(
       token: string,
       planam: string,
-      errorHandler: (error: Error, errorTitle?: string) => void
+      errorHandler: (error: Error, errorTitle?: string) => void,
     ): Promise<AllZPsPerLocalizationWithInfoAboutAllLocalizations[] | null> {
       try {
         let response: AllZPsPerLocalizationWithInfoAboutAllLocalizationsResponse;
@@ -21,14 +21,15 @@ export const useGetAllZPsInLocalizationWithAllLocalizationsInfo_Report1587 =
           await getRepId1587<AllZPsPerLocalizationWithInfoAboutAllLocalizationsResponse>(
             configPerBuild.apiAddress,
             planam,
-            token
+            token,
           );
 
         if (
           response.data.resultMainQuery === -1 ||
           response.data.resultMainQuery.length === 0
         ) {
-          toast.error(`Brak ZPków w zeskanowanej lokalizacji (${planam}).`);
+          const errorMessage = `Brak ZPków w zeskanowanej lokalizacji (${planam}).`;
+          toast.error(errorMessage, { id: errorMessage });
           return null;
         }
 

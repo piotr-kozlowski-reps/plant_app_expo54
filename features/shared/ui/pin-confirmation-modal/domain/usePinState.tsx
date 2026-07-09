@@ -57,20 +57,26 @@ export const usePinState = (
     );
 
     if (!foundModulePin) {
-      toast.warning(ERROR_MESSAGES.NO_PIN_FOR_MODULE);
+      toast.warning(ERROR_MESSAGES.NO_PIN_FOR_MODULE, {
+        id: ERROR_MESSAGES.NO_PIN_FOR_MODULE,
+      });
       setPin("");
       return;
     }
 
     const isPinGood = foundModulePin.module_pin === pin;
     if (!isPinGood) {
-      toast.warning(ERROR_MESSAGES.WRONG_PIN);
+      toast.warning(ERROR_MESSAGES.WRONG_PIN, {
+        id: ERROR_MESSAGES.WRONG_PIN,
+      });
       setPin("");
       return;
     }
 
     setPin("");
-    toast.success(MESSAGES.GOOD_PIN);
+    toast.success(MESSAGES.GOOD_PIN, {
+      id: MESSAGES.GOOD_PIN,
+    });
     confirmPinFn();
   };
 

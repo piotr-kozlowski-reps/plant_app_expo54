@@ -103,17 +103,18 @@ export const useScanValuesForOrderExportToCustomer = (
         /** guards */
         //if "outmvplan" - order export to client is already set - info and return
         if (foundZP.outmvplan) {
-          toast.warning(
-            `${
-              ERROR_MESSAGES.DATE_OF_ORDER_EXPORT_TO_CUSTOMER_ALREADY_SET
-            } ${renderDateInPolishWay(foundZP.outmvplan)}.`,
-          );
+          const warningMessage = `${
+            ERROR_MESSAGES.DATE_OF_ORDER_EXPORT_TO_CUSTOMER_ALREADY_SET
+          } ${renderDateInPolishWay(foundZP.outmvplan)}.`;
+          toast.warning(warningMessage, { id: warningMessage });
           return;
         }
 
         //if "dtlstm" is null - no any movement was done before - impossible to send to client -  info and return
         if (!foundZP.dtlstm) {
-          toast.warning(ERROR_MESSAGES.NO_EARLIER_INTERNAL_MOVEMENTS);
+          toast.warning(ERROR_MESSAGES.NO_EARLIER_INTERNAL_MOVEMENTS, {
+            id: ERROR_MESSAGES.NO_EARLIER_INTERNAL_MOVEMENTS,
+          });
           return;
         }
 
@@ -132,7 +133,9 @@ export const useScanValuesForOrderExportToCustomer = (
           ZPInfo.tmsdat,
         );
         if (!resultOfChangingDate) {
-          toast.warning(ERROR_MESSAGES.NO_TMS_DATE_IN_ZP);
+          toast.warning(ERROR_MESSAGES.NO_TMS_DATE_IN_ZP, {
+            id: ERROR_MESSAGES.NO_TMS_DATE_IN_ZP,
+          });
           return;
         }
 
@@ -175,7 +178,7 @@ export const useScanValuesForOrderExportToCustomer = (
   //       getIsPossibleToProcess_After13_guard();
   //     if (inHowManyDaysInput < 3 && !isPossibleToProcess_Before13) {
   //       toast.warning(
-  //         ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW
+  //         ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW, {id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW},
   //       );
   //       return;
   //     }

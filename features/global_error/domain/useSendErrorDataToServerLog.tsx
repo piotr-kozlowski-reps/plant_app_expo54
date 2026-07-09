@@ -46,7 +46,10 @@ export const useSendErrorDataToServerLog = (error_message: string) => {
       async function sendToServer(dataToSend: GlobalErrorDTO[]) {
         if (!dataToSend || dataToSend.length < 1) {
           toast.warning(
-            ERROR_MESSAGES.CANNOT_SEND_ERROR_TO_PRODUCER_LACK_OF_DATA
+            ERROR_MESSAGES.CANNOT_SEND_ERROR_TO_PRODUCER_LACK_OF_DATA,
+            {
+              id: ERROR_MESSAGES.CANNOT_SEND_ERROR_TO_PRODUCER_LACK_OF_DATA,
+            },
           );
           return;
         }
@@ -58,7 +61,7 @@ export const useSendErrorDataToServerLog = (error_message: string) => {
           configPerBuild.apiAddress,
           "/api.php/REST/custom/mobilelog",
           token!,
-          dataToSend
+          dataToSend,
         );
 
         const responseIDsQuantity = response.length;

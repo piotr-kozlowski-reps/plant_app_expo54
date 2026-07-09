@@ -77,7 +77,9 @@ export const useScannedValues = (
     const isField = whatValueWasScanned === "field";
 
     if (isField && isHobbyTech) {
-      toast.warning(ERROR_MESSAGES.WHEN_HOBBY_TECH_ONLY_ZP_CAN_BE_SCANNED);
+      toast.warning(ERROR_MESSAGES.WHEN_HOBBY_TECH_ONLY_ZP_CAN_BE_SCANNED, {
+        id: ERROR_MESSAGES.WHEN_HOBBY_TECH_ONLY_ZP_CAN_BE_SCANNED,
+      });
       return;
     }
 

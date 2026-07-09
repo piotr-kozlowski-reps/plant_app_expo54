@@ -44,9 +44,8 @@ export const useScanValuesForAddingTraysToPottedPlants = (
      * Jeżeli taca była już wcześniej zeskanowana -> info + koniec procedury.
      */
     if (checkWhatValueWasScanned(scannedValue) !== "tray") {
-      toast.warning(
-        `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. QRkod tacy ma inny format.`,
-      );
+      const warningMessage = `Zeskanowa wartość: "${scannedValue}" jest niepoprawna. QRkod tacy ma inny format.`;
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
 
@@ -59,7 +58,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     const zpAlreadyIncludesScannedTrayMessageInfo =
       getIfZpAlreadyIncludesScannedTray(scannedValue, cotyledonQuiltingArray);
     if (zpAlreadyIncludesScannedTrayMessageInfo) {
-      toast.warning(zpAlreadyIncludesScannedTrayMessageInfo);
+      toast.warning(zpAlreadyIncludesScannedTrayMessageInfo, {
+        id: zpAlreadyIncludesScannedTrayMessageInfo,
+      });
       return;
     }
 
@@ -74,7 +75,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       allowedTrayType,
     );
     if (!isProperScannedTrayType) {
-      toast.warning(getErrorMessageInfo(allowedTrayType, scannedValue));
+      toast.warning(getErrorMessageInfo(allowedTrayType, scannedValue), {
+        id: getErrorMessageInfo(allowedTrayType, scannedValue),
+      });
       return;
     }
 
@@ -84,7 +87,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
      * Musi byc wybrany kolor, jeżeli nie to -> info + koniec procedury.
      */
     if (!chosenColor) {
-      toast.warning(ERROR_MESSAGES.LACK_OF_CHOOSEN_COLOR);
+      toast.warning(ERROR_MESSAGES.LACK_OF_CHOOSEN_COLOR, {
+        id: ERROR_MESSAGES.LACK_OF_CHOOSEN_COLOR,
+      });
       return;
     }
 
@@ -99,7 +104,12 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       trays,
     );
     if (isMaxNumberOfTraysExceeded) {
-      toast.warning(ERROR_MESSAGES.MAX_NUMBER_OF_TRAYS_EXCEEDED_FOR_THAT_COLOR);
+      toast.warning(
+        ERROR_MESSAGES.MAX_NUMBER_OF_TRAYS_EXCEEDED_FOR_THAT_COLOR,
+        {
+          id: ERROR_MESSAGES.MAX_NUMBER_OF_TRAYS_EXCEEDED_FOR_THAT_COLOR,
+        },
+      );
       return;
     }
 
@@ -112,7 +122,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
       (tray) => tray.stk_id === getPureTrayValue(scannedValue),
     );
     if (foundTrayOnTheList) {
-      toast.warning(ERROR_MESSAGES.TRAY_ALREADY_ON_THE_LIST);
+      toast.warning(ERROR_MESSAGES.TRAY_ALREADY_ON_THE_LIST, {
+        id: ERROR_MESSAGES.TRAY_ALREADY_ON_THE_LIST,
+      });
       return;
     }
 
@@ -134,7 +146,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
        * Jeżeli taca ma inny paramert <b>event_type</b> niz <b>WASH</b> -> info + koniec procedury.
        */
       if (scannedTrayInfo.event_type !== "WASH") {
-        toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_WASHED);
+        toast.warning(ERROR_MESSAGES.TRAY_IS_NOT_WASHED, {
+          id: ERROR_MESSAGES.TRAY_IS_NOT_WASHED,
+        });
         return;
       }
 
@@ -172,7 +186,9 @@ export const useScanValuesForAddingTraysToPottedPlants = (
     }
 
     traysLocal.splice(traysLocal.indexOf(foundTray), 1);
-    toast.success(MESSAGES.TRAY_REMOVED_WITH_SUCCESS);
+    toast.success(MESSAGES.TRAY_REMOVED_WITH_SUCCESS, {
+      id: MESSAGES.TRAY_REMOVED_WITH_SUCCESS,
+    });
     setTrays(traysLocal);
   };
 

@@ -61,11 +61,15 @@ export const useLoginLogic = () => {
       );
 
       if (!tokens) {
-        toast.error(ERROR_MESSAGES.ERROR_IN_TOKENS);
+        toast.error(ERROR_MESSAGES.ERROR_IN_TOKENS, {
+          id: ERROR_MESSAGES.ERROR_IN_TOKENS,
+        });
         return null;
       }
       if ("error" in tokens) {
-        toast.error(ERROR_MESSAGES.ERROR_IN_TOKENS);
+        toast.error(ERROR_MESSAGES.ERROR_IN_TOKENS, {
+          id: ERROR_MESSAGES.ERROR_IN_TOKENS,
+        });
         return null;
       }
 
@@ -93,7 +97,9 @@ export const useLoginLogic = () => {
       ]);
 
       if (!userProfile || !adminUsersIDs) {
-        toast.error(ERROR_MESSAGES.ERROR_IN_USER_DATA);
+        toast.error(ERROR_MESSAGES.ERROR_IN_USER_DATA, {
+          id: ERROR_MESSAGES.ERROR_IN_USER_DATA,
+        });
         return null;
       }
       const isUserAnAdmin = adminUsersIDs.includes(userProfile.usr_id);
@@ -153,7 +159,9 @@ export const useLoginLogic = () => {
       );
 
       if (!isUserPermittedToLogin) {
-        toast.error(ERROR_MESSAGES.USER_NOT_VERIFIED);
+        toast.error(ERROR_MESSAGES.USER_NOT_VERIFIED, {
+          id: ERROR_MESSAGES.USER_NOT_VERIFIED,
+        });
         return null;
       }
 
@@ -173,7 +181,9 @@ export const useLoginLogic = () => {
         : true;
 
       if (!isAppUpToDate) {
-        toast.error(ERROR_MESSAGES.APP_NOT_UP_TO_DATE);
+        toast.error(ERROR_MESSAGES.APP_NOT_UP_TO_DATE, {
+          id: ERROR_MESSAGES.APP_NOT_UP_TO_DATE,
+        });
         router.replace("/app-not-up-to-date");
         return null;
       }

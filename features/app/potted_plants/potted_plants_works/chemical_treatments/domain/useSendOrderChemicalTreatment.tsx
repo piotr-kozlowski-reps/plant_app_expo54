@@ -49,10 +49,15 @@ export const useSendOrderChemicalTreatment = (
           id: ERROR_MESSAGES.LACK_OF_ZP,
         });
       if (!protectiveTreatment)
-        toast.error(ERROR_MESSAGES.LACK_OF_CHEMICAL_TREATMENT);
+        toast.error(ERROR_MESSAGES.LACK_OF_CHEMICAL_TREATMENT, {
+          id: ERROR_MESSAGES.LACK_OF_CHEMICAL_TREATMENT,
+        });
       if (!inHowManyDays)
         toast.error(
           ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_CHEMICAL_TREATMENT,
+          {
+            id: ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_CHEMICAL_TREATMENT,
+          },
         );
 
       return;

@@ -50,10 +50,15 @@ export const useSendOrderNitrogenIrrigation = (
           id: ERROR_MESSAGES.LACK_OF_ZP,
         });
       if (!protectiveTreatment)
-        toast.error(ERROR_MESSAGES.LACK_OF_NITROGEN_CONCENTRATION);
+        toast.error(ERROR_MESSAGES.LACK_OF_NITROGEN_CONCENTRATION, {
+          id: ERROR_MESSAGES.LACK_OF_NITROGEN_CONCENTRATION,
+        });
       if (!inHowManyDays)
         toast.error(
           ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_IRRIGATE_WITH_NITROGEN,
+          {
+            id: ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_IRRIGATE_WITH_NITROGEN,
+          },
         );
 
       return;

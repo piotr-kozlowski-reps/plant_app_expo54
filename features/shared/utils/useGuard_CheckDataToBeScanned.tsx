@@ -22,16 +22,24 @@ export const useGuard_CheckDataToBeScanned = (
     toast.warning(warningMessage, { id: warningMessage });
   }
   if (whatValueWasScanned === "field") {
-    toast.warning(ERROR_MESSAGES.NO_FIELD_POSSIBLE);
+    toast.warning(ERROR_MESSAGES.NO_FIELD_POSSIBLE, {
+      id: ERROR_MESSAGES.NO_FIELD_POSSIBLE,
+    });
   }
   if (whatValueWasScanned === "zp_roz") {
-    toast.warning(ERROR_MESSAGES.NO_ZP_ROZ_POSSIBLE);
+    toast.warning(ERROR_MESSAGES.NO_ZP_ROZ_POSSIBLE, {
+      id: ERROR_MESSAGES.NO_ZP_ROZ_POSSIBLE,
+    });
   }
   if (whatValueWasScanned === "zp_gru") {
-    toast.warning(ERROR_MESSAGES.NO_ZP_GRU_POSSIBLE);
+    toast.warning(ERROR_MESSAGES.NO_ZP_GRU_POSSIBLE, {
+      id: ERROR_MESSAGES.NO_ZP_GRU_POSSIBLE,
+    });
   }
   if (whatValueWasScanned === "tray") {
-    toast.warning(ERROR_MESSAGES.NO_TRAY_POSSIBLE);
+    toast.warning(ERROR_MESSAGES.NO_TRAY_POSSIBLE, {
+      id: ERROR_MESSAGES.NO_TRAY_POSSIBLE,
+    });
   }
 
   return { isScannedDataCorrect: false };

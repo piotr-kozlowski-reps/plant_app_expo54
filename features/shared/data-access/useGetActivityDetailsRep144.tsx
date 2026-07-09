@@ -34,7 +34,8 @@ export const useGetActivityDetailsRep144 = () => {
         );
 
       if (!response.data.resultMainQuery) {
-        toast.error(`Brak informacji o czynności dla id (${pcz_id}).`);
+        const errorMessage = `Brak informacji o czynności dla id (${pcz_id}).`;
+        toast.error(errorMessage, { id: errorMessage });
         return [];
       }
 

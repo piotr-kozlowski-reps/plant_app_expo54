@@ -17,11 +17,13 @@ import { FormikHelpers, useFormik } from "formik";
 export const useConfirmQuantitiesPlantsComingUpsCounterFormik = (
   closeFn: () => void,
   currentTray: Tray,
-  addOrChangeQuantityInPlantsComingUpsCounterHandler: (tray: Tray) => void
+  addOrChangeQuantityInPlantsComingUpsCounterHandler: (tray: Tray) => void,
 ) => {
   const onSubmit = async (value: Tray, formikHelpers: FormikHelpers<Tray>) => {
     if (!value) {
-      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_TRAY);
+      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_TRAY, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_TRAY,
+      });
       return;
     }
 

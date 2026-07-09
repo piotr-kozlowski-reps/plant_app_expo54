@@ -30,9 +30,8 @@ export async function getRepId116(
     response.data.resultMainQuery === -1 ||
     response.data.resultMainQuery.length === 0
   ) {
-    toast.error(
-      `ZP o podanym ID (${ZPWithoutAdditional_ZLEC}) nie posiada żadnej lokalizacji.`,
-    );
+    const errorMessage = `ZP o podanym ID (${ZPWithoutAdditional_ZLEC}) nie posiada żadnej lokalizacji.`;
+    toast.error(errorMessage, { id: errorMessage });
     return null;
   }
 

@@ -35,9 +35,8 @@ export const useGetTrayInfoForDon_Report1711 = () => {
         response.data.resultMainQuery === -1 ||
         response.data.resultMainQuery.length === 0
       ) {
-        toast.error(
-          `Taca o podanym ID (${scannedStk_id}) nie została odnaleziona lub nie jest tacą typu: TN.`,
-        );
+        const errorMessage = `Taca o podanym ID (${scannedStk_id}) nie została odnaleziona lub nie jest tacą typu: TN.`;
+        toast.error(errorMessage, { id: errorMessage });
         return null;
       }
 

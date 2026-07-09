@@ -46,7 +46,9 @@ export const useScanValuesForWateringPlants = (
       return;
     }
     if (whatValueWasScanned !== "field") {
-      toast.warning(ERROR_MESSAGES.ONLY_FIELD_AVAILABLE);
+      toast.warning(ERROR_MESSAGES.ONLY_FIELD_AVAILABLE, {
+        id: ERROR_MESSAGES.ONLY_FIELD_AVAILABLE,
+      });
       return;
     }
 
@@ -68,7 +70,9 @@ export const useScanValuesForWateringPlants = (
       );
 
       if (!localizationInfo) {
-        toast.warning(ERROR_MESSAGES.LOCALIZATION_NOT_FOUND);
+        toast.warning(ERROR_MESSAGES.LOCALIZATION_NOT_FOUND, {
+          id: ERROR_MESSAGES.LOCALIZATION_NOT_FOUND,
+        });
         return;
       }
 

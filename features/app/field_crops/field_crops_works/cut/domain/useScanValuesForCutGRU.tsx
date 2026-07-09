@@ -63,7 +63,7 @@ export const useScanValuesForCutGRU = (
          */
         // const ordnmb = foundZP.ordnmb;
         // if (!cutsList.find((cut) => cut.ordnmb === ordnmb)) {
-        //   toast.warning(ERROR_MESSAGES.CANNOT_CONFIRM_ZP_WAS_NOT_ORDERED);
+        //   toast.warning(ERROR_MESSAGES.CANNOT_CONFIRM_ZP_WAS_NOT_ORDERED, {id: ERROR_MESSAGES.CANNOT_CONFIRM_ZP_WAS_NOT_ORDERED});
         //   return;
         // }
 

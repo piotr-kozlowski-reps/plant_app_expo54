@@ -14,7 +14,9 @@ export function useErrorHandler() {
   };
 
   const notifyError = (description: string, errorTitle?: string) => {
-    toast.error(description);
+    toast.error(description, {
+      id: description,
+    });
   };
 
   return { errorHandler };

@@ -49,7 +49,9 @@ const TargetLocalizationModal = (props: Props) => {
       (work) => work.prior_ === prior_,
     );
     if (!foundWorkToPlan) {
-      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN);
+      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_WORK_TO_PLAN,
+      });
       return;
     }
     setTargetWorkToPlan(foundWorkToPlan);

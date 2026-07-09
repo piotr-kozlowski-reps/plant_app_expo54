@@ -35,12 +35,16 @@ export const usePrepareDataForFormikToCotyledonQuiltingQuantity = (
     formikHelpers: FormikHelpers<QuantityForCotyledonQuiltingInput>,
   ) => {
     if (!values || !values.quantity) {
-      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_QUANTITY);
+      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_QUANTITY, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_QUANTITY,
+      });
       return;
     }
 
     if (!chosenColor) {
-      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_COLOR);
+      toast.error(ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_COLOR, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_CHOSEN_COLOR,
+      });
       return;
     }
 

@@ -76,7 +76,9 @@ export const useScannedValuesForPotting = (
      */
     const isValueZpDon = checkWhatValueWasScanned(scannedValue);
     if (isValueZpDon !== "zp_don") {
-      toast.warning(ERROR_MESSAGES.SCANNED_ZP_IS_NOT_DON_ZP);
+      toast.warning(ERROR_MESSAGES.SCANNED_ZP_IS_NOT_DON_ZP, {
+        id: ERROR_MESSAGES.SCANNED_ZP_IS_NOT_DON_ZP,
+      });
       return;
     }
 
@@ -98,9 +100,8 @@ export const useScannedValuesForPotting = (
      * jeżeli raport nie zwróci czynności  z atrybutem  "dscrpt": "DONICZKOWANIE RD" -> info i koniec procedury.
      */
     if (!zpRozActivities || !zpRozActivities.length) {
-      toast.error(
-        `Brak informacji o czynnościach na zeskanowanym ZPku (${zpPureValue}).`,
-      );
+      const errorMessage = `Brak informacji o czynnościach na zeskanowanym ZPku (${zpPureValue}).`;
+      toast.error(errorMessage, { id: errorMessage });
       return;
     }
 
@@ -110,7 +111,9 @@ export const useScannedValuesForPotting = (
     );
 
     if (!foundPottingActivity) {
-      toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_NOT_FOUND);
+      toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_NOT_FOUND, {
+        id: ERROR_MESSAGES.POTTING_ACTIVITY_NOT_FOUND,
+      });
       return;
     }
 
@@ -133,9 +136,8 @@ export const useScannedValuesForPotting = (
      * jeżeli raport nie zwróci materiału z atrybutem  "twr_kod" rozpoczynającym się od "DONI." -> info i koniec procedury.
      */
     if (!activityDetails || !activityDetails.length) {
-      toast.error(
-        `Brak informacji o materiałach na zeskanowanym ZPku (${zpPureValue}).`,
-      );
+      const errorMessage = `Brak informacji o materiałach na zeskanowanym ZPku (${zpPureValue}).`;
+      toast.error(errorMessage, { id: errorMessage });
       return;
     }
 

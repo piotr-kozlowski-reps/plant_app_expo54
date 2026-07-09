@@ -43,9 +43,14 @@ export const useSendWorkToPlanInGreenhouseCrops = (
         toast.error(ERROR_MESSAGES.LACK_OF_ZP, {
           id: ERROR_MESSAGES.LACK_OF_ZP,
         });
-      if (!workToPlan) toast.error(ERROR_MESSAGES.LACK_OF_WORK_TO_PLAN);
+      if (!workToPlan)
+        toast.error(ERROR_MESSAGES.LACK_OF_WORK_TO_PLAN, {
+          id: ERROR_MESSAGES.LACK_OF_WORK_TO_PLAN,
+        });
       if (!inHowManyDays)
-        toast.error(ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_WORK_PLAN);
+        toast.error(ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_WORK_PLAN, {
+          id: ERROR_MESSAGES.LACK_OF_IN_HOW_MANY_DAYS_TO_WORK_PLAN,
+        });
 
       return;
     }
@@ -55,6 +60,9 @@ export const useSendWorkToPlanInGreenhouseCrops = (
     if (inHowManyDays < 3 && !isPossibleToProcess_Before13) {
       toast.warning(
         ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+        {
+          id: ERROR_MESSAGES.CANNOT_ORDER_AFTER_13_FOR_TOMORROW_AND_DAY_AFTER_TOMORROW,
+        },
       );
       return;
     }

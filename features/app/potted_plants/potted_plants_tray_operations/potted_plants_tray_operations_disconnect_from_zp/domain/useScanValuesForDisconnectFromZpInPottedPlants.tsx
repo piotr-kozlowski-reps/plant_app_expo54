@@ -89,7 +89,9 @@ export const useScanValuesForDisconnectFromZpInPottedPlants = (
        * zeskanowac można tylko tacę należącą do ZP z końcówką DON, jeżeli inna -> info i koniec procedury.
        */
       if (!foundTray.ordnmb.endsWith("DON")) {
-        toast.warning(ERROR_MESSAGES.TRAY_DOES_NOT_BELONG_TO_DON_ZP);
+        toast.warning(ERROR_MESSAGES.TRAY_DOES_NOT_BELONG_TO_DON_ZP, {
+          id: ERROR_MESSAGES.TRAY_DOES_NOT_BELONG_TO_DON_ZP,
+        });
         return;
       }
       /**

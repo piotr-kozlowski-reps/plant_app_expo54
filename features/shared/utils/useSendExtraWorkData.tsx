@@ -54,7 +54,10 @@ export const useSendExtraWorkData = (
         toast.error(ERROR_MESSAGES.LACK_OF_ZP, {
           id: ERROR_MESSAGES.LACK_OF_ZP,
         });
-      if (!begin_date) toast.error(ERROR_MESSAGES.LACK_OF_DATE);
+      if (!begin_date)
+        toast.error(ERROR_MESSAGES.LACK_OF_DATE, {
+          id: ERROR_MESSAGES.LACK_OF_DATE,
+        });
 
       return;
     }

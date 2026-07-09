@@ -50,15 +50,21 @@ const ChooseFieldDetailsModal = (props: Props) => {
   //fn
   const sendWateringPlantsData = async () => {
     if (!a && !b && !c && !all) {
-      toast.warning(ERROR_MESSAGES.NOTHING_WAS_CHOSEN);
+      toast.warning(ERROR_MESSAGES.NOTHING_WAS_CHOSEN, {
+        id: ERROR_MESSAGES.NOTHING_WAS_CHOSEN,
+      });
       return;
     }
     if (!wateringPlantsActivity) {
-      toast.warning(ERROR_MESSAGES.WATERING_PLANT_ACTIVITY_NOT_DELIVERED);
+      toast.warning(ERROR_MESSAGES.WATERING_PLANT_ACTIVITY_NOT_DELIVERED, {
+        id: ERROR_MESSAGES.WATERING_PLANT_ACTIVITY_NOT_DELIVERED,
+      });
       return;
     }
     if (!localizaction) {
-      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION);
+      toast.warning(ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION, {
+        id: ERROR_MESSAGES.NO_INFO_ABOUT_LOCALIZATION,
+      });
       return;
     }
 
