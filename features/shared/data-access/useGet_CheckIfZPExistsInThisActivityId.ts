@@ -15,6 +15,7 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
    * raport - czy dany zabieg ochronny może być zrobiony dla tego ZPeka:
    * dla ZP:
    * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1571</b>&ordnmb=<b>%ordnmb%</b>&activityid=<b>%activityId%</b>&module=<b>%module%</b>`;
+   * gdy <b>zp_don</b> - <b>nie przekazuje module</b> wcale
    * dla tacy:
    * <b>{{URL}}</b>/api.php/REST/custom/korsolgetreport?rep_id=<b>1571</b>&stk_id=$<b>%stk_id%</b>&activityid=<b>%activityId%</b>&module=<b>GRUNT</b>`;
    */
@@ -79,6 +80,22 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
         scannedValue,
       )}&activityid=${activityId}&module=${moduleKind}`;
     }
+
+    if (whatWasScanned === "zp_don") {
+      console.log(
+        `${
+          configPerBuild.apiAddress
+        }/api.php/REST/custom/korsolgetreport?rep_id=${
+          configPerBuild.edocReport_ZPForActivityId
+        }&ordnmb=${getPureZPValue(scannedValue)}&activityid=${activityId}`,
+      );
+      return `${
+        configPerBuild.apiAddress
+      }/api.php/REST/custom/korsolgetreport?rep_id=${
+        configPerBuild.edocReport_ZPForActivityId
+      }&ordnmb=${getPureZPValue(scannedValue)}&activityid=${activityId}`;
+    }
+
     if (whatWasScanned === "tray") {
       return `${
         configPerBuild.apiAddress

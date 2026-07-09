@@ -136,8 +136,21 @@ export const useScanValuesForProtectiveTreatment = (
         return;
       }
 
-      if (!isZPGru && isDon) {
-        alert("zeskanowano DON.");
+      if (!isZPGru && isDon && isZpDon) {
+        await scanZpOrTrayHandler(
+          {
+            scannedValue,
+            scannedValues,
+            isZPScanned,
+            setIsZPScanned,
+            activityId,
+            setScannedValues,
+            setIsForceToScanField,
+            setScannedZPOnManyFields,
+          },
+          "zp_don",
+        );
+        return;
       }
 
       if (isTray) {

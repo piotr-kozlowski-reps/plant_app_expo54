@@ -58,7 +58,8 @@ export const useScanZpOrTrayHandler = () => {
     if (
       whatWasScanned !== "tray" &&
       whatWasScanned !== "zp_gru" &&
-      whatWasScanned !== "zp_roz"
+      whatWasScanned !== "zp_roz" &&
+      whatWasScanned !== "zp_don"
     ) {
       toast.warning(
         ERROR_MESSAGES.WRONG_PARAMETER +
@@ -76,6 +77,7 @@ export const useScanZpOrTrayHandler = () => {
      * raporty:
      * @readFile `features/shared/data-access/useGet_CheckIfZPExistsInThisActivityId.ts`
      */
+
     const ZPFoundForThisActivityId:
       | (ZPItem & { scanned_raw_value: string })[]
       | null = await checkIfZPExistsInThisActivityId(
@@ -84,6 +86,10 @@ export const useScanZpOrTrayHandler = () => {
       activityId,
       whatWasScanned,
     );
+
+    console.log({
+      ZPFoundForThisActivityId,
+    });
 
     /**
      * @public
@@ -200,39 +206,59 @@ export const useScanZpOrTrayHandler = () => {
     if (valueNotFound) {
       const ZPWIthoutPrefixZLEC_ = getPureZPValue(scannedValue);
       toast.warning(
-        `ZPk: "${ZPWIthoutPrefixZLEC_}" nie został znaleziony na obiekcie.`,
+        `ZP'k: "${ZPWIthoutPrefixZLEC_}" nie został znaleziony na obiekcie.`,
       );
-      setScannedValues((prevValues) => [
-        ...prevValues,
-        {
-          scanned_raw_value: scannedValue,
-          planam: "BRAK",
-          ordnmb: ZPWIthoutPrefixZLEC_,
-          act_percentage: 100,
-          prev_percentage: 0,
-          stkcnt_loc: 0,
-          stkcnt_ordnmb: 0,
-          sordid: null,
-          trace_type: "",
-        },
-      ]);
+      setScannedValues((prevValues) => {
+        const foundZPInPrevScannedValues = prevValues.find(
+          (prev) => prev.ordnmb === ZPWIthoutPrefixZLEC_,
+        );
+
+        if (!foundZPInPrevScannedValues) {
+          return [
+            ...prevValues,
+            {
+              scanned_raw_value: scannedValue,
+              planam: "BRAK",
+              ordnmb: ZPWIthoutPrefixZLEC_,
+              act_percentage: 100,
+              prev_percentage: 0,
+              stkcnt_loc: 0,
+              stkcnt_ordnmb: 0,
+              sordid: null,
+              trace_type: "",
+            },
+          ];
+        }
+
+        return prevValues;
+      });
     }
 
     if (foundZPOnlyInOneLocalization) {
-      setScannedValues((prevValues) => [
-        ...prevValues,
-        {
-          scanned_raw_value: scannedValue,
-          planam: ZPFoundForThisActivityId[0].planam,
-          ordnmb: ZPFoundForThisActivityId[0].ordnmb,
-          act_percentage: ZPFoundForThisActivityId[0].act_percentage,
-          prev_percentage: ZPFoundForThisActivityId[0].prev_percentage,
-          stkcnt_loc: ZPFoundForThisActivityId[0].stkcnt_loc,
-          stkcnt_ordnmb: ZPFoundForThisActivityId[0].stkcnt_ordnmb,
-          sordid: ZPFoundForThisActivityId[0].sordid,
-          trace_type: ZPFoundForThisActivityId[0].trace_type,
-        },
-      ]);
+      setScannedValues((prevValues) => {
+        const foundZPInPrevScannedValues = prevValues.find(
+          (prev) => prev.ordnmb === ZPFoundForThisActivityId[0].ordnmb,
+        );
+
+        if (!foundZPInPrevScannedValues) {
+          return [
+            ...prevValues,
+            {
+              scanned_raw_value: scannedValue,
+              planam: ZPFoundForThisActivityId[0].planam,
+              ordnmb: ZPFoundForThisActivityId[0].ordnmb,
+              act_percentage: ZPFoundForThisActivityId[0].act_percentage,
+              prev_percentage: ZPFoundForThisActivityId[0].prev_percentage,
+              stkcnt_loc: ZPFoundForThisActivityId[0].stkcnt_loc,
+              stkcnt_ordnmb: ZPFoundForThisActivityId[0].stkcnt_ordnmb,
+              sordid: ZPFoundForThisActivityId[0].sordid,
+              trace_type: ZPFoundForThisActivityId[0].trace_type,
+            },
+          ];
+        }
+
+        return prevValues;
+      });
     }
 
     /**

@@ -145,7 +145,7 @@ const ChemicalTreatmentsConfirmationModal = (props: Props) => {
                 <View className="w-full">
                   <ComboboxFormik<ProtectiveTreatmentInput, ProtectiveTreatment>
                     label="Zabieg chemiczny:"
-                    placeholder="wybierz zabieg chemiczny"
+                    placeholder="wybierz środek chemiczny"
                     formik={formik}
                     formikField="treatment"
                     isVerifiedAtOnce={true}

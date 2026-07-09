@@ -69,7 +69,17 @@ export const useScanValueForExtraWorkHandler = () => {
       );
       return;
     }
-    setScannedValues((prevValue) => [...prevValue, foundFieldForDesiredZp]);
+    setScannedValues((prevValue) => {
+      const foundFieldInPrev = prevValue.find(
+        (item) => item.ordnmb === foundFieldForDesiredZp.ordnmb,
+      );
+
+      if (!foundFieldInPrev) {
+        return [...prevValue, foundFieldForDesiredZp];
+      }
+
+      return prevValue;
+    });
     setScannedZPOnManyFields([]);
     setIsForceToScanField(false);
     setIsZPScanned(true);
@@ -124,6 +134,8 @@ export const useScanValueForExtraWorkHandler = () => {
       activityId,
     );
 
+    console.log({ listOfZPs });
+
     //check if any of ZPs have "/ROZ" in name - if so (rozsada szklarniowa) - user cannnt do anything
     const isRoz = listOfZPs.some((zp) => zp.ordnmb.endsWith("/ROZ"));
     if (isRoz) {
@@ -144,10 +156,20 @@ export const useScanValueForExtraWorkHandler = () => {
         listOfZPsThatHasNotBeenScannedYet.push(zp);
       }
     });
-    setScannedValues((prevValue) => [
-      ...prevValue,
-      ...listOfZPsThatHasNotBeenScannedYet,
-    ]);
+
+    setScannedValues((prevValue) => {
+      console.log({ prevValue });
+      console.log({ listOfZPsThatHasNotBeenScannedYet });
+      const listOfZpThatAreForSureNotOnScannedList: ZpScannedValue[] = [];
+      listOfZPsThatHasNotBeenScannedYet.forEach((zp) => {
+        const foundZpInList = prevValue.find(
+          (item) => item.ordnmb === zp.ordnmb,
+        );
+        if (!foundZpInList) listOfZpThatAreForSureNotOnScannedList.push(zp);
+      });
+
+      return [...prevValue, ...listOfZpThatAreForSureNotOnScannedList];
+    });
     const isAtLeastOneZpInScannedField =
       listOfZPsThatHasNotBeenScannedYet.length;
     if (isAtLeastOneZpInScannedField) {
