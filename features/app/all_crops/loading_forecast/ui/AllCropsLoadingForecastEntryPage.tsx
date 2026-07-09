@@ -36,7 +36,9 @@ const AllCropsLoadingForecastEntryPage = (props: Props) => {
       if (
         !getSubmodulePermission<FieldCropsSubmodules>(moduleName, submoduleType)
       ) {
-        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
+        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType), {
+          id: provideNoAccessToSubmoduleMessage(submoduleType),
+        });
         router.back();
       }
     }
@@ -49,7 +51,9 @@ const AllCropsLoadingForecastEntryPage = (props: Props) => {
           submoduleType,
         )
       ) {
-        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
+        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType), {
+          id: provideNoAccessToSubmoduleMessage(submoduleType),
+        });
         router.back();
       }
     }

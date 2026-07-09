@@ -117,12 +117,12 @@ export const useSendTraysToBeAddedToChosenColor = (
     // console.log({ sentItemsQuantity });
 
     // if (responseIDsQuantity === sentItemsQuantity) {
-    //   toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+    //   toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {id: MESSAGES.DATA_SENT_SUCCESSFULLY });
     // queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CUTS_LIST] });
     // closeFn();
     // }
     // if (responseIDsQuantity !== sentItemsQuantity) {
-    //   toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+    //   toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA});
     // }
   }
 

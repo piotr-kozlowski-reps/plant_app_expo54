@@ -135,11 +135,15 @@ export const useSendAddToZpData = (
     // const sentItemsQuantity = dataToBeSend.length;
     const responseIDsQuantity = response.length;
     if (responseIDsQuantity === 0) {
-      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {
+        id: MESSAGES.DATA_SENT_SUCCESSFULLY,
+      });
       resetWholeState();
     }
     if (responseIDsQuantity !== 0) {
-      toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     }
   }
 

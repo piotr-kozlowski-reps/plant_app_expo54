@@ -116,14 +116,16 @@ export const useSendOrderToHardener = (
     // const sentItemsQuantity = dataToBeSend.length;
 
     // if (responseIDsQuantity === sentItemsQuantity) {
-    //   toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+    //   toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {id: MESSAGES.DATA_SENT_SUCCESSFULLY });
     // }
     // if (responseIDsQuantity !== sentItemsQuantity) {
-    //   toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+    //   toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA});
     // }
 
     if (response && response.length) {
-      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {
+        id: MESSAGES.DATA_SENT_SUCCESSFULLY,
+      });
     }
   }
 

@@ -16,14 +16,16 @@ import * as yup from "yup";
 export const usePrepareDataForFormikToChangePercentage = (
   zpItem: ZpScannedValue,
   closeFn: () => void,
-  actionFn: (zpValue: ZpScannedValue) => void
+  actionFn: (zpValue: ZpScannedValue) => void,
 ) => {
   const onSubmit = async (
     values: ZpScannedValuePercentage,
-    formikHelpers: FormikHelpers<ZpScannedValuePercentage>
+    formikHelpers: FormikHelpers<ZpScannedValuePercentage>,
   ) => {
     if (!zpItem) {
-      toast.error(ERROR_MESSAGES.LACK_OF_CHOSEN_ZP);
+      toast.error(ERROR_MESSAGES.LACK_OF_CHOSEN_ZP, {
+        id: ERROR_MESSAGES.LACK_OF_CHOSEN_ZP,
+      });
       return;
     }
     Keyboard.dismiss();
@@ -33,7 +35,9 @@ export const usePrepareDataForFormikToChangePercentage = (
       act_percentage: values.act_percentage,
     };
     actionFn(zpWithNewValue);
-    toast.success(MESSAGES.VALUE_CHANGED_WITH_SUCCESS);
+    toast.success(MESSAGES.VALUE_CHANGED_WITH_SUCCESS, {
+      id: MESSAGES.VALUE_CHANGED_WITH_SUCCESS,
+    });
     formikHelpers.resetForm();
     closeFn();
   };

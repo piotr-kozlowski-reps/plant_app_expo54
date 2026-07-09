@@ -78,7 +78,10 @@ export const usePrepareDataForFormikToPotting = (
 
     const foundMaterialWithDoni = findMaterialWithDoni(zpInfo.materials);
     if (!foundMaterialWithDoni) {
-      toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND);
+      toast.error(
+        ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND,
+        { id: ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND },
+      );
       return;
     }
     // const restOfMaterials = zpInfo.materials.filter(

@@ -23,7 +23,9 @@ export const useGetInternalTransportPermission = (
       if (
         !getSubmodulePermission<FieldCropsSubmodules>(moduleName, submoduleType)
       ) {
-        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
+        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType), {
+          id: provideNoAccessToSubmoduleMessage(submoduleType),
+        });
         router.back();
       }
     }
@@ -36,7 +38,9 @@ export const useGetInternalTransportPermission = (
           submoduleType,
         )
       ) {
-        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
+        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType), {
+          id: provideNoAccessToSubmoduleMessage(submoduleType),
+        });
         router.back();
       }
     }
@@ -49,7 +53,9 @@ export const useGetInternalTransportPermission = (
           submoduleType,
         )
       ) {
-        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType));
+        toast.warning(provideNoAccessToSubmoduleMessage(submoduleType), {
+          id: provideNoAccessToSubmoduleMessage(submoduleType),
+        });
         router.back();
       }
     }

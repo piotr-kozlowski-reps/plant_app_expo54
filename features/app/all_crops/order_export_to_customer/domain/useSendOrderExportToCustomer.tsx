@@ -30,7 +30,7 @@ export const useSendOrderExportToCustomer = (
   scannedValue: ZPShortenedInfoWithPics | null,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   resetValues: () => void,
-  submoduleType: AllExportToCustomerSubmodules
+  submoduleType: AllExportToCustomerSubmodules,
 ) => {
   const { isSendingDataAvailable } =
     useIsSendingOrderExportToCustomerDataAvailable(scannedValue, submoduleType);
@@ -43,7 +43,7 @@ export const useSendOrderExportToCustomer = (
   async function sendValuesForOrderExportToCustomerHandler(
     scannedValue: ZPShortenedInfoWithPics,
     inHowManyDays: number,
-    isSuperData: boolean
+    isSuperData: boolean,
   ) {
     try {
       setIsLoading(true);
@@ -60,7 +60,7 @@ export const useSendOrderExportToCustomer = (
   }
 
   async function sendDataToServer(
-    valuesToSendOrderToHardener: OrderExportToCustomerDataToSent
+    valuesToSendOrderToHardener: OrderExportToCustomerDataToSent,
   ) {
     ////guards
     const isScannedValue = valuesToSendOrderToHardener.scannedValue;
@@ -90,7 +90,7 @@ export const useSendOrderExportToCustomer = (
           prc_id: scannedValueLocal.prc_id,
           dscrpt: `ZDJĘCIE ROŚLIN PRZED WYSŁANIEM ${scannedValueLocal.ordnmb}`,
         },
-        errorHandler
+        errorHandler,
       );
 
       if (!docIdResponse) {
@@ -126,12 +126,12 @@ export const useSendOrderExportToCustomer = (
           baseURL,
           `/api.php/REST/v1/documents/${docId}/attachments`,
           token!,
-          fileToBeSent
+          fileToBeSent,
         );
 
         if (!response || !response.fileid || response.fileid.length !== 1) {
           throw new Error(
-            "useSendOrderExportToCustomer ->  sendAttachments -> response is wrong."
+            "useSendOrderExportToCustomer ->  sendAttachments -> response is wrong.",
           );
         }
       }
@@ -145,7 +145,7 @@ export const useSendOrderExportToCustomer = (
       movtyp: "OUT",
       movdta: addDaysToDate(
         new Date(Date.now()),
-        inHowManyDaysLocal ? inHowManyDaysLocal : 0
+        inHowManyDaysLocal ? inHowManyDaysLocal : 0,
       ),
       movspc: isSuperDataLocal ? 1 : 0,
       doc_id: docId,
@@ -161,10 +161,10 @@ export const useSendOrderExportToCustomer = (
         configPerBuild.apiAddress,
         "/api.php/REST/custom/movementsplan",
         token!,
-        [orderExportToCustomer]
+        [orderExportToCustomer],
       );
 
-    // toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+    // toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {id: MESSAGES.DATA_SENT_SUCCESSFULLY });
     // resetValues();
 
     // check if response array has the same amount of items as sent items
@@ -172,11 +172,15 @@ export const useSendOrderExportToCustomer = (
     // const sentItemsQuantity = 1;
 
     if (response) {
-      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {
+        id: MESSAGES.DATA_SENT_SUCCESSFULLY,
+      });
       resetValues();
     }
     if (!response) {
-      toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+      toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+        id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+      });
     }
   }
 

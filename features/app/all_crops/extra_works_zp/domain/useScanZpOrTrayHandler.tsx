@@ -61,12 +61,12 @@ export const useScanZpOrTrayHandler = () => {
       whatWasScanned !== "zp_roz" &&
       whatWasScanned !== "zp_don"
     ) {
-      toast.warning(
+      const warningMessage =
         ERROR_MESSAGES.WRONG_PARAMETER +
-          "-> " +
-          whatWasScanned +
-          " -> scanZpOrTrayHandler",
-      );
+        "-> " +
+        whatWasScanned +
+        " -> scanZpOrTrayHandler";
+      toast.warning(warningMessage, { id: warningMessage });
       return;
     }
 
@@ -101,7 +101,9 @@ export const useScanZpOrTrayHandler = () => {
         ? ZPFoundForThisActivityId[0].ordnmb
         : null;
     if (checkIfValueIsAlreadyScanned(zpOrdnmb, scannedValues)) {
-      toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST);
+      toast.warning(ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST, {
+        id: ERROR_MESSAGES.ZP_WAS_ALREADY_SCANNED_AND_IS_ON_LIST,
+      });
       return;
     }
 
@@ -113,7 +115,9 @@ export const useScanZpOrTrayHandler = () => {
      * gdy nie znaleziono ZP na obiekcie, to koniec procedury
      */
     if (!ZPFoundForThisActivityId || ZPFoundForThisActivityId.length === 0) {
-      toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC);
+      toast.warning(ERROR_MESSAGES.NOT_FOUND_IN_LOC, {
+        id: ERROR_MESSAGES.NOT_FOUND_IN_LOC,
+      });
       return;
     }
 
@@ -158,7 +162,9 @@ export const useScanZpOrTrayHandler = () => {
       const whatKindOfHobbyZp = await checkIfIsHobbyZp(ordnmb, token);
 
       if (whatKindOfHobbyZp === "no_hobby" || !whatKindOfHobbyZp) {
-        toast.warning(ERROR_MESSAGES.SCANNED_ZP_IS_NOT_HOBBY_ZP);
+        toast.warning(ERROR_MESSAGES.SCANNED_ZP_IS_NOT_HOBBY_ZP, {
+          id: ERROR_MESSAGES.SCANNED_ZP_IS_NOT_HOBBY_ZP,
+        });
         return;
       }
 
@@ -166,14 +172,18 @@ export const useScanZpOrTrayHandler = () => {
         (isActivityIdHobbyWithTj12 || isActivityIdHobbyWithTj12AndPackaging) &&
         whatKindOfHobbyZp === "hobby_tj10"
       ) {
-        toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ10_TRAYS);
+        toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ10_TRAYS, {
+          id: ERROR_MESSAGES.SCANNED_ZP_HAS_TJ10_TRAYS,
+        });
         return;
       }
       if (
         (isActivityIdHobbyWithTj10 || isActivityIdHobbyWithTj10AndPackaging) &&
         whatKindOfHobbyZp === "hobby_tj12"
       ) {
-        toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ12_TRAYS);
+        toast.warning(ERROR_MESSAGES.SCANNED_ZP_HAS_TJ12_TRAYS, {
+          id: ERROR_MESSAGES.SCANNED_ZP_HAS_TJ12_TRAYS,
+        });
         return;
       }
 
@@ -191,6 +201,9 @@ export const useScanZpOrTrayHandler = () => {
       if (isActivityThatNeedsTj10OrTj12 && whatKindOfHobbyZp === "hobby_rest") {
         toast.warning(
           ERROR_MESSAGES.SCANNED_ZP_HAS_NO_TJ_TRAYS_AND_THEY_ARE_NECESSARY,
+          {
+            id: ERROR_MESSAGES.SCANNED_ZP_HAS_NO_TJ_TRAYS_AND_THEY_ARE_NECESSARY,
+          },
         );
         return;
       }
@@ -207,9 +220,8 @@ export const useScanZpOrTrayHandler = () => {
 
     if (valueNotFound) {
       const ZPWIthoutPrefixZLEC_ = getPureZPValue(scannedValue);
-      toast.warning(
-        `ZP'k: "${ZPWIthoutPrefixZLEC_}" nie został znaleziony na obiekcie.`,
-      );
+      const warningMessage = `ZP'k: "${ZPWIthoutPrefixZLEC_}" nie został znaleziony na obiekcie.`;
+      toast.warning(warningMessage, { id: warningMessage });
       setScannedValues((prevValues) => {
         const foundZPInPrevScannedValues = prevValues.find(
           (prev) => prev.ordnmb === ZPWIthoutPrefixZLEC_,

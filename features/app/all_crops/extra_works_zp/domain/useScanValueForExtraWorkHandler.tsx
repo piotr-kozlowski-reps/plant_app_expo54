@@ -63,11 +63,10 @@ export const useScanValueForExtraWorkHandler = () => {
       scannedZPOnManyFields,
     );
     if (!foundFieldForDesiredZp) {
-      toast.warning(
-        `Nie znaleziono ${
-          scannedZPOnManyFields.length ? scannedZPOnManyFields[0].ordnmb : "ZP"
-        } w lokalizacji: ${scannedFieldNumber}`,
-      );
+      const warningText = `Nie znaleziono ${
+        scannedZPOnManyFields.length ? scannedZPOnManyFields[0].ordnmb : "ZP"
+      } w lokalizacji: ${scannedFieldNumber}`;
+      toast.warning(warningText, { id: warningText });
       return;
     }
     setScannedValues((prevValue) => {
@@ -141,7 +140,9 @@ export const useScanValueForExtraWorkHandler = () => {
     //check if any of ZPs have "/ROZ" in name - if so (rozsada szklarniowa) - user cannot do anything
     const isRoz = listOfZPs.some((zp) => zp.ordnmb.endsWith("/ROZ"));
     if (isRoz) {
-      toast.warning(ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ROZ);
+      toast.warning(ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ROZ, {
+        id: ERROR_MESSAGES.CANNOT_SCAN_FIELD_WHEN_ROZ,
+      });
       return;
     }
 

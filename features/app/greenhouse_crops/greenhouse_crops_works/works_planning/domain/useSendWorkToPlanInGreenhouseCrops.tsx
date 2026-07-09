@@ -151,7 +151,9 @@ export const useSendWorkToPlanInGreenhouseCrops = (
     );
 
     if (response && response.length) {
-      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+      toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {
+        id: MESSAGES.DATA_SENT_SUCCESSFULLY,
+      });
     }
   }
 

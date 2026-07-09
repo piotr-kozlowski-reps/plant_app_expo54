@@ -229,7 +229,9 @@ export const useScanValuesForInternalTransport = (
       (loc) => loc.movqty > 0,
     );
     if (valuesToBeSentFilteredToOnlyMovedItems.length === 0) {
-      toast.warning(ERROR_MESSAGES.QUANTITY_TO_BE_SENT_WAS_ZERO);
+      toast.warning(ERROR_MESSAGES.QUANTITY_TO_BE_SENT_WAS_ZERO, {
+        id: ERROR_MESSAGES.QUANTITY_TO_BE_SENT_WAS_ZERO,
+      });
       return;
     }
 
@@ -253,11 +255,15 @@ export const useScanValuesForInternalTransport = (
       const sentItemsQuantity = valuesToBeSentFilteredToOnlyMovedItems.length;
 
       if (responseIDsQuantity === sentItemsQuantity) {
-        toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY);
+        toast.success(MESSAGES.DATA_SENT_SUCCESSFULLY, {
+          id: MESSAGES.DATA_SENT_SUCCESSFULLY,
+        });
         resetWholeState();
       }
       if (responseIDsQuantity !== sentItemsQuantity) {
-        toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA);
+        toast.warning(ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA, {
+          id: ERROR_MESSAGES.PROBLEM_WHEN_SENDING_DATA,
+        });
       }
     } catch (error) {
       errorHandler(error as Error);

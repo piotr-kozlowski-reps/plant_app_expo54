@@ -141,10 +141,10 @@ export const useScannedValuesForPotting = (
 
     const foundMaterialWithDoni = findMaterialWithDoni(activityDetails);
     if (!foundMaterialWithDoni) {
-      // alert(
-      //   "foundMaterialWithDoni -> wróc do poprzedniego guarda, chwilowo puszczone",
-      // );
-      toast.error(ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND);
+      toast.error(
+        ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND,
+        { id: ERROR_MESSAGES.POTTING_ACTIVITY_MATERIAL_WITH_DONI_NOT_FOUND },
+      );
       return;
     }
 
