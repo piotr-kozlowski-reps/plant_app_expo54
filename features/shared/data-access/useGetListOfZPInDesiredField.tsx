@@ -22,8 +22,6 @@ export const useGetListOfZPInDesiredField = () => {
   ): Promise<ZpScannedValue[]> {
     let listOfZPsOnField: ZpScannedValue[] = [];
 
-    console.log({ activityId });
-
     //fetch data
     const fieldNumber = getPureFieldValue(value);
     const res = await fetch(

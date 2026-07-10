@@ -82,13 +82,6 @@ export const useGet_CheckIfZPExistsInThisActivityId = () => {
     }
 
     if (whatWasScanned === "zp_don") {
-      console.log(
-        `${
-          configPerBuild.apiAddress
-        }/api.php/REST/custom/korsolgetreport?rep_id=${
-          configPerBuild.edocReport_ZPForActivityId
-        }&ordnmb=${getPureZPValue(scannedValue)}&activityid=${activityId}`,
-      );
       return `${
         configPerBuild.apiAddress
       }/api.php/REST/custom/korsolgetreport?rep_id=${

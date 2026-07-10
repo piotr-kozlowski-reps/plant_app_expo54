@@ -48,6 +48,7 @@ type Props = {
     React.SetStateAction<boolean>
   >;
   chemicalTreatmentDon: ProtectiveTreatment | null;
+  refreshAllData: () => void;
 };
 
 const OrderToChemicalTreatmentsModal = (props: Props) => {
@@ -60,6 +61,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
     closeFn,
     setIsShowModalWithSelectChemicalTreatmentDon,
     resetValuesForChemicalTreatments,
+    refreshAllData,
   } = props;
 
   //scan values
@@ -102,7 +104,7 @@ const OrderToChemicalTreatmentsModal = (props: Props) => {
 
   /** send chemical treatment orders  */
   const sendValuesForOrderChemicalTreatmentHandler =
-    useSendOrderChemicalTreatment(setIsLoading, resetValues);
+    useSendOrderChemicalTreatment(setIsLoading, resetValues, refreshAllData);
 
   /** set treatment to null when opened component*/
   useEffect(() => {

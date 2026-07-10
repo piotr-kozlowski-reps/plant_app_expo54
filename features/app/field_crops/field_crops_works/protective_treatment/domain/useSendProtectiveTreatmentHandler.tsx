@@ -46,6 +46,7 @@ export const useSendProtectiveTreatmentHandler = (
    * @transformApiItem
    * @order 200
    * wysyłka - custom api - POST:
+   * adres: <b>{{URL}}</b>/api.php/REST/custom/<b>treatment</b>
    * @separator
    * <b>dane</b>:
    * [

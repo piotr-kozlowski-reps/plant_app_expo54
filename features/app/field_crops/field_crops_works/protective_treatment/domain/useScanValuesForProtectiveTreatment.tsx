@@ -20,6 +20,7 @@ import { useRestOfLocalizationsHelpers } from "@/features/shared/utils/useRestOf
 import { useGuard_CheckDataToBeScanned_ReturnFunction } from "@/features/shared/utils/useGuard_CheckDataToBeScanned_ReturnFunction";
 import { useScanValueForExtraWorkHandler } from "@/features/app/all_crops/extra_works_zp/domain/useScanValueForExtraWorkHandler";
 import { useScanZpOrTrayHandler } from "@/features/app/all_crops/extra_works_zp/domain/useScanZpOrTrayHandler";
+import { InfoModal } from "@/features/shared/types/interfaces-general";
 
 export const useScanValuesForProtectiveTreatment = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -43,10 +44,12 @@ export const useScanValuesForProtectiveTreatment = (
   const [treatment, setTreatment] = useState<ProtectiveTreatment | null>(null);
   const [extraWork, setExtraWork] = useState<ExtraWork | null>(null);
   const [who, setWho] = useState<WhoDidProtectiveTreatment | null>(null);
+
   //scanner
   const [qrLock, setQrLock] = useState(true);
   const [isFieldScanned, setIsFieldScanned] = useState(false);
   const [isZPScanned, setIsZPScanned] = useState(false);
+
   //scannedValues
   const { scannedValues, setScannedValues } = useScannedValuesForExtraWorks(
     isFieldScanned,
@@ -54,11 +57,13 @@ export const useScanValuesForProtectiveTreatment = (
     isZPScanned,
     setIsZPScanned,
   );
+
   //force to scan field
   const [isForceToScanField, setIsForceToScanField] = useState(false);
   const [scannedZPOnManyFields, setScannedZPOnManyFields] = useState<
     ZpScannedValue[]
   >([]);
+
   //rest of localizations to show user when finished
   const [restOfLocalizations, setRestOfLocalizations] = useState<
     RestOfLocalizationsDespiteOfOneChosen[]
@@ -68,7 +73,32 @@ export const useScanValuesForProtectiveTreatment = (
     setIsInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
   ] = useState(false);
 
+  //modals
+  const [isShowInfoConfirmationModal, setIsShowInfoConfirmationModal] =
+    useState(false);
+  const [infoModalDetails, setInfoModalDetails] = useState<InfoModal | null>(
+    null,
+  );
+
   //fn
+  const showInfoConfirmationModal = (
+    title: string,
+    confirmationButtonName: string,
+    info1: string,
+    info2?: string,
+  ) => {
+    setInfoModalDetails({
+      title,
+      info1,
+      info2,
+      confirmationButtonName,
+    });
+    setIsShowInfoConfirmationModal(true);
+  };
+  const hideInfoConfirmationModal = () => {
+    setIsShowInfoConfirmationModal(false);
+  };
+
   const setDataForProtectiveTreatment = (
     quantity: number,
     treatment: ProtectiveTreatment,
@@ -80,6 +110,7 @@ export const useScanValuesForProtectiveTreatment = (
     setExtraWork(treatmentType);
     setWho(who);
   };
+
   const scanValueHandler = async (scannedValue: string, activityId: number) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);
@@ -90,7 +121,7 @@ export const useScanValuesForProtectiveTreatment = (
      * @public
      * @procedureItem
      * @order 100
-     * dopuszczony: skan tacy, ZPeka lub lokalizacji
+     * dopuszczony: skan tacy(przy GRU tylko), ZPeka lub lokalizacji
      */
     const isScannedDataCorrect = checkIsScannedDataCorrect(scannedValue, [
       "tray",
@@ -204,6 +235,7 @@ export const useScanValuesForProtectiveTreatment = (
           setScannedValues,
           setIsFieldScanned,
           isShouldScanDonZps: isDon ? true : false,
+          showInfoConfirmationModal,
         });
 
         forceChangeWhoDidProtectiveTreatmentToRobotWhenScannedField();
@@ -260,6 +292,8 @@ export const useScanValuesForProtectiveTreatment = (
     scannedZPOnManyFields,
     restOfLocalizations,
     isInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
+    isShowInfoConfirmationModal,
+    infoModalDetails,
     setIsInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
     setQrLock,
     setDataForProtectiveTreatment,
@@ -268,6 +302,7 @@ export const useScanValuesForProtectiveTreatment = (
     clearScannedValues,
     clearZpOnManyFields,
     resetInfoAboutRestOfLocalizations,
+    hideInfoConfirmationModal,
   };
 
   /**helpers */

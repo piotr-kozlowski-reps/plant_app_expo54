@@ -198,6 +198,7 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
           resetValuesForChemicalTreatments={resetValuesForChemicalTreatments}
           chemicalTreatmentsDonList={chemicalTreatmentsDonList}
           chemicalTreatmentDon={chemicalTreatmentDon}
+          refreshAllData={refreshAllData}
         />
       </ModalInternal>
 
@@ -212,14 +213,10 @@ const PottedPlants_PottedPlantsWorks_ChemicalTreatments_MainWindow = (
           chemicalTreatmentsDon={chemicalTreatmentsDon}
           extraWorks={extraWorks}
           isLoading={isLoading}
-          // setIsShowModalWithSelectConcentration={
-          //   setIsShowModalWithSelectConcentration
-          // }
           // protectiveTreatment={protectiveTreatment}
           // resetValuesForProtectiveTreatments={
           //   resetValuesForProtectiveTreatments
           // }
-          // extraWork={extraWorkForNitrogenIrrigation!}
           refreshAllData={refreshAllData}
           // nitrogenIrrigationList={nitrogenIrrigationList}
         />

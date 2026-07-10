@@ -80,9 +80,6 @@ const AllCropsOrderExportToCustomerEntryPage = (props: Props) => {
     return modulesPins as ModulePin[];
   }, [modulesPins]);
 
-  console.log({ isPinConfirmed });
-  console.log({ modulesPins });
-
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />

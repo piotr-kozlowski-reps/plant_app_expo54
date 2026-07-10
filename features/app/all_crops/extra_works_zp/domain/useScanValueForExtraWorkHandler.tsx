@@ -34,6 +34,12 @@ type DataForScanField = {
   setScannedValues: React.Dispatch<React.SetStateAction<ZpScannedValue[]>>;
   setIsFieldScanned: React.Dispatch<React.SetStateAction<boolean>>;
   isShouldScanDonZps?: boolean;
+  showInfoConfirmationModal?: (
+    title: string,
+    confirmationButtonName: string,
+    info1: string,
+    info2?: string,
+  ) => void;
 };
 
 export const useScanValueForExtraWorkHandler = () => {
@@ -115,6 +121,7 @@ export const useScanValueForExtraWorkHandler = () => {
       setScannedValues,
       setIsFieldScanned,
       isShouldScanDonZps,
+      showInfoConfirmationModal,
     } = dataForScanField;
 
     if (isZPScanned) {
@@ -146,7 +153,7 @@ export const useScanValueForExtraWorkHandler = () => {
       return;
     }
 
-    //check if any ZPs have not "/DON" in name - if so - info for user he's doing also GRU or ROZ ZPs in place that only DON should be doneText
+    //check if any of ZPs have not "/DON" in name - if so - info for user he's doing also GRU or ROZ ZPs in place that only DON should be doneText
     const isAnyGruZPInArray = listOfZPs.some((zp) =>
       zp.ordnmb.endsWith("/GRU"),
     );
@@ -155,9 +162,20 @@ export const useScanValueForExtraWorkHandler = () => {
     );
 
     if (isShouldScanDonZps && (isAnyGruZPInArray || isAnyRozZPInArray)) {
-      toast.warning(ERROR_MESSAGES.FIELD_HAS_OTHER_ZPS_THAN_DON, {
-        id: ERROR_MESSAGES.FIELD_HAS_OTHER_ZPS_THAN_DON,
-      });
+      if (
+        showInfoConfirmationModal &&
+        typeof showInfoConfirmationModal === "function"
+      ) {
+        showInfoConfirmationModal(
+          "Uwaga",
+          "Potwierdzam",
+          "W lokalizacji znajduje się co najmniej jeden ZPek, który nie jest ZPekiem DON. Mimo to, potwierdzenie wykonania zabiegu chemicznego zostanie ustawione dla wszystkich ZPeków w lokalizacji.",
+        );
+      } else {
+        toast.warning(ERROR_MESSAGES.FIELD_HAS_OTHER_ZPS_THAN_DON, {
+          id: ERROR_MESSAGES.FIELD_HAS_OTHER_ZPS_THAN_DON,
+        });
+      }
     }
 
     const listOfZPsThatHasNotBeenScannedYet: ZpScannedValue[] = [];

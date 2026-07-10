@@ -87,10 +87,6 @@ export const useScanZpOrTrayHandler = () => {
       whatWasScanned,
     );
 
-    console.log({
-      ZPFoundForThisActivityId,
-    });
-
     /**
      * @public
      * @guard

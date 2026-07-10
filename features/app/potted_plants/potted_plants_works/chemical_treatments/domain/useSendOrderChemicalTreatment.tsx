@@ -24,6 +24,7 @@ type OrderChemicalTreatmentDataToSent = {
 export const useSendOrderChemicalTreatment = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   resetValues: () => void,
+  refreshAllData: () => void,
 ) => {
   ////vars
   const { addDaysToDate } = useDatesHelper();
@@ -122,6 +123,7 @@ export const useSendOrderChemicalTreatment = (
       errorHandler(error as Error);
     } finally {
       setIsLoading(false);
+      refreshAllData();
       resetValues();
     }
   }

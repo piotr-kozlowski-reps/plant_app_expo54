@@ -30,6 +30,7 @@ import { useShowModal } from "@/features/shared/utils/useShowModal";
 import { yellowColor } from "@/features/shared/constants/colorThemeVars";
 import ProtectiveTreatmentScannerModal from "@/features/app/field_crops/field_crops_works/protective_treatment/ui/ProtectiveTreatmentScannerModal";
 import AnotherLocalizationsToBeTreatedModal from "@/features/app/field_crops/field_crops_works/protective_treatment/ui/AnotherLocalizationsToBeTreatedModal";
+import ModalInfoToConfirm from "@/features/shared/ui/modal/ModalInfoToConfirm";
 
 type Props = {
   closeFn: () => void;
@@ -52,6 +53,13 @@ type Props = {
  * @order 400
  * Potwierdzenie zabiegu chemicznego:
  */
+
+/**
+ * @public
+ * @procedureItem
+ *  Formularz z wprowadzeniem: zabiegu chemicznego, ilości środka, kto wykonał, typu zabiegu)
+ */
+
 const ChemicalTreatmentsConfirmationModal = (props: Props) => {
   ////vars
   const {
@@ -67,6 +75,11 @@ const ChemicalTreatmentsConfirmationModal = (props: Props) => {
   const [isShowScanner, setIsShowScanner] = useShowModal(false);
 
   //scanner
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/app/field_crops/field_crops_works/protective_treatment/domain/useScanValuesForProtectiveTreatment.tsx`
+   */
   const {
     scannedValues,
     quantity,
@@ -80,6 +93,8 @@ const ChemicalTreatmentsConfirmationModal = (props: Props) => {
     scannedZPOnManyFields,
     restOfLocalizations,
     isInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
+    isShowInfoConfirmationModal,
+    infoModalDetails,
 
     setIsInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
     setQrLock,
@@ -89,14 +104,10 @@ const ChemicalTreatmentsConfirmationModal = (props: Props) => {
     clearScannedValues,
     clearZpOnManyFields,
     resetInfoAboutRestOfLocalizations,
+    hideInfoConfirmationModal,
   } = useScanValuesForProtectiveTreatment(setIsLoading, true);
 
   //formik
-  /**
-   * @public
-   * @procedureItem
-   *  Formularz z wprowadzeniem: zabiegu chemicznego, ilości środka, kto wykonał, typu zabiegu)
-   */
   const { formik, availableFormActions, canFormBeSubmitted, clearForm } =
     useConfirmChemicalTreatmentFormik(
       setDataForProtectiveTreatment,
@@ -114,6 +125,12 @@ const ChemicalTreatmentsConfirmationModal = (props: Props) => {
   const comboboxTreatmentType: Combobox<ExtraWork>[] = extraWorks.map(
     (item) => ({ visibleText: item.activityname, value: item }),
   );
+
+  /**
+   * @public
+   * @procedureItem
+   * @readFile `features/app/field_crops/field_crops_works/protective_treatment/domain/useSendProtectiveTreatmentHandler.tsx`
+   */
 
   ////tsx
   return (
@@ -259,6 +276,18 @@ const ChemicalTreatmentsConfirmationModal = (props: Props) => {
             <AnotherLocalizationsToBeTreatedModal
               closeFn={resetInfoAboutRestOfLocalizations}
               restOfLocalizations={restOfLocalizations}
+            />
+          </ModalInternal>
+
+          {/* modal with info to confirm */}
+          <ModalInternal
+            isOpen={isShowInfoConfirmationModal}
+            isTransparent={false}
+            backgroundColor={yellowColor}
+          >
+            <ModalInfoToConfirm
+              hideInfoConfirmationModal={hideInfoConfirmationModal}
+              infoModalDetails={infoModalDetails}
             />
           </ModalInternal>
         </KeyboardAwareScrollView>
