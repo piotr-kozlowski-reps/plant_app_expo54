@@ -29,10 +29,13 @@ import { ExtraWork } from "@/features/shared/types/interfaces-extra_works";
  *      2. formularz:
  *            - wybór środka chemicznego
  *            - data zlecenia
- * <b>b)</b> potwierdzenie zabiegu chemicznego: ????????????TODO
- *      1. scan QR  lokalizacji/ ZPka
- *      2. formularz:
- *            - wybór stężenia
+ * <b>b)</b> potwierdzenie zabiegu chemicznego:
+ *      1. formularz:
+ *            - zabieg chemiczny
+ *            - ilość środka
+ *            - kto wykonał
+ *            - typ zabiegu
+ *      2. scan QR  lokalizacji/ ZPka
  */
 
 const PottedPlants_PottedPlantsWorks_ChemicalTreatmentsEntryPage = () => {
