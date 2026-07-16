@@ -33,7 +33,7 @@ export const useGetZPInfo_Report113 = () => {
       /**
        * @public
        * @guard
-       * Jesli zapytanie zwróciło pustą tablicę lub -1 ->  to koniec procedury i informacja, że nie zaleziono ZP na zakładzie.
+       * Jesli zapytanie zwróciło pustą tablicę lub -1 -> to koniec procedury i informacja, że nie zaleziono ZP na zakładzie.
        */
       if (
         response.data.resultMainQuery === -1 ||
