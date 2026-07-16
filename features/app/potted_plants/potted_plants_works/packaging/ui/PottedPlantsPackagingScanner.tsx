@@ -2,17 +2,23 @@ import {
   INDEX,
   POTTED_PLANTS,
   POTTED_PLANTS_WORKS,
-  POTTED_PLANTS_WORKS_CHEMICAL_TREATMENTS,
 } from "@/features/shared/types/interfaces-navigation";
 import AppPath from "@/features/shared/ui/app-path/AppPath";
-// import ButtonBack from "@/features/shared/ui/button/ButtonBack";
-// import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
-import { View } from "react-native";
+import ButtonBack from "@/features/shared/ui/button/ButtonBack";
+import ButtonTextAndThreeArrows from "@/features/shared/ui/button/ButtonTextAndThreeArrows";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { CameraView } from "expo-camera";
+import { Overlay } from "@/features/shared/ui/overlay/Overlay";
+import Scanning from "@/features/shared/ui/scanning/Scanning";
+import { View, Platform, StyleSheet, Text, ScrollView } from "react-native";
 // import {
 //   KeyboardAwareScrollView,
 //   KeyboardToolbar,
 // } from "react-native-keyboard-controller";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useScanValuesForPottedPlantsPackaging } from "../domain/useScanValuesForPottedPlantsPackaging";
+import Button from "@/features/shared/ui/button/Button";
 // import { useConfirmChemicalTreatmentFormik } from "../domain/useConfirmChemicalTreatmentFormik";
 // import ComboboxFormik from "@/features/shared/ui/combobox/ComboboxFormik";
 // import {
@@ -45,206 +51,271 @@ const PottedPlantsPackagingScanner = (props: Props) => {
   //   const [isShowScanner, setIsShowScanner] = useShowModal(false);
 
   //scanner
-  /**
-   * @public
-   * @procedureItem
-   * scan ZPka
-   */
-  //   const {
-  //     scannedValues,
-  //     quantity,
-  //     treatment,
-  //     extraWork,
-  //     who,
-  //     isForceToScanField,
-  //     isFieldScanned,
-  //     qrLock,
-  //     isZPScanned,
-  //     scannedZPOnManyFields,
-  //     restOfLocalizations,
-  //     isInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
-  //     isShowInfoConfirmationModal,
-  //     infoModalDetails,
+  const {
+    scannedValue,
+    //     quantity,
+    //     treatment,
+    //     extraWork,
+    //     who,
+    //     isForceToScanField,
+    //     isFieldScanned,
+    qrLock,
+    //     isZPScanned,
+    //     scannedZPOnManyFields,
+    //     restOfLocalizations,
+    //     isInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
+    //     isShowInfoConfirmationModal,
+    //     infoModalDetails,
 
-  //     setIsInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
-  //     setQrLock,
-  //     setDataForProtectiveTreatment,
-  //     scanValueHandler,
-  //     deleteScannedValue,
-  //     clearScannedValues,
-  //     clearZpOnManyFields,
-  //     resetInfoAboutRestOfLocalizations,
-  //     hideInfoConfirmationModal,
-  //   } = useScanValuesForProtectiveTreatment(setIsLoading, true);
-
-  //   //formik
-  //   const { formik, availableFormActions, canFormBeSubmitted, clearForm } =
-  //     useConfirmChemicalTreatmentFormik(
-  //       setDataForProtectiveTreatment,
-  //       setIsShowScanner,
-  //     );
-
-  //   //combobox protectiveTreatments
-  //   const comboboxItems: Combobox<ProtectiveTreatment>[] =
-  //     chemicalTreatmentsDon.map((item) => ({
-  //       value: item,
-  //       visibleText: item.dscrpt,
-  //     }));
-
-  //   // combobox treatmentType
-  //   const comboboxTreatmentType: Combobox<ExtraWork>[] = extraWorks.map(
-  //     (item) => ({ visibleText: item.activityname, value: item }),
-  //   );
-
-  //   /**
-  //    * @public
-  //    * @procedureItem
-  //    * @readFile `features/app/field_crops/field_crops_works/protective_treatment/domain/useSendProtectiveTreatmentHandler.tsx`
-  //    */
+    setQrLock,
+    scanValueHandler,
+    //     setIsInformUserThatThereAreAnotherLocalizationsOfTreatedZP,
+    //     setDataForProtectiveTreatment,
+    //     deleteScannedValue,
+    //     clearScannedValues,
+    //     clearZpOnManyFields,
+    //     resetInfoAboutRestOfLocalizations,
+    //     hideInfoConfirmationModal,
+  } = useScanValuesForPottedPlantsPackaging(setIsLoading);
 
   ////tsx
   return (
     <>
-      <View className="relative w-full h-full">
-        <SafeAreaView className="flex-1 w-full bg-yellow">
-          <View className="w-full px-6 mt-4">
-            <AppPath
-              paths={[
-                INDEX,
-                POTTED_PLANTS,
-                POTTED_PLANTS_WORKS,
-                {
-                  actionFn: () => {},
-                  name: "Konfekcjonowanie",
-                },
-              ]}
-            />
-          </View>
-
-          <View className="flex-1 px-6">
-            <View className="flex-col items-center justify-center flex-1 ">
-              {/* <View className="w-full">
-                  <ComboboxFormik<ProtectiveTreatmentInput, ProtectiveTreatment>
-                    label="Zabieg chemiczny:"
-                    placeholder="wybierz środek chemiczny"
-                    formik={formik}
-                    formikField="treatment"
-                    isVerifiedAtOnce={true}
-                    comboboxItems={comboboxItems}
-                    itemPropertyToBeDisplayed={"dscrpt"}
-                    refreshAllData={refreshAllData}
-                  />
-                </View> */}
-
-              {/* <View className="w-full mt-[24px]">
-                  <InputFormik<ProtectiveTreatmentInput>
-                    label="Ilość środka:"
-                    placeholder="podaj ilość"
-                    isSignedAsRequired={true}
-                    formik={formik}
-                    formikField="quantity"
-                    keyboardType="numeric"
-                    isVerifiedAtOnce={true}
-                  />
-                </View> */}
-
-              {/* <View className="w-full mt-[24px]">
-                  <ComboboxFormik<
-                    ProtectiveTreatmentInput,
-                    WhoDidProtectiveTreatment
-                  >
-                    label="Wykonał:"
-                    placeholder="wybierz kto wykonał"
-                    formik={formik}
-                    formikField="who"
-                    isVerifiedAtOnce={true}
-                    comboboxItems={comboboxItems_WhoDidProtectiveTreatment}
-                    refreshAllData={() => {}}
-                  />
-                </View> */}
-
-              {/* <View className="w-full mt-[24px]">
-                  <ComboboxFormik<ProtectiveTreatmentInput, ExtraWork>
-                    label="Typ zabiegu:"
-                    placeholder="wybierz typ zabiegu"
-                    formik={formik}
-                    formikField="treatment_type"
-                    isVerifiedAtOnce={true}
-                    comboboxItems={comboboxTreatmentType}
-                    itemPropertyToBeDisplayed={"activityname"}
-                    refreshAllData={() => {}}
-                  />
-                </View> */}
+      <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
+        <View className="relative w-full h-full">
+          <SafeAreaView className="flex-1 w-full">
+            <View className="w-full px-6 mt-4">
+              <AppPath
+                paths={[
+                  INDEX,
+                  POTTED_PLANTS,
+                  POTTED_PLANTS_WORKS,
+                  {
+                    actionFn: () => {},
+                    name: "Konfekcjonowanie",
+                  },
+                ]}
+              />
             </View>
-          </View>
 
-          {/* <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
-              <View className="flex-1">
-                <ButtonTextAndThreeArrows
-                  actionFn={availableFormActions}
-                  text="przejdź dalej"
-                  isBackground
-                  disabled={!canFormBeSubmitted}
+            <View className="flex-col items-center justify-between w-[94vw] pl-6 mt-6 ">
+              <View className="h-[37vh] w-full relative">
+                {Platform.OS === "android" ? <StatusBar hidden /> : null}
+                <CameraView
+                  facing="back"
+                  style={StyleSheet.absoluteFillObject}
+                  onBarcodeScanned={({ data }) => {
+                    if (data && !qrLock) {
+                      scanValueHandler(data);
+                      setQrLock(true);
+                    }
+                  }}
                 />
-              </View>
-              <View className="ml-6">
-                <ButtonBack isOutline={false} actionFn={() => closeFn()} />
-              </View>
-            </View> */}
-        </SafeAreaView>
 
-        {/* <ModalInternal
-            isOpen={isShowScanner}
+                <Overlay />
+
+                {!scannedValue ? (
+                  <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full">
+                    {qrLock ? (
+                      <View className="flex-col items-center justify-center w-full h-full">
+                        <View className="w-full px-16">
+                          <View className="opacity-70">
+                            <Button
+                              title={"skanuj ZP"}
+                              handlePress={() => {
+                                setQrLock(false);
+                              }}
+                              containerStyles={`h-32`}
+                              isGrayed={!qrLock}
+                              height={128}
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    ) : null}
+
+                    {!qrLock ? (
+                      <View className="flex-col items-center justify-end w-full h-full pb-6">
+                        <Scanning />
+                      </View>
+                    ) : null}
+                  </View>
+                ) : null}
+
+                {/* {isFieldScanned ? (
+                  <>
+                    <View className="absolute top-0 bottom-0 left-0 right-0 w-full h-full opacity-80 bg-yellow"></View>
+                    <View className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center w-full h-full px-16">
+                      <Text className="text-foreground font-default-bold">
+                        Zeskanowano całą lokalizację.
+                      </Text>
+                      <Text className="text-center text-foreground font-default-normal">
+                        Brak możliwości zeskanowania następnych elementów.
+                      </Text>
+                    </View>
+                  </>
+                ) : null} */}
+              </View>
+            </View>
+
+            <View className="flex-col items-center justify-between flex-1 w-full">
+              <View className="w-full h-2"></View>
+              <View className="flex-col items-start justify-start flex-1 w-full px-6">
+                <View className="flex-col items-center w-full mb-[4px]">
+                  <View className="flex-row items-center justify-between w-full">
+                    {/* <View className="flex-1">
+                      <ButtonTextAndIcon
+                        actionFn={() => {
+                          setIsShowModalWithSelectChemicalTreatmentDon(true);
+                        }}
+                        text={`${
+                          chemicalTreatmentDon
+                            ? chemicalTreatmentDon.dscrpt
+                            : "środek chemiczny"
+                        }`}
+                        icon={
+                          <View className="ml-2">
+                            <ChevronDown
+                              size={24}
+                              color={lightColor}
+                              strokeWidth={2}
+                            />
+                          </View>
+                        }
+                        isBackground
+                        isFull={false}
+                        customColor={
+                          chemicalTreatmentDon ? darkColor : destructiveColor
+                        }
+                      />
+                    </View> */}
+
+                    {/* <View className="w-[40%] ml-4">
+                      <ButtonTextAndIcon
+                        actionFn={() => {
+                          setIsShowModalWithInHowManyDays(true);
+                        }}
+                        text={`+ ${inHowManyDays} ${
+                          inHowManyDays === 1 ? "dzień" : "dni"
+                        }`}
+                        icon={
+                          <View className="ml-2">
+                            <ChevronDown
+                              size={24}
+                              color={lightColor}
+                              strokeWidth={2}
+                            />
+                          </View>
+                        }
+                        isBackground
+                        isFull={false}
+                      />
+                    </View> */}
+                  </View>
+                </View>
+
+                {/* <ContainerHorizontalRoundedFrame>
+                  {scannedValues.length === 0 ? (
+                    <View className="relative flex-1 w-full h-full">
+                      <View className="absolute top-0 bottom-0 left-0 right-0 opacity-50 rounded-app">
+                        <View className="flex items-center justify-center w-full h-full">
+                          <Image
+                            source={images.hashed_background}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              resizeMode: "cover",
+                              borderRadius: 32,
+                            }}
+                            contentFit="cover"
+                          />
+                        </View>
+                      </View>
+                      <View className="absolute top-0 bottom-0 left-0 right-0 rounded-app">
+                        <View className="flex items-center justify-center w-full h-full ">
+                          <Text className="p-6 bg-yellow font-default-bold text-background-nuance rounded-app">
+                            {MESSAGES.LACK_OF_SCANNED_ZPS}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {scannedValues.length > 0 ? (
+                    <ScrollView className="w-full">
+                      <View className="flex-row flex-wrap items-center justify-start py-4">
+                        {scannedValues.map((zpInfo) => (
+                          <ZPItemInOrdersAllInfo
+                            key={zpInfo.ordnmb}
+                            zpInfo={zpInfo}
+                            inHowManyDays={inHowManyDays}
+                            setIsShowDeleteModal={setIsShowDeleteModal}
+                            setZPSelected={setZPSelected}
+                            isPossibleToDeleteItem={!isFieldScanned}
+                          />
+                        ))}
+                      </View>
+                    </ScrollView>
+                  ) : null}
+                </ContainerHorizontalRoundedFrame> */}
+              </View>
+
+              <View className="flex-row items-center justify-between w-full pl-6 mt-4 mb-6">
+                <View className="flex-1">
+                  <ButtonTextAndThreeArrows
+                    // actionFn={() =>
+                    //   sendValuesForOrderChemicalTreatmentHandler({
+                    //     scannedValues,
+                    //     inHowManyDays,
+                    //     protectiveTreatment: chemicalTreatmentDon,
+                    //   })
+                    // }
+                    actionFn={() => {}}
+                    text="wyślij"
+                    isBackground
+                    disabled={true}
+                  />
+                </View>
+                <View className="ml-6">
+                  <ButtonBack
+                    actionFn={() => {
+                      router.back();
+                    }}
+                    isOutline={false}
+                  />
+                </View>
+              </View>
+            </View>
+          </SafeAreaView>
+
+          {/* modals */}
+          {/* <ModalInternal
+            isOpen={isShowModalWithInHowManyDays}
             isTransparent={false}
             backgroundColor={yellowColor}
           >
-            <ProtectiveTreatmentScannerModal
-              scannedValues={scannedValues}
-              closeFn={() => setIsShowScanner(false)}
-              isLoading={isLoading}
-              quantity={quantity}
-              treatment={treatment}
-              extraWork={extraWork}
-              who={who}
-              qrLock={qrLock}
-              setQrLock={setQrLock}
-              isForceToScanField={isForceToScanField}
-              isFieldScanned={isFieldScanned}
-              isZPScanned={isZPScanned}
-              scanValueHandler={scanValueHandler}
-              deleteScannedValue={deleteScannedValue}
-              setIsLoading={setIsLoading}
-              clearScannedValues={clearScannedValues}
-              scannedZPOnManyFields={scannedZPOnManyFields}
-              clearZpOnManyFields={clearZpOnManyFields}
-              restOfLocalizations={restOfLocalizations}
-              isInformUserThatThereAreAnotherLocalizationsOfTreatedZP={
-                isInformUserThatThereAreAnotherLocalizationsOfTreatedZP
-              }
-              resetInfoAboutRestOfLocalizations={
-                resetInfoAboutRestOfLocalizations
-              }
-              setIsInformUserThatThereAreAnotherLocalizationsOfTreatedZP={
-                setIsInformUserThatThereAreAnotherLocalizationsOfTreatedZP
-              }
-              clearForm={clearForm}
+            <HowManyDaysToOrderNitrogenIrrigationModal
+              closeFn={() => setIsShowModalWithInHowManyDays(false)}
+              changeInHowManyDaysHandler={changeInHowManyDaysHandler}
+              is7Days
+              // whatOrderType={whatOrderType}
             />
           </ModalInternal> */}
 
-        {/* inform user that there are another localizations of ZP to be treated  -  modal */}
-        {/* <ModalInternal
-            isOpen={isInformUserThatThereAreAnotherLocalizationsOfTreatedZP}
+          {/* <ModalInternal
+            isOpen={isShowDeleteModal}
             isTransparent={false}
             backgroundColor={yellowColor}
           >
-            <AnotherLocalizationsToBeTreatedModal
-              closeFn={resetInfoAboutRestOfLocalizations}
-              restOfLocalizations={restOfLocalizations}
+            <DeleteZpForOrdersAllModal
+              closeFn={() => setIsShowDeleteModal(false)}
+              zpInfo={ZPSelected}
+              actionFn={deleteItemFromListHandler}
             />
           </ModalInternal> */}
 
-        {/* modal with info to confirm */}
-        {/* <ModalInternal
+          {/* modal with info to confirm */}
+          {/* <ModalInternal
             isOpen={isShowInfoConfirmationModal}
             isTransparent={false}
             backgroundColor={yellowColor}
@@ -254,6 +325,7 @@ const PottedPlantsPackagingScanner = (props: Props) => {
               infoModalDetails={infoModalDetails}
             />
           </ModalInternal> */}
+        </View>
       </View>
     </>
   );

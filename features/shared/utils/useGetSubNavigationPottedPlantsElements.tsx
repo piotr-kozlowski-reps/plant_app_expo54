@@ -20,6 +20,13 @@ export const useGetSubNavigationPottedPlantsElements = () => {
       subModuleName: keyof PottedPlantsSubmodules;
     }[] = [
       {
+        title: "Konfekcjonowanie",
+        actionFn: () => {
+          router.push("/app/potted_plants/potted_plants_works/packaging");
+        },
+        subModuleName: "potted_plants_works_packaging",
+      },
+      {
         title: "Transport wewnętrzny",
         actionFn: () => {
           router.push(
@@ -29,15 +36,6 @@ export const useGetSubNavigationPottedPlantsElements = () => {
         subModuleName: "potted_plants_works_internal_transport",
       },
       {
-        title: "Zlecenie transportu wewnętrznego",
-        actionFn: () => {
-          router.push(
-            "/app/potted_plants/potted_plants_works/order_to_internal_transport",
-          );
-        },
-        subModuleName: "potted_plants_works_order_to_internal_transport",
-      },
-      {
         title: "Zabiegi chemiczne",
         actionFn: () => {
           router.push(
@@ -45,6 +43,15 @@ export const useGetSubNavigationPottedPlantsElements = () => {
           );
         },
         subModuleName: "potted_plants_works_chemical_treatments",
+      },
+      {
+        title: "Zlecenie transportu wewnętrznego",
+        actionFn: () => {
+          router.push(
+            "/app/potted_plants/potted_plants_works/order_to_internal_transport",
+          );
+        },
+        subModuleName: "potted_plants_works_order_to_internal_transport",
       },
     ];
 
