@@ -62,8 +62,6 @@ export const useSendPottedPlantsPackaging = (
           [value],
         );
 
-      console.log({ response });
-
       //check if response array has the same amount of items as sent items
       const responseIDsQuantity = response.length;
       const sentItemsQuantity = 1;
