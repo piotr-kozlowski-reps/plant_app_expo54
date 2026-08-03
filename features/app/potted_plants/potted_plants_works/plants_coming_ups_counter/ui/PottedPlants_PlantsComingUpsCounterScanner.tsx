@@ -197,6 +197,12 @@ const PottedPlants_PlantsComingUpsCounterScanner = (props: Props) => {
       </SafeAreaView>
 
       {/* choose quantities -  modal */}
+      {/*
+       * @public
+       * @procedureItem
+       * @order 100
+       * wprowadzenie ilości braków (czy przez przyciski <b>+</b> i <b>-</b>, czy podając konkretne ilości w formularzu)
+       */}
       <ModalInternal
         isOpen={isShowModalWithTrayComingUpCounter}
         isTransparent={false}

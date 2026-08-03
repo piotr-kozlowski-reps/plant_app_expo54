@@ -40,6 +40,7 @@ export const useScanValuesForPottedPlantsComingUpsCounter = (
   const [isShowDeleteTrayModal, setIsShowDeleteTrayModal] = useState(false);
 
   //fn
+
   const scanValueHandler = async (scannedValue: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     player.seekTo(0);

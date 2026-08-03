@@ -14,13 +14,12 @@ import PottedPlants_PlantsComingUpsCounterScanner from "./PottedPlants_PlantsCom
  * PROCEDURA:
  */
 
-// /**
-//  * @public
-//  * @procedureDescription
-//  * @order 1
-//  *      1. scan QR ZPka
-//  *      2. wysłanie potwierdzenia do API
-//  */
+/**
+ * @public
+ * @procedureDescription
+ * - skan QR tacy
+ * - podanie ilości braku dla każdej z zeskanowanych tac (może być ich nieograniczona ilość, dodawne są na liście).
+ */
 
 const PottedPlants_ComingUpsCounter_EntryPage = () => {
   ////vars
