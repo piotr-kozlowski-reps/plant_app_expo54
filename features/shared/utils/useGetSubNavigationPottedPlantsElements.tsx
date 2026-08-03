@@ -27,6 +27,15 @@ export const useGetSubNavigationPottedPlantsElements = () => {
         subModuleName: "potted_plants_works_packaging",
       },
       {
+        title: "Przeliczanie wschodów",
+        actionFn: () => {
+          router.push(
+            "/app/potted_plants/potted_plants_works/plants_coming_ups_counter",
+          );
+        },
+        subModuleName: "potted_plants_works_plants_coming_ups_counter",
+      },
+      {
         title: "Transport wewnętrzny",
         actionFn: () => {
           router.push(
